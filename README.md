@@ -54,6 +54,23 @@ Here is a list of available arguments:
 | `useCss` | *true* | Add the default styles to Admin Bar or leave them off and style it your way |
 | `useJs` | *true* | Use the Admin Bar's default Javascript |
 
+## Color Settings
+The new color settings in Admin Bar 3 make changing colors easier for clients and developers, alike. By default, Admin Bar's colors are set by the first instance of Admin Bar on the page. This means if you embed Admin Bar multiple times, the colors will be consistent, even if your Twig tags' color settings differ. In a situation where you want different colors for multiple Admin Bar instances, you'll need to write CSS to do so. *NOTE: this is the case for color settings on Edit Links, too.*
+
+This is the default theme:
+
+![Screenshot](resources/screenshots/screenshot-color-default.png)
+
+By changing color settings, you could also match Craft's CP:
+
+![Screenshot](resources/screenshots/screenshot-color-craft.png)
+
+Or, you could also do this:
+
+![Screenshot](resources/screenshots/screenshot-color-wut.png)
+
+*I probably wouldn't, but I'm not here to judge what you like. ¯\_(ツ)_/¯*
+
 ---
 
 # In-Content Edit Links
