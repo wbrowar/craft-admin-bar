@@ -9,7 +9,8 @@ Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 
 ## Installation
 1. During Craft 3 beta, [follow these instructions for installation](https://github.com/craftcms/docs/blob/master/en/plugin-intro.md#loading-your-plugin-into-craft).
-2. Add one of the Twig tags to your template:
+2. Run `composer update` within the `adminbar` folder to downlaod dependencies.
+3. Add one of the Twig tags to your template:
   * [Admin Bar default tag](https://github.com/wbrowar/craft-3-adminbar#add-the-default-admin-bar)
   * [Admin Bar Twig tag](https://github.com/wbrowar/craft-3-adminbar#using-the-admin-bar-twig-tag)
   * [Edit Link Twig tag](https://github.com/wbrowar/craft-3-adminbar#edit-links-for-multiple-entries)
