@@ -69,7 +69,7 @@ Or, you could also do this:
 
 ![Screenshot](resources/screenshots/screenshot-color-wut.png)
 
-*I probably wouldn't, but I'm not here to judge what you like. ¯\_(ツ)_/¯*
+*I probably wouldn't, but I'm not here to judge what you like. ¯\\_(ツ)_/¯*
 
 ---
 
