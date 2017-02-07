@@ -10,9 +10,9 @@ Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 ## Installation
 1. During Craft 3 beta, [follow these instructions for installation](https://github.com/craftcms/docs/blob/master/en/plugin-intro.md#loading-your-plugin-into-craft).
 2. Add one of the Twig tags to your template:
-  * [Admin Bar default tag](https://github.com/wbrowar/adminbar#add-the-default-admin-bar)
-  * [Admin Bar Twig tag](https://github.com/wbrowar/adminbar#using-the-admin-bar-twig-tag)
-  * [Edit Link Twig tag](https://github.com/wbrowar/adminbar#edit-links-for-multiple-entries)
+  * [Admin Bar default tag](https://github.com/wbrowar/craft-3-adminbar#add-the-default-admin-bar)
+  * [Admin Bar Twig tag](https://github.com/wbrowar/craft-3-adminbar#using-the-admin-bar-twig-tag)
+  * [Edit Link Twig tag](https://github.com/wbrowar/craft-3-adminbar#edit-links-for-multiple-entries)
 
 ---
 
@@ -26,7 +26,7 @@ The easiest way to add Admin Bar to your website is by adding the tag, `{% admin
 Because Admin Bar is HTML, CSS, and Javascript added to your website's front-end, you may need to make some slight adjustments to override Admin Bar's CSS to make it fit your website.
 
 ## Using the Admin Bar Twig Tag
-Using the tag to add Admin Bar to your template is the same as using the Admin Bar Twig tag, but the Twig tag allows you more flexibility.
+Using the tag to add Admin Bar to your template is the same as using `{% adminbar() %}`, but the Twig tag allows you more flexibility.
 
 Use the tag, `{{ craft.adminbar.bar() }}`, to add Admin Bar anywhere you'd like within your template.
 
@@ -85,10 +85,10 @@ Here is a full list of available arguments:
 
 | Argument | Default | Description |
 | --- | --- | --- |
-| `bgColor` | *'#d85b4b'* | Background color behind the Edit link |
+| `bgColor` | *'#000000'* | Background color behind the Edit link |
 | `highlightColor` | *'#d85b4b'* | Color used for rollovers and links |
-| `textColor` | *'#d85b4b'* | Text color of the Edit link |
-| `containerSelector` | *null* | Outline a parent element to show content editors the entirety of an entry or editable section. [See below for an example](https://github.com/wbrowar/adminbar#inidcating-what-will-change-when-editing-an-entry) |
+| `textColor` | *'#FFFFFF'* | Text color of the Edit link |
+| `containerSelector` | *null* | Outline a parent element to show content editors the entirety of an entry or editable section. [See below for an example](https://github.com/wbrowar/craft-3-adminbar#inidcating-what-will-change-when-editing-an-entry) |
 | `devNote` | *null* | Display information to content editors. You may use plain text or HTML markup |
 | `showEditInfo` | *true* | If set to `true`, the Edit Link will display the last updated date and the name of the author that last saved the entry |
 | `useCss` | *true* | Add the default styles to Edit Links or leave them off and style it your way |
@@ -126,7 +126,7 @@ Here are the settings you can change with the config file:
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| `additionalLinks` | *[]* | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/adminbar#additional-links) |
+| `additionalLinks` | *[]* | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/craft-3-adminbar#additional-links) |
 | `cacheBar` | *true* | Enable caching of Admin Bar links |
 | `displayGreeting` | *true* | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]" |
 | `displayDashboardLink` | *true* | A link to the CP Dashboard |
@@ -158,11 +158,6 @@ You can add links to Admin Bar using the config file by passing properties into 
 
 ---
 
-## Build Tool Extras
-If you are using a build tool, such as [Grunt](http://gruntjs.com) or [Gulp](http://gulpjs.com), and you are using the Twig tag with `useCss` and/or `useJs` set to `false`, AND your `plugins` folder happens to be within your build tool root folder, you can find the uncompressed, un-[autoprefixed](https://github.com/postcss/autoprefixer) CSS and Javascript files at this location: `adminbar/buildsource/`. This could be helpful if you want to include Admin Bar CSS into your own stylesheet or modify the Javascript code.
-
----
-
 ## To Do
 * ~~New icon :horse:~~
 * ~~Update plugin to support Craft 3~~
@@ -175,6 +170,6 @@ If you are using a build tool, such as [Grunt](http://gruntjs.com) or [Gulp](htt
 
 ## Releases
 
-Release notes can be found at [releases.json](https://github.com/wbrowar/adminbar/blob/master/releases.json)
+Release notes can be found at [CHANGELOG.md](https://github.com/wbrowar/craft-3-adminbar/blob/master/CHANGELOG.md)
 
 Please, let me know if this plugin is useful or if you have any suggestions or issues. [@wbrowar](https://twitter.com/wbrowar)

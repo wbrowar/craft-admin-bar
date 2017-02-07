@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [3.0.0] - 2017.02.05
 ### Added
-- Added `craft.adminbar.canEmbed` to check if Admin Bar or Edit Links can be embedded.
+- Added `{{ craft.adminbar.canEmbed }}` to check if Admin Bar or Edit Links can be embedded.
 - Added `bgColor` and `textColor` settings.
 
 ### Changed
