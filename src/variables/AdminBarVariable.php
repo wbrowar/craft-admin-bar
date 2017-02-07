@@ -45,7 +45,7 @@ class AdminBarVariable
      * @param null $optional
      * @return string
      */
-    public function bar(array $config = array())
+    public function bar(array $config = [])
     {
         // deprecate color argument and migrate it to highlightColor
         if ($config['color'] ?? false) {
@@ -60,8 +60,13 @@ class AdminBarVariable
         // embed admin bar in twig template
         return AdminBar::$plugin->bar->canEmbed();
     }
-    public function edit(string $entryOrString, array $config = array())
+    public function edit($entryOrString, array $config = [])
     {
+        // deprecate color argument and migrate it to highlightColor
+        if ($config['color'] ?? false) {
+            $config['highlightColor'] = $config['color'];
+        }
+
         // embed admin bar in twig template
         return AdminBar::$plugin->editLinks->render($entryOrString, $config);
     }

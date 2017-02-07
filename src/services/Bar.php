@@ -11,10 +11,12 @@
 namespace wb\adminbar\services;
 
 use wb\adminbar\AdminBar;
+use Mexitek\PHPColors\Color;
 
 use Craft;
 use craft\base\Component;
 use craft\web\View;
+
 
 /**
  * Bar Service
@@ -67,14 +69,20 @@ class Bar extends Component
         $settings = AdminBar::$plugin->getSettings();
         $config['barEmbedded'] = $this->_barEmbedded;
         $config['customLinks'] = $settings['customLinks'] ?? [];
-        $config['bgColor'] = $config['bgColor']
-            ?? AdminBar::$plugin->getSettings()->bgColor
+        $config['bgColor'] = (!empty($config['bgColor'])
+                ? $this->_getColorRgbString($config['bgColor']) : null)
+            ?? (!empty($settings->bgColor)
+                ? $this->_getColorRgbString($settings->bgColor) : null)
             ?? '0, 0, 0';
-        $config['highlightColor'] = $config['highlightColor']
-            ?? AdminBar::$plugin->getSettings()->highlightColor
+        $config['highlightColor'] = (!empty($config['highlightColor'])
+                ? $this->_getColorRgbString($config['highlightColor']) : null)
+            ?? (!empty($settings->highlightColor)
+                ? $this->_getColorRgbString($settings->highlightColor) : null)
             ?? '218, 90, 71';
-        $config['textColor'] = $config['textColor']
-            ?? AdminBar::$plugin->getSettings()->textColor
+        $config['textColor'] = (!empty($config['textColor'])
+                ? $this->_getColorRgbString($config['textColor']) : null)
+            ?? (!empty($settings->textColor)
+                ? $this->_getColorRgbString($settings->textColor) : null)
             ?? '255, 255, 255';
 
 //        if (Craft::$app->requireEdition(Craft::Pro) === true) {
@@ -108,6 +116,13 @@ class Bar extends Component
 
         // change embedded value to true
         $this->_barEmbedded = true;
+    }
+    private function _getColorRgbString(string $cssColor):string
+    {
+        // convert color to RGB and return string that can be transparentized
+        $color = new Color($cssColor);
+        $colorRgb = $color->getRgb();
+        return $colorRgb['R'] . ',' . $colorRgb['G'] . ',' . $colorRgb['B'];
     }
     private function _getConfigSetting(string $key)
     {

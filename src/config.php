@@ -23,7 +23,7 @@
 
 return array(
     // ADMIN BAR
-    'additionalLinks' => array(),
+    'additionalLinks' => [],
     'cacheBar' => true,
     'displayGreeting' => true,
     'displayDashboardLink' => true,
@@ -41,21 +41,21 @@ return array(
 // EXAMPLES
 // Additional Links
 /*
-'additionalLinks' => array(
+'additionalLinks' => [
   // an example of a simple url link
-  array(
+  [
     'title' => 'Craft CMS',
     'url' => 'http://craftcms.com',
     'type' => 'url',
-  ),
+  ],
   // an example of a CP link
-  array(
+  [
     'title' => 'Entries',
     'url' => 'entries',
     'type' => 'cpUrl',
-  ),
+  ],
   // an example of a url link that passes along some extras
-  array(
+  [
     'title' => 'Blog',
     'url' => 'blog',
     'type' => 'url',
@@ -63,13 +63,13 @@ return array(
     'protocol' => 'http',
     'mustShowScriptName' => true,
     'permissions' => array('myPluginPermission', 'thisIsRequiredToo'),
-  ),
+  ],
   // an example of a plugin action link
-  array(
+  [
     'title' => 'Clear Cache',
     'url' => 'adminbar/clearTemplateCache',
     'type' => 'action',
     'admin' => true,
-  ),
-),
+  ],
+],
 */

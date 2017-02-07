@@ -18,6 +18,7 @@
         }
     ],
     "require": {
+        "mexitek/phpcolors": "dev-master"
     },
     "autoload": {
         "psr-4": {

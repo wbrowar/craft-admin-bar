@@ -37,7 +37,10 @@ class Settings extends Model
      *
      * @var string
      */
-    //public $someAttribute = 'Some Default';
+    public $customLinks = [];
+    public $highlightColor = '#D85B4B';
+    public $bgColor = '#000000';
+    public $textColor = '#FFFFFF';
 
     // Public Methods
     // =========================================================================
@@ -55,10 +58,8 @@ class Settings extends Model
     public function rules()
     {
         return [
-            ['customLinks', 'default', 'value' => []],
-            ['highlightColor', 'default', 'value' => '218, 90, 71'],
-            ['bgColor', 'default', 'value' => '0, 0, 0'],
-            ['textColor', 'default', 'value' => '255, 255, 255'],
+            [['highlightColor', 'bgColor', 'textColor'], 'required'],
+            [['highlightColor', 'bgColor', 'textColor'], 'string'],
         ];
     }
 }

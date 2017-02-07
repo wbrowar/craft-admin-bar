@@ -10,10 +10,13 @@
 
 namespace wb\adminbar\services;
 
+use craft\elements\Entry;
 use wb\adminbar\AdminBar;
+use Mexitek\PHPColors\Color;
 
 use Craft;
 use craft\base\Component;
+use craft\web\View;
 
 /**
  * EditLinks Service
@@ -30,6 +33,9 @@ use craft\base\Component;
  */
 class EditLinks extends Component
 {
+    private $_editEmbedded = false;
+    private $_editId = 0;
+
     // Public Methods
     // =========================================================================
 
@@ -45,8 +51,77 @@ class EditLinks extends Component
      */
     public function render($entryOrString, array $config = [])
     {
-        $result = 'edit';
+        $settings = AdminBar::$plugin->getSettings();
+        $config['editEmbedded'] = $this->_editEmbedded;
+        $config['entryOrString'] = $entryOrString;
+        $config['id'] = $this->_editId;
+        $config['enabled'] = AdminBar::$plugin->bar->canEmbed() ? true : false;
+        $config['bgColor'] = (!empty($config['bgColor'])
+                ? $this->_getColorRgbString($config['bgColor']) : null)
+            ?? (!empty($settings->bgColor)
+                ? $this->_getColorRgbString($settings->bgColor) : null)
+            ?? '0, 0, 0';
+        $config['highlightColor'] = (!empty($config['highlightColor'])
+                ? $this->_getColorRgbString($config['highlightColor']) : null)
+            ?? (!empty($settings->highlightColor)
+                ? $this->_getColorRgbString($settings->highlightColor) : null)
+            ?? '218, 90, 71';
+        $config['textColor'] = (!empty($config['textColor'])
+                ? $this->_getColorRgbString($config['textColor']) : null)
+            ?? (!empty($settings->textColor)
+                ? $this->_getColorRgbString($settings->textColor) : null)
+            ?? '255, 255, 255';
 
-        return $result;
+//        if (Craft::$app->requireEdition(Craft::Pro) === true) {
+//            $config['localesEnabled'] = true;
+//        } else {
+//            $config['localesEnabled'] = false;
+//        }
+
+        // add config file settings to config
+        $config['displayEditDate'] = $this->_getConfigSetting('displayEditDate');
+        $config['displayEditAuthor'] = $this->_getConfigSetting('displayEditAuthor');
+        $config['displayRevisionNote'] = $this->_getConfigSetting('displayRevisionNote');
+
+        // figure out if $entryOrString is a custom URL string, otherwise assume it's an Entry
+        if (is_string($entryOrString)) {
+            $config['type'] = 'string';
+        } else {
+            $config['type'] = 'entry';
+        }
+
+        // get recent revision information
+        $revision = $config['type'] == 'entry' ? Craft::$app->entryRevisions->getVersionsByEntryId($entryOrString->id, $entryOrString->siteId, 1, true) : '';
+        if (!empty($revision)) {
+            $revisionAuthor = Craft::$app->users->getUserById($revision[0]->creatorId);
+            $config['revisionAuthor'] = $revisionAuthor;
+            $config['revisionNote'] = $revision[0]->revisionNotes;
+        } else {
+            $config['revisionAuthor'] = null;
+            $config['revisionNote'] = null;
+        }
+
+        $oldMode = Craft::$app->view->getTemplateMode();
+        Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
+        $html = Craft::$app->view->renderTemplate('adminbar/editLinks', $config);
+        Craft::$app->view->setTemplateMode($oldMode);
+
+        print($html);
+
+        $this->_editId += 1;
+        $this->_editEmbedded = true;
+    }
+    private function _getColorRgbString(string $cssColor):string
+    {
+        // convert color to RGB and return string that can be transparentized
+        $color = new Color($cssColor);
+        $colorRgb = $color->getRgb();
+        return $colorRgb['R'] . ',' . $colorRgb['G'] . ',' . $colorRgb['B'];
+    }
+    private function _getConfigSetting(string $key)
+    {
+        // get settings from config file
+        $configSetting = Craft::$app->config->get($key, 'adminbar');
+        return $configSetting;
     }
 }
