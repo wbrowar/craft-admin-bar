@@ -1,0 +1,45 @@
+{
+    "name": "wb/adminbar",
+    "description": "Front-end shortcuts for clients logged into Craft CMS.",
+    "type": "craft-plugin",
+    "version": "3.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "plugin",
+        "adminbar"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Will Browar",
+            "homepage": "https://wbrowar.com/plugins/adminbar"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+          "wb\\adminbar\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Admin Bar",
+        "handle": "adminBar",
+        "version": "3.0.0",
+        "schemaVersion": "3.0.0",
+        "hasSettings": true,
+        "hasCpSection": false,
+        "developer": "Will Browar",
+        "developerUrl": "https://wbrowar.com/plugins/adminbar",
+        "description": "Front-end shortcuts for clients logged into Craft CMS.",
+        "documentationUrl": "https://github.com/wbrowar/adminbar/blob/master/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/wbrowar/adminbar/master/CHANGELOG.md",
+        "components": {
+            "bar": "wb\\adminbar\\services\\Bar",
+            "editLinks": "wb\\adminbar\\services\\EditLinks"
+        },
+        "class": "wb\\adminbar\\AdminBar"
+    }
+}
