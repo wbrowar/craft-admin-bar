@@ -8,11 +8,11 @@
  * @copyright Copyright (c) 2017 Will Browar
  */
 
-namespace wb\adminbar\variables;
+namespace wbrowar\adminbar\variables;
 
-use wb\adminbar\AdminBar;
+use wbrowar\adminbar\AdminBar;
 
-use Craft;
+//use Craft;
 
 /**
  * Admin Bar Variable
@@ -24,7 +24,7 @@ use Craft;
  *
  * @author    Will Browar
  * @package   AdminBar
- * @since     3.0.0
+ * @since     3.0.1
  */
 class AdminBarVariable
 {

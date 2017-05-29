@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2017 Will Browar
  */
 
-namespace wb\adminbar\assetbundles\AdminBar;
+namespace wbrowar\adminbar\assetbundles\AdminBar;
 
 use Craft;
 use craft\web\AssetBundle;
@@ -30,7 +30,7 @@ use craft\web\assets\cp\CpAsset;
  *
  * @author    Will Browar
  * @package   AdminBar
- * @since     3.0.0
+ * @since     3.0.1
  */
 class AdminBarAsset extends AssetBundle
 {
@@ -43,7 +43,7 @@ class AdminBarAsset extends AssetBundle
     public function init()
     {
         // define the path that your publishable resources live
-        $this->sourcePath = "@wb/adminbar/assetbundles/adminbar/dist";
+        $this->sourcePath = "@wbrowar/adminbar/assetbundles/adminbar/dist";
 
         // define the dependencies
         $this->depends = [

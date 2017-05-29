@@ -1,15 +1,19 @@
 {
-    "name": "wb/adminbar",
+    "name": "wbrowar/adminbar",
     "description": "Front-end shortcuts for clients logged into Craft CMS.",
     "type": "craft-plugin",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "keywords": [
         "craft",
         "cms",
         "craftcms",
-        "plugin",
-        "adminbar"
+        "craft-plugin",
+        "admin bar"
     ],
+    "support": {
+        "docs": "https://github.com/wbrowar/craft-3-adminbar/blob/master/README.md",
+        "issues": "https://github.com/wbrowar/craft-3-adminbar/issues"
+    },
     "license": "MIT",
     "authors": [
         {
@@ -18,29 +22,31 @@
         }
     ],
     "require": {
+        "craftcms/cms": "~3.0.0-beta.1",
         "mexitek/phpcolors": "dev-master"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "autoload": {
         "psr-4": {
-          "wb\\adminbar\\": "src/"
+          "wbrowar\\adminbar\\": "src/"
         }
     },
     "extra": {
         "name": "Admin Bar",
         "handle": "adminBar",
-        "version": "3.0.0",
-        "schemaVersion": "3.0.0",
-        "hasSettings": true,
+        "schemaVersion": "3.0.1",
+        "hasCpSettings": true,
         "hasCpSection": false,
-        "developer": "Will Browar",
-        "developerUrl": "https://wbrowar.com/plugins/adminbar",
-        "description": "Front-end shortcuts for clients logged into Craft CMS.",
-        "documentationUrl": "https://github.com/wbrowar/adminbar/blob/master/README.md",
-        "changelogUrl": "https://raw.githubusercontent.com/wbrowar/adminbar/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/wbrowar/craft-3-adminbar/master/CHANGELOG.md",
         "components": {
-            "bar": "wb\\adminbar\\services\\Bar",
-            "editLinks": "wb\\adminbar\\services\\EditLinks"
+            "bar": "wbrowar\\adminbar\\services\\Bar",
+            "editLinks": "wbrowar\\adminbar\\services\\EditLinks"
         },
-        "class": "wb\\adminbar\\AdminBar"
+        "class": "wbrowar\\adminbar\\AdminBar"
     }
 }

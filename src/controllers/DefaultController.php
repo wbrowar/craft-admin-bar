@@ -8,11 +8,11 @@
  * @copyright Copyright (c) 2017 Will Browar
  */
 
-namespace wb\adminbar\controllers;
+namespace wbrowar\adminbar\controllers;
 
-use wb\adminbar\AdminBar;
+//use wbrowar\adminbar\AdminBar;
 
-use Craft;
+//use Craft;
 use craft\web\Controller;
 
 /**
@@ -33,7 +33,7 @@ use craft\web\Controller;
  *
  * @author    Will Browar
  * @package   AdminBar
- * @since     3.0.0
+ * @since     3.0.1
  */
 class DefaultController extends Controller
 {
@@ -53,26 +53,26 @@ class DefaultController extends Controller
 
     /**
      * Handle a request going to our plugin's index action URL,
-     * e.g.: actions/adminbar/default
+     * e.g.: actions/admin-bar/default
      *
      * @return mixed
      */
     public function actionIndex()
     {
-        $result = 'something';
+        $result = 'Welcome to the DefaultController actionIndex() method';
 
         return $result;
     }
 
     /**
      * Handle a request going to our plugin's actionDoSomething URL,
-     * e.g.: actions/adminbar/default/do-something
+     * e.g.: actions/admin-bar/default/do-something
      *
      * @return mixed
      */
     public function actionDoSomething()
     {
-        $result = 'something';
+        $result = 'Welcome to the DefaultController actionDoSomething() method';
 
         return $result;
     }

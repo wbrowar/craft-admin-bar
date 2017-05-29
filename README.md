@@ -1,10 +1,8 @@
 # Craft – Admin Bar
 Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 
-> NOTE: Craft 3 has a few bugs in CP, so `Settings > Plugins > Admin Bar` might not work correctly. `Adminbar.php` config settings and Twig arguments seem to be working just fine, though. Also, if you're upgrading from Craft 2, there's no upgrade migration, yet, so please re-enter CP plugin setting values for now.
-
 ## Requirements
-* Craft 3.0+
+* Craft 3.0 (beta 18)+
 * PHP 7.0+
 
 ## Installation
@@ -22,12 +20,12 @@ Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 ![Screenshot](resources/screenshots/screenshot-bar.png)
 
 ## Add the Default Admin Bar
-The easiest way to add Admin Bar to your website is by adding the tag, `{% adminbar() %}`, anywhere within your page template. Admin Bar will appear at the top of any page that includes this tag when someone—who has the permission to view the CP—is logged into your website.
+The easiest way to add Admin Bar to your website is by adding the tag, `{{ adminbar() }}`, anywhere within your page template. Admin Bar will appear at the top of any page that includes this tag when someone—who has the permission to view the CP—is logged into your website.
 
 Because Admin Bar is HTML, CSS, and Javascript added to your website's front-end, you may need to make some slight adjustments to override Admin Bar's CSS to make it fit your website.
 
 ## Using the Admin Bar Twig Tag
-Using the tag to add Admin Bar to your template is the same as using `{% adminbar() %}`, but the Twig tag allows you more flexibility.
+Using the tag to add Admin Bar to your template is the same as using `{{ adminbar() }}`, but the Twig tag allows you more flexibility.
 
 Use the tag, `{{ craft.adminbar.bar() }}`, to add Admin Bar anywhere you'd like within your template.
 
@@ -53,23 +51,6 @@ Here is a list of available arguments:
 | `sticky` | *true* | Uses css to `position: fixed;` Admin Bar to the top of the page |
 | `useCss` | *true* | Add the default styles to Admin Bar or leave them off and style it your way |
 | `useJs` | *true* | Use the Admin Bar's default Javascript |
-
-## Color Settings
-The new color settings in Admin Bar 3 make changing colors easier for clients and developers, alike. By default, Admin Bar's colors are set by the first instance of Admin Bar on the page. This means if you embed Admin Bar multiple times, the colors will be consistent, even if your Twig tags' color settings differ. In a situation where you want different colors for multiple Admin Bar instances, you'll need to write CSS to do so. *NOTE: this is the case for color settings on Edit Links, too.*
-
-This is the default theme:
-
-![Screenshot](resources/screenshots/screenshot-color-default.png)
-
-By changing color settings, you could also match Craft's CP:
-
-![Screenshot](resources/screenshots/screenshot-color-craft.png)
-
-Or, you could also do this:
-
-![Screenshot](resources/screenshots/screenshot-color-wut.png)
-
-*I probably wouldn't, but I'm not here to judge what you like. ¯\\_(ツ)_/¯*
 
 ---
 
@@ -148,6 +129,7 @@ Here are the settings you can change with the config file:
 | `cacheBar` | *true* | Enable caching of Admin Bar links |
 | `displayGreeting` | *true* | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]" |
 | `displayDashboardLink` | *true* | A link to the CP Dashboard |
+| `displayDefaultEditSection` | *true* | Display the name of the section in the default entry/category edit link |
 | `displaySettingsLink` | *true* | A link to the CP Settings page that appears only to admins |
 | `displayLogout` | *true* | Logs you out of Craft CMS |
 | `enableMobileMenu` | *true* | Enables Admin Bar to display a separate mobile theme below a width of 600 pixels |

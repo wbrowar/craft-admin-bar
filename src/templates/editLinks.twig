@@ -1,0 +1,73 @@
+{% set id = id ?? 0 %}
+{% set highlightColor = highlightColor ?? '#d85b4b' %}
+{% set bgColor = bgColor ?? '#d85b4b' %}
+{% set textColor = textColor ?? '#d85b4b' %}
+{% set containerSelector = containerSelector ?? null %}
+{% set devNote = devNote ?? '' %}
+{% set showEditInfo = showEditInfo ?? true %}
+{% set useCss = useCss ?? true %}
+{% set useJs = useJs ?? true %}
+{% set localesEnabled = localesEnabled ?? false %}
+
+{% if type != 'string' %}
+    {% if localesEnabled %}
+        {% set editUrl = entryOrString.cpEditUrl ~ '/' ~ entryOrString.locale %}
+    {% else %}
+        {% set editUrl = entryOrString.cpEditUrl %}
+    {% endif %}
+{% else %}
+    {% set editUrl = entryOrString %}
+{% endif %}
+
+{% set js = '' %}
+
+{% if not editEmbedded %}
+    {% set newJs %}
+        "use strict";var adminBarEditLinks=[],ready=function(t){if("function"==typeof t)return"complete"===document.readyState||"interactive"===document.readyState?t():void document.addEventListener("DOMContentLoaded",t,!1)};ready(function(){function t(t,e){t.classList?t.classList.add(e):t.className+=" "+e}function e(t,e){for(var n=0,a=t.length;n<a;n++)if(t[n]==e)return!0;return!1}function n(t,n){for(var a=document.querySelectorAll(n),i=t.parentNode;i&&!e(a,i);)i=i.parentNode;return i}for(var a,i=0;i<adminBarEditLinks.length;i++){if(a=document.querySelectorAll('.admin_edit[data-id="'+i+'"]'),a[0].innerHTML=adminBarEditLinks[i],a[0].hasAttribute("data-container")){var r=n(a[0],a[0].getAttribute("data-container"));null!==r&&t(r,"admin_edit_container")}t(a[0],"admin_edit_embedded")}});
+    {% endset %}
+    {% set js = js ~ newJs %}
+
+    {% if useCss %}
+        {% set newCss %}
+            .admin_bar_icon{display:inline-block;margin-right:5px;width:15px;transform:translateY(2px)}.admin_bar_icon svg{width:100%}@media screen and (max-width: 600px){.admin_bar_wrapper .admin_bar_icon{margin-right:7px;width:22px}}.admin_edit.admin_edit_embedded{display:-ms-flexbox;display:flex;-ms-flex-flow:row wrap;flex-flow:row wrap;-ms-flex-pack:justify;justify-content:space-between;margin:20px 0;position:relative;width:100%;background-color:#f5f5f5;border:1px solid rgba({{ bgColor }},.8);box-sizing:border-box;font-family:"BlinkMacSystemFont",-apple-system,"Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif;font-size:17px;color:#505050;transition:border .2s ease-out, opacity .2s ease-out}.admin_edit.admin_edit_embedded:hover{border-color:rgb({{ highlightColor }})}.admin_edit_link{display:inline-block;padding:9px 9px 7px;background-color:rgba({{ bgColor }},.8);color:rgb({{ textColor }}) !important;text-decoration:none !important;text-transform:uppercase;transition:background .2s ease-out, color .2s ease-out;white-space:nowrap}.admin_edit_link svg path{transition:fill .2s ease-out;fill:rgb({{ textColor }})}.admin_edit_link:hover{background-color:rgb({{ highlightColor }});color:#fff !important}.admin_edit_link:hover svg path{fill:#fff}.admin_edit_info{display:-ms-flexbox;display:flex;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-ms-flex-pack:center;justify-content:center;-ms-flex:1 0 100%;flex:1 0 100%;padding:8px 10px;background-color:rgba(0,0,0,0.05);box-sizing:border-box;font-family:"BlinkMacSystemFont",-apple-system,"Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif;font-size:.8em;line-height:1.5;color:#505050}.admin_edit_info p{margin:0 0 8px;max-width:700px}.admin_edit_info p:last-child{margin-bottom:0}.admin_edit_info a{color:rgb({{ highlightColor }}) !important}.admin_edit_entry_updated{display:-ms-flexbox;display:flex;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-ms-flex-align:center;align-items:center;padding-right:10px;font-weight:500;font-size:.8em}.admin_edit_user_photo{padding-right:7px;width:23px;line-height:0}.admin_edit_user_photo img{max-width:100%;height:auto;border-radius:50%}.admin_edit_revision_note{max-width:700px}@media screen and (min-width: 601px){.admin_edit_container .admin_edit.admin_edit_embedded{margin:20px 0 0;border:none;opacity:.3}.admin_edit_container{margin-bottom:20px;outline:1px dashed transparent;outline-offset:3px;transition:outline-color .2s ease-out}.admin_edit_container:hover{outline-color:rgb({{ highlightColor }})}.admin_edit_container:hover .admin_edit{opacity:1}}
+
+        {% endset %}
+        {% css newCss %}
+    {% endif %}
+{% endif %}
+
+{% if enabled %}
+    {% set editLink %}{% spaceless %}
+        <a class="admin_edit_link admin_bar_has_icon" href="{{ editUrl }}"><span class="admin_bar_icon"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.93 228.72"><defs><style>.cls-1{fill:#fff}</style></defs><title>edit</title><path class="cls-1" d="M227.35 48.35a14.64 14.64 0 0 0-2.79-17L197.84 4.58a15.47 15.47 0 0 0-17.42-3.17l-5.95 4.74L14.29 166.33 0 228.72l62.39-14.29L222.57 54.26zM32.59 210.92a30 30 0 0 0-14.84-14.58l5.53-24.15 14.14 6.91 13.06 13.06 6.86 13z"/></svg></span>{{ 'Edit'|t }}</a>
+        {% if type != 'string' and (displayEditDate or displayEditAuthor) and showEditInfo %}
+            <div class="admin_edit_entry_updated">Last updated{% if displayEditDate %} {{ entryOrString.dateUpdated|date('m/d/Y') }}{% endif %}{% if displayEditAuthor %} by {# {% if currentUser.photo %}
+                    <span class="admin_edit_user_photo">
+                    <img src="{{ currentUser.photo.url(40) }}" alt="{{ currentUser.friendlyName }}’s photo"/>
+                    </span>{% endif %} #}{{ revisionAuthor.friendlyName ?? entryOrString.author.friendlyName }}{% endif %}
+            </div>
+        {% endif %}
+        {% if (displayRevisionNote and revisionNote is defined and revisionNote|length) or devNote|length %}
+            <div class="admin_edit_info">
+                {% if displayRevisionNote and (revisionNote is defined and revisionNote|length) %}
+                    <div class="admin_edit_revision_note">
+                        <b>Version Note</b> &ldquo;{{ revisionNote }}&rdquo;
+                    </div>
+                {% endif %}
+                {% if devNote|length %}
+                    <div class="admin_edit_entry_note">{{ devNote }}</div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endspaceless %}{% endset %}
+
+    {% if useJs %}
+        {% set newJs %}
+            adminBarEditLinks.push('{{ editLink }}');
+        {% endset %}
+        {% set js = js ~ newJs %}
+
+        {% js js %}
+    {% endif %}
+{% endif %}
+
+<div class="admin_edit{% if not useJs %} admin_edit_embedded{% endif %}" data-id="{{ id }}" {% if containerSelector is defined and containerSelector|length %}data-container="{{ containerSelector }}"{% endif %}>{% if not useJs %}{{ editLink }}{% endif %}</div>

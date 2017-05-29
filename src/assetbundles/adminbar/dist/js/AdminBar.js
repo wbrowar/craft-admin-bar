@@ -7,5 +7,5 @@
  * @copyright Copyright (c) 2017 Will Browar
  * @link      https://wbrowar.com/plugins/adminbar
  * @package   AdminBar
- * @since     3.0.0
+ * @since     3.0.1
  */

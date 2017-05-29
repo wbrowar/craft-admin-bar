@@ -8,15 +8,17 @@
  * @copyright Copyright (c) 2017 Will Browar
  */
 
-namespace wb\adminbar\models;
+namespace wbrowar\adminbar\models;
 
-use wb\adminbar\AdminBar;
+//use wbrowar\adminbar\AdminBar;
 
-use Craft;
+//use Craft;
 use craft\base\Model;
 
 /**
- * Settings Model
+ * AdminBar Settings Model
+ *
+ * This is a model used to define the plugin's settings.
  *
  * Models are containers for data. Just about every time information is passed
  * between services, controllers, and templates in Craft, it’s passed via a model.
@@ -25,7 +27,7 @@ use craft\base\Model;
  *
  * @author    Will Browar
  * @package   AdminBar
- * @since     3.0.0
+ * @since     3.0.1
  */
 class Settings extends Model
 {
@@ -33,14 +35,32 @@ class Settings extends Model
     // =========================================================================
 
     /**
-     * Some model attribute
+     * Some field model attribute
      *
      * @var string
      */
+    // Settings that can be set in CP
     public $customLinks = [];
     public $highlightColor = '#D85B4B';
     public $bgColor = '#000000';
     public $textColor = '#FFFFFF';
+
+    // Settings set in adminbar.php
+    // ADMIN BAR
+    public $additionalLinks = [];
+    public $cacheBar = true;
+    public $displayGreeting = true;
+    public $displayDashboardLink = true;
+    public $displayDefaultEditSection = true;
+    public $displaySettingsLink = true;
+    public $displayLogout = true;
+    public $enableMobileMenu = true;
+    public $scrollLinks = true;
+
+    // EDIT LINKS
+    public $displayEditDate = true;
+    public $displayEditAuthor = true;
+    public $displayRevisionNote = true;
 
     // Public Methods
     // =========================================================================

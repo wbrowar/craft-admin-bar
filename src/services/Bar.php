@@ -8,9 +8,9 @@
  * @copyright Copyright (c) 2017 Will Browar
  */
 
-namespace wb\adminbar\services;
+namespace wbrowar\adminbar\services;
 
-use wb\adminbar\AdminBar;
+use wbrowar\adminbar\AdminBar;
 use Mexitek\PHPColors\Color;
 
 use Craft;
@@ -55,7 +55,9 @@ class Bar extends Component
             !Craft::$app->getRequest()->getIsAjax() &&
             !Craft::$app->getRequest()->getIsConsoleRequest() &&
             !Craft::$app->getRequest()->getIsCpRequest() &&
-            !Craft::$app->getUser()->getIsGuest()
+            !Craft::$app->getRequest()->getIsLivePreview() &&
+            !Craft::$app->getUser()->getIsGuest() &&
+            (Craft::$app->getUser()->getIsAdmin() || Craft::$app->getUser()->can('accessCp'))
         );
     }
     public function clearAdminBarCache()
@@ -92,14 +94,15 @@ class Bar extends Component
 //        }
 
         // add config file settings to config
-        $config['additionalLinks'] = $this->_getConfigSetting('additionalLinks');
-        $config['cacheBar'] = $this->_getConfigSetting('cacheBar');
-        $config['displayDashboardLink'] = $this->_getConfigSetting('displayDashboardLink');
-        $config['displayGreeting'] = $this->_getConfigSetting('displayGreeting');
-        $config['displayLogout'] = $this->_getConfigSetting('displayLogout');
-        $config['displaySettingsLink'] = $this->_getConfigSetting('displaySettingsLink');
-        $config['enableMobileMenu'] = $this->_getConfigSetting('enableMobileMenu');
-        $config['scrollLinks'] = $this->_getConfigSetting('scrollLinks');
+        $config['additionalLinks'] = $settings->additionalLinks;
+        $config['cacheBar'] = $settings->cacheBar;
+        $config['displayDashboardLink'] = $settings->displayDashboardLink;
+        $config['displayDefaultEditSection'] = $settings->displayDefaultEditSection;
+        $config['displayGreeting'] = $settings->displayGreeting;
+        $config['displayLogout'] = $settings->displayLogout;
+        $config['displaySettingsLink'] = $settings->displaySettingsLink;
+        $config['enableMobileMenu'] = $settings->enableMobileMenu;
+        $config['scrollLinks'] = $settings->scrollLinks;
 
         $oldMode = Craft::$app->view->getTemplateMode();
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
@@ -123,11 +126,5 @@ class Bar extends Component
         $color = new Color($cssColor);
         $colorRgb = $color->getRgb();
         return $colorRgb['R'] . ',' . $colorRgb['G'] . ',' . $colorRgb['B'];
-    }
-    private function _getConfigSetting(string $key)
-    {
-        // get settings from config file
-        $configSetting = Craft::$app->config->get($key, 'adminbar');
-        return $configSetting;
     }
 }

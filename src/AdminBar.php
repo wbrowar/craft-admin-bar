@@ -8,16 +8,21 @@
  * @copyright Copyright (c) 2017 Will Browar
  */
 
-namespace wb\adminbar;
+namespace wbrowar\adminbar;
 
-use wb\adminbar\twigextensions\AdminBarTwigExtension;
-use wb\adminbar\variables\AdminBarVariable;
-use wb\adminbar\models\Settings;
+use wbrowar\adminbar\services\AdminBarService as AdminBarServiceService;
+use wbrowar\adminbar\variables\AdminBarVariable;
+use wbrowar\adminbar\twigextensions\AdminBarTwigExtension;
+use wbrowar\adminbar\models\Settings;
 
 use Craft;
 use craft\base\Plugin;
+use craft\services\Plugins;
+use craft\events\PluginEvent;
+use craft\console\Application as ConsoleApplication;
 use craft\web\UrlManager;
 use craft\events\RegisterUrlRulesEvent;
+
 use yii\base\Event;
 
 /**
@@ -32,7 +37,9 @@ use yii\base\Event;
  *
  * @author    Will Browar
  * @package   AdminBar
- * @since     3.0.0
+ * @since     3.0.1
+ *
+ * @property  AdminBarServiceService $adminBarService
  */
 class AdminBar extends Plugin
 {
@@ -43,7 +50,7 @@ class AdminBar extends Plugin
      * Static property that is an instance of this plugin class so that it can be accessed via
      * AdminBar::$plugin
      *
-     * @var static
+     * @var AdminBar
      */
     public static $plugin;
 
@@ -69,12 +76,17 @@ class AdminBar extends Plugin
         // Add in our Twig extensions
         Craft::$app->view->twig->addExtension(new AdminBarTwigExtension());
 
+        // Add in our console commands
+        if (Craft::$app instanceof ConsoleApplication) {
+            $this->controllerNamespace = 'wbrowar\adminbar\console\controllers';
+        }
+
         // Register our site routes
         Event::on(
             UrlManager::className(),
             UrlManager::EVENT_REGISTER_SITE_URL_RULES,
             function (RegisterUrlRulesEvent $event) {
-                $event->rules['siteActionTrigger1'] = 'adminbar/default';
+                $event->rules['siteActionTrigger1'] = 'admin-bar/default';
             }
         );
 
@@ -83,29 +95,47 @@ class AdminBar extends Plugin
             UrlManager::className(),
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
             function (RegisterUrlRulesEvent $event) {
-                $event->rules['cpActionTrigger1'] = 'adminbar/default/do-something';
+                $event->rules['cpActionTrigger1'] = 'admin-bar/default/do-something';
             }
         );
 
-        /**
-         * Logging in Craft involves using one of the following methods:
-         *
-         * Craft::trace(): record a message to trace how a piece of code runs. This is mainly for development use.
-         * Craft::info(): record a message that conveys some useful information.
-         * Craft::warning(): record a warning message that indicates something unexpected has happened.
-         * Craft::error(): record a fatal error that should be investigated as soon as possible.
-         *
-         * Unless `devMode` is on, only Craft::warning() & Craft::error() will log to `craft/storage/logs/web.log`
-         *
-         * It's recommended that you pass in the magic constant `__METHOD__` as the second parameter, which sets
-         * the category to the method (prefixed with the fully qualified class name) where the constant appears.
-         *
-         * To enable the Yii debug toolbar, go to your user account in the AdminCP and check the
-         * [] Show the debug toolbar on the front end & [] Show the debug toolbar on the Control Panel
-         *
-         * http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html
-         */
-        Craft::info('AdminBar ' . Craft::t('adminBar', 'plugin loaded'), __METHOD__);
+        // Do something after we're installed
+        Event::on(
+            Plugins::className(),
+            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
+            function (PluginEvent $event) {
+                if ($event->plugin === $this) {
+                    // We were just installed
+                }
+            }
+        );
+
+/**
+ * Logging in Craft involves using one of the following methods:
+ *
+ * Craft::trace(): record a message to trace how a piece of code runs. This is mainly for development use.
+ * Craft::info(): record a message that conveys some useful information.
+ * Craft::warning(): record a warning message that indicates something unexpected has happened.
+ * Craft::error(): record a fatal error that should be investigated as soon as possible.
+ *
+ * Unless `devMode` is on, only Craft::warning() & Craft::error() will log to `craft/storage/logs/web.log`
+ *
+ * It's recommended that you pass in the magic constant `__METHOD__` as the second parameter, which sets
+ * the category to the method (prefixed with the fully qualified class name) where the constant appears.
+ *
+ * To enable the Yii debug toolbar, go to your user account in the AdminCP and check the
+ * [] Show the debug toolbar on the front end & [] Show the debug toolbar on the Control Panel
+ *
+ * http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html
+ */
+        Craft::info(
+            Craft::t(
+                'adminbar',
+                '{name} plugin loaded',
+                ['name' => $this->name]
+            ),
+            __METHOD__
+        );
     }
 
     /**
@@ -124,57 +154,6 @@ class AdminBar extends Plugin
     // =========================================================================
 
     /**
-     * Performs actions before the plugin is installed.
-     *
-     * @return bool Whether the plugin should be installed
-     */
-    protected function beforeInstall():bool
-    {
-        return true;
-    }
-
-    /**
-     * Performs actions after the plugin is installed.
-     */
-    protected function afterInstall()
-    {
-    }
-
-    /**
-     * Performs actions before the plugin is updated.
-     *
-     * @return bool Whether the plugin should be updated
-     */
-    protected function beforeUpdate():bool
-    {
-        return true;
-    }
-
-    /**
-     * Performs actions after the plugin is updated.
-     */
-    protected function afterUpdate()
-    {
-    }
-
-    /**
-     * Performs actions before the plugin is installed.
-     *
-     * @return bool Whether the plugin should be installed
-     */
-    protected function beforeUninstall():bool
-    {
-        return true;
-    }
-
-    /**
-     * Performs actions after the plugin is installed.
-     */
-    protected function afterUninstall()
-    {
-    }
-
-    /**
      * Creates and returns the model used to store the plugin’s settings.
      *
      * @return \craft\base\Model|null
@@ -190,24 +169,21 @@ class AdminBar extends Plugin
      *
      * @return string The rendered settings HTML
      */
-    protected function settingsHtml():string
+    protected function settingsHtml(): string
     {
         AdminBar::$plugin->bar->clearAdminBarCache();
 
-        $settings = $this->getSettings();
+        $pluginsSettings= $this->getSettings();
 
-        if (empty($settings->customLinks)) {
-            $settings['customLinks'] = [['','',0]];
-            //Craft::dd($settings['customLinks']);
+        if (empty($pluginsSettings->customLinks)) {
+            $pluginsSettings['customLinks'] = [['','',0]];
+            //Craft::dd($pluginsSettings['customLinks']);
         }
-        //Craft::dd($settings);
 
         return Craft::$app->view->renderTemplate(
-            'adminbar'
-            . DIRECTORY_SEPARATOR
-            . 'settings',
+            'adminbar/settings',
             [
-                'settings' => $settings
+                'settings' => $pluginsSettings
             ]
         );
     }

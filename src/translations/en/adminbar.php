@@ -18,8 +18,8 @@
  *
  * @author    Will Browar
  * @package   AdminBar
- * @since     3.0.0
+ * @since     3.0.1
  */
 return [
-    'plugin loaded' => 'plugin loaded',
+    'Admin Bar plugin loaded' => 'Admin Bar plugin loaded',
 ];

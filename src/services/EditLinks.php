@@ -8,15 +8,15 @@
  * @copyright Copyright (c) 2017 Will Browar
  */
 
-namespace wb\adminbar\services;
+namespace wbrowar\adminbar\services;
 
-use craft\elements\Entry;
-use wb\adminbar\AdminBar;
+use wbrowar\adminbar\AdminBar;
 use Mexitek\PHPColors\Color;
 
 use Craft;
 use craft\base\Component;
 use craft\web\View;
+
 
 /**
  * EditLinks Service
@@ -79,9 +79,9 @@ class EditLinks extends Component
 //        }
 
         // add config file settings to config
-        $config['displayEditDate'] = $this->_getConfigSetting('displayEditDate');
-        $config['displayEditAuthor'] = $this->_getConfigSetting('displayEditAuthor');
-        $config['displayRevisionNote'] = $this->_getConfigSetting('displayRevisionNote');
+        $config['displayEditDate'] = $settings->displayEditDate;
+        $config['displayEditAuthor'] = $settings->displayEditAuthor;
+        $config['displayRevisionNote'] = $settings->displayRevisionNote;
 
         // figure out if $entryOrString is a custom URL string, otherwise assume it's an Entry
         if (is_string($entryOrString)) {
@@ -117,11 +117,5 @@ class EditLinks extends Component
         $color = new Color($cssColor);
         $colorRgb = $color->getRgb();
         return $colorRgb['R'] . ',' . $colorRgb['G'] . ',' . $colorRgb['B'];
-    }
-    private function _getConfigSetting(string $key)
-    {
-        // get settings from config file
-        $configSetting = Craft::$app->config->get($key, 'adminbar');
-        return $configSetting;
     }
 }

@@ -8,13 +8,11 @@
  * @copyright Copyright (c) 2017 Will Browar
  */
 
-namespace wb\adminbar\twigextensions;
+namespace wbrowar\adminbar\twigextensions;
 
-use wb\adminbar\AdminBar;
+use wbrowar\adminbar\AdminBar;
 
 use Craft;
-use craft\elements\Category;
-use craft\elements\Entry;
 
 /**
  * Twig can be extended in many ways; you can add extra tags, filters, tests, operators,
@@ -25,7 +23,7 @@ use craft\elements\Entry;
  *
  * @author    Will Browar
  * @package   AdminBar
- * @since     3.0.0
+ * @since     3.0.1
  */
 class AdminBarTwigExtension extends \Twig_Extension
 {
@@ -74,11 +72,13 @@ class AdminBarTwigExtension extends \Twig_Extension
             // get current page element
             $element = Craft::$app->urlManager->getMatchedElement();
 
+            //Craft::dd($element);
+
             if (!empty($element)) {
                 //$element->
-                if ($element instanceof Entry) {
+                if ($element instanceof craft\elements\Entry) {
                     $config['entry'] = $element;
-                } elseif ($element instanceof Category) {
+                } elseif ($element instanceof craft\elements\Category) {
                     $config['category'] = $element;
                 }
             }
@@ -86,5 +86,7 @@ class AdminBarTwigExtension extends \Twig_Extension
             // show admin bar in template
             return AdminBar::$plugin->bar->render($config);
         }
+
+        return false;
     }
 }
