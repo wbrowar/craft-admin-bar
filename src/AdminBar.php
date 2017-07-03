@@ -130,7 +130,7 @@ class AdminBar extends Plugin
  */
         Craft::info(
             Craft::t(
-                'adminbar',
+                'admin-bar',
                 '{name} plugin loaded',
                 ['name' => $this->name]
             ),

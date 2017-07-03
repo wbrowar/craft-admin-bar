@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "craftcms/cms": "~3.0.0-beta.1",
+        "craftcms/cms": "~3.0.0-beta.20",
         "mexitek/phpcolors": "^v0.4"
     },
     "repositories": [
@@ -38,7 +38,7 @@
     },
     "extra": {
         "name": "Admin Bar",
-        "handle": "adminBar",
+        "handle": "admin-bar",
         "schemaVersion": "3.0.1",
         "hasCpSettings": true,
         "hasCpSection": false,
