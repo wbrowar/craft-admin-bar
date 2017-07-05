@@ -181,7 +181,7 @@ class AdminBar extends Plugin
         }
 
         return Craft::$app->view->renderTemplate(
-            'adminbar/settings',
+            'admin-bar/settings',
             [
                 'settings' => $pluginsSettings
             ]

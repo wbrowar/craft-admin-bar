@@ -103,7 +103,7 @@ class EditLinks extends Component
 
         $oldMode = Craft::$app->view->getTemplateMode();
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        $html = Craft::$app->view->renderTemplate('adminbar/editLinks', $config);
+        $html = Craft::$app->view->renderTemplate('admin-bar/editLinks', $config);
         Craft::$app->view->setTemplateMode($oldMode);
 
         print($html);

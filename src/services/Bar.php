@@ -106,7 +106,7 @@ class Bar extends Component
 
         $oldMode = Craft::$app->view->getTemplateMode();
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        $html = Craft::$app->view->renderTemplate('adminbar/bar', $config);
+        $html = Craft::$app->view->renderTemplate('admin-bar/bar', $config);
         Craft::$app->view->setTemplateMode($oldMode);
 
         if (isset($config['type']) && $config['type'] === 'primary') {
