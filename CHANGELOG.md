@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.0.1] - 2017.05.29
+## 3.0.1 - 2017-05-29
 ### Added
 - Added option to turn off the section title shown in the default Entry/Category edit link.
 
@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Fixed detection of default Entry or Category when using `{{ adminbar() }}`
 
 
-## [3.0.0] - 2017.02.06
+## 3.0.0 - 2017-02-06
 ### Added
 - Added `{{ craft.adminbar.canEmbed }}` to check if Admin Bar or Edit Links can be embedded.
 - Added `bgColor` and `textColor` settings.
