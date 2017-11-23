@@ -17,7 +17,7 @@
         <div class="admin_bar_greeting">
             {# {% if currentUser.photo %}<span class="admin_bar_user_photo">
                 <img src="{{ currentUser.photo.url(40) }}" alt="{{ currentUser.friendlyName }}’s photo"/>
-                </span>{% endif %} #}{{ 'Hi'|t }}, {{ currentUser.friendlyName }}
+                </span>{% endif %} #}{{ 'Hi'|t('admin-bar') }}, {{ currentUser.friendlyName }}
         </div>
     {% endif %}
 

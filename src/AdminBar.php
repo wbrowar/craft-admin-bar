@@ -130,7 +130,7 @@ class AdminBar extends Plugin
  */
         Craft::info(
             Craft::t(
-                'adminbar',
+                'admin-bar',
                 '{name} plugin loaded',
                 ['name' => $this->name]
             ),
@@ -181,7 +181,7 @@ class AdminBar extends Plugin
         }
 
         return Craft::$app->view->renderTemplate(
-            'adminbar/settings',
+            'admin-bar/settings',
             [
                 'settings' => $pluginsSettings
             ]
