@@ -1,8 +1,9 @@
 # Craft – Admin Bar
 Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 
-| _UPGRADE NOTE: if you're upgrading from Craft 2, or updating in Craft 3, please update your Twig templates to use `{{ adminbar() }}` and `{{ editlink() }}` tags, as described below. The old `{% hook 'renderAdminBar' %}` hook and `{{ craft.adminbar.bar() }}` template tags have been removed in Craft 3._
-| _Also, the current output of Admin Bar and Edit Links are similar to the Craft 2 version of this plugin, but this will likely change by Craft 3 GA to make room for some improvements and some new CSS and JS features._
+> _UPGRADE NOTE: if you're upgrading from Craft 2, or updating in Craft 3, please update your Twig templates to use `{{ adminbar() }}` and `{{ editlink() }}` tags, as described below. The old `{% hook 'renderAdminBar' %}` hook and `{{ craft.adminbar.bar() }}` template tags have been removed in Craft 3._
+
+> _Also, the current output of Admin Bar and Edit Links are similar to the Craft 2 version of this plugin, but this will likely change by Craft 3 GA to make room for some improvements and some new CSS and JS features._
 
 ## Requirements
 * Craft 3.0 RC1+
