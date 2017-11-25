@@ -49,11 +49,12 @@ class EditLinks extends Component
      *
      * @return mixed
      */
-    public function render($entryOrString, array $config = [])
+    public function render(array $config = [])
     {
         $settings = AdminBar::$plugin->getSettings();
         $config['editEmbedded'] = $this->_editEmbedded;
-        $config['entryOrString'] = $entryOrString;
+        $entry = ($config['entry'] = $config['entry'] ?? null);
+        $config['url'] = $config['url'] ?? '#';
         $config['id'] = $this->_editId;
         $config['enabled'] = AdminBar::$plugin->bar->canEmbed() ? true : false;
         $config['bgColor'] = (!empty($config['bgColor'])
@@ -83,15 +84,11 @@ class EditLinks extends Component
         $config['displayEditAuthor'] = $settings->displayEditAuthor;
         $config['displayRevisionNote'] = $settings->displayRevisionNote;
 
-        // figure out if $entryOrString is a custom URL string, otherwise assume it's an Entry
-        if (is_string($entryOrString)) {
-            $config['type'] = 'string';
-        } else {
-            $config['type'] = 'entry';
-        }
+        // figure out if $entry is a custom URL string, otherwise assume it's an Entry
+        $config['type'] = $config['entry'] ? 'entry' : 'string';
 
         // get recent revision information
-        $revision = $config['type'] == 'entry' ? Craft::$app->entryRevisions->getVersionsByEntryId($entryOrString->id, $entryOrString->siteId, 1, true) : '';
+        $revision = $config['type'] == 'entry' ? Craft::$app->entryRevisions->getVersionsByEntryId($entry->id, $entry->siteId, 1, true) : '';
         if (!empty($revision)) {
             $revisionAuthor = Craft::$app->users->getUserById($revision[0]->creatorId);
             $config['revisionAuthor'] = $revisionAuthor;

@@ -50,7 +50,8 @@ class AdminBarTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('adminbar', [$this, 'primaryAdminBar']),
+            new \Twig_SimpleFunction('adminbar', [$this, 'adminBar']),
+            new \Twig_SimpleFunction('editlink', [$this, 'editLink']),
         ];
     }
 
@@ -61,25 +62,20 @@ class AdminBarTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function primaryAdminBar(array $config = [])
+    public function adminBar(array $config = [])
     {
         if (AdminBar::$plugin->bar->canEmbed()) {
-            $config['sticky'] = true;
-            $config['type'] = 'primary';
-            $config['useCss'] = true;
-            $config['useJs'] = true;
+            if (!isset($config['entry']) && !isset($config['url'])) {
+                // get current page element
+                $element = Craft::$app->urlManager->getMatchedElement();
 
-            // get current page element
-            $element = Craft::$app->urlManager->getMatchedElement();
-
-            //Craft::dd($element);
-
-            if (!empty($element)) {
-                //$element->
-                if ($element instanceof craft\elements\Entry) {
-                    $config['entry'] = $element;
-                } elseif ($element instanceof craft\elements\Category) {
-                    $config['category'] = $element;
+                if (!empty($element)) {
+                    //$element->
+                    if ($element instanceof craft\elements\Entry) {
+                        $config['entry'] = $element;
+                    } elseif ($element instanceof craft\elements\Category) {
+                        $config['category'] = $element;
+                    }
                 }
             }
 
@@ -88,5 +84,16 @@ class AdminBarTwigExtension extends \Twig_Extension
         }
 
         return false;
+    }
+
+    public function editLink(array $config = [])
+    {
+        // deprecate color argument and migrate it to highlightColor
+        if ($config['color'] ?? false) {
+            $config['highlightColor'] = $config['color'];
+        }
+
+        // embed admin bar in twig template
+        return AdminBar::$plugin->editLinks->render($config);
     }
 }

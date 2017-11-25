@@ -109,13 +109,7 @@ class Bar extends Component
         $html = Craft::$app->view->renderTemplate('admin-bar/bar', $config);
         Craft::$app->view->setTemplateMode($oldMode);
 
-        if (isset($config['type']) && $config['type'] === 'primary') {
-            // TODO find replacement for includeFootHtml
-            //craft()->templates->includeFootHtml($html);
-            print($html);
-        } else {
-            print($html);
-        }
+        print($html);
 
         // change embedded value to true
         $this->_barEmbedded = true;

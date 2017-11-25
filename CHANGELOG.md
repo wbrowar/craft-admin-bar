@@ -4,19 +4,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 3.0.1 - 2017-05-29
+
+## [3.0.2] - 2017.11.24
+### Added
+- Added `{{ editlink() }}` Twig tag for adding Edit Links to your templates.
+- Added `entry` and `url` arguments to Edit Link Twig tag.
+
+### Changed
+- Removed template variables, in favor of using `{{ adminbar() }}` and `{{ editlink() }}`.
+
+### Fixed
+- Support for Craft RC1. Thanks to @MakeilaLundy for fixing translation bugs.
+
+
+## [3.0.1] - 2017.05.29
 ### Added
 - Added option to turn off the section title shown in the default Entry/Category edit link.
 
 ### Changed
-- Moved check for user and user permission from template files over to Service
+- Moved check for user and user permission from template files over to Service.
 - Removed Admin Bar and Edit Links from templates when in Live Preview.
 
 ### Fixed
-- Fixed detection of default Entry or Category when using `{{ adminbar() }}`
+- Fixed detection of default Entry or Category when using `{{ adminbar() }}`.
 
 
-## 3.0.0 - 2017-02-06
+## [3.0.0] - 2017.02.06
 ### Added
 - Added `{{ craft.adminbar.canEmbed }}` to check if Admin Bar or Edit Links can be embedded.
 - Added `bgColor` and `textColor` settings.
