@@ -28,7 +28,7 @@ Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 ![Screenshot](resources/screenshots/screenshot-bar.png)
 
 ## Add the Default Admin Bar
-To add Admin Bar to your website add the tag, `{{ adminbar() }}`, anywhere within your page template. Admin Bar will appear at the top of any page that includes this tag when someone—who has the permission to view the CP—is logged into your website.
+To add Admin Bar to your website add the `{{ adminbar() }}` tag anywhere within your page template. Admin Bar will appear at the top of any page that includes this tag when someone—who has the permission to view the CP—is logged into your website.
 
 Because Admin Bar is HTML, CSS, and Javascript added to your website's front-end, you may need to make some slight adjustments to override Admin Bar's CSS to make it fit your website.
 
@@ -53,14 +53,14 @@ Here is a list of available arguments:
 
 ---
 
-# In-Content Edit Links
+# Edit Links
 
 ![Screenshot](resources/screenshots/screenshot-edit.png)
 
 ## Edit Links for Multiple Entries
 When looping through entries on a collection page, entries in search results, or related entries to a page, you can now place edit links that make it easier to find and edit these entries.
 
-To add an Edit Link, use the tag, `{{ editlink({ entry: entry }) }}`, and pass in the entry you'd like the link to edit. You could also use Edit Links to add shortcuts to other areas of the CP by passing in a url string, `{{ editlink({ url: craft.config.cpTrigger ~ '/categories/myCategories/5-some-category-page' }) }}`.
+To add an Edit Link, use the `{{ editlink({ entry: myEntry }) }}` tag, and replace 'myEntry' with the entry you'd like the link to edit. You could also use Edit Links to add shortcuts to other areas of the CP by passing in a url string, `{{ editlink({ url: craft.app.config.general.cpTrigger ~ '/categories/myCategories/5-some-category-page' }) }}`.
 
 By default, Edit Links use Javascript to add the links to your page, so you can feel free to use `{% cache %}` tags around the Twig tag. The only thing a non-logged in user would see is this in the HTML markup: `<div class="admin_edit" data-id="0"></div>`.
 
@@ -95,8 +95,8 @@ Here is a full list of available arguments:
 | `useCss` | *true* | Add the default styles to Edit Links or leave them off and style it your way |
 | `useJs` | *true* | Add the default Javascript used by Entry Edit Links. Setting this to `false` embeds the Entry Edit Link through Twig, instead |
 
-### Inidcating What Will Change When Editing an Entry
-To help a content editor realize what part of an Edit Link is editable, the `containerSelector` argument can select a containing parent HTML element of the Entry Edit Link Twig tag. For example, in the code below, by setting `containerSelector` to `'li'`, an outline would appear when a content editor rolls over the `<li>` element on the page.
+### Indicating What Will Change When Editing an Entry
+To help a content editor realize what part of an Edit Link is editable, the `containerSelector` argument can select a containing parent HTML element of the Edit Link Twig tag. For example, in the code below, by setting `containerSelector` to `'li'`, an outline would appear when a content editor rolls over the closest parent `<li>` element on the page.
 
 ```twig
 <ul class="my_sweet_content">
@@ -138,7 +138,7 @@ Here are the settings you can change with the config file:
 | `enableMobileMenu` | *true* | Enables Admin Bar to display a separate mobile theme below a width of 600 pixels |
 | `scrollLinks` | *true* | Enable Admin Bar to scroll horizontally when the browser window doesn't have enough room for all of the links |
 
-### Entry Edit Links
+### Edit Links
 
 | Setting | Default | Description |
 | --- | --- | --- |
