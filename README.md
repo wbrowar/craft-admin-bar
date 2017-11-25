@@ -78,7 +78,7 @@ You can also add developer notes to content editors, or pass along other argumen
   devNote: myNote,
 }) }}
 ```
-![Screenshot](resources/screenshots/screenshot-edit-hover.png)
+![Screenshot](resources/screenshots/screenshot-edit-note.png)
 
 Here is a full list of available arguments:
 

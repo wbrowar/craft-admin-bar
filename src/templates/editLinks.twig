@@ -54,9 +54,7 @@
         {% if (displayRevisionNote and revisionNote is defined and revisionNote|length) or devNote|length %}
             <div class="editlink__info">
                 {% if displayRevisionNote and (revisionNote is defined and revisionNote|length) %}
-                    <div class="editlink__revision_note">
-                        <b>Version Note</b> &ldquo;{{ revisionNote }}&rdquo;
-                    </div>
+                    <div class="editlink__revision_note"><b>Version Note</b> &ldquo;{{ revisionNote }}&rdquo;</div>
                 {% endif %}
                 {% if devNote|length %}
                     <div class="editlink__entry_note">{{ devNote }}</div>
