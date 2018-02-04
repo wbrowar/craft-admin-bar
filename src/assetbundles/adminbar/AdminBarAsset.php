@@ -45,19 +45,14 @@ class AdminBarAsset extends AssetBundle
         // define the path that your publishable resources live
         $this->sourcePath = "@wbrowar/adminbar/assetbundles/adminbar/dist";
 
-        // define the dependencies
-        $this->depends = [
-            CpAsset::class,
-        ];
-
         // define the relative path to CSS/JS files that should be registered with the page
         // when this asset bundle is registered
         $this->js = [
-            'js/AdminBar.js',
+            'js/adminbar.js',
         ];
 
         $this->css = [
-            'css/AdminBar.css',
+            'css/adminbar.css',
         ];
 
         parent::init();

@@ -24,14 +24,13 @@
 return array(
     // ADMIN BAR
     'additionalLinks' => [],
-    'cacheBar' => true,
+    'customCss' => '',
     'displayGreeting' => true,
     'displayDashboardLink' => true,
     'displayDefaultEditSection' => true,
     'displaySettingsLink' => true,
     'displayLogout' => true,
     'enableMobileMenu' => true,
-    'scrollLinks' => true,
 
     // EDIT LINKS
     'displayEditDate' => true,

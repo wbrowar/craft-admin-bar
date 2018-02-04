@@ -80,7 +80,7 @@ class AdminBarTwigExtension extends \Twig_Extension
             }
 
             // show admin bar in template
-            return AdminBar::$plugin->bar->render($config);
+            print AdminBar::$plugin->bar->render($config);
         }
 
         return false;

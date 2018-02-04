@@ -53,6 +53,93 @@ Here is a list of available arguments:
 
 ---
 
+## Admin Bar Widgets
+
+![Screenshot](resources/screenshots/screenshot-widget-edit-links.png)
+
+![Screenshot](resources/screenshots/screenshot-guide-entry.png)
+
+Craft plugins can add context-aware information to Admin Bar. To enable Admin Bar Widgets for your site, use Admin Bar plugin settings.
+
+> NOTE: This feature is new and in beta. If you have any feedback or suggestion for more widget layouts, please create a GitHub Issue.
+
+Plugins that provide Admin Bar Widgets:
+- [Admin Bar](https://github.com/wbrowar/craft-3-adminbar)
+- [Guide](https://github.com/wbrowar/craft-3-guide)
+
+### Creating an Admin Bar Widget for a Plugin
+Adding Admin Bar Widgets to your plugin requires three things: an icon SVG, a Twig template, and a variable in your plugin's primary class.
+
+Add this variable and modify it in your Primary Plugin Class:
+
+```php
+public $adminBarWidgets = [[
+    'description' => 'Description that appears in Admin Bar Plugin Settings.',
+    'handle' => 'widget-handle',
+    'iconPath' => 'icon-mask.svg',
+    'layout' => 'center',
+    'name' => 'Widget Name',
+    'template' => 'plugin-handle/path_to_template_file',
+]];
+```
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| `description` | *''* | Describe what kind of information or functionality will appear in the widget. |
+| `handle` – REQUIRED | *null* | A unique ID used for referencing the widget. |
+| `iconPath` – REQUIRED | *null* | The path to an SVG icon that will appear in Admin Bar. |
+| `layout` | *'columns_12'* | The CSS Grid layout used to display the content of the widget. |
+| `name` – REQUIRED | *null* | Name of the widget. |
+| `template` – REQUIRED | *null* | Path to a Twig template used to render out the widget. |
+
+`$adminBarWidgets` is an array that allows you to add as many widgets as you need. Each widget needs to be opted-in by the user before it's added to Admin Bar.
+
+### Widget Template
+Admin Bar uses the template path provided in the `$adminBarWidgets` variable to populate the body of the widget. The twig template will have the following variables passed into it:
+
+| Parameter | Description |
+| --- | --- |
+| `id` | The string used to identify the widget. This is created from the Plugin handle and the widget handle provided in `$adminBarWidgets`. |
+| `category` | If the current page is a Category element, the `category` variable is passed into the widget. |
+| `entry` | If the current page is a Entry element, the `entry` variable is passed into the widget. |
+| `info` | The information passed through `$adminBarWidgets`, so it can be reference in the widget. |
+| `includeAssets` | A boolean passed from Admin Bar to indicate whether CSS and Javascript should be inlined (`true`) or can be included via `{% js %}` and `{% css %}` tags (`false`). |
+
+You can find example templates in both Admin Bar and Guide:
+
+[Admin Bar Edit Links widget](#)
+[Guide Content Guide widget](#)
+
+Both of these templates use the `center` layout and CSS and Javascript are included in the template.
+
+> It's important to note that Admin Bar Widgets are added to the HTML, CSS, and Javascript designed for the front-end, so overriding CSS or adding Javascript errors to the page should be avoided, Also, no assumptions about front-end frameworks and libraries should be made, so vanilla Javascript and CSS should be used as much as possible.
+
+### Validating Widgets
+If no useful content is provided by a widget, it can be removed from Admin Bar using the `adminBarRemoveWidget` Javascript function. This requires that the widget's `id` be passed in to remove the widget.
+
+For example, in the Admin Bar Edit Links widget, the following code is used to remove the widget when the page doesn't include any Edit Links.
+
+```html
+<script>
+if (document.getElementsByClassName('editlink').length === 0) {
+    adminBarRemoveWidget('{{ id }}');
+};
+<script>
+```
+
+### Widget Layouts
+Admin Bar Widgets use a set of CSS Grid layouts to layout the body of the widget based on the type of content presented.
+
+#### 12-Column
+`'layout' => 'columns_12',`
+
+The default layout is a 12-column grid.
+
+#### Center
+`'layout' => 'center',`
+
+A three-column layout that puts the `:first-child` in the center, but provides room for left-hand and right-hand sidebars.
+
 # Edit Links
 
 ![Screenshot](resources/screenshots/screenshot-edit.png)
@@ -129,14 +216,12 @@ Here are the settings you can change with the config file:
 | Setting | Default | Description |
 | --- | --- | --- |
 | `additionalLinks` | *[]* | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/craft-3-adminbar#additional-links) |
-| `cacheBar` | *true* | Enable caching of Admin Bar links |
 | `displayGreeting` | *true* | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]" |
 | `displayDashboardLink` | *true* | A link to the CP Dashboard |
 | `displayDefaultEditSection` | *true* | Display the name of the section in the default entry/category edit link |
 | `displaySettingsLink` | *true* | A link to the CP Settings page that appears only to admins |
 | `displayLogout` | *true* | Logs you out of Craft CMS |
 | `enableMobileMenu` | *true* | Enables Admin Bar to display a separate mobile theme below a width of 600 pixels |
-| `scrollLinks` | *true* | Enable Admin Bar to scroll horizontally when the browser window doesn't have enough room for all of the links |
 
 ### Edit Links
 
@@ -162,7 +247,7 @@ You can add links to Admin Bar using the config file by passing properties into 
 ---
 
 ## To Do
-* Add a sweet new feature (more on that soon)
+* Add more Admin Bar Widget layouts
 
 ---
 

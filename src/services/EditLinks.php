@@ -57,27 +57,6 @@ class EditLinks extends Component
         $config['url'] = $config['url'] ?? '#';
         $config['id'] = $this->_editId;
         $config['enabled'] = AdminBar::$plugin->bar->canEmbed() ? true : false;
-        $config['bgColor'] = (!empty($config['bgColor'])
-                ? $this->_getColorRgbString($config['bgColor']) : null)
-            ?? (!empty($settings->bgColor)
-                ? $this->_getColorRgbString($settings->bgColor) : null)
-            ?? '0, 0, 0';
-        $config['highlightColor'] = (!empty($config['highlightColor'])
-                ? $this->_getColorRgbString($config['highlightColor']) : null)
-            ?? (!empty($settings->highlightColor)
-                ? $this->_getColorRgbString($settings->highlightColor) : null)
-            ?? '218, 90, 71';
-        $config['textColor'] = (!empty($config['textColor'])
-                ? $this->_getColorRgbString($config['textColor']) : null)
-            ?? (!empty($settings->textColor)
-                ? $this->_getColorRgbString($settings->textColor) : null)
-            ?? '255, 255, 255';
-
-//        if (Craft::$app->requireEdition(Craft::Pro) === true) {
-//            $config['localesEnabled'] = true;
-//        } else {
-//            $config['localesEnabled'] = false;
-//        }
 
         // add config file settings to config
         $config['displayEditDate'] = $settings->displayEditDate;
@@ -88,8 +67,8 @@ class EditLinks extends Component
         $config['type'] = $config['entry'] ? 'entry' : 'string';
 
         // get recent revision information
-        $revision = $config['type'] == 'entry' ? Craft::$app->entryRevisions->getVersionsByEntryId($entry->id, $entry->siteId, 1, true) : '';
-        if (!empty($revision)) {
+        $revision = $config['type'] == 'entry' ? Craft::$app->entryRevisions->getVersionsByEntryId($entry->id, $entry->siteId, 1, true) : null;
+        if ($revision ?? false) {
             $revisionAuthor = Craft::$app->users->getUserById($revision[0]->creatorId);
             $config['revisionAuthor'] = $revisionAuthor;
             $config['revisionNote'] = $revision[0]->revisionNotes;

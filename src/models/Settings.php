@@ -40,22 +40,22 @@ class Settings extends Model
      * @var string
      */
     // Settings that can be set in CP
+    // Custom CSS used to style Guide components
+    public $customCss = '';
+
+    // Links added via config file
     public $customLinks = [];
-    public $highlightColor = '#D85B4B';
-    public $bgColor = '#000000';
-    public $textColor = '#FFFFFF';
 
     // Settings set in adminbar.php
     // ADMIN BAR
     public $additionalLinks = [];
-    public $cacheBar = true;
     public $displayGreeting = true;
     public $displayDashboardLink = true;
     public $displayDefaultEditSection = true;
     public $displaySettingsLink = true;
     public $displayLogout = true;
     public $enableMobileMenu = true;
-    public $scrollLinks = true;
+    public $widgets = [];
 
     // EDIT LINKS
     public $displayEditDate = true;
@@ -78,8 +78,7 @@ class Settings extends Model
     public function rules()
     {
         return [
-            [['highlightColor', 'bgColor', 'textColor'], 'required'],
-            [['highlightColor', 'bgColor', 'textColor'], 'string'],
+            [['customCss'], 'string'],
         ];
     }
 }

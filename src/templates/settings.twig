@@ -1,50 +1,27 @@
 {% import "_includes/forms" as forms %}
 
-<h2>Colors</h2>
+<h2>Widgets</h2>
+<p>Craft plugins can add context-aware widgets to Admin Bar.</p>
 
-<table width="100%">
-    <caption></caption>
-    <thead>
-    <tr>
-        <th width="33%"></th>
-        <th width="33%"></th>
-        <th width="33%"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>
-            {{ forms.colorField({
-                'label': 'Highlight Color',
-                'id': 'highlightColor',
-                'name': 'highlightColor',
-                'value': settings.highlightColor ?? '#d85b4b',
-                'instructions': 'Color used for highlights and rollovers.'
-            }) }}
-        </td>
-        <td>
-            {{ forms.colorField({
-                'label': 'Background Color',
-                'id': 'bgColor',
-                'name': 'bgColor',
-                'value': settings.bgColor ?? '#000000',
-                'instructions': 'Background color for Admin&nbsp;Bar and Edit&nbsp;Links.'
-            }) }}
-        </td>
-        <td>
-            {{ forms.colorField({
-                'label': 'Text Color',
-                'id': 'textColor',
-                'name': 'textColor',
-                'value': settings.textColor ?? '#FFFFFF',
-                'instructions': 'Color used for icons and text.'
-            }) }}
-        </td>
-    </tr>
-    </tbody>
-</table>
+{% if widgets|length %}
+    {% for item in widgets %}
+        {% set id = item.pluginHandle ~ '_' ~ item.handle %}
+        {{ forms.lightswitchField({
+            label: item.pluginName ~ ': ' ~ item.name,
+            id: 'widgets[' ~ id ~ ']',
+            name: 'widgets[' ~ id ~ ']',
+            instructions: item.description ?? null,
+            on: settings.widgets[id] ?? false ? settings.widgets[id] : false,
+        }) }}
+    {% endfor %}
+{% else %}
+    <p>The plugins you have installed do not provide Admin Bar Widgets, yet.</p>
+{% endif %}
 
 <hr>
+
+<h2>Additional Links</h2>
+<p>Add your own links to the Admin Bar.</p>
 
 {{ forms.editableTableField({
     'label': 'Custom Links',
@@ -66,5 +43,41 @@
         },
     },
     'rows': settings.customLinks ?? ['','',''],
-    'instructions': 'Add your own links to the Admin Bar.'
 }) }}
+
+<hr>
+
+<h2>Colors</h2>
+<p>Use CSS Custom Properties or your own custom CSS to re-brand Admin Bar.</p>
+
+{{ forms.textareaField({
+    label: 'Custom CSS',
+    id: 'customCss',
+    name: 'customCss',
+    rows: 10,
+    value: settings.customCss,
+    placeholder: ':root {\n  --adminbar-color-bg: #222;\n  --adminbar-color-highlight: #c0c;\n  --adminbar-color-link-text: #ccc;\n}'
+}) }}
+
+{% set cssVariables = [
+    ['<b>--adminbar-color-bg</b>: rgba(0, 0, 0, .8);', 'The background color of Admin Bar.'],
+    ['<b>--adminbar-color-border</b>: rgb(80, 80, 80);', 'The color of borders that separate sections in Admin Bar'],
+    ['<b>--adminbar-color-highlight</b>: rgb(216, 91, 75);', 'The color that appears when links are rolled over.'],
+    ['<b>--adminbar-color-link-text</b>: rgb(255, 255, 255);', 'The color of link text.'],
+    ['<b>--adminbar-color-text</b>: rgba(255, 255, 255, .8);', 'The color of all other text.'],
+    ['<b>--adminbar-font-stack</b>: \'BlinkMacSystemFont\', -apple-system, \'Trebuchet MS\', \'Lucida Grande\', \'Lucida Sans Unicode\', \'Lucida Sans\', Tahoma, sans-serif;', 'The fonts used in Admin Bar and Edit Links.'],
+    ['<b>--adminbar-font-size-mobile</b>: 17px;', 'The mobile font size for type in Admin Bar and Edit Links.'],
+    ['<b>--adminbar-font-size-desktop</b>: 14px;', 'The font size for type in Admin Bar and Edit Links in a viewport above 601px wide.'],
+    ['<b>--adminbar-height-mobile</b>: 52px;', 'The height of Admin Bar and the top of Edit Links on mobile.'],
+    ['<b>--adminbar-height-desktop</b>: 45px;', 'The height of Admin Bar and the top of Edit Links in a viewport above 601px wide.'],
+    ['<b>--editlinks-color-bg</b>: rgb(245, 245, 245);', 'The background color of Edit Links.'],
+    ['<b>--editlinks-color-border</b>: var(--adminbar-color-border);', 'Color of borders in Edit Links'],
+    ['<b>--editlinks-color-highlight</b>: var(--adminbar-color-highlight);', 'The color that appears when links are rolled over.'],
+    ['<b>--editlinks-color-text</b>: rgb(80, 80, 80);', 'The color of all other text.'],
+] %}
+<div style="display: grid; grid-template-columns: minmax(100px, 450px) auto; grid-template-rows: auto; grid-gap: 5px 30px;">
+    {% for item in cssVariables %}
+        <div>{{ item[0]|raw }}</div>
+        <div>{{ item[1]|raw }}</div>
+    {% endfor %}
+</div>

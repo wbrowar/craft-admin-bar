@@ -10,18 +10,13 @@
 
 namespace wbrowar\adminbar;
 
-use wbrowar\adminbar\services\AdminBarService as AdminBarServiceService;
-use wbrowar\adminbar\variables\AdminBarVariable;
+use wbrowar\adminbar\assetbundles\AdminBar\AdminBarAsset;
 use wbrowar\adminbar\twigextensions\AdminBarTwigExtension;
 use wbrowar\adminbar\models\Settings;
 
 use Craft;
 use craft\base\Plugin;
-use craft\services\Plugins;
-use craft\events\PluginEvent;
-use craft\console\Application as ConsoleApplication;
-use craft\web\UrlManager;
-use craft\events\RegisterUrlRulesEvent;
+use craft\web\View;
 
 use yii\base\Event;
 
@@ -54,6 +49,15 @@ class AdminBar extends Plugin
      */
     public static $plugin;
 
+    public $adminBarWidgets = [[
+        'description' => 'Finds all Edit Links on the page and lists them out for quick access.',
+        'handle' => 'edit-links',
+        'iconPath' => 'icon-mask.svg',
+        'layout' => 'center',
+        'name' => 'Edit Links',
+        'template' => 'admin-bar/adminbar_widget_edit_links',
+    ]];
+
     // Public Methods
     // =========================================================================
 
@@ -72,43 +76,19 @@ class AdminBar extends Plugin
     {
         parent::init();
         self::$plugin = $this;
+        $view = Craft::$app->getView();
 
         // Add in our Twig extensions
         Craft::$app->view->twig->addExtension(new AdminBarTwigExtension());
 
-        // Add in our console commands
-        if (Craft::$app instanceof ConsoleApplication) {
-            $this->controllerNamespace = 'wbrowar\adminbar\console\controllers';
-        }
+        Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function() {
+            $view = Craft::$app->getView();
 
-        // Register our site routes
-        Event::on(
-            UrlManager::className(),
-            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
-            function (RegisterUrlRulesEvent $event) {
-                $event->rules['siteActionTrigger1'] = 'admin-bar/default';
+            if ($view->getTemplateMode() === View::TEMPLATE_MODE_CP) {
+                $view->registerAssetBundle(AdminBarAsset::class);
+                $view->registerCss($this->getSettings()->customCss);
             }
-        );
-
-        // Register our CP routes
-        Event::on(
-            UrlManager::className(),
-            UrlManager::EVENT_REGISTER_CP_URL_RULES,
-            function (RegisterUrlRulesEvent $event) {
-                $event->rules['cpActionTrigger1'] = 'admin-bar/default/do-something';
-            }
-        );
-
-        // Do something after we're installed
-        Event::on(
-            Plugins::className(),
-            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ($event->plugin === $this) {
-                    // We were just installed
-                }
-            }
-        );
+        });
 
 /**
  * Logging in Craft involves using one of the following methods:
@@ -138,18 +118,6 @@ class AdminBar extends Plugin
         );
     }
 
-    /**
-     * Returns the component definition that should be registered on the
-     * [[\craft\web\twig\variables\CraftVariable]] instance for this plugin’s handle.
-     *
-     * @return mixed|null The component definition to be registered.
-     * It can be any of the formats supported by [[\yii\di\ServiceLocator::set()]].
-     */
-    public function defineTemplateComponent()
-    {
-        return AdminBarVariable::class;
-    }
-
     // Protected Methods
     // =========================================================================
 
@@ -173,17 +141,19 @@ class AdminBar extends Plugin
     {
         AdminBar::$plugin->bar->clearAdminBarCache();
 
-        $pluginsSettings= $this->getSettings();
+        $settings = $this->getSettings();
 
-        if (empty($pluginsSettings->customLinks)) {
-            $pluginsSettings['customLinks'] = [['','',0]];
-            //Craft::dd($pluginsSettings['customLinks']);
+        if (empty($settings->customLinks)) {
+            $settings['customLinks'] = [['','',0]];
         }
+
+        $adminBarWidgets = AdminBar::$plugin->bar->getAdminBarWidgetsFromPlugins();
 
         return Craft::$app->view->renderTemplate(
             'admin-bar/settings',
             [
-                'settings' => $pluginsSettings
+                'widgets'  => $adminBarWidgets,
+                'settings' => $settings
             ]
         );
     }

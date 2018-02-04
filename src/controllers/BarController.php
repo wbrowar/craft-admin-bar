@@ -10,10 +10,12 @@
 
 namespace wbrowar\adminbar\controllers;
 
-//use wbrowar\adminbar\AdminBar;
-
-//use Craft;
+use Craft;
+use craft\elements\Category;
+use craft\elements\Entry;
 use craft\web\Controller;
+use wbrowar\adminbar\AdminBar;
+use yii\web\User;
 
 /**
  * Default Controller
@@ -35,7 +37,7 @@ use craft\web\Controller;
  * @package   AdminBar
  * @since     3.0.1
  */
-class DefaultController extends Controller
+class BarController extends Controller
 {
 
     // Protected Properties
@@ -46,34 +48,69 @@ class DefaultController extends Controller
      *         The actions must be in 'kebab-case'
      * @access protected
      */
-    protected $allowAnonymous = ['index', 'do-something'];
+    protected $allowAnonymous = true;
+
+    public $enableCsrfValidation = false;
 
     // Public Methods
     // =========================================================================
 
     /**
      * Handle a request going to our plugin's index action URL,
-     * e.g.: actions/admin-bar/default
+     * e.g.: actions/admin-bar/bar
      *
      * @return mixed
      */
     public function actionIndex()
     {
-        $result = 'Welcome to the DefaultController actionIndex() method';
+        $result = [
+            'content' => false,
+            'response' => 'error',
+        ];
 
-        return $result;
+        if (Craft::$app->request->getIsAjax() && Craft::$app->request->getIsPost()) {
+
+            $params = Craft::$app->request->getBodyParams();
+
+            if (isset($params['uri']) && (Craft::$app->getUser()->getIsAdmin() || Craft::$app->getUser()->can('accessCp'))) {
+                $config = ['includeAssets' => true];
+
+                if (substr($params['uri'], 0, 1) === '/') {
+                    $params['uri'] = substr($params['uri'], 1);
+                }
+                $entry = Entry::find()
+                            ->uri($params['uri'])
+                            ->one();
+
+                if ($entry) {
+                    $config['entry'] = $entry;
+                } else {
+                    $category = Category::find()
+                        ->uri($params['uri'])
+                        ->one();
+
+                    if ($category) {
+                        $config['category'] = $category;
+                    }
+                }
+
+                $result['content'] = AdminBar::$plugin->bar->render($config);
+                $result['response'] = 'success';
+            }
+        }
+
+        return $this->asJson($result);
     }
 
     /**
      * Handle a request going to our plugin's actionDoSomething URL,
-     * e.g.: actions/admin-bar/default/do-something
+     * e.g.: actions/admin-bar/bar/bar-from-uri
      *
      * @return mixed
      */
-    public function actionDoSomething()
+    public function actionBarFromUri()
     {
-        $result = 'Welcome to the DefaultController actionDoSomething() method';
-
-        return $result;
+        //$this->requirePostRequest();
+        //$this->requireAjaxRequest();
     }
 }
