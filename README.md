@@ -42,12 +42,9 @@ Here is a list of available arguments:
 
 | Argument | Default | Description |
 | --- | --- | --- |
-| `bgColor` | *'#000000'* | CSS hex color used for Admin Bar's background color |
 | `category` | *null* | Pass in a category object to add an edit link for that category |
 | `entry` | *null* | Pass in an entry object to add an edit link for that entry |
-| `highlightColor` | *'#d85b4b'* | CSS hex color used for rollovers and for the background of the mobile theme |
 | `sticky` | *true* | Uses css to `position: fixed;` Admin Bar to the top of the page |
-| `textColor` | *'#ffffff'* | CSS hex color for icons and link text |
 | `useCss` | *true* | Add the default styles to Admin Bar or leave them off and style it your way |
 | `useJs` | *true* | Use the Admin Bar's default Javascript |
 
@@ -61,7 +58,7 @@ Here is a list of available arguments:
 
 Craft plugins can add context-aware information to Admin Bar. To enable Admin Bar Widgets for your site, use Admin Bar plugin settings.
 
-> NOTE: This feature is new and in beta. If you have any feedback or suggestion for more widget layouts, please create a GitHub Issue.
+> NOTE: This feature is new and in beta. If you have any feedback or suggestion for more widget layouts, please create a [GitHub Issue](https://github.com/wbrowar/craft-3-adminbar/issues).
 
 Plugins that provide Admin Bar Widgets:
 - [Admin Bar](https://github.com/wbrowar/craft-3-adminbar)
@@ -107,12 +104,12 @@ Admin Bar uses the template path provided in the `$adminBarWidgets` variable to 
 
 You can find example templates in both Admin Bar and Guide:
 
-[Admin Bar Edit Links widget](#)
-[Guide Content Guide widget](#)
+- [Admin Bar Edit Links widget](https://github.com/wbrowar/craft-3-adminbar/blob/master/src/templates/adminbar_widget_edit_links.twig)
+- [Guide Content Guide widget](https://github.com/wbrowar/craft-3-guide/blob/master/src/templates/adminbar_guide_for_entry.twig)
 
 Both of these templates use the `center` layout and CSS and Javascript are included in the template.
 
-> It's important to note that Admin Bar Widgets are added to the HTML, CSS, and Javascript designed for the front-end, so overriding CSS or adding Javascript errors to the page should be avoided, Also, no assumptions about front-end frameworks and libraries should be made, so vanilla Javascript and CSS should be used as much as possible.
+> It's important to note that Admin Bar Widgets are added to the HTML, CSS, and Javascript designed for the front-end, so overriding CSS or adding Javascript errors to the page should be avoided as much as possible. Also, no assumptions about front-end frameworks and libraries should be made, so vanilla Javascript and CSS should be used as much as possible.
 
 ### Validating Widgets
 If no useful content is provided by a widget, it can be removed from Admin Bar using the `adminBarRemoveWidget` Javascript function. This requires that the widget's `id` be passed in to remove the widget.
@@ -124,7 +121,7 @@ For example, in the Admin Bar Edit Links widget, the following code is used to r
 if (document.getElementsByClassName('editlink').length === 0) {
     adminBarRemoveWidget('{{ id }}');
 };
-<script>
+</script>
 ```
 
 ### Widget Layouts
@@ -133,7 +130,7 @@ Admin Bar Widgets use a set of CSS Grid layouts to layout the body of the widget
 #### 12-Column
 `'layout' => 'columns_12',`
 
-The default layout is a 12-column grid.
+The default layout is a 12-column grid. Use CSS to design the layout of the widget content however you'd like.
 
 #### Center
 `'layout' => 'center',`
@@ -151,7 +148,7 @@ To add an Edit Link, use the `{{ editlink({ entry: myEntry }) }}` tag, and repla
 
 By default, Edit Links use Javascript to add the links to your page, so you can feel free to use `{% cache %}` tags around the Twig tag. The only thing a non-logged in user would see is this in the HTML markup: `<div class="admin_edit" data-id="0"></div>`.
 
-You can also add developer notes to content editors, or pass along other arguments.
+You may also add developer notes for content editors, or pass along other arguments that change the appearance of that link.
 
 ```twig
 {% set myNote %}{% spaceless %}
@@ -171,14 +168,11 @@ Here is a full list of available arguments:
 
 | Argument | Default | Description |
 | --- | --- | --- |
-| `bgColor` | *'#000000'* | Background color behind the Edit link |
 | `containerSelector` | *null* | Outline a parent element to show content editors the entirety of an entry or editable section. [See below for an example](https://github.com/wbrowar/craft-3-adminbar#inidcating-what-will-change-when-editing-an-entry) |
 | `devNote` | *null* | Display information to content editors. You may use plain text or HTML markup |
 | `entry` | *null* | Pass in an entry object to add an edit link for that entry |
-| `highlightColor` | *'#d85b4b'* | Color used for rollovers and links |
 | `showEditInfo` | *true* | If set to `true`, the Edit Link will display the last updated date and the name of the author that last saved the entry |
-| `textColor` | *'#FFFFFF'* | Text color of the Edit link |
-| `url` | *'#'* | A URL that will be navigated to when the "Edit" link is clicked |
+| `url` | *''* | A URL that will be navigated to when the "Edit" link is clicked |
 | `useCss` | *true* | Add the default styles to Edit Links or leave them off and style it your way |
 | `useJs` | *true* | Add the default Javascript used by Entry Edit Links. Setting this to `false` embeds the Entry Edit Link through Twig, instead |
 
