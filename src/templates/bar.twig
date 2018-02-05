@@ -57,7 +57,7 @@
         {% endif %}
 
         <div id="adminbar__links" class="adminbar__links_wrapper">
-            <div class="adminbar__widget_buttons">
+            <div id="adminbar__widget_buttons" class="adminbar__widget_buttons">
                 {% if widgets ?? false %}
                     {% for item in widgets %}
                         <a id="adminbar__widget_button--{{ item.id }}" class="adminbar__widget_button" href="javascript:;" title="{{ item.name }}" onclick="adminBarWidgetButtonHandler('{{ item.id }}')" data-widget-id="{{ item.id }}">{{ svg(item.iconPath) }}</a>
