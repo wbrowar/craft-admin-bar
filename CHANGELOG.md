@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 3.1.1 - 2018-02-04
+### Added
+- Admin Bar Widgets lets plugins add contextual content to the front-end
+- Added more re-branding options with a new Custom CSS setting
+
+### Changed
+- Redesigned Edit Links to be more mobile friendly and more consistent with the look of Admin Bar
+- Overhauled the CSS for Edit Links
+- Changed much of the HTML and CSS for Admin Bar to make Admin Bar Widgets work
+- Removed the `scrollLinks` and `cacheBar` settings
+- Removed old color settings
+- Replaced mobile menu toggle text with the Admin Bar icon (if you can think of a better icon idea, please suggest it)
+
+### Fixed
+- Added pointer cursor to mobile menu toggle
+- Cleaned up and updated the `config.php` file (copy this to `config/admin-bar.php` to use it)
+- (3.1.1) Quick bug fix
+
 
 ## 3.1.0 - 2018-02-04
 ### Added
