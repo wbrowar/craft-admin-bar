@@ -5,27 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## 3.1.2 - 2018-02-05
+## 3.1.3 - 2018-02-07
 ### Added
-- Admin Bar Widgets lets plugins add contextual content to the front-end
-- Added more re-branding options with a new Custom CSS setting
+- Admin Bar can now be pulled into sites via HTTP Request (using jQuery, Axios, and other HTTP clients)
+- Added `{{ getAdminBarAssets() }}` Twig tag that includes the CSS and Javascript for Admin Bar and its widgets
+- Added `--adminbar-color-bg-image` CSS variable
 
 ### Changed
-- Redesigned Edit Links to be more mobile friendly and more consistent with the look of Admin Bar
-- Overhauled the CSS for Edit Links
-- Changed much of the HTML and CSS for Admin Bar to make Admin Bar Widgets work
-- Removed the `scrollLinks` and `cacheBar` settings
-- Removed old color settings
-- Replaced mobile menu toggle text with the Admin Bar icon (if you can think of a better icon idea, please suggest it)
+- Replaced include CSS and JS pattern with new `{{ addAdminBarCss() }}` and `{{ addAdminBarJs() }}` Twig tags
 
 ### Fixed
-- Added pointer cursor to mobile menu toggle
-- Cleaned up and updated the `config.php` file (copy this to `config/admin-bar.php` to use it)
-- (3.1.2) Quick bug fix
+- Fixed bug that prevented clicking on widget buttons
+
+
+## 3.1.2 - 2018-02-05
+### Fixed
+- Quick bug fix
 
 
 ## 3.1.1 - 2018-02-05
-- (3.1.1) Quick bug fix
+### Fixed
+- Quick bug fix
 
 
 ## 3.1.0 - 2018-02-04
@@ -44,16 +44,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - Added pointer cursor to mobile menu toggle
 - Cleaned up and updated the `config.php` file (copy this to `config/admin-bar.php` to use it)
-
-
-## 3.1.0 - 2017-02-06
-### Added
-- Admin Bar can now be pulled into sites via HTTP Request (using jQuery, Axios, and other HTTP clients).
-
-### Changed
-- Completely rebuilt the admin bar template and CSS.
-  - Admin Bar now relies on CSS Grid and CSS Custom Properties.
-- Replaced `bgColor`, `highlightColor`, and `textColor` settings with a `customCSS` setting that gives you more control over admin bar's color theme.
 
 
 ## 3.0.3 - 2017-11-24

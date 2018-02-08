@@ -34,11 +34,6 @@
         if (document.getElementsByClassName('editlink').length === 0) { adminBarRemoveWidget('{{ id }}'); };
     {% endset %}
 
-    {% if includeAssets ?? false %}
-        <style>{{ css }}</style>
-        <script>{{ js }}</script>
-    {% else %}
-        {% css css %}
-        {% js js|raw %}
-    {% endif %}
+    {{ addAdminBarCss(includeAssets, css) }}
+    {{ addAdminBarJs(includeAssets, js) }}
 </div>

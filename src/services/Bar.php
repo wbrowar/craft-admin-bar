@@ -10,11 +10,12 @@
 
 namespace wbrowar\adminbar\services;
 
-use craft\base\Plugin;
 use wbrowar\adminbar\AdminBar;
 
 use Craft;
 use craft\base\Component;
+use craft\elements\Category;
+use craft\elements\Entry;
 use craft\web\View;
 
 
@@ -33,6 +34,9 @@ use craft\web\View;
  */
 class Bar extends Component
 {
+    public $templateCss = '';
+    public $templateJs = '';
+
     // Public Methods
     // =========================================================================
 
@@ -115,6 +119,7 @@ class Bar extends Component
         $settings = AdminBar::$plugin->getSettings();
         $config['customLinks'] = $settings['customLinks'] ?? [];
         $config['customCss'] = $settings['customCss'] ?? '';
+        $config['includeAssets'] = $settings['includeAssets'] ?? false;
 
         // add config file settings to config
         $config['additionalLinks'] = $settings->additionalLinks;
@@ -134,5 +139,35 @@ class Bar extends Component
         Craft::$app->view->setTemplateMode($oldMode);
 
         return $html;
+    }
+    public function renderAdminBarForUri($uri, array $config = []):string
+    {
+        if (Craft::$app->getUser()->getIsAdmin() || Craft::$app->getUser()->can('accessCp')) {
+            if (substr($uri, 0, 1) === '/') {
+                $uri = substr($uri, 1);
+            }
+            if ($uri === '') {
+                $uri = '__home__';
+            }
+            $entry = Entry::find()
+                ->uri($uri)
+                ->one();
+
+            if ($entry) {
+                $config['entry'] = $entry;
+            } else {
+                $category = Category::find()
+                    ->uri($uri)
+                    ->one();
+
+                if ($category) {
+                    $config['category'] = $category;
+                }
+            }
+
+            return AdminBar::$plugin->bar->render($config);
+        }
+
+        return '';
     }
 }

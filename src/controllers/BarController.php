@@ -11,8 +11,7 @@
 namespace wbrowar\adminbar\controllers;
 
 use Craft;
-use craft\elements\Category;
-use craft\elements\Entry;
+use craft\helpers\Json;
 use craft\web\Controller;
 use wbrowar\adminbar\AdminBar;
 use yii\web\User;
@@ -68,49 +67,19 @@ class BarController extends Controller
             'response' => 'error',
         ];
 
-        if (Craft::$app->request->getIsAjax() && Craft::$app->request->getIsPost()) {
+        $params = Json::decode(Craft::$app->request->getRawBody());
+        $includeAssets = $params['includeAssets'] ?? false;
+        $uri = $params['uri'];
 
-            $params = Craft::$app->request->getBodyParams();
+        if (($uri ?? false)) {
+            $config = ['includeAssets' => $includeAssets];
 
-            if (isset($params['uri']) && (Craft::$app->getUser()->getIsAdmin() || Craft::$app->getUser()->can('accessCp'))) {
-                $config = ['includeAssets' => true];
-
-                if (substr($params['uri'], 0, 1) === '/') {
-                    $params['uri'] = substr($params['uri'], 1);
-                }
-                $entry = Entry::find()
-                            ->uri($params['uri'])
-                            ->one();
-
-                if ($entry) {
-                    $config['entry'] = $entry;
-                } else {
-                    $category = Category::find()
-                        ->uri($params['uri'])
-                        ->one();
-
-                    if ($category) {
-                        $config['category'] = $category;
-                    }
-                }
-
-                $result['content'] = AdminBar::$plugin->bar->render($config);
+            $result['content'] = AdminBar::$plugin->bar->renderAdminBarForUri($uri, $config);
+            if (!empty($result['content'])) {
                 $result['response'] = 'success';
             }
         }
 
         return $this->asJson($result);
-    }
-
-    /**
-     * Handle a request going to our plugin's actionDoSomething URL,
-     * e.g.: actions/admin-bar/bar/bar-from-uri
-     *
-     * @return mixed
-     */
-    public function actionBarFromUri()
-    {
-        //$this->requirePostRequest();
-        //$this->requireAjaxRequest();
     }
 }

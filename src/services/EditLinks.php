@@ -86,6 +86,8 @@ class EditLinks extends Component
 
         $this->_editId += 1;
         $this->_editEmbedded = true;
+
+        return '';
     }
     private function _getColorRgbString(string $cssColor):string
     {

@@ -1,9 +1,7 @@
-# Craft – Admin Bar
+# Craft – Admin Bar
 Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 
 > _UPGRADE NOTE: if you're upgrading from Craft 2, or updating in Craft 3, please update your Twig templates to use `{{ adminbar() }}` and `{{ editlink() }}` tags, as described below. The old `{% hook 'renderAdminBar' %}` hook and `{{ craft.adminbar.bar() }}` template tags have been removed in Craft 3._
-
-> _Also, the current output of Admin Bar and Edit Links are similar to the Craft 2 version of this plugin, but this will likely change by Craft 3 GA to make room for some improvements and some new CSS and JS features._
 
 ## Requirements
 * Craft 3.0 RC1+
@@ -47,6 +45,104 @@ Here is a list of available arguments:
 | `sticky` | *true* | Uses css to `position: fixed;` Admin Bar to the top of the page |
 | `useCss` | *true* | Add the default styles to Admin Bar or leave them off and style it your way |
 | `useJs` | *true* | Use the Admin Bar's default Javascript |
+
+## Adding Admin Bar to the Front-End via Javascript
+Admin Bar can be added to many sites that use Craft as a headless CMS or use static caching, like FastCGI Caching. This requires these three steps:
+
+1. Admin Bar assets get included onto the page, via the `{{ getAdminBarAssets() }}` Twig tag
+2. An HTTP client—like jQuery or Axios—is used to get Admin Bar's HTML and place it onto the page
+3. The Javascript function, `window.adminBarInit();`, gets called
+
+The `{{ getAdminBarAssets() }}` Twig tag places all of Admin Bar's CSS and Javascript onto the page within `<script>` and `<style>` tags. This should be placed towards the bottom of the `<body>` tag.
+
+With the assets in place, you can use `jQuery.ajax()`, `axios.post()`, or other similar methods to request Admin Bar's HTML from Craft. This requires the URI of the page be passed in to the request to give Admin Bar context.
+
+Here's an example of using jQuery to get Admin Bar's HTML:
+
+```javascript
+import jQuery from 'jquery';
+
+// get the URI from the current page
+const data = {
+	uri: window.location.pathname
+}
+
+// request Admin Bar after converting array to JSON
+jQuery.ajax({
+    type: 'POST',
+    url: '/actions/admin-bar/bar',
+    cache: false,
+    data: JSON.stringify(data),
+    dataType: 'json',
+    success: function(data) {
+        if (data.response === 'success' && typeof adminBarInit === "function") {
+            // add Admin Bar to the bottom of the <body> element
+            jQuery('body').append(data.content);
+
+            // fire init function that gets loaded into the template
+            // via the {{ getAdminBarAssets() }} Twig tag
+            adminBarInit();
+        }
+    },
+    error: function(err) {
+        console.log("Error");
+        console.log(err);
+    }
+});
+```
+
+Note that `JSON.stringify()` is used to convert the data over to JSON before sending.
+
+Here's another example, using a Single File Vue Component that uses Axios for HTTP request:
+```vue
+<template>
+    <div v-html="adminbar"></div>
+</template>
+
+<script>
+    import axios from 'axios';
+
+    export default {
+        data() {
+            return {
+                adminbar: false,
+                data: false,
+            };
+        },
+        props: {
+            uri: { required: true },
+        },
+        mounted() {
+            // get the URI that's passed in as a prop
+            this.data = {
+                uri: this.uri
+            };
+
+            // make request to get Admin Bar content
+            axios.post('/actions/admin-bar/bar', this.data).then((json) => {
+                if (json.status === 200) {
+                    this.adminbar = json.data.content;
+                }
+            });
+        },
+        updated: function () {
+            this.$nextTick(function () {
+                if (this.adminbar && typeof window.adminBarInit === "function") {
+                    // fire init function that gets loaded into the template
+                    // via the {{ getAdminBarAssets() }} Twig tag
+                    window.adminBarInit();
+                }
+            })
+        }
+    }
+</script>
+```
+
+If this file is `AdminBar.vue`, the Twig code for this Vue Component would be: `<admin-bar uri="{{ craft.app.request.url }}"></admin-bar>`.
+
+This component can be copied from this repo's [resources/scripts folder](resources/scripts/AdminBar.vue).
+
+> _If you have any suggestions on how to make sure security with this feature is tight, please let me know._
 
 ---
 
@@ -100,7 +196,7 @@ Admin Bar uses the template path provided in the `$adminBarWidgets` variable to 
 | `category` | If the current page is a Category element, the `category` variable is passed into the widget. |
 | `entry` | If the current page is a Entry element, the `entry` variable is passed into the widget. |
 | `info` | The information passed through `$adminBarWidgets`, so it can be reference in the widget. |
-| `includeAssets` | A boolean passed from Admin Bar to indicate whether CSS and Javascript should be inlined (`true`) or can be included via `{% js %}` and `{% css %}` tags (`false`). |
+| `includeAssets` | A boolean that needs to be passed in to `{{ addAdminBarCss() }}` and `{{ addAdminBarJs() }}` tags. |
 
 You can find example templates in both Admin Bar and Guide:
 
@@ -136,6 +232,8 @@ The default layout is a 12-column grid. Use CSS to design the layout of the widg
 `'layout' => 'center',`
 
 A three-column layout that puts the `:first-child` in the center, but provides room for left-hand and right-hand sidebars.
+
+---
 
 # Edit Links
 
