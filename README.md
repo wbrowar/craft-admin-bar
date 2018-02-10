@@ -270,6 +270,7 @@ Here is a full list of available arguments:
 | `devNote` | *null* | Display information to content editors. You may use plain text or HTML markup |
 | `entry` | *null* | Pass in an entry object to add an edit link for that entry |
 | `showEditInfo` | *true* | If set to `true`, the Edit Link will display the last updated date and the name of the author that last saved the entry |
+| `title` | *null* | If provided, overrides the entry's title or custom url used for the edit link's title |
 | `url` | *''* | A URL that will be navigated to when the "Edit" link is clicked |
 | `useCss` | *true* | Add the default styles to Edit Links or leave them off and style it your way |
 | `useJs` | *true* | Add the default Javascript used by Entry Edit Links. Setting this to `false` embeds the Entry Edit Link through Twig, instead |

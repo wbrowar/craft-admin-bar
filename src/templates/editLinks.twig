@@ -2,7 +2,6 @@
 {% set devNote = devNote ?? '' %}
 {% set id = id ?? 0 %}
 {% set localesEnabled = localesEnabled ?? false %}
-{% set title = entry.title ?? url %}
 {% set showEditInfo = showEditInfo ?? true %}
 {% set useCss = useCss ?? true %}
 {% set useJs = useJs ?? true %}
@@ -44,7 +43,7 @@
                     <div class="editlink__photo">{% if displayEditAuthor and currentUser.photo ?? false %}<img src="{{ currentUser.getThumbUrl(50) }}" alt="{{ currentUser.friendlyName }}’s photo"/>{% endif %}</div>
                     <div class="editlink__name">{% if displayEditAuthor %}{{ revisionAuthor.friendlyName ?? entry.author.friendlyName }}{% endif %}</div>
                 {% else %}
-                    <div class="editlink__updated_label">{{ url }}</div>
+                    <div class="editlink__updated_label">{{ title }}</div>
                 {% endif %}
             {% endif %}
         </div>
