@@ -77,6 +77,15 @@ class EditLinks extends Component
             $config['revisionNote'] = null;
         }
 
+        // set title based on override, entry, or url provided
+        if (!isset($config['title'])) {
+            if ($config['type'] == 'entry') {
+                $config['title'] = $config['entry']->title;
+            } else {
+                $config['title'] = $config['url'];
+            }
+        }
+
         $oldMode = Craft::$app->view->getTemplateMode();
         Craft::$app->view->setTemplateMode(View::TEMPLATE_MODE_CP);
         $html = Craft::$app->view->renderTemplate('admin-bar/editLinks', $config);
