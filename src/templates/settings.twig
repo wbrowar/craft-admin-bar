@@ -60,8 +60,8 @@
 }) }}
 
 {% set cssVariables = [
-    ['<b>--adminbar-color-bg</b>: rgba(0, 0, 0, .8);', 'The background color of Admin Bar.'],
-    ['<b>--adminbar-color-bg-image</b>: none;', 'The background image of Admin Bar.'],
+    ['<b>--adminbar-bg</b>: var(--adminbar-color-bg);', 'The background of Admin Bar. This is used as shorthand for the CSS `background` property.'],
+    ['<b>--adminbar-color-bg</b>: rgba(0, 0, 0, .8);', 'The background color of Admin Bar if --adminbar-bg is not set.'],
     ['<b>--adminbar-color-border</b>: rgb(80, 80, 80);', 'The color of borders that separate sections in Admin Bar'],
     ['<b>--adminbar-color-highlight</b>: rgb(216, 91, 75);', 'The color that appears when links are rolled over.'],
     ['<b>--adminbar-color-link-text</b>: rgb(255, 255, 255);', 'The color of link text.'],
@@ -71,7 +71,8 @@
     ['<b>--adminbar-font-size-desktop</b>: 14px;', 'The font size for type in Admin Bar and Edit Links in a viewport above 601px wide.'],
     ['<b>--adminbar-height-mobile</b>: 52px;', 'The height of Admin Bar and the top of Edit Links on mobile.'],
     ['<b>--adminbar-height-desktop</b>: 45px;', 'The height of Admin Bar and the top of Edit Links in a viewport above 601px wide.'],
-    ['<b>--editlinks-color-bg</b>: rgb(245, 245, 245);', 'The background color of Edit Links.'],
+    ['<b>--editlinks-bg</b>: var(--editlinks-color-bg);', 'The background of Edit Links. This is used as shorthand for the CSS `background` property.'],
+    ['<b>--editlinks-color-bg</b>: rgba(0, 0, 0, .8);', 'The background color of Edit Links if --adminbar-bg is not set.'],
     ['<b>--editlinks-color-border</b>: var(--adminbar-color-border);', 'Color of borders in Edit Links'],
     ['<b>--editlinks-color-highlight</b>: var(--adminbar-color-highlight);', 'The color that appears when links are rolled over.'],
     ['<b>--editlinks-color-text</b>: rgb(80, 80, 80);', 'The color of all other text.'],

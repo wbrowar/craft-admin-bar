@@ -10,6 +10,8 @@
 
 namespace wbrowar\adminbar;
 
+use craft\events\PluginEvent;
+use craft\services\Plugins;
 use wbrowar\adminbar\assetbundles\AdminBar\AdminBarAsset;
 use wbrowar\adminbar\twigextensions\AdminBarTwigExtension;
 use wbrowar\adminbar\models\Settings;
@@ -87,10 +89,15 @@ class AdminBar extends Plugin
             }
 
             // Add Admin Bar CSS and user Custom CSS to CP
-            if ($view->getTemplateMode() === View::TEMPLATE_MODE_CP) {
+            if ($view->getTemplateMode() === View::TEMPLATE_MODE_CP && (Craft::$app->request->getPathInfo() === 'settings' || Craft::$app->request->getPathInfo() === 'settings/plugins')) {
                 $view->registerAssetBundle(AdminBarAsset::class);
                 $view->registerCss($settings->customCss);
             }
+        });
+
+        Event::on(Plugins::class, Plugins::EVENT_BEFORE_SAVE_PLUGIN_SETTINGS, function() {
+            // Remove duplicate links that appear upon save
+            AdminBar::$plugin->setSettings(['additionalLinks' => []]);
         });
 
 /**
@@ -146,6 +153,7 @@ class AdminBar extends Plugin
 
         $settings = $this->getSettings();
 
+        // Create one empty table row if non are present
         if (empty($settings->customLinks)) {
             $settings['customLinks'] = [['','',0]];
         }

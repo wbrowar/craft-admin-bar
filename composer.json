@@ -2,7 +2,7 @@
     "name": "wbrowar/adminbar",
     "description": "Front-end shortcuts for clients logged into Craft CMS.",
     "type": "craft-plugin",
-    "version": "3.1.3",
+    "version": "3.1.4",
     "keywords": [
         "craft",
         "cms",

@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 3.1.4 - 2018-02-10
+### Added
+- An Admin Bar Widget can now be invalidated using PHP via an Event that's called before widgets are loaded
+- The title on Edit Links can now be overridden when `url` and `title` are both passed in as config parameters
+
+### Changed
+- Removed `--adminbar-color-bg-image` CSS variable and replaced it with `--adminbar-bg` so you can set the entire `background` shorthand CSS property
+- Removed need to pass `includeAssets` into `{{ addAdminBarCss() }}` and `{{ addAdminBarJs() }}` Twig tags
+
+### Fixed
+- Fixed an issue that duplicated `additionalLinks` when settings were saved through CP
+  - If you're seeing duplicate `additionalLinks`, just re-save Admin Bar's plugin settings
+- Set Edit Links on Edit Links widget to a fixed height
+- Fixed a bug that loaded AdminBarAsset bundle files on the front-end
+- Fixed an error that was thrown when `{{ getAdminBarAssets() }}` was called and there was no logged in user
+- Fixed a bug where the current logged in user photo was shown instead of the revision author's photo.
+
+
 ## 3.1.3 - 2018-02-07
 ### Added
 - Admin Bar can now be pulled into sites via HTTP Request (using jQuery, Axios, and other HTTP clients)

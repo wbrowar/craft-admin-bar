@@ -65,24 +65,14 @@ class AdminBarTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function addAdminBarCss($includeAssets, $css)
+    public function addAdminBarCss(string $css)
     {
-        if ($includeAssets) {
-            return '';
-        } else {
-            AdminBar::$plugin->bar->templateCss .= $css;
-            return '';
-        }
+        AdminBar::$plugin->bar->templateCss .= $css;
     }
 
-    public function addAdminBarJs($includeAssets, $js)
+    public function addAdminBarJs(string $js)
     {
-        if ($includeAssets) {
-            return '';
-        } else {
-            AdminBar::$plugin->bar->templateJs .= $js;
-            return '';
-        }
+        AdminBar::$plugin->bar->templateJs .= $js;
     }
 
     public function adminBar(array $config = []):string
@@ -115,22 +105,31 @@ class AdminBarTwigExtension extends \Twig_Extension
         return AdminBar::$plugin->editLinks->render($config);
     }
 
-    public function getAdminBarAssets(array $config = [])
+    public function getAdminBarAssets(array $config = [], bool $render = true)
     {
-        if (!isset($config['entry']) && !isset($config['url'])) {
-            $element = Craft::$app->urlManager->getMatchedElement();
+        if ($render) {
+            $config['includeAssets'] = $config['includeAssets'] ?? false;
 
-            if (!empty($element)) {
-                if ($element instanceof craft\elements\Entry) {
-                    $config['entry'] = $element;
-                } elseif ($element instanceof craft\elements\Category) {
-                    $config['category'] = $element;
+            if ($config['uri'] ?? false) {
+                AdminBar::$plugin->bar->renderAdminBarForUri($config['uri'], $config);
+            } else if (!isset($config['entry']) && !isset($config['url'])) {
+                $element = Craft::$app->urlManager->getMatchedElement();
+
+                if (!empty($element)) {
+                    if ($element instanceof craft\elements\Entry) {
+                        $config['entry'] = $element;
+                    } elseif ($element instanceof craft\elements\Category) {
+                        $config['category'] = $element;
+                    }
                 }
+
+                AdminBar::$plugin->bar->render($config);
             }
         }
 
-        AdminBar::$plugin->bar->render($config);
+        $css = AdminBar::$plugin->bar->templateCss;
+        $js = $render ? 'function adminBarInit() {' . AdminBar::$plugin->bar->templateJs . '}' : AdminBar::$plugin->bar->templateJs;
 
-        return '<style>' . AdminBar::$plugin->bar->templateCss . '</style><script>function adminBarInit() {'.AdminBar::$plugin->bar->templateJs.'}</script>';
+        return '<style>' . $css . '</style><script>' . $js . '</script>';
     }
 }

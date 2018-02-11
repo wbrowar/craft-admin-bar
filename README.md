@@ -49,11 +49,11 @@ Here is a list of available arguments:
 ## Adding Admin Bar to the Front-End via Javascript
 Admin Bar can be added to many sites that use Craft as a headless CMS or use static caching, like FastCGI Caching. This requires these three steps:
 
-1. Admin Bar assets get included onto the page, via the `{{ getAdminBarAssets() }}` Twig tag
+1. Admin Bar assets get included onto the page, via the `{{ getAdminBarAssets({ uri: craft.app.request.url }) }}` Twig tag
 2. An HTTP client—like jQuery or Axios—is used to get Admin Bar's HTML and place it onto the page
 3. The Javascript function, `window.adminBarInit();`, gets called
 
-The `{{ getAdminBarAssets() }}` Twig tag places all of Admin Bar's CSS and Javascript onto the page within `<script>` and `<style>` tags. This should be placed towards the bottom of the `<body>` tag.
+The `{{ getAdminBarAssets({ uri: craft.app.request.url }) }}` Twig tag places all of Admin Bar's CSS and Javascript onto the page within `<script>` and `<style>` tags. This should be placed towards the bottom of the `<body>` tag.
 
 With the assets in place, you can use `jQuery.ajax()`, `axios.post()`, or other similar methods to request Admin Bar's HTML from Craft. This requires the URI of the page be passed in to the request to give Admin Bar context.
 
@@ -80,7 +80,7 @@ jQuery.ajax({
             jQuery('body').append(data.content);
 
             // fire init function that gets loaded into the template
-            // via the {{ getAdminBarAssets() }} Twig tag
+            // via the {{ getAdminBarAssets({ uri: craft.app.request.url }) }} Twig tag
             adminBarInit();
         }
     },
@@ -208,7 +208,32 @@ Both of these templates use the `center` layout and CSS and Javascript are inclu
 > It's important to note that Admin Bar Widgets are added to the HTML, CSS, and Javascript designed for the front-end, so overriding CSS or adding Javascript errors to the page should be avoided as much as possible. Also, no assumptions about front-end frameworks and libraries should be made, so vanilla Javascript and CSS should be used as much as possible.
 
 ### Validating Widgets
-If no useful content is provided by a widget, it can be removed from Admin Bar using the `adminBarRemoveWidget` Javascript function. This requires that the widget's `id` be passed in to remove the widget.
+If no useful content is provided by a widget, it can be removed from Admin Bar using the `EVENT_ADMIN_BAR_BEFORE_RENDER` Event in the Admin Bar `Bar` class. For example, in the Guide plugin if no Content Guide is present for the current Entry passed into Admin Bar, the Guide widget can be removed by adding `enabled` to the `$adminBarWidgets` variable and setting it to false.
+
+```php
+use wbrowar\adminbar\events\AdminBarRenderEvent;
+use wbrowar\adminbar\services\Bar;
+
+Event::on(Bar::class, Bar::EVENT_ADMIN_BAR_BEFORE_RENDER, function(AdminBarRenderEvent $event) {
+    // Get the entry from the $event var
+    $entry = $event->entry;
+
+    if ($event->entry ?? false) {
+        // Check for a Content Guide for this entry
+        $total = Guide::$plugin->guide->getUserGuides([
+            'sectionId' => $entry->sectionId,
+            'typeId' => $entry->sectionId,
+        ], 'count');
+        
+        // If no guide exists, disable the widget
+        if ($total < 1) {
+            $this->adminBarWidgets[0]['enabled'] = false;
+        }
+    }
+});
+```
+
+If the widget needs the page to be fully rendered before validating it, the `adminBarRemoveWidget` Javascript function can be used after doing some client-side validation. This requires that the widget's `id` be passed in to remove the widget.
 
 For example, in the Admin Bar Edit Links widget, the following code is used to remove the widget when the page doesn't include any Edit Links.
 
@@ -270,6 +295,7 @@ Here is a full list of available arguments:
 | `devNote` | *null* | Display information to content editors. You may use plain text or HTML markup |
 | `entry` | *null* | Pass in an entry object to add an edit link for that entry |
 | `showEditInfo` | *true* | If set to `true`, the Edit Link will display the last updated date and the name of the author that last saved the entry |
+| `title` | *null* | If provided, overrides the entry's title or custom url used for the edit link's title |
 | `url` | *''* | A URL that will be navigated to when the "Edit" link is clicked |
 | `useCss` | *true* | Add the default styles to Edit Links or leave them off and style it your way |
 | `useJs` | *true* | Add the default Javascript used by Entry Edit Links. Setting this to `false` embeds the Entry Edit Link through Twig, instead |

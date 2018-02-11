@@ -16,6 +16,7 @@
         #adminbar_widget_edit_links__container .editlink__link {
             grid-area: unset;
             border: 1px solid var(--editlinks-color-border);
+            height: var(--adminbar-height-desktop);
         }
         .adminbar_widget_edit_links__header {
             padding-bottom: .8em;
@@ -34,6 +35,6 @@
         if (document.getElementsByClassName('editlink').length === 0) { adminBarRemoveWidget('{{ id }}'); };
     {% endset %}
 
-    {{ addAdminBarCss(includeAssets, css) }}
-    {{ addAdminBarJs(includeAssets, js) }}
+    {% do addAdminBarCss(css) %}
+    {% do addAdminBarJs(js) %}
 </div>
