@@ -84,8 +84,8 @@ class Bar extends Component
 
                     if (
                         $enabled &&
-                        $widget['handle'] ?? false &&
-                        $widget['template'] ?? false
+                        ($widget['handle'] ?? false) &&
+                        ($widget['template'] ?? false)
                     ) {
                         $widgets[] = [
                             'id' => $plugin->handle . '_' . $widget['handle'],
@@ -115,7 +115,7 @@ class Bar extends Component
         foreach($widgetsFromPlugins as $pluginWidget) {
             $id = $pluginWidget['pluginHandle'] . '_' . $pluginWidget['handle'];
             $enabled = $pluginWidget['enabled'] ?? true;
-            if ($enabled && $settings['widgets'][$id] ?? false && $settings['widgets'][$id] === 1) {
+            if ($enabled && ($settings['widgets'][$id] ?? false) && $settings['widgets'][$id] === 1) {
                 $widgets[] = $pluginWidget;
             }
         }
