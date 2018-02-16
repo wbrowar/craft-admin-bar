@@ -214,23 +214,25 @@ If no useful content is provided by a widget, it can be removed from Admin Bar u
 use wbrowar\adminbar\events\AdminBarRenderEvent;
 use wbrowar\adminbar\services\Bar;
 
-Event::on(Bar::class, Bar::EVENT_ADMIN_BAR_BEFORE_RENDER, function(AdminBarRenderEvent $event) {
-    // Get the entry from the $event var
-    $entry = $event->entry;
+if (class_exists(Bar::class)) {
+    Event::on(Bar::class, Bar::EVENT_ADMIN_BAR_BEFORE_RENDER, function(AdminBarRenderEvent $event) {
+        // Get the entry from the $event var
+        $entry = $event->entry;
 
-    if ($event->entry ?? false) {
-        // Check for a Content Guide for this entry
-        $total = Guide::$plugin->guide->getUserGuides([
-            'sectionId' => $entry->sectionId,
-            'typeId' => $entry->sectionId,
-        ], 'count');
-        
-        // If no guide exists, disable the widget
-        if ($total < 1) {
-            $this->adminBarWidgets[0]['enabled'] = false;
+        if ($entry) {
+            // Check for a Content Guide for this entry
+            $total = Guide::$plugin->guide->getUserGuides([
+                'sectionId' => $entry->sectionId,
+                'typeId' => $entry->sectionId,
+            ], 'count');
+
+            // If no guide exists, disable the widget
+            if ($total < 1) {
+                $this->adminBarWidgets[0]['enabled'] = false;
+            }
         }
-    }
-});
+    });
+}
 ```
 
 If the widget needs the page to be fully rendered before validating it, the `adminBarRemoveWidget` Javascript function can be used after doing some client-side validation. This requires that the widget's `id` be passed in to remove the widget.

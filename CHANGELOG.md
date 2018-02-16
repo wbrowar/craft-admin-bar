@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 3.1.5 - 2018-02-16
+### Fixed
+- Removed padding that caused a vertical scrollbar to appear
+- Fixed an order of operations error (thanks to @sbossarte)
+
+
 ## 3.1.4 - 2018-02-10
 ### Added
 - An Admin Bar Widget can now be invalidated using PHP via an Event that's called before widgets are loaded
