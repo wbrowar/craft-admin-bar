@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 3.1.6 - 2018-05-10
+### Changed
+- Changed "Logout" to "Sign out" to be consistent with Craft's CP Sign out link
+
+### Fixed
+- Changed the method that registered Twig extensions
+
+
 ## 3.1.5 - 2018-02-16
 ### Fixed
 - Removed padding that caused a vertical scrollbar to appear

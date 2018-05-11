@@ -79,14 +79,12 @@ class AdminBar extends Plugin
         parent::init();
         self::$plugin = $this;
 
+        // Add in our Twig extensions
+        Craft::$app->view->registerTwigExtension(new AdminBarTwigExtension());
+
         Event::on(View::class, View::EVENT_BEFORE_RENDER_TEMPLATE, function() {
             $settings = $this->getSettings();
             $view = Craft::$app->getView();
-
-            // Add in our Twig extensions
-            if (Craft::$app->view->twig->hasExtension(AdminBarTwigExtension::class) === false) {
-                Craft::$app->view->twig->addExtension(new AdminBarTwigExtension());
-            }
 
             // Add Admin Bar CSS and user Custom CSS to CP
             if ($view->getTemplateMode() === View::TEMPLATE_MODE_CP && (Craft::$app->request->getPathInfo() === 'settings' || Craft::$app->request->getPathInfo() === 'settings/plugins')) {

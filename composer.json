@@ -2,7 +2,7 @@
     "name": "wbrowar/adminbar",
     "description": "Front-end shortcuts for clients logged into Craft CMS.",
     "type": "craft-plugin",
-    "version": "3.1.5",
+    "version": "3.1.6",
     "keywords": [
         "craft",
         "cms",
@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.0-RC9"
+        "craftcms/cms": "^3.0.7"
     },
     "repositories": [
         {

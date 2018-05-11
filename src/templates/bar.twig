@@ -116,7 +116,7 @@
         </div>
         <div class="adminbar__logout">
             {% if displayLogout ?? true %}
-                <a class="adminbar__logout_link" href="{{ url(logoutUrl) }}">{{ 'Logout'|t }}</a>
+                <a class="adminbar__logout_link" href="{{ url(logoutUrl) }}">{{ 'Sign out'|t }}</a>
             {% endif %}
             {% if enableMobileMenu ?? true %}
                 <div id="adminbar__mobile_toggle" class="adminbar__mobile_toggle">{{ svg(iconPath) }}</div>
