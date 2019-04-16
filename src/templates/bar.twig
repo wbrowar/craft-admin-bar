@@ -79,21 +79,21 @@
                         <a href="{{ url(craft.app.config.general.cpTrigger ~ '/dashboard') }}" class="adminbar__has_icon"><span class="adminbar__icon">{{ svg(dashboardPath) }}</span>{{ 'Dashboard'|t }}</a>
                     {% endif %}
 
-                    {% if entry ?? false and currentUser.can('editEntries:[' ~ entry.section.id ~ ']') %}
+                    {% if entry ?? false and (currentUser ? currentUser.can('editEntries:[' ~ entry.section.id ~ ']') : true) %}
                         {% set sectionName = displayDefaultEditSection ? ' ' ~ entry.section : ''  %}
                         {% set entryEditUrl = entry.cpEditUrl %}
 
                         <a href="{{ url(entryEditUrl) }}" class="adminbar__has_icon"><span class="adminbar__icon">{{ svg(editPath) }}</span>{{ 'Edit'|t ~ sectionName }}</a>
                     {% endif %}
 
-                    {% if category ?? false and currentUser.can('editCategories:[' ~ category.group.id ~ ']') %}
+                    {% if category ?? false and (currentUser ? currentUser.can('editCategories:[' ~ category.group.id ~ ']') : true) %}
                         {% set sectionName = displayDefaultEditSection ? ' ' ~ category : ''  %}
                         {% set categoryEditUrl = category.cpEditUrl %}
 
                         <a href="{{ url(categoryEditUrl) }}" class="adminbar__has_icon"><span class="adminbar__icon">{{ svg(editPath) }}</span>{{ 'Edit '|t ~ sectionName }}</a>
                     {% endif %}
 
-                    {% if (displayGuideLink ?? true) and plugin('guide') and currentUser.can('accessPlugin-guide') %}
+                    {% if (displayGuideLink ?? true) and plugin('guide') and (currentUser ? currentUser.can('accessPlugin-guide') : true) %}
                         <a href="{{ url(craft.app.config.general.cpTrigger ~ '/guide') }}" class="adminbar__has_icon"><span class="adminbar__icon">{{ svg(guidePath) }}</span>{{ 'Guide'|t }}</a>
                     {% endif %}
 

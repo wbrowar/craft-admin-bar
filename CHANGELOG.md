@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.7.1 - 2018-04-16
+### Fixed
+- Fixed a bug that occurred when you are not logged in to a site that has Admin Bar embedded
+
+
 ## 3.1.7 - 2018-04-15
 ### Added
 - Added Guide link if the Guide plugin is installed and enabled and the user can access the Guide CP section
