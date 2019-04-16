@@ -10,7 +10,6 @@
 
 namespace wbrowar\adminbar;
 
-use craft\events\PluginEvent;
 use craft\services\Plugins;
 use wbrowar\adminbar\assetbundles\AdminBar\AdminBarAsset;
 use wbrowar\adminbar\twigextensions\AdminBarTwigExtension;
@@ -87,10 +86,10 @@ class AdminBar extends Plugin
             $view = Craft::$app->getView();
 
             // Add Admin Bar CSS and user Custom CSS to CP
-            if ($view->getTemplateMode() === View::TEMPLATE_MODE_CP && (Craft::$app->request->getPathInfo() === 'settings' || Craft::$app->request->getPathInfo() === 'settings/plugins')) {
-                $view->registerAssetBundle(AdminBarAsset::class);
-                $view->registerCss($settings->customCss);
-            }
+//            if ($view->getTemplateMode() === View::TEMPLATE_MODE_CP && (Craft::$app->request->getPathInfo() === 'settings' || Craft::$app->request->getPathInfo() === 'settings/plugins')) {
+//                $view->registerAssetBundle(AdminBarAsset::class);
+//                $view->registerCss($settings->customCss);
+//            }
         });
 
         Event::on(Plugins::class, Plugins::EVENT_BEFORE_SAVE_PLUGIN_SETTINGS, function() {

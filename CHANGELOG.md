@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.7 - 2018-04-15
+### Added
+- Added Guide link if the Guide plugin is installed and enabled and the user can access the Guide CP section
+  - Added `displayGuideLink` to disable Guide link in `admin-bar.php` config file
+
+### Changed
+- "Edit" links only appear for users who have access to edit the linked Entry or Category
+- "Settings" link only appears when `allowAdminChanges` is set to `true`
+- Changed sticky CSS from `position: fixed` to `position: sticky`
+- Changed default Admin Bar background color
+- Bumped minimum Craft version to 3.1.22
+
+### Fixed
+- Fixed an issue that displayed section name on the "Edit" link when `displayDefaultEditSection` was set to `false`
+- Fixed an issue that added an asset bundle to the CP when it shouldn't have
+
 
 ## 3.1.6 - 2018-05-10
 ### Changed

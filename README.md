@@ -1,14 +1,14 @@
 # Craft – Admin Bar
 Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 
-> _UPGRADE NOTE: if you're upgrading from Craft 2, or updating in Craft 3, please update your Twig templates to use `{{ adminbar() }}` and `{{ editlink() }}` tags, as described below. The old `{% hook 'renderAdminBar' %}` hook and `{{ craft.adminbar.bar() }}` template tags have been removed in Craft 3._
-
 ## Requirements
-* Craft 3.0 RC1+
+* Craft 3.1.22+
 * PHP 7.0+
 * Browsers that support the [current CSS Grid Layout spec](https://caniuse.com/#feat=css-grid)
 
 ## Installation
+To install the plugin, you can find it in the [Craft Plugin Store](https://plugins.craftcms.com/admin-bar), or follow these instructions:
+
 1. Open your terminal and go to your Craft project:
 
 `cd /path/to/project`
@@ -338,7 +338,8 @@ Here are the settings you can change with the config file:
 | `additionalLinks` | *[]* | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/craft-3-adminbar#additional-links) |
 | `displayGreeting` | *true* | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]" |
 | `displayDashboardLink` | *true* | A link to the CP Dashboard |
-| `displayDefaultEditSection` | *true* | Display the name of the section in the default entry/category edit link |
+| `displayDefaultEditSection` | *true* | Display the name of the section in the default entry/category edit link if the user has permission to edit it |
+| `displayGuideLink` | *true* | If the [Guide](https://plugins.craftcms.com/guide) plugin is installed, a link to the Guide CP Section is displayed |
 | `displaySettingsLink` | *true* | A link to the CP Settings page that appears only to admins |
 | `displayLogout` | *true* | Logs you out of Craft CMS |
 | `enableMobileMenu` | *true* | Enables Admin Bar to display a separate mobile theme below a width of 600 pixels |

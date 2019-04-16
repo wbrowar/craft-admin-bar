@@ -135,7 +135,8 @@ class Bar extends Component
         $config['displayDefaultEditSection'] = $settings->displayDefaultEditSection;
         $config['displayGreeting'] = $settings->displayGreeting;
         $config['displayLogout'] = $settings->displayLogout;
-        $config['displaySettingsLink'] = $settings->displaySettingsLink;
+        $config['displayGuideLink'] = $settings->displayGuideLink;
+        $config['displaySettingsLink'] = $settings->displaySettingsLink && Craft::$app->getConfig()->getGeneral()->allowAdminChanges;
         $config['enableMobileMenu'] = $settings->enableMobileMenu;
 
         // give plugins a chance to disable or modify their widgets

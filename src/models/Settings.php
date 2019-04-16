@@ -52,6 +52,7 @@ class Settings extends Model
     public $displayGreeting = true;
     public $displayDashboardLink = true;
     public $displayDefaultEditSection = true;
+    public $displayGuideLink = true;
     public $displaySettingsLink = true;
     public $displayLogout = true;
     public $enableMobileMenu = true;
