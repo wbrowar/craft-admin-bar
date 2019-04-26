@@ -79,14 +79,14 @@
                         <a href="{{ url(craft.app.config.general.cpTrigger ~ '/dashboard') }}" class="adminbar__has_icon"><span class="adminbar__icon">{{ svg(dashboardPath) }}</span>{{ 'Dashboard'|t }}</a>
                     {% endif %}
 
-                    {% if entry ?? false and (currentUser ? currentUser.can('editEntries:[' ~ entry.section.id ~ ']') : true) %}
+                    {% if entry ?? false and (currentUser ? currentUser.can('editEntries:' ~ entry.getSection().uid) : true) %}
                         {% set sectionName = displayDefaultEditSection ? ' ' ~ entry.section : ''  %}
                         {% set entryEditUrl = entry.cpEditUrl %}
 
                         <a href="{{ url(entryEditUrl) }}" class="adminbar__has_icon"><span class="adminbar__icon">{{ svg(editPath) }}</span>{{ 'Edit'|t ~ sectionName }}</a>
                     {% endif %}
 
-                    {% if category ?? false and (currentUser ? currentUser.can('editCategories:[' ~ category.group.id ~ ']') : true) %}
+                    {% if category ?? false and (currentUser ? currentUser.can('editCategories:' ~ category.group.uid) : true) %}
                         {% set sectionName = displayDefaultEditSection ? ' ' ~ category : ''  %}
                         {% set categoryEditUrl = category.cpEditUrl %}
 
