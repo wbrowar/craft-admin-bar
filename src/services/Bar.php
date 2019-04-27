@@ -158,6 +158,8 @@ class Bar extends Component
     public function renderAdminBarForUri(string $uri, array $config = []):string
     {
         if (Craft::$app->getUser()->getIsAdmin() || Craft::$app->getUser()->checkPermission('accessCp')) {
+            $config['userCanEdit'] = false;
+
             if (substr($uri, 0, 1) === '/') {
                 $uri = substr($uri, 1);
             }
@@ -170,6 +172,7 @@ class Bar extends Component
 
             if ($entry) {
                 $config['entry'] = $entry;
+                $config['userCanEdit'] = in_array($entry->id, Craft::$app->getSections()->getEditableSectionIds());
             } else {
                 $category = Category::find()
                     ->uri($uri)
@@ -177,6 +180,7 @@ class Bar extends Component
 
                 if ($category) {
                     $config['category'] = $category;
+                    $config['userCanEdit'] = in_array($category->getGroup()->id, Craft::$app->getCategories()->getEditableGroupIds());
                 }
             }
 

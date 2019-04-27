@@ -4,12 +4,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 3.1.7.1 - 2018-04-16
+## 3.1.8 - 2019-04-27
+### Added
+- You can switch from CSS `position: sticky` to `position: fixed` by passing in `{ fixed: true }`
+  - _NOTE: Passing in `{ sticky: false }` uses `position: relative` by default_
+- When using Javascript to embed Admin Bar, a `params` object can be passed in to pass arguments into the rendered Admin Bar
+
+### Changed
+- Removed Vue component example in README and replaced it with a vanilla, `fetch()`-based Javascript example
+
+### Fixed
+- Support for checking if the logged in user can edit an entry or category based on UID instead of user permissions. Thanks, Daniel Jagszent!
+
+
+## 3.1.7.1 - 2019-04-16
 ### Fixed
 - Fixed a bug that occurred when you are not logged in to a site that has Admin Bar embedded
 
 
-## 3.1.7 - 2018-04-15
+## 3.1.7 - 2019-04-15
 ### Added
 - Added Guide link if the Guide plugin is installed and enabled and the user can access the Guide CP section
   - Added `displayGuideLink` to disable Guide link in `admin-bar.php` config file

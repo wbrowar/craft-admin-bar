@@ -68,11 +68,11 @@ class BarController extends Controller
         ];
 
         $params = Json::decode(Craft::$app->request->getRawBody());
-        //$includeAssets = $params['includeAssets'] ?? false;
+        $config = $params['params'] ?? [];
         $uri = $params['uri'];
 
         if (($uri ?? false)) {
-            $config = ['includeAssets' => false];
+            $config['includeAssets'] = false;
 
             $result['content'] = AdminBar::$plugin->bar->renderAdminBarForUri($uri, $config);
             if (!empty($result['content'])) {
