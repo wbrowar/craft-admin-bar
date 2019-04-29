@@ -29,23 +29,6 @@
     {% do addAdminBarJs(js) %}
 {% endif %}
 
-{#
-{% if includeAssets ?? false %}
-    <style>{{ css }}</style>
-    <script>{{ js }}</script>
-{% else %}
-    {% if useCss ?? true %}
-        {% css css %}
-    {% endif %}
-
-    {% if useJs ?? true %}
-        {% if js|length %}
-            {% js js|raw %}
-        {% endif %}
-    {% endif %}
-{% endif %}
-#}
-
 <div id="adminbar" class="adminbar{% if fixed ?? false %} adminbar--fixed{% elseif sticky ?? true %} adminbar--sticky{% endif %}{% if devMode %} adminbar--devmode{% endif %}{% if enableMobileMenu ?? true %} adminbar--mobile{% endif %}">
     <div class="adminbar__bar">
 
@@ -79,14 +62,14 @@
                         <a href="{{ url(craft.app.config.general.cpTrigger ~ '/dashboard') }}" class="adminbar__has_icon"><span class="adminbar__icon">{{ svg(dashboardPath) }}</span>{{ 'Dashboard'|t }}</a>
                     {% endif %}
 
-                    {% if entry ?? false and (userCanEdit or (entry.section.id in craft.app.sections.editableSectionIds)) %}
+                    {% if entry ?? false and ((userCanEdit ?? false) or (entry.section.id in craft.app.sections.editableSectionIds)) %}
                         {% set sectionName = displayDefaultEditSection ? ' ' ~ entry.section : ''  %}
                         {% set entryEditUrl = entry.cpEditUrl %}
 
                         <a href="{{ url(entryEditUrl) }}" class="adminbar__has_icon"><span class="adminbar__icon">{{ svg(editPath) }}</span>{{ 'Edit'|t ~ sectionName }}</a>
                     {% endif %}
 
-                    {% if category ?? false and (userCanEdit or (category.group.id in craft.app.categories.editableGroupIds)) %}
+                    {% if category ?? false and ((userCanEdit ?? false) or (category.group.id in craft.app.categories.editableGroupIds)) %}
                         {% set sectionName = displayDefaultEditSection ? ' ' ~ category : ''  %}
                         {% set categoryEditUrl = category.cpEditUrl %}
 

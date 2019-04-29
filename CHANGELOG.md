@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.8.1 - 2019-04-29
+### Fixed
+- Fixed a Twig bug introduced in 3.1.8
+
+
 ## 3.1.8 - 2019-04-27
 ### Added
 - You can switch from CSS `position: sticky` to `position: fixed` by passing in `{ fixed: true }`
