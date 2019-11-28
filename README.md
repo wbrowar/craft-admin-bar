@@ -41,6 +41,8 @@ Here is a list of available arguments:
 | Argument | Default | Description |
 | --- | --- | --- |
 | `category` | *null* | Pass in a category object to add an edit link for that category |
+| `editLinkLabel` | *null* | Set a custom label for the Edit Link when `editLinkUrl` is set to a custom URL |
+| `editLinkUrl` | *null* | Override the Edit Link with a custom URL or URI (this will be run through the `url()` Twig function) |
 | `entry` | *null* | Pass in an entry object to add an edit link for that entry |
 | `fixed` | *false* | Use CSS `position: fixed` instead of `position: sticky;` |
 | `sticky` | *true* | Uses CSS to `position: sticky;` Admin Bar to the top of the page |

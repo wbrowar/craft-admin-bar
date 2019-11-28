@@ -34,7 +34,7 @@
 
 {% if enabled %}
     {% set editLink %}{% spaceless %}
-        <a class="editlink__link" href="{{ url }}">{{ 'Edit'|t }}<span class="adminbar__icon"><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.93 228.72"><path d="M227.35 48.35a14.64 14.64 0 0 0-2.79-17L197.84 4.58a15.47 15.47 0 0 0-17.42-3.17l-5.95 4.74L14.29 166.33 0 228.72l62.39-14.29L222.57 54.26zM32.59 210.92a30 30 0 0 0-14.84-14.58l5.53-24.15 14.14 6.91 13.06 13.06 6.86 13z" fill="#fff"/></svg></span></a>
+        <a class="editlink__link" href="{{ url }}">{{ 'Edit'|t }}<span class="adminbar__icon"><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.93 228.72"><path d="M227.35 48.35a14.64 14.64 0 00-2.79-17L197.84 4.58a15.47 15.47 0 00-17.42-3.17l-5.95 4.74L14.29 166.33 0 228.72l62.39-14.29L222.57 54.26zM32.59 210.92a30 30 0 00-14.84-14.58l5.53-24.15 14.14 6.91 13.06 13.06 6.86 13z" fill="#fff"/></svg></span></a>
         <div class="editlink__updated">
             {% if showEditInfo %}
                 {% if entry ?? false %}

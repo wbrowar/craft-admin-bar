@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.9 - 2019-11-28
+### Added
+- You can now set the Edit Link to a custom URL or URI (it will be run through the `url()` Twig function). ([#15](https://github.com/wbrowar/craft-adminbar/issues/15))
+- The label for the Edit Link can be set to a custom string when setting a custom Edit Link URL.
+
+### Removed
+- Removed unused console commands
+
 ## 3.1.8.1 - 2019-04-29
 ### Fixed
 - Fixed a Twig bug introduced in 3.1.8

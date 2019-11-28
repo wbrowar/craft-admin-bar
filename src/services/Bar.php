@@ -127,6 +127,8 @@ class Bar extends Component
         $settings = AdminBar::$plugin->getSettings();
         $config['customLinks'] = $settings['customLinks'] ?? [];
         $config['customCss'] = $settings['customCss'] ?? '';
+        $config['editLinkLabel'] = $config['editLinkLabel'] ?? null;
+        $config['editLinkUrl'] = $config['editLinkUrl'] ?? null;
         $config['includeAssets'] = $config['includeAssets'] ?? true;
 
         // add config file settings to config
@@ -166,6 +168,7 @@ class Bar extends Component
             if ($uri === '') {
                 $uri = '__home__';
             }
+
             $entry = Entry::find()
                 ->uri($uri)
                 ->one();
@@ -186,7 +189,7 @@ class Bar extends Component
 
             $config['includeAssets'] = $config['includeAssets'] ?? false;
 
-            return AdminBar::$plugin->bar->render($config);
+            return $this->render($config);
         }
 
         return '';
