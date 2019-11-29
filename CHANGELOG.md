@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.10 - 2019-11-28
+### Changed
+- Bumped minimum Craft CMS requirement to `^3.3.16`
+
+### Fixed
+- Fixed Admin Bar appearing in Live Preview based on a change in Craft 3.2 ([#16](https://github.com/wbrowar/craft-adminbar/issues/16))
+
 ## 3.1.9 - 2019-11-28
 ### Added
 - You can now set the Edit Link to a custom URL or URI (it will be run through the `url()` Twig function). ([#15](https://github.com/wbrowar/craft-adminbar/issues/15))

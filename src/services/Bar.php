@@ -61,7 +61,7 @@ class Bar extends Component
             !Craft::$app->getRequest()->getIsAjax() &&
             !Craft::$app->getRequest()->getIsConsoleRequest() &&
             !Craft::$app->getRequest()->getIsCpRequest() &&
-            !Craft::$app->getRequest()->getIsLivePreview() &&
+            !Craft::$app->getRequest()->getIsPreview() &&
             !Craft::$app->getUser()->getIsGuest() &&
             (Craft::$app->getUser()->getIsAdmin() || Craft::$app->getUser()->checkPermission('accessCp'))
         );
