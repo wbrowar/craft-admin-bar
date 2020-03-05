@@ -127,9 +127,18 @@ class AdminBarTwigExtension extends \Twig_Extension
             }
         }
 
-        $css = AdminBar::$plugin->bar->templateCss;
+        $styles = trim(preg_replace(
+            '/"/', "'", AdminBar::$plugin->bar->templateCss));
+
+        $css = '(function () {'
+            . 'var docHead = (document.getElementsByTagName("head") || [])[0];'
+            . 'var adminBarStyle = document.createElement("style");'
+            . 'adminBarStyle.innerHTML = "' . $styles . '";'
+            . 'if (docHead) docHead.appendChild(adminBarStyle);'
+            . '})()';
+
         $js = $render ? 'function adminBarInit() {' . AdminBar::$plugin->bar->templateJs . '}' : AdminBar::$plugin->bar->templateJs;
 
-        return '<style>' . $css . '</style><script>' . $js . '</script>';
+        return '<script>' . $css . '</script><script>' . $js . '</script>';
     }
 }
