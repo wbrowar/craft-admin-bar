@@ -24,12 +24,6 @@
     "require": {
         "craftcms/cms": "^3.3.16"
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        }
-    ],
     "autoload": {
         "psr-4": {
           "wbrowar\\adminbar\\": "src/"
