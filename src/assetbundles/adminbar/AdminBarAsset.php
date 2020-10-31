@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2017 Will Browar
  */
 
-namespace wbrowar\adminbar\assetbundles\AdminBar;
+namespace wbrowar\adminbar\assetbundles\adminbar;
 
 use Craft;
 use craft\web\AssetBundle;

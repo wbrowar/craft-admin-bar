@@ -11,7 +11,7 @@
 namespace wbrowar\adminbar;
 
 use craft\services\Plugins;
-use wbrowar\adminbar\assetbundles\AdminBar\AdminBarAsset;
+use wbrowar\adminbar\assetbundles\adminbar\AdminBarAsset;
 use wbrowar\adminbar\twigextensions\AdminBarTwigExtension;
 use wbrowar\adminbar\models\Settings;
 

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.1.11 - 2019-10-31
+### Fixed
+- Composer 2 compatibility [#23](https://github.com/wbrowar/craft-adminbar/issues/23)
+
+
 ## 3.1.10 - 2019-11-28
 ### Changed
 - Bumped minimum Craft CMS requirement to `^3.3.16`
