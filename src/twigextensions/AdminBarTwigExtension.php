@@ -25,7 +25,7 @@ use Craft;
  * @package   AdminBar
  * @since     3.0.1
  */
-class AdminBarTwigExtension extends \Twig_Extension
+class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
 {
     // Public Methods
     // =========================================================================
@@ -50,11 +50,11 @@ class AdminBarTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('addAdminBarCss', [$this, 'addAdminBarCss']),
-            new \Twig_SimpleFunction('addAdminBarJs', [$this, 'addAdminBarJs']),
-            new \Twig_SimpleFunction('adminbar', [$this, 'adminBar']),
-            new \Twig_SimpleFunction('editlink', [$this, 'editLink']),
-            new \Twig_SimpleFunction('getAdminBarAssets', [$this, 'getAdminBarAssets'], array('is_safe' => array('html'))),
+            new \Twig\TwigFunction('addAdminBarCss', [$this, 'addAdminBarCss']),
+            new \Twig\TwigFunction('addAdminBarJs', [$this, 'addAdminBarJs']),
+            new \Twig\TwigFunction('adminbar', [$this, 'adminBar']),
+            new \Twig\TwigFunction('editlink', [$this, 'editLink']),
+            new \Twig\TwigFunction('getAdminBarAssets', [$this, 'getAdminBarAssets'], array('is_safe' => array('html'))),
         ];
     }
 
