@@ -37,7 +37,7 @@
         "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/wbrowar/craft-3-adminbar/master/CHANGELOG.md",
         "components": {
-            "bar": "wbrowar\\adminbar\\services\\Bar",
+            "bar": "wbrowar\\adminbar\\services\\Bar"
         },
         "class": "wbrowar\\adminbar\\AdminBar"
     }
