@@ -1,24 +1,24 @@
 {% import "_includes/forms" as forms %}
 
-<h2>Widgets</h2>
-<p>Craft plugins can add context-aware widgets to Admin Bar.</p>
+{#<h2>Widgets</h2>#}
+{#<p>Craft plugins can add context-aware widgets to Admin Bar.</p>#}
 
-{% if widgets|length %}
-    {% for item in widgets %}
-        {% set id = item.pluginHandle ~ '_' ~ item.handle %}
-        {{ forms.lightswitchField({
-            label: item.pluginName ~ ': ' ~ item.name,
-            id: 'widgets[' ~ id ~ ']',
-            name: 'widgets[' ~ id ~ ']',
-            instructions: item.description ?? null,
-            on: settings.widgets[id] ?? false ? settings.widgets[id] : false,
-        }) }}
-    {% endfor %}
-{% else %}
-    <p>The plugins you have installed do not provide Admin Bar Widgets, yet.</p>
-{% endif %}
+{#{% if widgets|length %}#}
+{#    {% for item in widgets %}#}
+{#        {% set id = item.pluginHandle ~ '_' ~ item.handle %}#}
+{#        {{ forms.lightswitchField({#}
+{#            label: item.pluginName ~ ': ' ~ item.name,#}
+{#            id: 'widgets[' ~ id ~ ']',#}
+{#            name: 'widgets[' ~ id ~ ']',#}
+{#            instructions: item.description ?? null,#}
+{#            on: settings.widgets[id] ?? false ? settings.widgets[id] : false,#}
+{#        }) }}#}
+{#    {% endfor %}#}
+{#{% else %}#}
+{#    <p>The plugins you have installed do not provide Admin Bar Widgets, yet.</p>#}
+{#{% endif %}#}
 
-<hr>
+{#<hr>#}
 
 <h2>Additional Links</h2>
 <p>Add your own links to the Admin Bar.</p>
@@ -28,6 +28,7 @@
     'id': 'customLinks',
     'name': 'customLinks',
     'addRowLabel': 'Add a link',
+    'allowAdd': true,
     'cols': {
         'linkLabel': {
             'heading': 'Label',

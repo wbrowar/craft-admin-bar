@@ -47,7 +47,7 @@ class BarController extends Controller
      *         The actions must be in 'kebab-case'
      * @access protected
      */
-    protected $allowAnonymous = true;
+    protected int|bool|array $allowAnonymous = true;
 
     public $enableCsrfValidation = false;
 

@@ -5,13 +5,12 @@
 {% import _self as self %}
 
 {# icons #}
-{% set assetBundlePath = view.getAssetManager().getPublishedPath('@wbrowar/adminbar/assetbundles/adminbar/dist', true) %}
-{% set dashboardPath = assetBundlePath ~ '/img/dashboard.svg' %}
-{% set devmodePath = assetBundlePath ~ '/img/devmode.svg' %}
-{% set editPath = assetBundlePath ~ '/img/edit.svg' %}
-{% set iconPath = assetBundlePath ~ '/img/icon.svg' %}
-{% set guidePath = assetBundlePath ~ '/img/guide.svg' %}
-{% set settingsPath = assetBundlePath ~ '/img/settings.svg' %}
+{% set dashboardPath = include('admin-bar/icons/dashboard.svg') %}
+{% set devmodePath = include('admin-bar/icons/devmode.svg') %}
+{% set editPath = include('admin-bar/icons/edit.svg') %}
+{% set iconPath = include('admin-bar/icons/icon.svg') %}
+{% set guidePath = include('admin-bar/icons/guide.svg') %}
+{% set settingsPath = include('admin-bar/icons/settings.svg') %}
 
 {% if useCss ?? true %}
     {% set css %}
@@ -37,7 +36,7 @@
         {% endif %}
 
         {% if displayGreeting ?? true %}
-            <div class="adminbar__greeting">{% spaceless %}
+            <div class="adminbar__greeting">{% apply spaceless %}
                 {% if currentUser and (currentUser.photo ?? false) %}
                     <span class="adminbar__user_photo">
                         <img src="{{ currentUser.getThumbUrl(50) }}" alt="{{ currentUser.friendlyName }}’s photo"/>
@@ -45,16 +44,16 @@
                 {% endif %}
 
                 {{ 'Hi'|t }}, {{ currentUser.friendlyName ?? '' }}
-            {% endspaceless %}</div>
+            {% endapply %}</div>
         {% endif %}
 
         <div id="adminbar__links" class="adminbar__links_wrapper">
             <div id="adminbar__widget_buttons" class="adminbar__widget_buttons">
-                {% if widgets ?? false %}
-                    {% for item in widgets %}
-                        <a id="adminbar__widget_button--{{ item.id }}" class="adminbar__widget_button" href="javascript:;" title="{{ item.name }}" data-widget-id="{{ item.id }}">{{ svg(item.iconPath) }}<span class="adminbar__widget_button__click" data-widget-id="{{ item.id }}"></span></a>
-                    {% endfor %}
-                {% endif %}
+{#                {% if widgets ?? false %}#}
+{#                    {% for item in widgets %}#}
+{#                        <a id="adminbar__widget_button--{{ item.id }}" class="adminbar__widget_button" href="javascript:;" title="{{ item.name }}" data-widget-id="{{ item.id }}">{{ svg(item.iconPath) }}<span class="adminbar__widget_button__click" data-widget-id="{{ item.id }}"></span></a>#}
+{#                    {% endfor %}#}
+{#                {% endif %}#}
             </div>
             <div class="adminbar__overlay">
                 <nav id="adminbar__links_nav" class="adminbar__links">
