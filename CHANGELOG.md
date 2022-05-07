@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 3.2.0 - 2019-05-06
+## 3.2.0 - 2019-05-07
 ### Added
-- Composer 2 compatibility [#28](https://github.com/wbrowar/craft-adminbar/issues/28)
+- Craft 4 compatibility [#28](https://github.com/wbrowar/craft-adminbar/issues/28)
 
 ### Removed
 - Removed Edit Links and Admin Bar Widgets
