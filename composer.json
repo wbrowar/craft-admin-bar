@@ -11,8 +11,8 @@
         "admin bar"
     ],
     "support": {
-        "docs": "https://github.com/wbrowar/craft-3-adminbar/blob/master/README.md",
-        "issues": "https://github.com/wbrowar/craft-3-adminbar/issues"
+        "docs": "https://raw.githubusercontent.com/wbrowar/craft-adminbar/3.x-craft-4/README.md",
+        "issues": "https://github.com/wbrowar/craft-adminbar/issues"
     },
     "license": "MIT",
     "authors": [
@@ -35,7 +35,7 @@
         "schemaVersion": "3.1.0",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/wbrowar/craft-3-adminbar/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/wbrowar/craft-adminbar/3.x-craft-4/CHANGELOG.md",
         "components": {
             "bar": "wbrowar\\adminbar\\services\\Bar"
         },
