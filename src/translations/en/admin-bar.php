@@ -21,5 +21,7 @@
  * @since     3.0.1
  */
 return [
-    'Admin Bar plugin loaded' => 'Admin Bar plugin loaded',
+    'avatar-alt' => '{name}’s avatar.',
+    'greeting-text' => 'Hi, {name}',
+    'logout-label' => 'Sign out',
 ];

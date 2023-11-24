@@ -4,6 +4,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.0.0-beta.0 - 2023-11-24
+### Added
+- Added static translations for all string on admin bar.
+- Added `rtl` config option that can be passed into `adminBar()` as `adminBar({ rtl: true })`.
+  - _NOTE: Admin Bar will automatically adjust when the page reading direction is set to `rtl`, so this option is here for situations where you have to manually set it._
+
+### Changed
+- Admin Bar is now rendered as a web component, [Admin Bar Component](https://www.npmjs.com/package/admin-bar-component), instead of via a Twig template and custom JavaScript.
+  - It’s rendered via the Shadow DOM, which means that Admin Bar is less likely to be affected by your front-end’s CSS.
+  - More CSS Custom Properties can be changed to customize the look of Admin Bar.
+- The `adminbar()` twig function has been deprecated and changed to `adminBar()` to better follow Craft Twig naming conventions.
+- Changed the Custom CSS text area field into a [Craft Code Editor](https://github.com/nystudio107/craft-code-editor) field.
+
+### Fixed
+- Fixed an issue preventing removing items from the Custom Links settings table field.
+
+### Removed
+- Removed any code related to deprecated "Admin Bar Widgets" feature.
+- Removed any code related to deprecated "Edit Links" feature.
+- Removed the `category` config option for `adminBar()`
+- Removed `addAdminBarCss` Twig function.
+- Removed `addAdminBarJs` Twig function.
+- Removed `editlink` Twig function.
+- Removed `getAdminBarAssets` Twig function.
+- Removed `enableMobileMenu` config option.
+- Removed `clearAdminBarCache` method from Bar service.
+- Removed `renderAdminBarForUri` method from Bar service.
+- Removed `AdminBarRenderEvent` event.
+- Removed `BarController` controller.
+
+
 ## 3.2.1 - 2022-05-07
 ### Fixed
 - Fixed CHANGELOG link in `composer.json`

@@ -50,31 +50,26 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
     public function getFunctions()
     {
         return [
-            new \Twig\TwigFunction('addAdminBarCss', [$this, 'addAdminBarCss']),
-            new \Twig\TwigFunction('addAdminBarJs', [$this, 'addAdminBarJs']),
-            new \Twig\TwigFunction('adminbar', [$this, 'adminBar']),
-            new \Twig\TwigFunction('editlink', [$this, 'editLink']),
-            new \Twig\TwigFunction('getAdminBarAssets', [$this, 'getAdminBarAssets'], array('is_safe' => array('html'))),
+            new \Twig\TwigFunction('adminBar', [$this, 'adminBar']),
+            new \Twig\TwigFunction('adminbar', [$this, 'adminBarLegacy']),
+            new \Twig\TwigFunction('adminBarCssFile', [$this, 'adminBarCssFile']),
+            new \Twig\TwigFunction('adminBarJsFile', [$this, 'adminBarJsFile']),
         ];
     }
 
     /**
-     * Our function called via Twig; it can do anything you want
+     * TODO
      *
      * @param null $text
      *
      * @return string
      */
-    public function addAdminBarCss(string $css)
+    public function adminBarLegacy(array $config = []):string
     {
-        AdminBar::$plugin->bar->templateCss .= $css;
-    }
+        Craft::$app->getDeprecator()->log(__METHOD__, 'The `adminbar()` Twig method has been deprecated and will be removed in Admin Bar 5.0. Use `adminBar()` instead.');
 
-    public function addAdminBarJs(string $js)
-    {
-        AdminBar::$plugin->bar->templateJs .= $js;
+        return $this->adminBar($config);
     }
-
     public function adminBar(array $config = []):string
     {
         if (AdminBar::$plugin->bar->canEmbed()) {
@@ -83,11 +78,8 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
                 $element = Craft::$app->urlManager->getMatchedElement();
 
                 if (!empty($element)) {
-                    //$element->
                     if ($element instanceof craft\elements\Entry) {
                         $config['entry'] = $element;
-                    } elseif ($element instanceof craft\elements\Category) {
-                        $config['category'] = $element;
                     }
                 }
             }
@@ -99,37 +91,17 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
         return false;
     }
 
-    public function editLink(array $config = []):string
+    public function adminBarCssFile():string | null
     {
-        // embed admin bar in twig template
-        return AdminBar::$plugin->editLinks->render($config);
+        $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
+
+        return $assets['css'] ?? null;
     }
 
-    public function getAdminBarAssets(array $config = [], bool $render = true)
+    public function adminBarJsFile():string | null
     {
-        if ($render) {
-            $config['includeAssets'] = $config['includeAssets'] ?? false;
+        $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
 
-            if ($config['uri'] ?? false) {
-                AdminBar::$plugin->bar->renderAdminBarForUri($config['uri'], $config);
-            } else if (!isset($config['entry']) && !isset($config['url'])) {
-                $element = Craft::$app->urlManager->getMatchedElement();
-
-                if (!empty($element)) {
-                    if ($element instanceof craft\elements\Entry) {
-                        $config['entry'] = $element;
-                    } elseif ($element instanceof craft\elements\Category) {
-                        $config['category'] = $element;
-                    }
-                }
-
-                AdminBar::$plugin->bar->render($config);
-            }
-        }
-
-        $css = AdminBar::$plugin->bar->templateCss;
-        $js = $render ? 'function adminBarInit() {' . AdminBar::$plugin->bar->templateJs . '}' : AdminBar::$plugin->bar->templateJs;
-
-        return '<style>' . $css . '</style><script>' . $js . '</script>';
+        return $assets['js'] ?? null;
     }
 }

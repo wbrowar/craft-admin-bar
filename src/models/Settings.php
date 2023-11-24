@@ -40,10 +40,10 @@ class Settings extends Model
      * @var string
      */
     // Settings that can be set in CP
-    // Custom CSS used to style Guide components
+    // Custom CSS used to style Guide components.
     public $customCss = '';
 
-    // Links added via config file
+    // Links added via settings page.
     public $customLinks = [];
 
     // Settings set in adminbar.php
@@ -55,13 +55,6 @@ class Settings extends Model
     public $displayGuideLink = true;
     public $displaySettingsLink = true;
     public $displayLogout = true;
-    public $enableMobileMenu = true;
-    public $widgets = [];
-
-    // EDIT LINKS
-    public $displayEditDate = true;
-    public $displayEditAuthor = true;
-    public $displayRevisionNote = true;
 
     // Public Methods
     // =========================================================================
