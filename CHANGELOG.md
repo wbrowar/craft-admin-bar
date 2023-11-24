@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 3.2.1 - 2022-05-07
+## 4.0.0-beta.0 - 2023-11-24
 ### Added
 - Added static translations for all string on admin bar.
 - Added `rtl` config option that can be passed into `adminBar()` as `adminBar({ rtl: true })`.
@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
   - It’s rendered via the Shadow DOM, which means that Admin Bar is less likely to be affected by your front-end’s CSS.
   - More CSS Custom Properties can be changed to customize the look of Admin Bar.
 - The `adminbar()` twig function has been deprecated and changed to `adminBar()` to better follow Craft Twig naming conventions.
+- Changed the Custom CSS text area field into a [Craft Code Editor](https://github.com/nystudio107/craft-code-editor) field.
 
 ### Fixed
 - Fixed an issue preventing removing items from the Custom Links settings table field.

@@ -1,44 +1,43 @@
 {% import "_includes/forms" as forms %}
-
-<h2>Additional Links</h2>
-<p>Add your own links to the Admin Bar.</p>
+{% import "codeeditor/codeEditor" as codeEditor %}
 
 {{ forms.editableTableField({
-    'label': 'Custom Links',
-    'id': 'customLinks',
-    'name': 'customLinks',
-    'addRowLabel': 'Add a link',
-    'allowAdd': true,
-    'allowDelete': true,
-    'cols': {
-        'linkLabel': {
-            'heading': 'Label',
-            'type': 'singleline',
+    label: 'Additional Links'|t('admin-bar'),
+    instructions: 'Add your own links to the Admin Bar.'|t('admin-bar'),
+    id: 'customLinks',
+    name: 'customLinks',
+    addRowLabel: 'Add a link',
+    allowAdd: true,
+    allowDelete: true,
+    cols: {
+        linkLabel: {
+            heading: 'Label',
+            type: 'singleline',
         },
-        'linkUrl': {
-            'heading': 'URL',
-            'type': 'singleline',
+        linkUrl: {
+            heading: 'URL',
+            type: 'singleline',
         },
-        'adminOnly': {
-            'heading': 'Admin only?',
-            'type': 'checkbox',
+        adminOnly: {
+            heading: 'Admin only?',
+            type: 'checkbox',
         },
     },
-    'rows': settings.customLinks ?? ['','',''],
+    rows: settings.customLinks ?? ['','',''],
 }) }}
 
 <hr>
 
-<h2>Colors</h2>
-<p>Use CSS Custom Properties or your own custom CSS to re-brand Admin Bar.</p>
-
-{{ forms.textareaField({
+{{ codeEditor.textareaField({
     label: 'Custom CSS'|t('admin-bar'),
+    instructions: "Use CSS Custom Properties or your own custom CSS to re-brand Admin Bar."|t('admin-bar'),
     id: 'customCss',
-    name: 'customCss',
-    rows: 10,
+    name: "customCss",
     value: settings.customCss,
-    placeholder: 'admin-bar {\n  --admin-bar-bg: oklch(0.51 0.4 262 / 0.75);\n  --admin-bar-color-highlight: oklch(0.51 0.4 57 / 0.86);\n  --admin-bar-button-color-text: oklch(1 0.05 131 / 0.86);\n}'
+}, "Code Editor", {
+    language: "css",
+}, {
+    wrapperClass: 'content-pane'
 }) }}
 
 <h2>CSS Defaults</h2>
@@ -46,7 +45,7 @@
 
 <hr>
 
-<div class="code">
+<div class="content-pane code">
 <code><pre>
 /* Added styles to CSS Cascade Layer to make it easier to override them. */
 @layer admin-bar {
