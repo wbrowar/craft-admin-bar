@@ -1,0 +1,10 @@
+{
+  "admin-bar.ts": {
+    "css": [
+      "assets/admin-bar-HHu2uQjY.css"
+    ],
+    "file": "assets/admin-bar-Pk50sfzL.js",
+    "isEntry": true,
+    "src": "admin-bar.ts"
+  }
+}

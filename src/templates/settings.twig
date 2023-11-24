@@ -1,25 +1,5 @@
 {% import "_includes/forms" as forms %}
 
-{#<h2>Widgets</h2>#}
-{#<p>Craft plugins can add context-aware widgets to Admin Bar.</p>#}
-
-{#{% if widgets|length %}#}
-{#    {% for item in widgets %}#}
-{#        {% set id = item.pluginHandle ~ '_' ~ item.handle %}#}
-{#        {{ forms.lightswitchField({#}
-{#            label: item.pluginName ~ ': ' ~ item.name,#}
-{#            id: 'widgets[' ~ id ~ ']',#}
-{#            name: 'widgets[' ~ id ~ ']',#}
-{#            instructions: item.description ?? null,#}
-{#            on: settings.widgets[id] ?? false ? settings.widgets[id] : false,#}
-{#        }) }}#}
-{#    {% endfor %}#}
-{#{% else %}#}
-{#    <p>The plugins you have installed do not provide Admin Bar Widgets, yet.</p>#}
-{#{% endif %}#}
-
-{#<hr>#}
-
 <h2>Additional Links</h2>
 <p>Add your own links to the Admin Bar.</p>
 
@@ -29,6 +9,7 @@
     'name': 'customLinks',
     'addRowLabel': 'Add a link',
     'allowAdd': true,
+    'allowDelete': true,
     'cols': {
         'linkLabel': {
             'heading': 'Label',
@@ -52,35 +33,95 @@
 <p>Use CSS Custom Properties or your own custom CSS to re-brand Admin Bar.</p>
 
 {{ forms.textareaField({
-    label: 'Custom CSS',
+    label: 'Custom CSS'|t('admin-bar'),
     id: 'customCss',
     name: 'customCss',
     rows: 10,
     value: settings.customCss,
-    placeholder: ':root {\n  --adminbar-color-bg: #222;\n  --adminbar-color-highlight: #c0c;\n  --adminbar-color-link-text: #ccc;\n}'
+    placeholder: 'admin-bar {\n  --admin-bar-bg: oklch(0.51 0.4 262 / 0.75);\n  --admin-bar-color-highlight: oklch(0.51 0.4 57 / 0.86);\n  --admin-bar-button-color-text: oklch(1 0.05 131 / 0.86);\n}'
 }) }}
 
-{% set cssVariables = [
-    ['<b>--adminbar-bg</b>: linear-gradient(to bottom, rgba(0, 0, 0, .7), rgba(0, 0, 0, .95));', 'The background of Admin Bar. This is used as shorthand for the CSS `background` property.'],
-    ['<b>--adminbar-color-bg</b>: rgba(0, 0, 0, .8);', 'The background color of Admin Bar if --adminbar-bg is not set.'],
-    ['<b>--adminbar-color-border</b>: rgb(80, 80, 80);', 'The color of borders that separate sections in Admin Bar'],
-    ['<b>--adminbar-color-highlight</b>: rgb(216, 91, 75);', 'The color that appears when links are rolled over.'],
-    ['<b>--adminbar-color-link-text</b>: rgb(255, 255, 255);', 'The color of link text.'],
-    ['<b>--adminbar-color-text</b>: rgba(255, 255, 255, .8);', 'The color of all other text.'],
-    ['<b>--adminbar-font-stack</b>: \'BlinkMacSystemFont\', -apple-system, \'Trebuchet MS\', \'Lucida Grande\', \'Lucida Sans Unicode\', \'Lucida Sans\', Tahoma, sans-serif;', 'The fonts used in Admin Bar and Edit Links.'],
-    ['<b>--adminbar-font-size-mobile</b>: 17px;', 'The mobile font size for type in Admin Bar and Edit Links.'],
-    ['<b>--adminbar-font-size-desktop</b>: 14px;', 'The font size for type in Admin Bar and Edit Links in a viewport above 601px wide.'],
-    ['<b>--adminbar-height-mobile</b>: 52px;', 'The height of Admin Bar and the top of Edit Links on mobile.'],
-    ['<b>--adminbar-height-desktop</b>: 45px;', 'The height of Admin Bar and the top of Edit Links in a viewport above 601px wide.'],
-    ['<b>--editlinks-bg</b>: var(--editlinks-color-bg);', 'The background of Edit Links. This is used as shorthand for the CSS `background` property.'],
-    ['<b>--editlinks-color-bg</b>: rgba(0, 0, 0, .8);', 'The background color of Edit Links if --adminbar-bg is not set.'],
-    ['<b>--editlinks-color-border</b>: var(--adminbar-color-border);', 'Color of borders in Edit Links'],
-    ['<b>--editlinks-color-highlight</b>: var(--adminbar-color-highlight);', 'The color that appears when links are rolled over.'],
-    ['<b>--editlinks-color-text</b>: rgb(80, 80, 80);', 'The color of all other text.'],
-] %}
-<div style="display: grid; grid-template-columns: minmax(100px, 450px) auto; grid-template-rows: auto; grid-gap: 5px 30px;">
-    {% for item in cssVariables %}
-        <div>{{ item[0]|raw }}</div>
-        <div>{{ item[1]|raw }}</div>
-    {% endfor %}
+<h2>CSS Defaults</h2>
+<p>Below are the contents of the CSS file for the Admin Bar Component. You can override any of these CSS variables in your front-end stylesheet, or in the Custom CSS field above.</p>
+
+<hr>
+
+<div class="code">
+<code><pre>
+/* Added styles to CSS Cascade Layer to make it easier to override them. */
+@layer admin-bar {
+  admin-bar {
+    /* Sets the background of the bar using the background shorthand property,
+    allowing you to use a gradient, a solid color, or an image. */
+    --admin-bar-bg: linear-gradient(to bottom, rgba(0, 0, 0, .65), rgba(0, 0, 0, .9));
+
+    /* The color used on hover changes. */
+    --admin-bar-color-highlight: oklch(0.6 0.4 83);
+
+    /* The highlight color specific to logout buttons. That can be set to
+    a different color to make it more obvious that the logout button is not a link. */
+    --admin-bar-color-highlight-logout: var(--admin-bar-color-highlight);
+
+    /* The color of text for everything but button labels.. */
+    --admin-bar-color-text: rgba(255, 255, 255, 0.8);
+
+    /* The font stack for all text. */
+    --admin-bar-font-stack: 'BlinkMacSystemFont', -apple-system, 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;
+
+    /* The font size for all text. */
+    --admin-bar-font-size: .9rem;
+
+    /* The height and width of avatar images. */
+    --admin-bar-avatar-size: 25px;
+
+    /* The height of the bar and all of the buttons. */
+    --admin-bar-height: 43px;
+
+    /* When `show-environment` is added to an `<admin-bar>` an environment
+    warning will appear. The default looks like yellow, striped police tape,
+    but you can use any CSS value used in the background shorthand property. */
+    --admin-bar-environment-bg: repeating-linear-gradient(
+      -45deg,
+      var(--admin-bar-environment-bg-color),
+      var(--admin-bar-environment-bg-color) 18px,
+      transparent 18px,
+      transparent 30px
+    );
+
+    /* Change just the color of the yellow stripes in the environment warning. */
+    --admin-bar-environment-bg-color: oklch(0.9 0.4 98);
+
+    /* The height of the environment warning */
+    --admin-bar-environment-height: 4px;
+
+    /* The default transition duration for all animations.
+    Set this to `0` to turn off transitions. */
+    --admin-bar-transition-duration: 0.3s;
+
+    /* Adds a box-shadow to the bar to increase visual elevation. */
+    /*--admin-bar-shadow: 0 0 15px color-mix(in srgb, rgba(0, 0, 0, 0.7), currentColor 10%);*/
+
+    /* Adds a box-shadow to avatar images and buttons. */
+    --admin-bar-shadow-elements: 0 1px 2px color-mix(in srgb, rgba(0, 0, 0, 0.5), currentColor 10%), 0 3px 6px color-mix(in srgb, rgba(0, 0, 0, 0.4), currentColor 10%);
+
+    /* By default, when adding the `fixed` or `sticky` class to an `<admin-bar>`,
+     the z-index of the element is set to `1`. Set this property if you need the
+     z-index to be a higher value. */
+    /*--admin-bar-z-index: 1000000000;*/
+
+    /* The background of all buttons. */
+    --admin-bar-button-color-bg: transparent;
+
+    /* The text of all button labels. */
+    --admin-bar-button-color-text: rgb(255, 255, 255);
+  }
+
+  @media (prefers-reduced-motion) {
+    admin-bar {
+      /* Turns off transitions for users who do not want any animations. */
+      --admin-bar-transition-duration: 0s;
+    }
+  }
+}
+</pre></code>
 </div>

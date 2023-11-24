@@ -14,7 +14,7 @@
  * Completely optional configuration settings for Admin Bar if you want to customize some
  * of its more esoteric behavior, or just want specific control over things.
  *
- * Don't edit this file, instead copy it to 'craft/config' as 'adminbar.php' and make
+ * Don't edit this file, instead copy it to 'craft/config' as 'admin-bar.php' and make
  * your changes there.
  *
  * Once copied to 'craft/config', this file will be multi-environment aware as well, so you can
@@ -28,14 +28,9 @@ return array(
     'displayGreeting' => true,
     'displayDashboardLink' => true,
     'displayDefaultEditSection' => true,
+    'displayGuideLink' => true,
     'displaySettingsLink' => true,
     'displayLogout' => true,
-    'enableMobileMenu' => true,
-
-    // EDIT LINKS
-    'displayEditDate' => true,
-    'displayEditAuthor' => true,
-    'displayRevisionNote' => true,
 );
 
 // EXAMPLES

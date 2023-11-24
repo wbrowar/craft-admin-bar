@@ -1,0 +1,16 @@
+{
+  "name": "admin-bar",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "admin-bar-component": "^0.1.8",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0"
+  }
+}
