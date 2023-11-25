@@ -28,22 +28,30 @@
 
 <hr>
 
+{% set placeholder %}
+admin-bar {
+    --admin-bar-bg: oklch(0.51 0.4 262 / 0.75);
+    --admin-bar-color-highlight: oklch(0.51 0.4 57 / 0.86);
+    --admin-bar-button-color-text: oklch(1 0.05 131 / 0.86);
+}
+{% endset %}
+
 {{ codeEditor.textareaField({
     label: 'Custom CSS'|t('admin-bar'),
     instructions: "Use CSS Custom Properties or your own custom CSS to re-brand Admin Bar."|t('admin-bar'),
     id: 'customCss',
     name: "customCss",
+    placeholder: placeholder|replace({" ": "&nbsp;"})|raw|nl2br,
     value: settings.customCss,
+    rows: 5,
 }, "Code Editor", {
     language: "css",
 }, {
-    wrapperClass: 'content-pane'
+    wrapperClass: 'content-pane',
 }) }}
 
 <h2>CSS Defaults</h2>
-<p>Below are the contents of the CSS file for the Admin Bar Component. You can override any of these CSS variables in your front-end stylesheet, or in the Custom CSS field above.</p>
-
-<hr>
+<p style="text-wrap: pretty;">Below are the contents of the CSS file for the Admin Bar Component. You can override any of these CSS variables in your front-end stylesheet, or in the Custom CSS field above.</p>
 
 <div class="content-pane code">
 <code><pre>
