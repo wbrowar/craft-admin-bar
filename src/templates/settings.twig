@@ -44,7 +44,7 @@ admin-bar {
     placeholder: placeholder|replace({" ": "&nbsp;"})|raw|nl2br,
     value: settings.customCss,
     rows: 5,
-}, "Code Editor", {
+}, "Custom CSS", {
     language: "css",
 }, {
     wrapperClass: 'content-pane',
@@ -53,8 +53,7 @@ admin-bar {
 <h2>CSS Defaults</h2>
 <p style="text-wrap: pretty;">Below are the contents of the CSS file for the Admin Bar Component. You can override any of these CSS variables in your front-end stylesheet, or in the Custom CSS field above.</p>
 
-<div class="content-pane code">
-<code><pre>
+{% set cssDefaults %}
 /* Added styles to CSS Cascade Layer to make it easier to override them. */
 @layer admin-bar {
   admin-bar {
@@ -130,5 +129,14 @@ admin-bar {
     }
   }
 }
-</pre></code>
-</div>
+{% endset %}
+
+{{ codeEditor.textareaField({
+    value: cssDefaults|raw,
+}, "Code Editor", {
+    language: "css",
+    readOnly: true,
+}, {
+    maxEditorRows: 0,
+    wrapperClass: 'content-pane',
+}) }}
