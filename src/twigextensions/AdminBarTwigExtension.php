@@ -72,7 +72,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
     }
     public function adminBar(array $config = []):string
     {
-        if (AdminBar::$plugin->bar->canEmbed()) {
+        if (AdminBar::$plugin->bar->canEmbed() || ($config['force'] ?? false)) {
             if (!isset($config['entry']) && !isset($config['url'])) {
                 // get current page element
                 $element = Craft::$app->urlManager->getMatchedElement();
