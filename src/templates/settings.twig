@@ -1,6 +1,14 @@
 {% import "_includes/forms" as forms %}
 {% import "codeeditor/codeEditor" as codeEditor %}
 
+<h2>{{ 'Preview'|t('admin-bar') }}</h2>
+
+<div class="admin-bar-settings-preview" style="position: relative;">
+    {{ adminBar({ force: true }) }}
+</div>
+
+<hr>
+
 {{ forms.editableTableField({
     label: 'Additional Links'|t('admin-bar'),
     instructions: 'Add your own links to the Admin Bar.'|t('admin-bar'),
@@ -30,9 +38,9 @@
 
 {% set placeholder %}
 admin-bar {
-    --admin-bar-bg: oklch(0.51 0.4 262 / 0.75);
-    --admin-bar-color-highlight: oklch(0.51 0.4 57 / 0.86);
-    --admin-bar-button-color-text: oklch(1 0.05 131 / 0.86);
+    --admin-bar-bg: linear-gradient(to bottom, oklch(0.11 0.3 190 / 0.67), oklch(0.11 0.3 190 / 0.8));
+    --admin-bar-color-highlight: oklch(0.54 0.3 23.9);
+    --admin-bar-color-text: rgb(228, 237, 246);
 }
 {% endset %}
 
@@ -44,23 +52,25 @@ admin-bar {
     placeholder: placeholder|replace({" ": "&nbsp;"})|raw|nl2br,
     value: settings.customCss,
     rows: 5,
-}, "Code Editor", {
+}, "Custom CSS", {
     language: "css",
 }, {
     wrapperClass: 'content-pane',
 }) }}
 
-<h2>CSS Defaults</h2>
-<p style="text-wrap: pretty;">Below are the contents of the CSS file for the Admin Bar Component. You can override any of these CSS variables in your front-end stylesheet, or in the Custom CSS field above.</p>
+<h2>{{ 'CSS Defaults'|t('admin-bar') }}</h2>
+<p style="text-wrap: pretty;">{{ 'Below are the contents of the CSS file for the Admin Bar Component. You can override any of these CSS variables in your front-end stylesheet, or in the Custom CSS field above.'|t('admin-bar') }}</p>
 
-<div class="content-pane code">
-<code><pre>
+{% set cssDefaults %}
 /* Added styles to CSS Cascade Layer to make it easier to override them. */
 @layer admin-bar {
   admin-bar {
     /* Sets the background of the bar using the background shorthand property,
     allowing you to use a gradient, a solid color, or an image. */
-    --admin-bar-bg: linear-gradient(to bottom, rgba(0, 0, 0, .65), rgba(0, 0, 0, .9));
+    --admin-bar-bg: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.9));
+
+    /* Adds an effect to blur */
+    --admin-bar-backdrop-filter: blur(20px) saturate(200%);
 
     /* The color used on hover changes. */
     --admin-bar-color-highlight: oklch(0.6 0.4 83);
@@ -99,7 +109,7 @@ admin-bar {
     --admin-bar-environment-bg-color: oklch(0.9 0.4 98);
 
     /* The height of the environment warning */
-    --admin-bar-environment-height: 4px;
+    --admin-bar-environment-height: 5px;
 
     /* The default transition duration for all animations.
     Set this to `0` to turn off transitions. */
@@ -114,13 +124,67 @@ admin-bar {
     /* By default, when adding the `fixed` or `sticky` class to an `<admin-bar>`,
      the z-index of the element is set to `1`. Set this property if you need the
      z-index to be a higher value. */
-    /*--admin-bar-z-index: 1000000000;*/
+    /*--admin-bar-z-index: 1;*/
 
     /* The background of all buttons. */
     --admin-bar-button-color-bg: transparent;
 
     /* The text of all button labels. */
     --admin-bar-button-color-text: rgb(255, 255, 255);
+
+    /* Default styles for the `<admin-bar>` element. */
+    display: block;
+    --environment-height: 0px;
+    width: var(--admin-bar-width, 100%);
+    height: calc(var(--admin-bar-height, 43px) + var(--environment-height));
+
+    /* Add height when environment warning is enabled. */
+    &[show-environment] {
+      --environment-height: var(--admin-bar-environment-height);
+    }
+    /* Set read direction from right to left. */
+    &.rtl {
+      direction: rtl;
+    }
+    /* Fixes `<admin-bar>` to the top of page. */
+    &.fixed {
+      position: fixed;
+      right: 0;
+      left: 0;
+      z-index: var(--admin-bar-z-index, 1);
+
+      &:not(.bottom) {
+        top: 0;
+      }
+    }
+    /* Sticks `<admin-bar>` to the top of the page when scrolling. */
+    &.sticky {
+      position: sticky;
+      right: 0;
+      left: 0;
+      z-index: var(--admin-bar-z-index, 1);
+
+      &:not(.bottom) {
+        top: 0;
+      }
+    }
+    /* Moves `<admin-bar>` to the bottom of the page when using `.fixed` or `.sticky`. */
+    &.bottom {
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    /* Avoid layout shift from happening before Admin Bar Component is registered. */
+    &:not(:defined) {
+      background: var(--admin-bar-bg);
+      opacity: 0.75;
+
+      /* Hide all slot content until Admin Bar Component is registered. */
+      & * {
+        display: none;
+      }
+    }
   }
 
   @media (prefers-reduced-motion) {
@@ -130,5 +194,14 @@ admin-bar {
     }
   }
 }
-</pre></code>
-</div>
+{% endset %}
+
+{{ codeEditor.textareaField({
+    value: cssDefaults|raw,
+}, "Code Editor", {
+    language: "css",
+    readOnly: true,
+}, {
+    maxEditorRows: 0,
+    wrapperClass: 'content-pane',
+}) }}

@@ -19,6 +19,7 @@
 
 {% set adminBarAttributes = {
     class: classes,
+    'greeting-text': 'greeting-text'|t('admin-bar', params = { name: currentUser.friendlyName }),
     'logout-href': url(logoutUrl),
     'logout-label': 'logout-label'|t('admin-bar'),
     'show-environment': devMode,
@@ -34,8 +35,6 @@
 {% endif %}
 
 <admin-bar {{ attr(adminBarAttributes) }}>
-    <div slot="greeting">{{ 'greeting-text'|t('admin-bar', params = { name: currentUser.friendlyName }) }}</div>
-
     {% if displayDashboardLink ?? true %}
         <admin-bar-button button-href="{{ url(craft.app.config.general.cpTrigger ~ '/dashboard') }}" label-text="{{ 'Dashboard'|t }}"><span slot="label-before">{{ icons.dashboard }}</span></admin-bar-button>
     {% endif %}

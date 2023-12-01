@@ -24,7 +24,6 @@
 return array(
     // ADMIN BAR
     'additionalLinks' => [],
-    'customCss' => '',
     'displayGreeting' => true,
     'displayDashboardLink' => true,
     'displayDefaultEditSection' => true,

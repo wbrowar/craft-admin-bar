@@ -4,11 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 4.0.0-beta.0 - 2023-11-24
+## 4.0.0-beta.1 - 2023-12-01
 ### Added
-- Added static translations for all string on admin bar.
+- Added static translations for all strings on admin bar.
 - Added `rtl` config option that can be passed into `adminBar()` as `adminBar({ rtl: true })`.
   - _NOTE: Admin Bar will automatically adjust when the page reading direction is set to `rtl`, so this option is here for situations where you have to manually set it._
+- Added `force` option to `adminBar()`, bypassing the default check to see if Admin Bar can be rendered.
 
 ### Changed
 - Admin Bar is now rendered as a web component, [Admin Bar Component](https://www.npmjs.com/package/admin-bar-component), instead of via a Twig template and custom JavaScript.
