@@ -35,26 +35,69 @@ class Settings extends Model
     // =========================================================================
 
     /**
+     * Links added via `config/admin-bar.php`.
+     *
+     * @var array
+     */
+    public array $additionalLinks = [];
+
+    /**
      * Some field model attribute
      *
-     * @var string
+     * @var string Custom CSS used to style Guide components.
      */
-    // Settings that can be set in CP
-    // Custom CSS used to style Guide components.
-    public $customCss = '';
+    public string $customCss = '';
 
-    // Links added via settings page.
-    public $customLinks = [];
+    /**
+     * Links added via settings page.
+     *
+     * @var array
+     */
+    public array $customLinks = [];
 
-    // Settings set in adminbar.php
-    // ADMIN BAR
-    public $additionalLinks = [];
-    public $displayGreeting = true;
-    public $displayDashboardLink = true;
-    public $displayDefaultEditSection = true;
-    public $displayGuideLink = true;
-    public $displaySettingsLink = true;
-    public $displayLogout = true;
+    /**
+     * Adds the Dashboard link to Admin Bar.
+     *
+     * @var bool
+     */
+    public bool $displayDashboardLink = true;
+
+    /**
+     * Adds the Edit link to Admin Bar.
+     *
+     * @var bool
+     */
+    public bool $displayDefaultEditSection = true;
+
+    /**
+     * Adds the Greeting section to Admin Bar. This displays the current user’s
+     * avatar (if one is set) and the text, “Hi, {{ user.friendlyName }}”.
+     *
+     * @var bool
+     */
+    public bool $displayGreeting = true;
+
+    /**
+     * Adds the Guide link to Admin Bar.
+     *
+     * @var bool
+     */
+    public bool $displayGuideLink = true;
+
+    /**
+     * Adds the Logout section to Admin Bar. This displays a “Sign out” link that
+     * links to the `/logout` URL.
+     *
+     * @var bool
+     */
+    public bool $displayLogout = true;
+
+    /**
+     * Adds the Settings link to Admin Bar.
+     *
+     * @var bool
+     */
+    public bool $displaySettingsLink = true;
 
     // Public Methods
     // =========================================================================
