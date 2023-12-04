@@ -74,11 +74,6 @@ class AdminBar extends Plugin
         // Add in our Twig extensions
         Craft::$app->view->registerTwigExtension(new AdminBarTwigExtension());
 
-        Event::on(Plugins::class, Plugins::EVENT_BEFORE_SAVE_PLUGIN_SETTINGS, function() {
-            // Remove duplicate links that appear upon save
-            AdminBar::$plugin->setSettings(['additionalLinks' => []]);
-        });
-
         /**
          * Logging in Craft involves using one of the following methods:
          *

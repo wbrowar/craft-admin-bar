@@ -54,9 +54,9 @@
         <admin-bar-button button-href="{{ cpUrl('guide') }}" label-text="{{ 'Guide'|t('admin-bar') }}"><span slot="label-before">{{ icons.guide }}</span></admin-bar-button>
     {% endif %}
 
-    {% if customLinks|length %}
+    {% if customLinks ?? false %}
         {% for link in customLinks %}
-            {% if link.linkUrl|length %}
+            {% if link.linkUrl ?? false %}
                 {% if link.adminOnly != true %}
                     <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}"></admin-bar-button>
                 {% elseif link.adminOnly and currentUser and currentUser.admin %}
@@ -91,7 +91,7 @@
 {% endif %}
 
 {% macro addConfigLink(link) %}
-    {% if link.linkParams is defined %}
+    {% if link.linkParams ?? false %}
         {% set params = link.linkParams %}
     {% else %}
         {% set params = '' %}
@@ -102,11 +102,11 @@
     {% set mustShowScriptName = link.mustShowScriptName ?? '' %}
 
     {% set userHasPermission = true %}
-    {% if link.admin is defined and link.admin %}
+    {% if link.admin ?? false %}
         {% if currentUser and not currentUser.admin %}
             {% set userHasPermission = false %}
         {% endif %}
-    {% elseif link.permissions is defined and link.permissions|length %}
+    {% elseif link.permissions ?? false %}
         {% for permission in link.permissions %}
             {% if currentUser and not currentUser.can(permission) %}
                 {% set userHasPermission = false %}
