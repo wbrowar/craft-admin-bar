@@ -14,24 +14,25 @@
     instructions: 'Add your own links to the Admin Bar.'|t('admin-bar'),
     id: 'customLinks',
     name: 'customLinks',
-    addRowLabel: 'Add a link',
+    addRowLabel: 'Add a link'|t('little-layout'),
     allowAdd: true,
     allowDelete: true,
+    allowReorder: true,
     cols: {
         linkLabel: {
-            heading: 'Label',
+            heading: 'Label'|t('admin-bar'),
             type: 'singleline',
         },
         linkUrl: {
-            heading: 'URL',
+            heading: 'URL'|t('admin-bar'),
             type: 'singleline',
         },
         adminOnly: {
-            heading: 'Admin only?',
+            heading: 'Admin only?'|t('admin-bar'),
             type: 'checkbox',
         },
     },
-    rows: settings.customLinks ?? ['','',''],
+    rows: settings.customLinks ?? [],
 }) }}
 
 <hr>
@@ -132,9 +133,11 @@ admin-bar {
     /* The text of all button labels. */
     --admin-bar-button-color-text: rgb(255, 255, 255);
 
+    /* ====================================================================== */
+
     /* Default styles for the `<admin-bar>` element. */
-    display: block;
     --environment-height: 0px;
+    display: block;
     width: var(--admin-bar-width, 100%);
     height: calc(var(--admin-bar-height, 43px) + var(--environment-height));
 

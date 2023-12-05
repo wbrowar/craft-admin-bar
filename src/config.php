@@ -22,7 +22,6 @@
  */
 
 return array(
-    // ADMIN BAR
     'additionalLinks' => [],
     'displayGreeting' => true,
     'displayDashboardLink' => true,

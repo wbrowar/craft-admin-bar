@@ -10,6 +10,7 @@
 
 namespace wbrowar\adminbar\twigextensions;
 
+use craft\errors\DeprecationException;
 use wbrowar\adminbar\AdminBar;
 
 use Craft;
@@ -33,9 +34,9 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
     /**
      * Returns the name of the extension.
      *
-     * @return string The extension name
+     * @return string The extension name.
      */
-    public function getName()
+    public function getName(): string
     {
         return 'AdminBar';
     }
@@ -47,7 +48,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
      *
     * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new \Twig\TwigFunction('adminBar', [$this, 'adminBar']),
@@ -58,19 +59,12 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
     }
 
     /**
-     * TODO
+     * Renders the Admin Bar after checking to see if it can be rendered on the page.
      *
-     * @param null $text
-     *
+     * @param array $config An object of config options that can be passed into `{{ adminBar() }}`. See the README for a full list of config params.
      * @return string
      */
-    public function adminBarLegacy(array $config = []):string
-    {
-        Craft::$app->getDeprecator()->log(__METHOD__, 'The `adminbar()` Twig method has been deprecated and will be removed in Admin Bar 5.0. Use `adminBar()` instead.');
-
-        return $this->adminBar($config);
-    }
-    public function adminBar(array $config = []):string
+    public function adminBar(array $config = []): string
     {
         if (AdminBar::$plugin->bar->canEmbed() || ($config['force'] ?? false)) {
             if (!isset($config['entry']) && !isset($config['url'])) {
@@ -91,17 +85,41 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
         return false;
     }
 
-    public function adminBarCssFile():string | null
+    /**
+     * Returns the path to Admin Bar’s CSS File.
+     *
+     * @return string | null
+     */
+    public function adminBarCssFile(): string | null
     {
         $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
 
         return $assets['css'] ?? null;
     }
 
-    public function adminBarJsFile():string | null
+    /**
+     * Returns the path to Admin Bar’s JavaScript File.
+     *
+     * @return string | null
+     */
+    public function adminBarJsFile(): string | null
     {
         $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
 
         return $assets['js'] ?? null;
+    }
+
+    /**
+     * DEPRECATED: Renders the Admin Bar and logs a deprecation error (or throws an error in devMode).
+     *
+     * @param array $config An object of config options that can be passed into `{{ adminBar() }}`. See the README for a full list of config params.
+     * @return string
+     * @throws DeprecationException
+     */
+    public function adminBarLegacy(array $config = []): string
+    {
+        Craft::$app->getDeprecator()->log(__METHOD__, 'The `adminbar()` Twig method has been deprecated and will be removed in Admin Bar 5.0. Use `adminBar()` instead.');
+
+        return $this->adminBar($config);
     }
 }

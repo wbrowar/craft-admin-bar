@@ -10,12 +10,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Added `rtl` config option that can be passed into `adminBar()` as `adminBar({ rtl: true })`.
   - _NOTE: Admin Bar will automatically adjust when the page reading direction is set to `rtl`, so this option is here for situations where you have to manually set it._
 - Added `force` option to `adminBar()`, bypassing the default check to see if Admin Bar can be rendered.
+- When rendering `{{ adminBar() }}` results in an error, the error is caught and contained for easier debugging.
+- All PHP classes are now documented with updated comments.
 
 ### Changed
 - Admin Bar is now rendered as a web component, [Admin Bar Component](https://www.npmjs.com/package/admin-bar-component), instead of via a Twig template and custom JavaScript.
   - It’s rendered via the Shadow DOM, which means that Admin Bar is less likely to be affected by your front-end’s CSS.
   - More CSS Custom Properties can be changed to customize the look of Admin Bar.
 - The `adminbar()` twig function has been deprecated and changed to `adminBar()` to better follow Craft Twig naming conventions.
+- Changed all CP URLs to use the `cpUrl()` Twig method, instead of `url()`.
 - Changed the Custom CSS text area field into a [Craft Code Editor](https://github.com/nystudio107/craft-code-editor) field.
 
 ### Fixed
