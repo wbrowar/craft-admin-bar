@@ -10,6 +10,8 @@ If you are creating a Craft CMS site with a Twig front end, you can use this plu
 
 If you are creating a headless site, or a site that is statically cached, you may not need this plugin, and in that case you can add [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) directly into your site’s JavaScript (via a bundler or a `<script>` tag).
 
+> :warning: Admin Bar’s composer package name has changed from `wbrowar/adminbar` to `wbrowar/craft-admin-bar`. Update your composer.json to point to [the new package on Packagist.](https://packagist.org/packages/wbrowar/craft-admin-bar)
+
 ## Requirements
 * Craft 4.0.0
 
@@ -17,12 +19,14 @@ If you are creating a headless site, or a site that is statically cached, you ma
 To install the plugin, you can find it in the [Craft Plugin Store](https://plugins.craftcms.com/admin-bar), or follow these instructions:
 
 1. Open your terminal and go to your Craft project:
-
-`cd /path/to/project`
+   ```bash
+   cd /path/to/project
+   ```
 
 2. Then tell Composer to require the plugin:
-
-`composer require wbrowar/adminbar`
+   ```bash
+   composer require wbrowar/craft-admin-bar
+   ```
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Admin Bar.
 
@@ -68,15 +72,15 @@ Here are the settings you can change with the config file:
 
 ### Admin Bar
 
-| Setting | Default | Description                                                                                                              |
-| --- | --- |--------------------------------------------------------------------------------------------------------------------------|
-| `additionalLinks` | *[]* | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/craft-3-adminbar#additional-links). |
-| `displayGreeting` | *true* | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]".                                              |
-| `displayDashboardLink` | *true* | A link to the CP Dashboard.                                                                                              |
-| `displayDefaultEditSection` | *true* | Display the name of the section in the default entry/category edit link if the user has permission to edit it.           |
-| `displayGuideLink` | *true* | If the [Guide](https://plugins.craftcms.com/guide) plugin is installed, a link to the Guide CP Section is displayed.     |
-| `displayLogout` | *true* | Displays a button that logs you out of Craft CMS.                                                                        |
-| `displaySettingsLink` | *true* | A link to the CP Settings page that appears only to admins.                                                              |
+| Setting | Default | Description                                                                                                             |
+| --- | --- |-------------------------------------------------------------------------------------------------------------------------|
+| `additionalLinks` | *[]* | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/craft-admin-bar#additional-links). |
+| `displayGreeting` | *true* | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]".                                             |
+| `displayDashboardLink` | *true* | A link to the CP Dashboard.                                                                                             |
+| `displayDefaultEditSection` | *true* | Display the name of the section in the default entry/category edit link if the user has permission to edit it.          |
+| `displayGuideLink` | *true* | If the [Guide](https://plugins.craftcms.com/guide) plugin is installed, a link to the Guide CP Section is displayed.    |
+| `displayLogout` | *true* | Displays a button that logs you out of Craft CMS.                                                                       |
+| `displaySettingsLink` | *true* | A link to the CP Settings page that appears only to admins.                                                             |
 
 #### Additional Links
 You can add links to Admin Bar using the config file by passing properties into an array, called `additionalLinks`. There are examples commented out in the `config.php` file, and here are the properties you can use to create links.
@@ -95,6 +99,6 @@ You can add links to Admin Bar using the config file by passing properties into 
 
 ## Releases
 
-Release notes can be found at [CHANGELOG.md](https://github.com/wbrowar/craft-3-adminbar/blob/master/CHANGELOG.md)
+Release notes can be found at [CHANGELOG.md](https://github.com/wbrowar/craft-admin-bar/blob/main/CHANGELOG.md)
 
 Please, let me know if this plugin is useful or if you have any suggestions or issues. [@wbrowar](https://twitter.com/wbrowar)

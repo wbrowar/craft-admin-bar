@@ -4,7 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 4.0.0-beta.1 - 2023-12-01
+
+> {warning} Admin Bar’s composer package name has changed from `wbrowar/adminbar` to `wbrowar/craft-admin-bar`. Update your composer.json to point to [the new package on Packagist.](https://packagist.org/packages/wbrowar/craft-admin-bar)
+
+## 4.0.0 - 2023-12-01
 ### Added
 - Added static translations for all strings on admin bar.
 - Added `rtl` config option that can be passed into `adminBar()` as `adminBar({ rtl: true })`.
@@ -20,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - The `adminbar()` twig function has been deprecated and changed to `adminBar()` to better follow Craft Twig naming conventions.
 - Changed all CP URLs to use the `cpUrl()` Twig method, instead of `url()`.
 - Changed the Custom CSS text area field into a [Craft Code Editor](https://github.com/nystudio107/craft-code-editor) field.
+- Changed all instances of `adminbar` with `admin-bar` or `craft-admin-bar`, where applicable.
 
 ### Fixed
 - Fixed an issue preventing removing items from the Custom Links settings table field.
@@ -46,7 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 3.2.0 - 2022-05-07
 ### Added
-- Craft 4 compatibility [#28](https://github.com/wbrowar/craft-adminbar/issues/28)
+- Craft 4 compatibility [#28](https://github.com/wbrowar/craft-admin-bar/issues/28)
 
 ### Removed
 - Removed Edit Links and Admin Bar Widgets
@@ -54,7 +58,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 3.1.11 - 2019-10-31
 ### Fixed
-- Composer 2 compatibility [#23](https://github.com/wbrowar/craft-adminbar/issues/23)
+- Composer 2 compatibility [#23](https://github.com/wbrowar/craft-admin-bar/issues/23)
 
 
 ## 3.1.10 - 2019-11-28
@@ -62,11 +66,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Bumped minimum Craft CMS requirement to `^3.3.16`
 
 ### Fixed
-- Fixed Admin Bar appearing in Live Preview based on a change in Craft 3.2 ([#16](https://github.com/wbrowar/craft-adminbar/issues/16))
+- Fixed Admin Bar appearing in Live Preview based on a change in Craft 3.2 ([#16](https://github.com/wbrowar/craft-admin-bar/issues/16))
 
 ## 3.1.9 - 2019-11-28
 ### Added
-- You can now set the Edit Link to a custom URL or URI (it will be run through the `url()` Twig function). ([#15](https://github.com/wbrowar/craft-adminbar/issues/15))
+- You can now set the Edit Link to a custom URL or URI (it will be run through the `url()` Twig function). ([#15](https://github.com/wbrowar/craft-admin-bar/issues/15))
 - The label for the Edit Link can be set to a custom string when setting a custom Edit Link URL.
 
 ### Removed

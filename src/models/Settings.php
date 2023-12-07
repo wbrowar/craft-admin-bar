@@ -4,13 +4,11 @@
  *
  * Front-end shortcuts for clients logged into Craft CMS.
  *
- * @link      https://wbrowar.com/plugins/adminbar
+ * @link      https://wbrowar.com
  * @copyright Copyright (c) 2017 Will Browar
  */
 
 namespace wbrowar\adminbar\models;
-
-//use wbrowar\adminbar\AdminBar;
 
 //use Craft;
 use craft\base\Model;

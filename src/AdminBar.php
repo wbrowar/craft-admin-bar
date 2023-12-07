@@ -4,7 +4,7 @@
  *
  * Front-end shortcuts for clients logged into Craft CMS.
  *
- * @link      https://wbrowar.com/plugins/adminbar
+ * @link      https://wbrowar.com
  * @copyright Copyright (c) 2017 Will Browar
  */
 
@@ -70,6 +70,11 @@ class AdminBar extends Plugin
     {
         parent::init();
         self::$plugin = $this;
+
+        // Add our services
+        $this->setComponents([
+            "bar" => "wbrowar\adminbar\services\Bar"
+        ]);
 
         // Add in our Twig extensions
         Craft::$app->view->registerTwigExtension(new AdminBarTwigExtension());

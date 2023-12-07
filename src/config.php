@@ -4,7 +4,7 @@
  *
  * Front-end shortcuts for clients logged into Craft CMS.
  *
- * @link      https://wbrowar.com/plugins/adminbar
+ * @link      https://wbrowar.com
  * @copyright Copyright (c) 2017 Will Browar
  */
 
@@ -59,8 +59,8 @@ return array(
   ],
   // an example of a plugin action link
   [
-    'title' => 'Clear Cache',
-    'url' => 'adminbar/clearTemplateCache',
+    'title' => 'Save Entry',
+    'url' => 'entries/save-entry',
     'type' => 'action',
     'admin' => true,
   ],

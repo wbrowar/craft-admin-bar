@@ -1,24 +1,29 @@
 {
-    "name": "wbrowar/adminbar",
+    "name": "wbrowar/craft-admin-bar",
     "description": "Front-end shortcuts for clients logged into Craft CMS.",
     "type": "craft-plugin",
-    "version": "4.0.0-beta.0",
+    "version": "4.0.0",
     "keywords": [
         "craft",
         "cms",
         "craftcms",
         "craft-plugin",
-        "admin bar"
+        "admin bar",
+        "admin-bar",
+        "toolbar",
+        "admin toolbar",
+        "author experience",
+        "ax"
     ],
     "support": {
-        "docs": "https://raw.githubusercontent.com/wbrowar/craft-adminbar/3.x-craft-4/README.md",
-        "issues": "https://github.com/wbrowar/craft-adminbar/issues"
+        "docs": "https://raw.githubusercontent.com/wbrowar/craft-admin-bar/main/README.md",
+        "issues": "https://github.com/wbrowar/craft-admin-bar/issues"
     },
     "license": "MIT",
     "authors": [
         {
             "name": "Will Browar",
-            "homepage": "https://wbrowar.com/plugins/adminbar"
+            "homepage": "https://wbrowar.com"
         }
     ],
     "require": {
@@ -36,10 +41,9 @@
         "schemaVersion": "3.1.0",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/wbrowar/craft-adminbar/3.x-craft-4/CHANGELOG.md",
-        "components": {
-            "bar": "wbrowar\\adminbar\\services\\Bar"
-        },
+        "developerUrl": "https://wbrowar.com",
+        "documentationUrl": "https://raw.githubusercontent.com/wbrowar/craft-admin-bar/main/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/wbrowar/craft-admin-bar/main/CHANGELOG.md",
         "class": "wbrowar\\adminbar\\AdminBar"
     }
 }
