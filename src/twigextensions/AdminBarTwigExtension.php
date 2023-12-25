@@ -55,6 +55,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
             new \Twig\TwigFunction('adminbar', [$this, 'adminBarLegacy']),
             new \Twig\TwigFunction('adminBarCssFile', [$this, 'adminBarCssFile']),
             new \Twig\TwigFunction('adminBarJsFile', [$this, 'adminBarJsFile']),
+            new \Twig\TwigFunction('adminBarOnPageCss', [$this, 'adminBarOnPageCss']),
         ];
     }
 
@@ -107,6 +108,24 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
         $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
 
         return $assets['js'] ?? null;
+    }
+
+    /**
+     * CSS that tweaks the look of Admin Bar. Can be overwritten using CSS Cascade Layers.
+     *
+     * @return string | null
+     */
+    public function adminBarOnPageCss(): string | null
+    {
+        return '@layer admin-bar {
+            admin-bar {
+                & svg.icon {
+                    display: block;
+                    width: 15px;
+                    height: auto;
+                }
+            }
+        }';
     }
 
     /**

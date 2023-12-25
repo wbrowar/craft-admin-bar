@@ -1,9 +1,9 @@
 {
   "admin-bar.ts": {
     "css": [
-      "assets/admin-bar-8X5X-TUO.css"
+      "assets/admin-bar--IpVbGO8.css"
     ],
-    "file": "assets/admin-bar-8PP8e-xa.js",
+    "file": "assets/admin-bar-YttkAaW3.js",
     "isEntry": true,
     "src": "admin-bar.ts"
   }

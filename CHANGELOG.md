@@ -4,10 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.0.1 - 2023-12-25
+### Changed
+- Removed rounded corners and margin on buttons so that the "flat" style is the default.
+- Moved the icon SVG code into the Admin Bar main template—making it easier to load Admin Bar via Sprig or Blitz dynamic includes. Thanks to alexr on the Craft CMS Discord for the idea!
+
+## 4.0.0 - 2023-12-01
 
 > {warning} Admin Bar’s composer package name has changed from `wbrowar/adminbar` to `wbrowar/craft-admin-bar`. Update your composer.json to point to [the new package on Packagist.](https://packagist.org/packages/wbrowar/craft-admin-bar)
 
-## 4.0.0 - 2023-12-01
 ### Added
 - Added static translations for all strings on admin bar.
 - Added `rtl` config option that can be passed into `adminBar()` as `adminBar({ rtl: true })`.

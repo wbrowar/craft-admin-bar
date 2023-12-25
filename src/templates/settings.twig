@@ -84,7 +84,7 @@ admin-bar {
     --admin-bar-color-text: rgba(255, 255, 255, 0.8);
 
     /* The font stack for all text. */
-    --admin-bar-font-stack: 'BlinkMacSystemFont', -apple-system, 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;
+    --admin-bar-font-stack: system-ui, sans-serif;
 
     /* The font size for all text. */
     --admin-bar-font-size: .9rem;
@@ -129,6 +129,9 @@ admin-bar {
 
     /* The background of all buttons. */
     --admin-bar-button-color-bg: transparent;
+
+    /* The background of the button that is currently in the hover state. */
+    --admin-bar-button-color-bg-hover: var(--admin-bar-button-color-text, white);
 
     /* The text of all button labels. */
     --admin-bar-button-color-text: rgb(255, 255, 255);

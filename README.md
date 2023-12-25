@@ -95,6 +95,39 @@ You can add links to Admin Bar using the config file by passing properties into 
 | `mustShowScriptName` | *string* | Appends `index.php`, as [documented here](https://craftcms.com/docs/templating/functions#url) |
 | `permissions` | *array* | An array of required permissions that are needed for this link to be displayed. All permissions in this array will be required for the link to appear |
 
+## Dynamically Loading Admin Bar
+
+### Using Admin Bar with Blitz Static Caching
+The [Blitz Craft CMS plugin](https://plugins.craftcms.com/blitz) provides a Twig function, called `includeDynamic()`, that lets you render a Twig template on a statically-cached page. With this function, Admin Bar can be dynamically included into your template so it will work on cached and uncached pages.
+
+With Blitz installed, you can start by moving the `{{ adminBar() }}` method from your Twig templates into a separate Twig file in your `templates` directory. For this example, we’ll add the following code to a file at `/templates/includes/admin-bar.twig`.
+
+```twig
+{% set entry = entryUri ?? false ? craft.entries.uri(entryUri).one() : null %}
+
+{{ adminBar({
+  entry: entry ?? null,
+  useCss: false,
+  useJs: false,
+}) }}
+```
+
+Notice that `useCss` and `useJs` are both set to `false`. This is because registering CSS and JS files from dynamic includes won’t work on a statically-cached page. You can set any other `adminBar()` argument that you’d like here.
+
+Next, call the `dynamicInclude()` function in the place in your layout or page template where you would like Admin Bar to be embedded:
+
+```twig
+{{ craft.blitz.includeDynamic('includes/admin-bar.twig', { entryUri: entry.uri ?? '' }) }}
+
+{% css adminBarCssFile() %}
+{% css adminBarOnPageCss() %}
+{% js adminBarJsFile() %}
+```
+
+You can pass parameters into `includeDynamic()`, so we can pass the URI of the current page entry—which will be used to figure out what page Admin Bar will use as the "Edit" button.
+
+In order to load Admin Bar’s CSS and JS onto the front end, we can use Admin Bar’s built-in Twig functions anywhere within our template.
+
 ---
 
 ## Releases
