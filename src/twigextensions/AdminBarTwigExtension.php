@@ -89,11 +89,17 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
     /**
      * Returns the path to Admin Bar’s CSS File.
      *
+     * @param array $config An object of config options that can be passed into `{{ adminBarCssFile() }}`.
      * @return string | null
      */
-    public function adminBarCssFile(): string | null
+    public function adminBarCssFile(array $config = ['contents' => false]): string | null
     {
         $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
+
+        if ($config['contents'] ?? false) {
+            $glob = glob(AdminBar::$plugin->getBasePath() . '/assetbundles/dist/assets/admin-bar-*.css');
+            return file_get_contents($glob[0] ?? null);
+        }
 
         return $assets['css'] ?? null;
     }
@@ -101,22 +107,30 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
     /**
      * Returns the path to Admin Bar’s JavaScript File.
      *
+     * @param array $config An object of config options that can be passed into `{{ adminBarJsFile() }}`.
      * @return string | null
      */
-    public function adminBarJsFile(): string | null
+    public function adminBarJsFile(array $config = ['contents' => false]): string | null
     {
         $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
+
+        if ($config['contents'] ?? false) {
+            $glob = glob(AdminBar::$plugin->getBasePath() . '/assetbundles/dist/assets/admin-bar-*.js');
+            return file_get_contents($glob[0] ?? null);
+        }
 
         return $assets['js'] ?? null;
     }
 
     /**
-     * CSS that tweaks the look of Admin Bar. Can be overwritten using CSS Cascade Layers.
+     * CSS that tweaks the look of Admin Bar and loads Custom CSS from Amdin Bar plugin settings.
      *
      * @return string | null
      */
     public function adminBarOnPageCss(): string | null
     {
+        $settings = AdminBar::$plugin->getSettings();
+
         return '@layer admin-bar {
             admin-bar {
                 & svg.icon {
@@ -125,7 +139,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
                     height: auto;
                 }
             }
-        }';
+        }' . "\n" . ($settings['customCss'] ?? '');
     }
 
     /**

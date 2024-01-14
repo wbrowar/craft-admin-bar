@@ -82,6 +82,7 @@ class Bar extends Component
             }
             $config['fixed'] = key_exists('fixed', $config) || key_exists('sticky', $config) ? $config['fixed'] ?? false : false;
             $config['sticky'] = key_exists('fixed', $config) || key_exists('sticky', $config) ? $config['sticky'] ?? false : true;
+            $config['textElements'] = key_exists('textElements', $config) ? $config['textElements'] : [];
             $config['useCss'] = key_exists('useCss', $config) ? $config['useCss'] : true;
             $config['useJs'] = key_exists('useJs', $config) ? $config['useJs'] : true;
 
@@ -102,11 +103,8 @@ class Bar extends Component
              if (($assets['css'] ?? false) && $config['useCss']) {
                  Craft::$app->getView()->registerCssFile($assets['css']);
              }
-             if ($settings['customCss'] ?? false) {
-                 Craft::$app->getView()->registerCss($settings['customCss']);
-             }
              if (($assets['js'] ?? false) && $config['useJs']) {
-                 Craft::$app->getView()->registerJsFile($assets['js'], ['type' => 'module']);
+                 Craft::$app->getView()->registerJsFile($assets['js'], ['defer' => true, 'type' => 'module']);
              }
 
             $html = Craft::$app->getView()->renderTemplate('admin-bar/bar', $config);

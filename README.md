@@ -43,17 +43,33 @@ You may pass in an array of arguments to make some changes on how Admin Bar look
 
 Here is a list of available arguments:
 
-| Argument        | Default | Description                                                                                                                                                                                                                       |
-|-----------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `editLinkLabel` | *null*  | Set a custom label for the Edit Link when `editLinkUrl` is set to a custom URL.                                                                                                                                                   |
-| `editLinkUrl`   | *null*  | Override the Edit Link with a custom URL or URI (this will be run through the `url()` Twig function).                                                                                                                             |
-| `entry`         | *null*  | Pass in an entry object to add an edit link for that entry .                                                                                                                                                                      |
-| `fixed`         | *false* | Use CSS `position: fixed` instead of `position: sticky;`.                                                                                                                                                                         |
-| `force`         | *false* | Bypasses the default check that `{{ adminBar() }}` does to see if Admin Bar can be rendered.                                                                                                                                      |
-| `rtl`           | *false* | Changes the reading direction from `ltr` to `rtl` in situations where you need to manually set it. Admin Bar Component will automatcally switch to RTL if your page is set to RTL or if you have the CSS set to `direction: rtl`. |
-| `sticky`        | *true*  | Uses CSS to `position: sticky;` Admin Bar to the top of the page.                                                                                                                                                                 |
-| `useCss`        | *true*  | Add the default styles to Admin Bar or leave them out to load the stylesheet with your project’s CSS.                                                                                                                             |
-| `useJs`         | *true*  | Use the Admin Bar's default Javascript or set this to `false` to import the [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) into your project’s JS bundle.                                                  |
+| Argument      | Default | Description                                                                                                                                                                                                                    |
+|---------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `editLinkLabel` | *null*  | Set a custom label for the Edit Link when `editLinkUrl` is set to a custom URL.                                                                                                                                                |
+| `editLinkUrl` | *null*  | Override the Edit Link with a custom URL or URI (this will be run through the `url()` Twig function).                                                                                                                          |
+| `entry`       | *null*  | Pass in an entry object to add an edit link for that entry .                                                                                                                                                                   |
+| `fixed`       | *false* | Use CSS `position: fixed` instead of `position: sticky;`.                                                                                                                                                                      |
+| `force`       | *false* | Bypasses the default check that `{{ adminBar() }}` does to see if Admin Bar can be rendered.                                                                                                                                   |
+| `rtl`         | *false* | Changes the reading direction from `ltr` to `rtl` in situations where you need to manually set it. Admin Bar Component will automatcally switch to RTL if your page is set to RTL or if you have the CSS set to `direction: rtl`. |
+| `sticky`      | *true*  | Uses CSS to `position: sticky;` Admin Bar to the top of the page.                                                                                                                                                              |
+| `textElements` | *[]*    | Add text elements to admin bar using an array of objects.                                                                                                                                                                      |
+| `useCss`      | *true*  | Add the default styles to Admin Bar or leave them out to load the stylesheet with your project’s CSS.                                                                                                                          |
+| `useJs`       | *true*  | Use the Admin Bar's default Javascript or set this to `false` to import the [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) into your project’s JS bundle.                                               |
+
+### Adding Text Elements to Admin Bar
+
+Plain text and labels can be added to Admin Bar by adding objects into the `textElements` argument. Object properties can include any property accepted by `<admin-bar-text>` elements, [as documented here](https://github.com/wbrowar/admin-bar-component#adding-text-elements-to-admin-bar). Each object will add a new text element and the properties in each object will be added using Craft’s `attr()` method.
+
+For example, this will add a line of text that will display the number of entries in the current entry’s section:
+
+```twig
+{{ adminBar({
+    entry: entry ?? null,
+    textElements: [
+        { 'label-content': craft.entries.section(entry.section.handle).count(), 'text-content': 'Entries in this section' },
+    ],
+}) }}
+```
 
 ## Configuration settings
 The config file gives you the ability to adjust how Admin Bar looks and functions in multiple environments. It also allows you to create additional links for the Admin Bar, and allows for plugin actions to be called through these additional links.
@@ -95,6 +111,37 @@ You can add links to Admin Bar using the config file by passing properties into 
 | `mustShowScriptName` | *string* | Appends `index.php`, as [documented here](https://craftcms.com/docs/templating/functions#url) |
 | `permissions` | *array* | An array of required permissions that are needed for this link to be displayed. All permissions in this array will be required for the link to appear |
 
+## Optimizing CSS and JS Delivery for Performance
+
+By default, using `{{ adminBar() }}` will render HTML, and it will link to the static CSS and JS assets that make Admin Bar work. The CSS is loaded in a file in the `<head>` and the JavaScript is loaded in a file at the bottom of the `<body>` tag—deferred so it’s not render blocking. 
+
+Because these add extra requests to your server, you may prefer to move the CSS and JS code into your Twig template. First, to turn off the deafult loading behavior, add `useCss` and `useJs` arguments to your embed code and set them both to `false`:
+
+```twig
+{{ adminBar({
+    entry: entry ?? null,
+    useCss: false,
+    useJs: false,
+}) }}
+```
+
+This turns off loading any JavaScript or CSS onto the page. To load those assets back in, you can add the following anywere on your Twig template:
+
+```twig
+{% css adminBarCssFile({ contents: true }) %}
+{% css adminBarOnPageCss() %}
+{% js adminBarJsFile({ contents: true }) %}
+```
+
+- `adminBarCssFile()` gets the CSS that comes with [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) and adds that to the page.
+  - Setting the `contents` argument to `true` will use PHP’s `file_get_contents()` method to extract the CSS code from the file as a string.
+- The `adminBarOnPageCss()` method adds some CSS that is specific to the Admin Bar plugin along with any CSS that was added in the Custom CSS Admin Bar plugin setting.
+- `adminBarJsFile()` gets the JavaScript code that comes with [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) and adds that to the page.
+  - The `contents` argument also uses `file_get_contents()` to get the JavaScript code to place inside of a `<script>` tag.
+
+> [!NOTE]
+> How you embed your static assets are up to you. One less server request is usually better, but adding a few extra KB to every page in your HTML markup might not be as performant as caching and loading static `.css` and `.js` files.
+
 ## Dynamically Loading Admin Bar
 
 ### Using Admin Bar with Blitz Static Caching
@@ -121,7 +168,7 @@ Next, call the `dynamicInclude()` function in the place in your layout or page t
 
 {% css adminBarCssFile() %}
 {% css adminBarOnPageCss() %}
-{% js adminBarJsFile() %}
+{% js adminBarJsFile() with { defer: true, type: 'module' } %}
 ```
 
 You can pass parameters into `includeDynamic()`, so we can pass the URI of the current page entry—which will be used to figure out what page Admin Bar will use as the "Edit" button.

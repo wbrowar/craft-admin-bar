@@ -68,7 +68,7 @@ admin-bar {
   admin-bar {
     /* Sets the background of the bar using the background shorthand property,
     allowing you to use a gradient, a solid color, or an image. */
-    --admin-bar-bg: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.9));
+    --admin-bar-bg: linear-gradient(to bottom, rgba(0 0 0 / 0.65), rgba(0 0 0 / 0.9));
 
     /* Adds an effect to blur */
     --admin-bar-backdrop-filter: blur(20px) saturate(200%);
@@ -81,7 +81,7 @@ admin-bar {
     --admin-bar-color-highlight-logout: var(--admin-bar-color-highlight);
 
     /* The color of text for everything but button labels.. */
-    --admin-bar-color-text: rgba(255, 255, 255, 0.8);
+    --admin-bar-color-text: rgba(255 255 255 / 0.8);
 
     /* The font stack for all text. */
     --admin-bar-font-stack: system-ui, sans-serif;
@@ -120,7 +120,7 @@ admin-bar {
     /*--admin-bar-shadow: 0 0 15px color-mix(in srgb, rgba(0, 0, 0, 0.7), currentColor 10%);*/
 
     /* Adds a box-shadow to avatar images and buttons. */
-    --admin-bar-shadow-elements: 0 1px 2px color-mix(in srgb, rgba(0, 0, 0, 0.5), currentColor 10%), 0 3px 6px color-mix(in srgb, rgba(0, 0, 0, 0.4), currentColor 10%);
+    --admin-bar-shadow-elements: 0 1px 2px color-mix(in srgb, rgba(0 0 0 / 0.5), currentColor 10%), 0 3px 6px color-mix(in srgb, rgba(0 0 0 / 0.4), currentColor 10%);
 
     /* By default, when adding the `fixed` or `sticky` class to an `<admin-bar>`,
      the z-index of the element is set to `1`. Set this property if you need the
@@ -134,7 +134,13 @@ admin-bar {
     --admin-bar-button-color-bg-hover: var(--admin-bar-button-color-text, white);
 
     /* The text of all button labels. */
-    --admin-bar-button-color-text: rgb(255, 255, 255);
+    --admin-bar-button-color-text: rgb(255 255 255);
+
+    /* The background for labels in `admin-bar-text` components. */
+    --admin-bar-text-label-color-bg: rgba(255 255 255 / 0.9);
+
+    /* The text for labels in `admin-bar-text` components. */
+    --admin-bar-text-label-color-text: rgba(0 0 0 / 1);
 
     /* ====================================================================== */
 

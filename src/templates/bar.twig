@@ -33,6 +33,16 @@
     }) %}
 {% endif %}
 
+{% set textElements = textElements ?? [] %}
+
+{% if devMode %}
+    {% set textElements = textElements|merge([{
+        'label-content': craft.app.config.env|upper,
+        style: { '--admin-bar-text-label-color-bg': 'var(--admin-bar-environment-bg-color)' },
+        title: 'Craft CMS is running in Dev Mode.'|t('admin-bar'),
+    }]) %}
+{% endif %}
+
 <admin-bar {{ attr(adminBarAttributes) }}>
     {% if displayDashboardLink ?? true %}
         <admin-bar-button button-href="{{ cpUrl('dashboard') }}" label-text="{{ 'Dashboard'|t }}"><span slot="label-before">{{ self.iconDashboard }}</span></admin-bar-button>
@@ -71,6 +81,14 @@
 
     {% if currentUser and currentUser.admin and displaySettingsLink ?? true %}
         <admin-bar-button button-href="{{ cpUrl('settings') }}" label-text="{{ 'Settings'|t('admin-bar') }}"><span slot="label-before">{{ self.iconSettings }}</span></admin-bar-button>
+    {% endif %}
+
+    {% if textElements|length %}
+        <span style="flex: 1 0 30px;"></span>
+
+        {% for textAttrs in textElements %}
+            <admin-bar-text {{ attr(textAttrs) }}></admin-bar-text>
+        {% endfor %}
     {% endif %}
 </admin-bar>
 

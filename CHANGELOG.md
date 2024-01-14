@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.1.0 - 2024-01-14
+### Added
+- Added `textElements` setting for the `{{ adminBar() }}` method, letting you add text elements and labels to Admin Bar.
+- Added a text element label to indicate the current environment when `devMode` is enabled.
+- Added an option to `adminBarCssFile()` and `adminBarJsFile()` Twig methods that lets you output the contents of the file, instead of getting the cpresources URL. 
+
+### Changed
+- Upgraded to [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) **1.0.0**
+- When `useJs` is set to `true` the `<script>` tag that loads Admin Bar’s JS is set to `defer`.
+  - To avoid this, set `useJs` to `false` and load Admin Bar’s JS file using `{% js adminBarJsFile() with { type: 'module' } %}`.
+- Custom CSS that is set on the Admin Bar plugin settings page no longer gets registered when `useCss` is set to `false`.
+  - The Custom CSS will now get loaded whenever the `adminBarOnPageCss()` is called.
+
 ## 4.0.1 - 2023-12-25
 ### Changed
 - Removed rounded corners and margin on buttons so that the "flat" style is the default.
