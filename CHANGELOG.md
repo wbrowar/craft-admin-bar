@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Link to Utilities page with a badge label showing number of utilities notifications.
 - Added config option to disable Utilities link.
 
-- ### Changed
+### Changed
 - Upgraded to [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) **1.0.1** and updated dependencies
 
 ## 4.1.0 - 2024-01-14
