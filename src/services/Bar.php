@@ -10,6 +10,7 @@
 
 namespace wbrowar\adminbar\services;
 
+use craft\base\UtilityInterface;
 use craft\helpers\Html;
 use wbrowar\adminbar\AdminBar;
 
@@ -86,6 +87,15 @@ class Bar extends Component
             $config['useCss'] = key_exists('useCss', $config) ? $config['useCss'] : true;
             $config['useJs'] = key_exists('useJs', $config) ? $config['useJs'] : true;
 
+            // Get utilities notification count
+            $config['utilitiesNotificationCount'] = 0;
+            $userUtilities = Craft::$app->getUtilities()->getAuthorizedUtilityTypes();
+            if (!empty($userUtilities)) {
+                foreach ($userUtilities as $userUtility) {
+                    $config['utilitiesNotificationCount'] += $userUtility::badgeCount();
+                }
+            }
+
             // Add config file settings to config
             $config['additionalLinks'] = $settings->additionalLinks;
             $config['displayDashboardLink'] = $settings->displayDashboardLink;
@@ -93,6 +103,7 @@ class Bar extends Component
             $config['displayGreeting'] = $settings->displayGreeting;
             $config['displayLogout'] = $settings->displayLogout;
             $config['displayGuideLink'] = $settings->displayGuideLink;
+            $config['displayUtilitiesLink'] = $settings->displayUtilitiesLink && !empty($userUtilities);
             $config['displaySettingsLink'] = $settings->displaySettingsLink && Craft::$app->getConfig()->getGeneral()->allowAdminChanges;
 
             $oldMode = Craft::$app->getView()->getTemplateMode();

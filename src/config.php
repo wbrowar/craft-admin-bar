@@ -27,6 +27,7 @@ return array(
     'displayDashboardLink' => true,
     'displayDefaultEditSection' => true,
     'displayGuideLink' => true,
+    'displayUtilitiesLink' => true,
     'displaySettingsLink' => true,
     'displayLogout' => true,
 );

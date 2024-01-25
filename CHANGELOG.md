@@ -4,11 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.2.0 - 2024-01-25
+### Added
+- Link to Utilities page with a badge label showing number of utilities notifications.
+- Added config option to disable Utilities link.
+
+- ### Changed
+- Upgraded to [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) **1.0.1** and updated dependencies
+
 ## 4.1.0 - 2024-01-14
 ### Added
 - Added `textElements` setting for the `{{ adminBar() }}` method, letting you add text elements and labels to Admin Bar.
 - Added a text element label to indicate the current environment when `devMode` is enabled.
-- Added an option to `adminBarCssFile()` and `adminBarJsFile()` Twig methods that lets you output the contents of the file, instead of getting the cpresources URL. 
+- Added an option to `adminBarCssFile()` and `adminBarJsFile()` Twig methods that lets you output the contents of the file, instead of getting the cpresources URL.
 
 ### Changed
 - Upgraded to [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) **1.0.0**

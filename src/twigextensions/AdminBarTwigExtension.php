@@ -139,6 +139,14 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
                     height: auto;
                 }
             }
+            admin-bar-button {
+                &:hover {
+                    & admin-bar-text {
+                        --admin-bar-text-label-color-bg: var(--admin-bar-color-highlight);
+                        --admin-bar-text-label-color-text: var(--admin-bar-button-color-bg-hover);
+                    }
+                }
+            }
         }' . "\n" . ($settings['customCss'] ?? '');
     }
 

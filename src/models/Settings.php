@@ -91,6 +91,13 @@ class Settings extends Model
     public bool $displayLogout = true;
 
     /**
+     * Adds the Utilities link to Admin Bar.
+     *
+     * @var bool
+     */
+    public bool $displayUtilitiesLink = true;
+
+    /**
      * Adds the Settings link to Admin Bar.
      *
      * @var bool
