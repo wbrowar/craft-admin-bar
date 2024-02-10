@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.3.0 - 2024-02-09
+### Added
+- Added `position` argument to `{{ adminBar() }}` [#40](https://github.com/wbrowar/craft-admin-bar/issues/40)
+  - When setting `{{ adminBar({ fixed: true, position: 'bottom' }) }}` Admin Bar will be fixed to the bottom of the page.
+
+### Removed
+- Removed unused logic around setting defaults for `fixed` and `sticky` arguments.
+
 ## 4.2.0 - 2024-01-25
 ### Added
 - Link to Utilities page with a badge label showing number of utilities notifications.

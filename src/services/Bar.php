@@ -74,6 +74,7 @@ class Bar extends Component
             $config['editLinkUrl'] = $config['editLinkUrl'] ?? null;
             $config['includeAssets'] = $config['includeAssets'] ?? true;
 
+            // Defaults `sticky` to `true` when `fixed` and `sticky` are not set.
             if (key_exists('fixed', $config) || key_exists('sticky', $config)) {
                 $config['fixed'] = $config['fixed'] ?? false;
                 $config['sticky'] = $config['sticky'] ?? false;
@@ -81,8 +82,6 @@ class Bar extends Component
                 $config['fixed'] = false;
                 $config['sticky'] = true;
             }
-            $config['fixed'] = key_exists('fixed', $config) || key_exists('sticky', $config) ? $config['fixed'] ?? false : false;
-            $config['sticky'] = key_exists('fixed', $config) || key_exists('sticky', $config) ? $config['sticky'] ?? false : true;
             $config['textElements'] = key_exists('textElements', $config) ? $config['textElements'] : [];
             $config['useCss'] = key_exists('useCss', $config) ? $config['useCss'] : true;
             $config['useJs'] = key_exists('useJs', $config) ? $config['useJs'] : true;

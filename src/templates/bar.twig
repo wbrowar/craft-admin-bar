@@ -12,6 +12,10 @@
     {% set classes = classes|merge(['sticky']) %}
 {% endif %}
 
+{% if position ?? false and position == 'bottom' %}
+    {% set classes = classes|merge(['bottom']) %}
+{% endif %}
+
 {% if rtl ?? false %}
     {% set classes = classes|merge(['rtl']) %}
 {% endif %}
