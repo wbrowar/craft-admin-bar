@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.0.0 - 2024-03-23
+### Added
+- Added support for Craft 5
+
+### Changed
+- The `{{ adminBar() }}` Twig method now returns `null` instead of `false` when Admin Bar isn’t rendered.
+
+
 ## 4.3.0 - 2024-02-09
 ### Added
 - Added `position` argument to `{{ adminBar() }}` [#40](https://github.com/wbrowar/craft-admin-bar/issues/40)

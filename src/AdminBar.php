@@ -173,13 +173,13 @@ class AdminBar extends Plugin
         if (file_exists($manifestPath)) {
             $manifestJson = file_get_contents($manifestPath);
 
-            if ($manifestJson) {
+            if (!empty($manifestJson)) {
                 $manifest = Json::decodeIfJson($manifestJson);
 
-                if ($manifest && $manifest[$filename]) {
+                if (!empty($manifest) && $manifest[$filename]) {
                     $path = Craft::$app->getAssetManager()->getPublishedUrl('@wbrowar/adminbar/assetbundles/dist/', true);
 
-                    if ($path) {
+                    if (!empty($path)) {
                         if ($manifest[$filename]['css'] ?? false) {
                             $assetPaths['css'] = $path . '/' . $manifest[$filename]['css'][0];
                         }
