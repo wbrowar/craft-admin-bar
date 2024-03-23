@@ -11,6 +11,7 @@
 namespace wbrowar\adminbar\twigextensions;
 
 use craft\errors\DeprecationException;
+use craft\elements\Entry;
 use wbrowar\adminbar\AdminBar;
 
 use Craft;
@@ -65,15 +66,15 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
      * @param array $config An object of config options that can be passed into `{{ adminBar() }}`. See the README for a full list of config params.
      * @return string
      */
-    public function adminBar(array $config = []): string
+    public function adminBar(array $config = []): string | null
     {
         if (AdminBar::$plugin->bar->canEmbed() || ($config['force'] ?? false)) {
             if (!isset($config['entry']) && !isset($config['url'])) {
                 // get current page element
-                $element = Craft::$app->urlManager->getMatchedElement();
+                $element = Craft::$app->getUrlManager()->getMatchedElement();
 
                 if (!empty($element)) {
-                    if ($element instanceof craft\elements\Entry) {
+                    if ($element instanceof Entry) {
                         $config['entry'] = $element;
                     }
                 }
@@ -83,7 +84,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
             print AdminBar::$plugin->bar->render($config);
         }
 
-        return false;
+        return null;
     }
 
     /**

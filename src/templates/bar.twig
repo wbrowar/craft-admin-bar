@@ -55,7 +55,7 @@
     {% if editLinkUrl ?? false %}
         <admin-bar-button button-href="{{ cpUrl(editLinkUrl) }}" label-text="{{ 'Edit {name}'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }) }}"><span slot="label-before">{{ self.iconEdit }}</span></admin-bar-button>
     {% else %}
-      {% if entry ?? false and ((userCanEdit ?? false) or (entry.section.id in craft.app.sections.editableSectionIds)) %}
+      {% if entry ?? false and ((userCanEdit ?? false) or (entry.section.id in craft.app.entries.editableSectionIds)) %}
         {% set sectionName = displayDefaultEditSection ? ' ' ~ entry.section : ''  %}
         {% set entryEditUrl = entry.cpEditUrl %}
 

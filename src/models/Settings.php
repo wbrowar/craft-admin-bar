@@ -10,7 +10,6 @@
 
 namespace wbrowar\adminbar\models;
 
-//use Craft;
 use craft\base\Model;
 
 /**

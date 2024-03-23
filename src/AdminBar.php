@@ -38,6 +38,7 @@ use yii\base\Event;
  * @since     3.0.1
  *
  * @property Bar $bar
+ * @method Settings getSettings()
  */
 class AdminBar extends Plugin
 {
@@ -51,6 +52,11 @@ class AdminBar extends Plugin
      * @var AdminBar|null
      */
     public static ?AdminBar $plugin;
+    
+    /**
+     * @var ?Settings
+     */
+    public static ?Settings $settings = null;
 
     // Public Methods
     // =========================================================================
@@ -70,6 +76,7 @@ class AdminBar extends Plugin
     {
         parent::init();
         self::$plugin = $this;
+        self::$settings = self::$plugin->getSettings();
 
         // Add our services
         $this->setComponents([
@@ -125,21 +132,18 @@ class AdminBar extends Plugin
      * block on the settings page.
      *
      * @return string|null The rendered settings HTML
-     * @throws
      */
     protected function settingsHtml(): ?string
     {
-        $settings = $this->getSettings();
-
         // Create one empty table row if non are present
-        if (empty($settings->customLinks)) {
-            $settings['customLinks'] = [['','',0]];
+        if (empty(self::$settings->customLinks)) {
+            self::$settings['customLinks'] = [['','',0]];
         }
 
         return Craft::$app->view->renderTemplate(
             'admin-bar/settings',
             [
-                'settings' => $settings
+                'settings' => self::$settings
             ]
         );
     }
@@ -166,24 +170,24 @@ class AdminBar extends Plugin
 
         $manifestPath = self::$plugin->getBasePath() . '/assetbundles/dist/.vite/manifest.json';
 
-        if ($manifestPath ?? false) {
+        if (file_exists($manifestPath)) {
             $manifestJson = file_get_contents($manifestPath);
 
-            if ($manifestJson ?? false) {
+            if ($manifestJson) {
                 $manifest = Json::decodeIfJson($manifestJson);
 
                 if ($manifest && $manifest[$filename]) {
                     $path = Craft::$app->getAssetManager()->getPublishedUrl('@wbrowar/adminbar/assetbundles/dist/', true);
-                }
-            }
-        }
 
-        if ($path ?? false) {
-            if ($manifest[$filename]['css'] ?? false) {
-                $assetPaths['css'] = $path . '/' . $manifest[$filename]['css'][0];
-            }
-            if ($manifest[$filename]['file'] ?? false) {
-                $assetPaths['js'] = $path . '/' . $manifest[$filename]['file'];
+                    if ($path) {
+                        if ($manifest[$filename]['css'] ?? false) {
+                            $assetPaths['css'] = $path . '/' . $manifest[$filename]['css'][0];
+                        }
+                        if ($manifest[$filename]['file'] ?? false) {
+                            $assetPaths['js'] = $path . '/' . $manifest[$filename]['file'];
+                        }
+                    }
+                }
             }
         }
 

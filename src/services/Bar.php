@@ -68,7 +68,7 @@ class Bar extends Component
     public function render(array $config = []): string
     {
         try {
-            $settings = AdminBar::$plugin->getSettings();
+            $settings = AdminBar::$settings;
             $config['customLinks'] = $settings['customLinks'] ?? [];
             $config['editLinkLabel'] = $config['editLinkLabel'] ?? null;
             $config['editLinkUrl'] = $config['editLinkUrl'] ?? null;
