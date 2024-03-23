@@ -7,9 +7,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 5.0.0 - 2024-03-23
 ### Added
 - Added support for Craft 5
+- An icon is shown when no utility notifications are shown
+- An icon is shown when a custom url is set to `"/"`
 
 ### Changed
 - The `{{ adminBar() }}` Twig method now returns `null` instead of `false` when Admin Bar isn’t rendered.
+- Updated Admin Bar icons to match Craft CMS’s CP icons
 
 
 ## 4.3.0 - 2024-02-09

@@ -138,6 +138,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
                     display: block;
                     width: 15px;
                     height: auto;
+                    fill: currentColor;
                 }
             }
             admin-bar-button {
