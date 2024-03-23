@@ -182,4 +182,14 @@ In order to load Admin Bar’s CSS and JS onto the front end, we can use Admin B
 
 Release notes can be found at [CHANGELOG.md](https://github.com/wbrowar/craft-admin-bar/blob/main/CHANGELOG.md)
 
-Please, let me know if this plugin is useful or if you have any suggestions or issues. [@wbrowar](https://twitter.com/wbrowar)
+## Supported Versions
+
+Here is a general goal for adding and supporting features for Admin Bar going forward:
+
+- New features for the plugin will be added to the current major plugin version that targets the current released version of Craft CMS.
+- The latest major plugin version that targets the previous released major version of Craft CMS will be supported with bug fixes intruduced in updates to that version of Craft CMS.
+- Previous major plugin versions will only get security-related updates—when necessary.
+
+---
+
+Brought to you by [Will Browar](https://wbrowar.com)
