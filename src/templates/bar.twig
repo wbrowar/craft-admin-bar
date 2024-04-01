@@ -33,7 +33,11 @@
 {% if currentUser and (currentUser.photo ?? false) %}
     {% set adminBarAttributes = adminBarAttributes|merge({
         'avatar-alt': 'avatar-alt'|t('admin-bar', params = { name: currentUser.friendlyName }),
-        'avatar-src': currentUser.getThumbUrl(50),
+        'avatar-src': currentUser.photo.getUrl({
+            mode: 'crop',
+            width: 50,
+            height: 50,
+        }),
     }) %}
 {% endif %}
 
@@ -83,6 +87,8 @@
         {{ self.addConfigLink(link) }}
     {% endfor %}
 
+    <span style="flex-grow: 1;"></span>
+
     {% if currentUser and displayUtilitiesLink ?? true %}
         <admin-bar-button button-href="{{ cpUrl('utilities') }}" label-text="{{ 'Utilities'|t('admin-bar') }}">{% apply spaceless %}
             {% if utilitiesNotificationCount > 0 %}
@@ -98,8 +104,6 @@
     {% endif %}
 
     {% if textElements|length %}
-        <span style="flex: 1 0 30px;"></span>
-
         {% for textAttrs in textElements %}
             <admin-bar-text {{ attr(textAttrs) }}></admin-bar-text>
         {% endfor %}
