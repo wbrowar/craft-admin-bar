@@ -135,6 +135,9 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
         return '@layer admin-bar {
             admin-bar {
                 & svg.icon {
+                    display: none;
+                }
+                &:defined svg.icon {
                     display: block;
                     width: 15px;
                     height: auto;
