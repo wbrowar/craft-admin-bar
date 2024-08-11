@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   build: {
-    cssMinify: 'lightningcss',
     emptyOutDir: true,
     manifest: true,
     outDir: '../src/assetbundles/dist',

@@ -14,6 +14,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - The `{{ adminBar() }}` Twig method now returns `null` instead of `false` when Admin Bar isn’t rendered.
 - Updated Admin Bar icons to match Craft CMS’s CP icons
 
+### Fixed
+- Fixed an issue with the asset build process removing spaces in CSS that shouldn’t have been removed. [#42](https://github.com/wbrowar/craft-admin-bar/issues/42)
+
 
 ## 4.3.0 - 2024-02-09
 ### Added

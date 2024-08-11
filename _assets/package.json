@@ -10,9 +10,9 @@
   },
   "devDependencies": {
     "admin-bar-component": "^1.0.1",
-    "lightningcss": "^1.23.0",
-    "prettier": "^3.2.4",
-    "typescript": "^5.3.3",
-    "vite": "^5.0.12"
+    "lightningcss": "^1.26.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0"
   }
 }
