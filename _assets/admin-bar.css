@@ -1,1 +1,8 @@
 @import url(admin-bar-component/dist/admin-bar.css);
+
+@layer admin-bar {
+  admin-bar {
+    --admin-bar-bg-color: oklch(0.131 0.036 248.399);
+    --admin-bar-color-highlight: oklch(0.55 0.23 28.77);
+  }
+}
