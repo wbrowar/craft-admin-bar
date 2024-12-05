@@ -66,11 +66,17 @@ admin-bar {
 /* Added styles to CSS Cascade Layer to make it easier to override them. */
 @layer admin-bar {
   admin-bar {
-    /* Sets the background of the bar using the background shorthand property,
-    allowing you to use a gradient, a solid color, or an image. */
-    --admin-bar-bg: linear-gradient(to bottom, rgba(0 0 0 / 0.65), rgba(0 0 0 / 0.9));
+    /* Used in gradients and as a solid color in the background for `<admin-bar>` elements and button popovers. */
+    --admin-bar-bg-color: #000000;
 
-    /* Adds an effect to blur */
+    /* Sets the background of the `<admin-bar>` elements and popovers using the background shorthand property,
+    allowing you to use a gradient, a solid color, or an image. Setting this removes the "glass" effect and transparencies in popovers. */
+    /*--admin-bar-bg: var(--admin-bar-bg-color);*/
+
+    /* Border radius value used in different places. */
+    --admin-bar-border-radius: 6px;
+
+    /* Adds an effect to blur. */
     --admin-bar-backdrop-filter: blur(20px) saturate(200%);
 
     /* The color used on hover changes. */
@@ -81,13 +87,22 @@ admin-bar {
     --admin-bar-color-highlight-logout: var(--admin-bar-color-highlight);
 
     /* The color of text for everything but button labels.. */
-    --admin-bar-color-text: rgba(255 255 255 / 0.8);
+    --admin-bar-color-text: rgb(255 255 255 / 0.9);
 
     /* The font stack for all text. */
     --admin-bar-font-stack: system-ui, sans-serif;
 
     /* The font size for all text. */
     --admin-bar-font-size: .9rem;
+
+    /* Background for glass element, used as a fallback for browsers that don’t support `mask-image`. */
+    --admin-bar-glass-bg: var(--admin-bar-bg, linear-gradient(var(--admin-bar-gradient-direction), var(--admin-bar-bg-color), color-mix(in srgb, var(--admin-bar-bg-color) 20%, transparent 100%) 50%));
+
+    /* The thickness of the glass effect on admin bar. */
+    --admin-bar-glass-thickness: 2px;
+
+    /* The default direction of gradients. */
+    --admin-bar-gradient-direction: to bottom;
 
     /* The height and width of avatar images. */
     --admin-bar-avatar-size: 25px;
@@ -117,10 +132,10 @@ admin-bar {
     --admin-bar-transition-duration: 0.3s;
 
     /* Adds a box-shadow to the bar to increase visual elevation. */
-    /*--admin-bar-shadow: 0 0 15px color-mix(in srgb, rgba(0, 0, 0, 0.7), currentColor 10%);*/
+    /*--admin-bar-shadow: 0 0 15px color-mix(in srgb, rgb(0, 0, 0, 0.7), currentColor 10%);*/
 
     /* Adds a box-shadow to avatar images and buttons. */
-    --admin-bar-shadow-elements: 0 1px 2px color-mix(in srgb, rgba(0 0 0 / 0.5), currentColor 10%), 0 3px 6px color-mix(in srgb, rgba(0 0 0 / 0.4), currentColor 10%);
+    --admin-bar-shadow-elements: 0 1px 2px color-mix(in srgb, rgb(0 0 0 / 0.4), currentColor 10%), 0 3px 6px color-mix(in srgb, rgba(0 0 0 / 0.3), currentColor 10%);
 
     /* By default, when adding the `fixed` or `sticky` class to an `<admin-bar>`,
      the z-index of the element is set to `1`. Set this property if you need the
@@ -136,11 +151,20 @@ admin-bar {
     /* The text of all button labels. */
     --admin-bar-button-color-text: rgb(255 255 255);
 
+    /* The background of the button popover element. */
+    --admin-bar-button-popover-bg: var(--admin-bar-bg, color-mix(in srgb, var(--admin-bar-bg-color), transparent 60%));
+
+    /* The `border-radius` property that changes based on the position of the popover.  */
+    --admin-bar-button-popover-border-radius: var(--admin-bar-border-radius);
+
+    /* The value of the padding property on `admin-bar-text` components. */
+    --admin-bar-text-padding: 0 clamp(4px, 1vw, 13px);
+
     /* The background for labels in `admin-bar-text` components. */
-    --admin-bar-text-label-color-bg: rgba(255 255 255 / 0.9);
+    --admin-bar-text-label-color-bg: rgb(255 255 255 / 0.9);
 
     /* The text for labels in `admin-bar-text` components. */
-    --admin-bar-text-label-color-text: rgba(0 0 0 / 1);
+    --admin-bar-text-label-color-text: rgb(0 0 0 / 1);
 
     /* ====================================================================== */
 
@@ -182,6 +206,7 @@ admin-bar {
     }
     /* Moves `<admin-bar>` to the bottom of the page when using `.fixed` or `.sticky`. */
     &.bottom {
+      --admin-bar-gradient-direction: to top;
       right: 0;
       bottom: 0;
       left: 0;

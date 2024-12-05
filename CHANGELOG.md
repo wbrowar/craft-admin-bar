@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.0.1 - 2024-12-04
+### Added
+- Added `id` argument to `{{ adminBar() }}` Twig tags—letting you set the `id` for the Admin Bar wrapper element.
+
+### Changed
+- Updated Admin Bar Component to `1.1.1`.
+  - Note there are changes in the CSS Custom Properties: `--admin-bar-bg-color` and `--admin-bar-bg`. Nothing should break, if you’ve overridden these in custom settings, but the behavior of `--admin-bar-bg` is slightly changed.
+- Updated build dependencies.
+- Bumped up required Craft CMS version to `5.5.0` to get around plugin development issue.
+
+### Removed
+- Removed `{{ adminbar() }}` Twig tag and deprecation error that was suppoed to be removed in `5.0.0`.
+  - NOTE: on local development environments, Craft’s errors will ask you if you mean `adminBar` as a reminder.
+
+
 ## 5.0.0 - 2024-03-23
 ### Added
 - Added support for Craft 5

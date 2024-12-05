@@ -10,18 +10,14 @@
 
 namespace wbrowar\adminbar;
 
+use Craft;
 use craft\base\Model;
+use craft\base\Plugin;
 use craft\helpers\App;
 use craft\helpers\Json;
-use craft\services\Plugins;
+use wbrowar\adminbar\models\Settings;
 use wbrowar\adminbar\services\Bar;
 use wbrowar\adminbar\twigextensions\AdminBarTwigExtension;
-use wbrowar\adminbar\models\Settings;
-
-use Craft;
-use craft\base\Plugin;
-
-use yii\base\Event;
 
 /**
  * Craft plugins are very much like little applications in and of themselves. We’ve made
@@ -161,7 +157,7 @@ class AdminBar extends Plugin
             'js' => '',
         ];
 
-        if (App::parseEnv('$VITE_ADMIN_BAR_HMR') == 'true') {
+        if (App::parseEnv('$VITE_ADMIN_BAR_HMR') == true) {
             return [
                 'css' => '',
                 'js' => 'http://localhost:3300/' . $filename,

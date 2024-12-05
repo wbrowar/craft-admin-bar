@@ -23,6 +23,7 @@
 {% set adminBarAttributes = {
     class: classes,
     'greeting-text': 'greeting-text'|t('admin-bar', params = { name: currentUser.friendlyName }),
+    id: id ?? 'admin-bar',
     'logout-href': url(logoutUrl),
     'logout-label': 'logout-label'|t('admin-bar'),
     'show-environment': devMode,

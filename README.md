@@ -1,4 +1,4 @@
-# Admin Bar for Craft CMS 4
+# Admin Bar for Craft CMS 5
 
 ![Screenshot](resources/screenshots/screenshot-bar.png)
 
@@ -13,7 +13,7 @@ If you are creating a headless site, or a site that is statically cached, you ma
 > :warning: Admin Bar’s composer package name has changed from `wbrowar/adminbar` to `wbrowar/craft-admin-bar`. Update your composer.json to point to [the new package on Packagist.](https://packagist.org/packages/wbrowar/craft-admin-bar)
 
 ## Requirements
-* Craft 4.0.0
+* Craft 5.5.0
 
 ## Installation
 To install the plugin, you can find it in the [Craft Plugin Store](https://plugins.craftcms.com/admin-bar), or follow these instructions:
@@ -43,19 +43,20 @@ You may pass in an array of arguments to make some changes on how Admin Bar look
 
 Here is a list of available arguments:
 
-| Argument        | Default | Description                                                                                                                                                                                                                    |
-|-----------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `editLinkLabel` | *null*  | Set a custom label for the Edit Link when `editLinkUrl` is set to a custom URL.                                                                                                                                                |
-| `editLinkUrl`   | *null*  | Override the Edit Link with a custom URL or URI (this will be run through the `url()` Twig function).                                                                                                                          |
-| `entry`         | *null*  | Pass in an entry object to add an edit link for that entry .                                                                                                                                                                   |
-| `fixed`         | *false* | Use CSS `position: fixed` instead of `position: sticky;`.                                                                                                                                                                      |
-| `force`         | *false* | Bypasses the default check that `{{ adminBar() }}` does to see if Admin Bar can be rendered.                                                                                                                                   |
-| `position`      | *'top'* | When set to `'bottom'` and used with `fixed: true`, Admin Bar will be fixed to the bottom of the page. Accepts: `'bottom'`, `'top'`                                                                                             |
-| `rtl`           | *false* | Changes the reading direction from `ltr` to `rtl` in situations where you need to manually set it. Admin Bar Component will automatcally switch to RTL if your page is set to RTL or if you have the CSS set to `direction: rtl`. |
-| `sticky`        | *true*  | Uses CSS to `position: sticky;` Admin Bar to the top of the page.                                                                                                                                                              |
-| `textElements`  | *[]*    | Add text elements to admin bar using an array of objects.                                                                                                                                                                      |
-| `useCss`        | *true*  | Add the default styles to Admin Bar or leave them out to load the stylesheet with your project’s CSS.                                                                                                                          |
-| `useJs`         | *true*  | Use the Admin Bar's default Javascript or set this to `false` to import the [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) into your project’s JS bundle.                                               |
+| Argument        | Default       | Description                                                                                                                                                                                                                       |
+|-----------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `editLinkLabel` | *null*        | Set a custom label for the Edit Link when `editLinkUrl` is set to a custom URL.                                                                                                                                                   |
+| `editLinkUrl`   | *null*        | Override the Edit Link with a custom URL or URI (this will be run through the `url()` Twig function).                                                                                                                             |
+| `entry`         | *null*        | Pass in an entry object to add an edit link for that entry .                                                                                                                                                                      |
+| `fixed`         | *false*       | Use CSS `position: fixed` instead of `position: sticky;`.                                                                                                                                                                         |
+| `force`         | *false*       | Bypasses the default check that `{{ adminBar() }}` does to see if Admin Bar can be rendered.                                                                                                                                      |
+| `id`            | *'admin-bar'* | Set the `id` attribute on the Admin Bar wrapper element.                                                                                                                                                                          |
+| `position`      | *'top'*       | When set to `'bottom'` and used with `fixed: true`, Admin Bar will be fixed to the bottom of the page. Accepts: `'bottom'`, `'top'`                                                                                               |
+| `rtl`           | *false*       | Changes the reading direction from `ltr` to `rtl` in situations where you need to manually set it. Admin Bar Component will automatcally switch to RTL if your page is set to RTL or if you have the CSS set to `direction: rtl`. |
+| `sticky`        | *true*        | Uses CSS to `position: sticky;` Admin Bar to the top of the page.                                                                                                                                                                 |
+| `textElements`  | *[]*          | Add text elements to admin bar using an array of objects.                                                                                                                                                                         |
+| `useCss`        | *true*        | Add the default styles to Admin Bar or leave them out to load the stylesheet with your project’s CSS.                                                                                                                             |
+| `useJs`         | *true*        | Use the Admin Bar's default Javascript or set this to `false` to import the [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) into your project’s JS bundle.                                                  |
 
 ### Adding Text Elements to Admin Bar
 

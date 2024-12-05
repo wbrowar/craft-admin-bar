@@ -10,11 +10,9 @@
 
 namespace wbrowar\adminbar\twigextensions;
 
-use craft\errors\DeprecationException;
+use Craft;
 use craft\elements\Entry;
 use wbrowar\adminbar\AdminBar;
-
-use Craft;
 
 /**
  * Twig can be extended in many ways; you can add extra tags, filters, tests, operators,
@@ -53,7 +51,6 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
     {
         return [
             new \Twig\TwigFunction('adminBar', [$this, 'adminBar']),
-            new \Twig\TwigFunction('adminbar', [$this, 'adminBarLegacy']),
             new \Twig\TwigFunction('adminBarCssFile', [$this, 'adminBarCssFile']),
             new \Twig\TwigFunction('adminBarJsFile', [$this, 'adminBarJsFile']),
             new \Twig\TwigFunction('adminBarOnPageCss', [$this, 'adminBarOnPageCss']),
@@ -153,19 +150,5 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
                 }
             }
         }' . "\n" . ($settings['customCss'] ?? '');
-    }
-
-    /**
-     * DEPRECATED: Renders the Admin Bar and logs a deprecation error (or throws an error in devMode).
-     *
-     * @param array $config An object of config options that can be passed into `{{ adminBar() }}`. See the README for a full list of config params.
-     * @return string
-     * @throws DeprecationException
-     */
-    public function adminBarLegacy(array $config = []): string
-    {
-        Craft::$app->getDeprecator()->log(__METHOD__, 'The `adminbar()` Twig method has been deprecated and will be removed in Admin Bar 5.0. Use `adminBar()` instead.');
-
-        return $this->adminBar($config);
     }
 }
