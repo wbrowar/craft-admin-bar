@@ -1,0 +1,10 @@
+<admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem">
+  {{ svg('@nystudio107/seomatic/icon-mask.svg')|attr({ class: 'icon' }) }}
+  <div slot="popover" style="max-width: 800px; padding: clamp(4px, 1vw, 13px);">
+    <p><strong>Main Entity:</strong> {{ seomatic.meta.parsedValue('mainEntityOfPage') }}</p>
+    <p><strong>Title:</strong> {{ seomatic.meta.parsedValue('seoTitle') }}</p>
+    <p><strong>Description:</strong> {{ seomatic.meta.parsedValue('seoDescription') }}</p>
+    <p><strong>Canonical Url:</strong> {{ seomatic.meta.parsedValue('canonicalUrl') }}</p>
+    <p><strong>Image:</strong> <img src="{{ seomatic.meta.parsedValue('seoImage') }}" alt="{{ seomatic.meta.parsedValue('seoImageDescription') }}"></p>
+  </div>
+</admin-bar-button>

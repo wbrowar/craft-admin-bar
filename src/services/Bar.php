@@ -10,13 +10,11 @@
 
 namespace wbrowar\adminbar\services;
 
-use craft\base\UtilityInterface;
-use craft\helpers\Html;
-use wbrowar\adminbar\AdminBar;
-
 use Craft;
 use craft\base\Component;
+use craft\helpers\Html;
 use craft\web\View;
+use wbrowar\adminbar\AdminBar;
 
 
 /**
@@ -105,19 +103,23 @@ class Bar extends Component
             $config['displayUtilitiesLink'] = $settings->displayUtilitiesLink && !empty($userUtilities);
             $config['displaySettingsLink'] = $settings->displaySettingsLink && Craft::$app->getConfig()->getGeneral()->allowAdminChanges;
 
+            // Pro features
+            $config['pro'] = AdminBar::$pro ?? false;
+            $config['widgetPlugins'] = AdminBar::$widgetPlugins ?? [];
+            
             $oldMode = Craft::$app->getView()->getTemplateMode();
             Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
 
-             $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
+            $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
 
-             if (($assets['css'] ?? false) && $config['useCss']) {
-                 Craft::$app->getView()->registerCssFile($assets['css']);
-             }
-             if (($assets['js'] ?? false) && $config['useJs']) {
-                 Craft::$app->getView()->registerJsFile($assets['js'], ['defer' => true, 'type' => 'module']);
-             }
+            if (($assets['css'] ?? false) && $config['useCss']) {
+                Craft::$app->getView()->registerCssFile($assets['css']);
+            }
+            if (($assets['js'] ?? false) && $config['useJs']) {
+                Craft::$app->getView()->registerJsFile($assets['js'], ['defer' => true, 'type' => 'module']);
+            }
 
-            $html = Craft::$app->getView()->renderTemplate('admin-bar/bar', $config);
+            $html = Craft::$app->getView()->renderTemplate('admin-bar/_bar', $config);
             Craft::$app->getView()->setTemplateMode($oldMode);
         } catch (\Throwable $e) {
             return $this->_error($e->getMessage(), 'error');

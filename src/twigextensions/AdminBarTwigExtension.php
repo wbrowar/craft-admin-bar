@@ -131,21 +131,12 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
 
         return '@layer admin-bar {
             admin-bar {
-                & svg.icon {
-                    display: none;
-                }
-                &:defined svg.icon {
+                &:not(:defined) {
                     display: block;
-                    width: 15px;
-                    height: auto;
-                    fill: currentColor;
-                }
-            }
-            admin-bar-button {
-                &:hover {
-                    & admin-bar-text {
-                        --admin-bar-text-label-color-bg: var(--admin-bar-color-highlight);
-                        --admin-bar-text-label-color-text: var(--admin-bar-button-color-bg-hover);
+                    height: var(--admin-bar-height, 43px);
+                    
+                    & > * {
+                        display: none;
                     }
                 }
             }
