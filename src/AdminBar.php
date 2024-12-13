@@ -151,15 +151,19 @@ class AdminBar extends Plugin
      */
     private function widgetPlugins(): array
     {
-        $plugins = [];
+        $plugins = [
+            'blitz' => ['name' => 'Blitz', 'version' => null],
+            'guide' => ['name' => 'Guide', 'version' => null],
+            'seomatic' => ['name' => 'Seomatic', 'version' => null],
+        ];
 
         if (Craft::$app->getPlugins()->isPluginInstalled('guide')) {
-            $plugins[] = 'guide-5.2.0';
+            $plugins['guide']['version'] = '5.2.0';
         }
         if (Craft::$app->getPlugins()->isPluginInstalled('seomatic')) {
-            $plugins[] = 'seomatic-5.1.0';
+            $plugins['seomatic']['version'] = '5.1.0';
         }
-        
+
         return $plugins;
     }
 
@@ -192,7 +196,8 @@ class AdminBar extends Plugin
         return Craft::$app->view->renderTemplate(
             'admin-bar/_settings',
             [
-                'settings' => self::$settings
+                'settings' => self::$settings,
+                'widgetPlugins' => AdminBar::$widgetPlugins ?? [],
             ]
         );
     }
@@ -213,7 +218,8 @@ class AdminBar extends Plugin
             'js' => '',
         ];
 
-        if (App::parseEnv('$VITE_ADMIN_BAR_HMR') == true) {
+        // testinggg
+        if (App::parseEnv('$VITE_ADMIN_BAR_HMR')) {
             return [
                 'css' => '',
                 'js' => 'http://localhost:3300/' . $filename,

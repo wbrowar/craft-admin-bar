@@ -105,6 +105,10 @@ class Bar extends Component
 
             // Pro features
             $config['pro'] = AdminBar::$pro ?? false;
+            $config['displayWidgetLabels'] = $settings->displayWidgetLabels;
+            $config['widgetEnabledBlitz'] = $settings->widgetEnabledBlitz;
+            $config['widgetEnabledGuide'] = $settings->widgetEnabledGuide;
+            $config['widgetEnabledSeomatic'] = $settings->widgetEnabledSeomatic;
             $config['widgetPlugins'] = AdminBar::$widgetPlugins ?? [];
             
             $oldMode = Craft::$app->getView()->getTemplateMode();

@@ -1,69 +1,3 @@
-{% import "_includes/forms" as forms %}
-{% import "codeeditor/codeEditor" as codeEditor %}
-
-<h2>{{ 'Preview'|t('admin-bar') }}</h2>
-
-<div class="admin-bar-settings-preview" style="position: relative;">
-    {{ adminBar({ force: true }) }}
-
-</div>
-
-<hr>
-
-{{ forms.editableTableField({
-    label: 'Additional Links'|t('admin-bar'),
-    instructions: 'Add your own links to the Admin Bar.'|t('admin-bar'),
-    id: 'customLinks',
-    name: 'customLinks',
-    addRowLabel: 'Add a link'|t('little-layout'),
-    allowAdd: true,
-    allowDelete: true,
-    allowReorder: true,
-    cols: {
-        linkLabel: {
-            heading: 'Label'|t('admin-bar'),
-            type: 'singleline',
-        },
-        linkUrl: {
-            heading: 'URL'|t('admin-bar'),
-            type: 'singleline',
-        },
-        adminOnly: {
-            heading: 'Admin only?'|t('admin-bar'),
-            type: 'checkbox',
-        },
-    },
-    rows: settings.customLinks ?? [],
-}) }}
-
-<hr>
-
-{% set placeholder %}
-admin-bar {
-    --admin-bar-bg-color: oklch(0.131 0.036 248.399);
-    --admin-bar-color-highlight: oklch(0.55 0.23 28.77);
-    --admin-bar-color-text: rgb(228, 237, 246);
-}
-{% endset %}
-
-{{ codeEditor.textareaField({
-    label: 'Custom CSS'|t('admin-bar'),
-    instructions: "Use CSS Custom Properties or your own custom CSS to re-brand Admin Bar."|t('admin-bar'),
-    id: 'customCss',
-    name: "customCss",
-    placeholder: placeholder|replace({" ": "&nbsp;"})|raw|nl2br,
-    value: settings.customCss,
-    rows: 5,
-}, "Custom CSS", {
-    language: "css",
-}, {
-    wrapperClass: 'content-pane',
-}) }}
-
-<h2>{{ 'CSS Defaults'|t('admin-bar') }}</h2>
-<p style="text-wrap: pretty;">{{ 'Below are the contents of the CSS file for the Admin Bar Component. You can override any of these CSS variables in your front-end stylesheet, or in the Custom CSS field above.'|t('admin-bar') }}</p>
-
-{% set cssDefaults %}
 /* Added styles to CSS Cascade Layer to make it easier to override them. */
 @layer admin-bar {
   admin-bar {
@@ -115,11 +49,11 @@ admin-bar {
     warning will appear. The default looks like yellow, striped police tape,
     but you can use any CSS value used in the background shorthand property. */
     --admin-bar-environment-bg: repeating-linear-gradient(
-      -45deg,
-      var(--admin-bar-environment-bg-color),
-      var(--admin-bar-environment-bg-color) 18px,
-      transparent 18px,
-      transparent 30px
+        -45deg,
+        var(--admin-bar-environment-bg-color),
+        var(--admin-bar-environment-bg-color) 18px,
+        transparent 18px,
+        transparent 30px
     );
 
     /* Change just the color of the yellow stripes in the environment warning. */
@@ -151,6 +85,9 @@ admin-bar {
 
     /* The text of all button labels. */
     --admin-bar-button-color-text: rgb(255 255 255);
+
+    /* The default color of text on button popover elements. */
+    --admin-bar-button-popover-color-text: var(--admin-bar-color-text, rgb(255 255 255));
 
     /* The background of the button popover element. */
     --admin-bar-button-popover-bg: var(--admin-bar-bg, color-mix(in srgb, var(--admin-bar-bg-color), transparent 40%));
@@ -232,14 +169,3 @@ admin-bar {
     }
   }
 }
-{% endset %}
-
-{{ codeEditor.textareaField({
-    value: cssDefaults|raw,
-}, "Code Editor", {
-    language: "css",
-    readOnly: true,
-}, {
-    maxEditorRows: 0,
-    wrapperClass: 'content-pane',
-}) }}
