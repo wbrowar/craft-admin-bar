@@ -6,13 +6,17 @@
   <div slot="popover">
     {% if guides|length %}
       {% for guide in guides %}
-        <admin-bar-button button-href="{{ cpUrl('guide/page/' ~ guide.slug) }}">
+        <admin-bar-button button-href="{{ cpUrl('guide/page/' ~ guide.slug) }}" title="{{ 'Go to the page for the guide: '|t('admin-bar') ~ guide.title }}">
           <span style="--admin-bar-icon-width: 1rem">{{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}</span>
           {{ guide.title }}
         </admin-bar-button>
       {% endfor %}
     {% endif %}
-    <admin-bar-button button-href="{{ cpUrl('guide') }}" {% if guides|length %}style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);"{% endif %}>
+    <admin-bar-button
+        button-href="{{ cpUrl('guide') }}"
+        {% if guides|length %}style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);"{% endif %}
+        title="{{ 'Go to the CMS Guide page'|t('admin-bar') }}"
+    >
       <span style="--admin-bar-icon-width: 1.3rem">{{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}</span>
       {{ 'CMS Guide'|t('guide') }}
     </admin-bar-button>

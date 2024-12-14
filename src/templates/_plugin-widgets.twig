@@ -1,11 +1,5 @@
-{# Interactive Widgets #}
-
 {% if widgetEnabledCraftNewEntry and 'craft-new-entry' in widgetPlugins|keys %}
   {{ include('admin-bar/admin-bar-widgets/_craft-new-entry') }}
-{% endif %}
-
-{% if widgetEnabledCraftSites and 'craft-sites' in widgetPlugins|keys %}
-  {{ include('admin-bar/admin-bar-widgets/_craft-sites') }}
 {% endif %}
 
 {% if widgetEnabledGuide and 'guide' in widgetPlugins|keys %}
@@ -16,7 +10,9 @@
   {{ include('admin-bar/admin-bar-widgets/_seomatic') }}
 {% endif %}
 
-{# Status Widgets #}
+{% if widgetEnabledCraftSites and 'craft-sites' in widgetPlugins|keys %}
+  {{ include('admin-bar/admin-bar-widgets/_craft-sites') }}
+{% endif %}
 
 {% if widgetEnabledBlitz and 'blitz' in widgetPlugins|keys %}
   {{ include('admin-bar/admin-bar-widgets/_blitz') }}

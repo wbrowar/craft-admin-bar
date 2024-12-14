@@ -28,8 +28,7 @@
     ],
     "require": {
         "craftcms/cms": "^5.5.0",
-        "nystudio107/craft-code-editor": "^1.0.18",
-        "putyourlightson/craft-datastar-module": "^1.0.0-beta.1"
+        "nystudio107/craft-code-editor": "^1.0.18"
     },
     "autoload": {
         "psr-4": {

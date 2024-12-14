@@ -1,20 +1,26 @@
-{% set pluginHandle = 'guide' %}
+{% set pluginHandle = 'craft-sites' %}
 
-<admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem" title="{{ widgetPlugins[pluginHandle].name }}">
-  {{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}
-  {{ displayWidgetLabels ? widgetPlugins[pluginHandle].name : '' }}
-  <div slot="popover">
-    {% if guides|length %}
-      {% for guide in guides %}
-        <admin-bar-button button-href="{{ cpUrl('guide/page/' ~ guide.slug) }}">
-          <span style="--admin-bar-icon-width: 1rem">{{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}</span>
-          {{ guide.title }}
-        </admin-bar-button>
-      {% endfor %}
+{% set widgetElement = entrySiteLinks|length ? 'admin-bar-button' : 'admin-bar-text' %}
+
+{% if currentSite %}
+  {% set widgetContent %}
+    {{ svg('@appicons/' ~ earthIcon ~ '.svg')|attr({ class: 'icon' }) }}
+    {{ currentSite.name }}
+
+    {% if entrySiteLinks|length %}
+      <div slot="popover">
+        {% for link in entrySiteLinks %}
+          <admin-bar-button button-href="{{ link.url }}" title="{{ 'Go to this entry on the site: '|t('admin-bar') ~ link.title }}">
+            <span style="--admin-bar-icon-width: 1rem">{{ svg('@appicons/' ~ earthIcon ~ '.svg')|attr({ class: 'icon' }) }}</span>
+            {{ link.title }}
+          </admin-bar-button>
+        {% endfor %}
+      </div>
     {% endif %}
-    <admin-bar-button button-href="{{ cpUrl('guide') }}" {% if guides|length %}style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);"{% endif %}>
-      <span style="--admin-bar-icon-width: 1.3rem">{{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}</span>
-      {{ 'CMS Guide'|t('guide') }}
-    </admin-bar-button>
-  </div>
-</admin-bar-button>
+  {% endset %}
+  <{{ widgetElement }}
+      class="admin-bar-widget"
+      title="{{ widgetPlugins[pluginHandle].name }}"
+      style="--admin-bar-icon-width: 1.5rem"
+  >{{ widgetContent }}</{{ widgetElement }}>
+{% endif %}

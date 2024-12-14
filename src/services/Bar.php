@@ -107,19 +107,19 @@ class Bar extends Component
             $config['displaySettingsLink'] = $settings->displaySettingsLink && Craft::$app->getConfig()->getGeneral()->allowAdminChanges;
 
             // Pro features
-            $config['pro'] = AdminBar::$pro;
+            $config['proEdition'] = AdminBar::$pro;
             $config['widgetPlugins'] = AdminBar::$pro ? AdminBarWidget::getAdminBarWidgets() ?? [] : [];
 
-            $config['displayWidgetLabels'] = $config['pro'] ? $settings->displayWidgetLabels : false;
-            $config['widgetEnabledBlitz'] = $config['pro'] ? $settings->widgetEnabledBlitz : false;
-            $config['widgetEnabledCraftNewEntry'] = $config['pro'] ? $settings->widgetEnabledCraftNewEntry : false;
-            $config['widgetEnabledCraftSites'] = $config['pro'] ? $settings->widgetEnabledCraftSites : false;
-            $config['widgetEnabledGuide'] = $config['pro'] ? $settings->widgetEnabledGuide : false;
-            $config['widgetEnabledSeomatic'] = $config['pro'] ? $settings->widgetEnabledSeomatic : false;
-            $config['widgetEnabledViewCount'] = $config['pro'] ? $settings->widgetEnabledViewCount : false;
+            $config['displayWidgetLabels'] = AdminBar::$pro ? $settings->displayWidgetLabels : false;
+            $config['widgetEnabledBlitz'] = AdminBar::$pro ? $settings->widgetEnabledBlitz : false;
+            $config['widgetEnabledCraftNewEntry'] = AdminBar::$pro ? $settings->widgetEnabledCraftNewEntry : false;
+            $config['widgetEnabledCraftSites'] = AdminBar::$pro ? $settings->widgetEnabledCraftSites : false;
+            $config['widgetEnabledGuide'] = AdminBar::$pro ? $settings->widgetEnabledGuide : false;
+            $config['widgetEnabledSeomatic'] = AdminBar::$pro ? $settings->widgetEnabledSeomatic : false;
+            $config['widgetEnabledViewCount'] = AdminBar::$pro ? $settings->widgetEnabledViewCount : false;
 
-            if ($config['pro'] && !empty($config['widgetPlugins'])) {
-                $config = array_merge($config, AdminBarWidget::getWidgetConfigForEntry($entry, $settings));
+            if (AdminBar::$pro && !empty($config['widgetPlugins'])) {
+                $config = array_merge($config, AdminBarWidget::getWidgetConfigForEntry($entry, $settings, $config['widgetPlugins']));
             }
             
             $oldMode = Craft::$app->getView()->getTemplateMode();

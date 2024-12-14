@@ -88,7 +88,9 @@
         {{ self.addConfigLink(link) }}
     {% endfor %}
 
-    <span style="flex-grow: 1;"></span>
+    {% if not (proEdition and widgetPlugins|length) %}
+        <span style="flex-grow: 1;"></span>
+    {% endif %}
 
     {% if currentUser and displayUtilitiesLink ?? true %}
         <admin-bar-button button-href="{{ cpUrl('utilities') }}" label-text="{{ 'Utilities'|t('admin-bar') }}">{% apply spaceless %}
@@ -104,7 +106,9 @@
         <admin-bar-button button-href="{{ cpUrl('settings') }}" label-text="{{ 'Settings'|t('admin-bar') }}"><span slot="label-before">{{ self.iconSettings }}</span></admin-bar-button>
     {% endif %}
 
-    {% if pro and widgetPlugins|length %}
+    {% if proEdition and widgetPlugins|length %}
+        <span style="flex-grow: 1;"></span>
+
         {% include 'admin-bar/_plugin-widgets.twig' %}
     {% endif %}
 

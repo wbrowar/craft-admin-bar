@@ -13,6 +13,7 @@ namespace wbrowar\adminbar\helpers;
 use Craft;
 use craft\base\Element;
 use craft\elements\Entry;
+use craft\helpers\Cp;
 use putyourlightson\blitz\Blitz;
 use putyourlightson\blitz\models\SiteUriModel;
 use wbrowar\adminbar\models\Settings;
@@ -137,10 +138,11 @@ class AdminBarWidget
      *
      * @param $entry Entry
      * @param $settings Settings
+     * @param $widgetPlugins array
      *
      * @return array
      */
-    public static function getWidgetConfigForEntry($entry, $settings): array
+    public static function getWidgetConfigForEntry($entry, $settings, $widgetPlugins): array
     {
         $config = [];
 
@@ -151,7 +153,7 @@ class AdminBarWidget
         if (
             !empty($entry)
             && $settings->widgetEnabledBlitz
-            && ($config['widgetPlugins']['blitz']['version'] ?? false)
+            && ($widgetPlugins['blitz']['version'] ?? false)
             && class_exists(Blitz::class)
             && class_exists(SiteUriModel::class)
         ) {
@@ -185,12 +187,43 @@ class AdminBarWidget
             $config['newEntrySections'] = $sections;
         }
 
+        // Craft Sites
+        $config['currentSite'] = null;
+        $config['entrySiteLinks'] = [];
+        if ($settings->widgetEnabledCraftSites) {
+            $currentSite = Craft::$app->getSites()->getCurrentSite();
+            $config['currentSite'] = ['name' => $currentSite->name];
+            $config['earthIcon'] = Cp::earthIcon();
+
+            if (!empty($entry)) {
+                $supportedSites = $entry->supportedSites;
+
+                if (!empty($supportedSites)) {
+                     $supportedSiteIds = array_map(function ($site) {
+                        return $site['siteId'];
+                    }, $supportedSites);
+
+                    $propagatedEntries = Entry::find()->id($entry->id)->siteId($supportedSiteIds)->all();
+                    foreach ($propagatedEntries as $propagatedEntry) {
+                        if ($propagatedEntry->siteId !== $currentSite->id) {
+                            $site = Craft::$app->getSites()->getSiteById($propagatedEntry->siteId);
+
+                            $config['entrySiteLinks'][] = [
+                                'title' => $site->name,
+                                'url' => $propagatedEntry->getUrl(),
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+
         // Guide Widget
         $config['guides'] = [];
         if (
             !empty($entry)
             && $settings->widgetEnabledGuide
-            && ($config['widgetPlugins']['guide']['version'] ?? false)
+            && ($widgetPlugins['guide']['version'] ?? false)
             && class_exists(Guide::class)
         ) {
             $guideIds = [];
