@@ -1,12 +1,18 @@
 {% import "_includes/forms" as forms %}
 {% import "codeeditor/codeEditor" as codeEditor %}
 
-<h2>{{ 'Preview'|t('admin-bar') }}</h2>
+{% set previewEntry = craft.entries.orderBy('RAND()').section('*').uri(':notempty:').one() %}
 
-{% set previewEntry = craft.entries.orderBy('RAND()').section('*').one() %}
+<div class="admin-bar-settings-2-column">
+    <h2>{{ 'Preview'|t('admin-bar') }}</h2>
+
+    {% if previewEntry ?? false %}
+        <p style="margin-block-start: 0; justify-self: end;">{{ 'Showing preview for page, '|t('admin-bar') }} <a href="{{ previewEntry.url }}">{{ previewEntry.title }}</a></p>
+    {% endif %}
+</div>
 
 <div class="admin-bar-settings-preview">
-    {{ adminBar({ entry: previewEntry ?? null, force: true }) }}
+    {{ adminBar({ entry: previewEntry ?? null, editLinkLabel: previewEntry ?? false ? previewEntry.section.name : null, force: true }) }}
 </div>
 
 <hr>
@@ -53,34 +59,69 @@
 <div class="admin-bar-settings-2-column" style="margin-block-start: var(--xl);">
     {% if installedPlugins|length %}
         <div>
-            {% if 'blitz' in installedPlugins %}
-                {{ forms.lightswitchField({
-                    label: widgetPlugins.blitz.name,
-                    id: 'widgetEnabledBlitz',
-                    name: 'widgetEnabledBlitz',
-                    on: settings.widgetEnabledBlitz,
-                    instructions: 'Displays cache status for the current page.'|t('admin-bar'),
-                }) }}
+            {% if 'seomatic' in installedPlugins %}
+                <div class="admin-bar-settings-plugin-settings">
+                    {{ svg(widgetPlugins['seomatic'].icon) }}
+                    {{ forms.lightswitchField({
+                        label: widgetPlugins['seomatic'].name,
+                        id: 'widgetEnabledSeomatic',
+                        name: 'widgetEnabledSeomatic',
+                        on: settings.widgetEnabledSeomatic,
+                        instructions: widgetPlugins['seomatic'].widgetDescription,
+                    }) }}
+                </div>
             {% endif %}
 
             {% if 'guide' in installedPlugins %}
-                {{ forms.lightswitchField({
-                    label: widgetPlugins.guide.name,
-                    id: 'widgetEnabledGuide',
-                    name: 'widgetEnabledGuide',
-                    on: settings.widgetEnabledGuide,
-                    instructions: 'Displays all of the guides for the current page entry.'|t('admin-bar'),
-                }) }}
+                <div class="admin-bar-settings-plugin-settings">
+                    {{ svg(widgetPlugins['guide'].icon) }}
+                    {{ forms.lightswitchField({
+                        label: widgetPlugins['guide'].name,
+                        id: 'widgetEnabledGuide',
+                        name: 'widgetEnabledGuide',
+                        on: settings.widgetEnabledGuide,
+                        instructions: widgetPlugins['guide'].widgetDescription,
+                    }) }}
+                </div>
             {% endif %}
 
-            {% if 'seomatic' in installedPlugins %}
-                {{ forms.lightswitchField({
-                    label: widgetPlugins.seomatic.name,
-                    id: 'widgetEnabledSeomatic',
-                    name: 'widgetEnabledSeomatic',
-                    on: settings.widgetEnabledSeomatic,
-                    instructions: 'Displays meta details for the current page.'|t('admin-bar'),
-                }) }}
+            {% if 'blitz' in installedPlugins %}
+                <div class="admin-bar-settings-plugin-settings">
+                    {{ svg(widgetPlugins['blitz'].icon) }}
+                    {{ forms.lightswitchField({
+                        label: widgetPlugins['blitz'].name,
+                        id: 'widgetEnabledBlitz',
+                        name: 'widgetEnabledBlitz',
+                        on: settings.widgetEnabledBlitz,
+                        instructions: widgetPlugins['blitz'].widgetDescription,
+                    }) }}
+                </div>
+            {% endif %}
+
+            {% if 'view-count' in installedPlugins %}
+                <div class="admin-bar-settings-plugin-settings">
+                    {{ svg(widgetPlugins['view-count'].icon) }}
+                    {{ forms.lightswitchField({
+                        label: widgetPlugins['view-count'].name,
+                        id: 'widgetEnabledViewCount',
+                        name: 'widgetEnabledViewCount',
+                        on: settings.widgetEnabledViewCount,
+                        instructions: widgetPlugins['view-count'].widgetDescription,
+                    }) }}
+                </div>
+            {% endif %}
+
+            {% if 'workflow' in installedPlugins %}
+                <div class="admin-bar-settings-plugin-settings">
+                    {{ svg(widgetPlugins['workflow'].icon) }}
+                    {{ forms.lightswitchField({
+                        label: widgetPlugins['workflow'].name,
+                        id: 'widgetEnabledViewCount',
+                        name: 'widgetEnabledViewCount',
+                        on: settings.widgetEnabledViewCount,
+                        instructions: widgetPlugins['workflow'].widgetDescription,
+                    }) }}
+                </div>
             {% endif %}
         </div>
     {% endif %}
@@ -93,17 +134,24 @@
             on: settings.displayWidgetLabels,
         }) }}
 
-        <details>
-            <summary>{{ 'Plugins that also work with Admin Bar Widgets.'|t('admin-bar') }}</summary>
+        {% set notInstalledPlugins = [] %}
+        {% for plugin in widgetPlugins|keys %}
+            {% if plugin not in installedPlugins %}
+                {% set notInstalledPlugins = notInstalledPlugins|merge([plugin]) %}
+            {% endif %}
+        {% endfor %}
 
-            <ul>
-                {% for plugin in widgetPlugins|keys %}
-                    {% if plugin not in installedPlugins %}
-                        <li><a href="https://plugins.craftcms.com/{{ plugin }}">{{ widgetPlugins[plugin].name }}</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </details>
+        {% if notInstalledPlugins|length %}
+            <details>
+                <summary>{{ 'Plugins that also work with Admin Bar Widgets.'|t('admin-bar') }}</summary>
+
+                <ul>
+                    {% for plugin in notInstalledPlugins %}
+                        <li><a href="https://plugins.craftcms.com/{{ plugin }}">{{ widgetPlugins[plugin].name }}</a>: {{ widgetPlugins[plugin].widgetDescription }}</li>
+                    {% endfor %}
+                </ul>
+            </details>
+        {% endif %}
     </div>
 </div>
 
@@ -157,11 +205,24 @@ admin-bar {
     .admin-bar-settings-2-column {
         &:has(:nth-child(2)) {
             display: flex;
+            justify-content: space-between;
             gap: var(--l);
 
             & > div {
                 flex: 1 1 400px;
             }
+        }
+    }
+    .admin-bar-settings-plugin-settings {
+        display: grid;
+        grid-template-columns: 45px 1fr;
+        align-items: center;
+        gap: var(--m);
+
+        & svg {
+            display: block;
+            width: 45px;
+            height: auto;
         }
     }
 {% endcss %}

@@ -23,4 +23,9 @@
       }
     }
   }
+  .admin-bar-widget {
+    [slot="popover"] {
+      max-height: calc(90dvh - var(--admin-bar-height) - clamp(4px, 1vw, 13px));
+    }
+  }
 }

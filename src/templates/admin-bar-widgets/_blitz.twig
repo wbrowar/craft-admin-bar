@@ -1,0 +1,14 @@
+{% set pluginHandle = 'blitz' %}
+
+{% if entry ?? false %}
+  <admin-bar-text
+      class="admin-bar-widget"
+      title="{{ widgetPlugins[pluginHandle].name }}"
+  >
+    {# TODO Use Blitz branded yellow/gray colors (#fec136/#333f4c) or green/red (#11a697/#dc2626)?  #}
+    <div style="aspect-ratio: 1; width: 0.85em; border: 1px solid var(--admin-bar-color-text); border-radius: 50%; background-color: {{ blitzCached ? '#fec136' : '#333f4c' }};"></div>
+    {{ displayWidgetLabels ? widgetPlugins[pluginHandle].name : '' }}
+    {{ blitzCached ? 'Cached'|t('admin-bar') : 'Not Cached'|t('admin-bar') }}
+  </admin-bar-text>
+{% endif %}
+

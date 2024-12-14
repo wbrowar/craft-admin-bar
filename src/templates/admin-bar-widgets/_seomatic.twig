@@ -1,11 +1,48 @@
-<admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem">
-  {{ svg('@nystudio107/seomatic/icon-mask.svg')|attr({ class: 'icon' }) }}
-  {{ displayWidgetLabels ? widgetPlugins.seomatic.name : '' }}
-  <div slot="popover" style="max-width: 800px; padding: clamp(4px, 1vw, 13px);">
-    <p><strong>Main Entity:</strong> {{ seomatic.meta.parsedValue('mainEntityOfPage') }}</p>
-    <p><strong>Title:</strong> {{ seomatic.meta.parsedValue('seoTitle') }}</p>
-    <p><strong>Description:</strong> {{ seomatic.meta.parsedValue('seoDescription') }}</p>
-    <p><strong>Canonical Url:</strong> {{ seomatic.meta.parsedValue('canonicalUrl') }}</p>
-    <p><strong>Image:</strong> <img src="{{ seomatic.meta.parsedValue('seoImage') }}" alt="{{ seomatic.meta.parsedValue('seoImageDescription') }}"></p>
-  </div>
-</admin-bar-button>
+{% set pluginHandle = 'seomatic' %}
+
+{% if entry ?? false %}
+  {% set seomaticMetaGql = gql('{
+    entry(id: "' ~ entry.id ~ '", siteId: "' ~ entry.siteId ~ '") {
+      seomatic(asArray: true) {
+        metaTitleContainer
+        metaTagContainer
+        metaLinkContainer
+        metaScriptContainer
+        metaJsonLdContainer
+        metaSiteVarsContainer
+      }
+    }
+  }').data.entry.seomatic %}
+
+{#  {% dd seomaticMetaGql %}#}
+
+  {% set metaTitleContainer = seomaticMetaGql.metaTitleContainer|json_decode %}
+  {% set metaTagContainer = seomaticMetaGql.metaTagContainer|json_decode %}
+  {% set metaLinkContainer = seomaticMetaGql.metaLinkContainer|json_decode %}
+  {% set metaJsonLdContainer = seomaticMetaGql.metaJsonLdContainer|json_decode %}
+
+{#  {% dd metaJsonLdContainer %}#}
+
+  {% set meta = {
+    canonical: metaLinkContainer.canonical.href ?? null,
+    description: metaTagContainer.description.content ?? null,
+    imageAlt: metaTagContainer['og:image:alt'].content ?? null,
+    imageUrl: metaTagContainer['og:image'].content ?? null,
+    mainEntity: metaJsonLdContainer.mainEntityOfPage['@type'] ?? null,
+    title: metaTitleContainer.title.title ?? null,
+  } %}
+
+{#  {% dd meta %}#}
+
+  <admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem" title="{{ widgetPlugins[pluginHandle].name }}">
+    {{ svg('@nystudio107/seomatic/icon-mask.svg')|attr({ class: 'icon' }) }}
+    {{ displayWidgetLabels ? widgetPlugins[pluginHandle].name : '' }}
+    <div slot="popover" style="max-width: 800px; padding: clamp(4px, 1vw, 13px);">
+      <img src="{{ meta.imageUrl }}" alt="{{ meta.imageAlt }}" style="display: block; width: min(400px, 70vw); height: auto; border-radius: var(--admin-bar-border-radius);">
+      <p><em><a href="{{ meta.canonical }}" style="color: var(--admin-bar-button-popover-color-text, rgb(255 255 255)); word-break: break-all">{{ meta.canonical }}</a></em></p>
+      <p><strong>{{ meta.title }}</strong></p>
+      <p>{{ meta.description }}</p>
+      <p><strong>Main Entity:</strong> {{ meta.mainEntity }}</p>
+    </div>
+  </admin-bar-button>
+{% endif %}

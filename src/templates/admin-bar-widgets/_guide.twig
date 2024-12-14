@@ -1,7 +1,20 @@
-<admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem">
+{% set pluginHandle = 'guide' %}
+
+<admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem" title="{{ widgetPlugins[pluginHandle].name }}">
   {{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}
-  {{ displayWidgetLabels ? widgetPlugins.guide.name : '' }}
-  <span slot="popover">
-    <admin-bar-text>Hi, this is popover content 🍾</admin-bar-text>
-  </span>
+  {{ displayWidgetLabels ? widgetPlugins[pluginHandle].name : '' }}
+  <div slot="popover">
+    {% if guides|length %}
+      {% for guide in guides %}
+        <admin-bar-button button-href="{{ cpUrl('guide/page/' ~ guide.slug) }}">
+          <span style="--admin-bar-icon-width: 1rem">{{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}</span>
+          {{ guide.title }}
+        </admin-bar-button>
+      {% endfor %}
+    {% endif %}
+    <admin-bar-button button-href="{{ cpUrl('guide') }}" {% if guides|length %}style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);"{% endif %}>
+      <span style="--admin-bar-icon-width: 1.3rem">{{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}</span>
+      {{ 'CMS Guide'|t('guide') }}
+    </admin-bar-button>
+  </div>
 </admin-bar-button>

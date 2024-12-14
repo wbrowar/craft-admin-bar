@@ -131,6 +131,13 @@ class Settings extends Model
      */
     public bool $widgetEnabledSeomatic = false;
 
+    /**
+     * Enables the Admin Bar Widget: View Count
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledViewCount = false;
+
     // Public Methods
     // =========================================================================
 

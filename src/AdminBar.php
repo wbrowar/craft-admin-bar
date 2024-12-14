@@ -47,12 +47,6 @@ class AdminBar extends Plugin
     // =========================================================================
 
     /**
-     * @var string[]
-     */
-    public static $widgetPlugins;
-
-
-    /**
      * @var bool
      */
     public static $pro;
@@ -90,7 +84,6 @@ class AdminBar extends Plugin
         self::$plugin = $this;
         self::$pro = self::$plugin->is(AdminBar::EDITION_PRO);
         self::$settings = self::$plugin->getSettings();
-        self::$widgetPlugins = self::widgetPlugins();
 
         // Add our services
         $this->setComponents([
@@ -149,19 +142,70 @@ class AdminBar extends Plugin
      *
      * @return string[]
      */
-    private function widgetPlugins(): array
+    public function widgetPlugins(): array
     {
         $plugins = [
-            'blitz' => ['name' => 'Blitz', 'version' => null],
-            'guide' => ['name' => 'Guide', 'version' => null],
-            'seomatic' => ['name' => 'Seomatic', 'version' => null],
+            'blitz' => [
+                'name' => 'Blitz',
+                'widgetDescription' => Craft::t('admin-bar', 'Displays cache status for the current page.'),
+                'version' => null
+            ],
+            'guide' => [
+                'name' => 'Guide',
+                'widgetDescription' => Craft::t('admin-bar', 'Displays all of the guides for the current page entry.'),
+                'version' => null
+            ],
+            'seomatic' => [
+                'name' => 'Seomatic',
+                'widgetDescription' => Craft::t('admin-bar', 'Displays meta details for the current page.'),
+                'version' => null
+            ],
+            'view-count' => [
+                'name' => 'View Count',
+                'widgetDescription' => Craft::t('admin-bar', 'Displays number of times the current page has been viewed.'),
+                'version' => null
+            ],
+            'workflow' => [
+                'name' => 'Workflow',
+                'widgetDescription' => Craft::t('admin-bar', 'Displays workflow status for the current page.'),
+                'version' => null
+            ],
         ];
 
+        if (Craft::$app->getPlugins()->isPluginInstalled('blitz')) {
+            $pluginHandle = 'blitz';
+            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+            $plugins[$pluginHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($pluginHandle);
+            $plugins[$pluginHandle]['name'] = $plugin->name;
+            $plugins[$pluginHandle]['version'] = version_compare($plugin->getVersion(), '5.9.0', '>=') ? '5.9.0' : null;
+        }
         if (Craft::$app->getPlugins()->isPluginInstalled('guide')) {
-            $plugins['guide']['version'] = '5.2.0';
+            $pluginHandle = 'guide';
+            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+            $plugins[$pluginHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($pluginHandle);
+            $plugins[$pluginHandle]['name'] = $plugin->name;
+            $plugins[$pluginHandle]['version'] = version_compare($plugin->getVersion(), '5.2.0', '>=') ? '5.2.0' : null;
         }
         if (Craft::$app->getPlugins()->isPluginInstalled('seomatic')) {
-            $plugins['seomatic']['version'] = '5.1.0';
+            $pluginHandle = 'seomatic';
+            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+            $plugins[$pluginHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($pluginHandle);
+            $plugins[$pluginHandle]['name'] = $plugin->name;
+            $plugins[$pluginHandle]['version'] = version_compare($plugin->getVersion(), '5.1.0', '>=') ? '5.1.0' : null;
+        }
+        if (Craft::$app->getPlugins()->isPluginInstalled('view-count')) {
+            $pluginHandle = 'view-count';
+            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+            $plugins[$pluginHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($pluginHandle);
+            $plugins[$pluginHandle]['name'] = $plugin->name;
+            $plugins[$pluginHandle]['version'] = version_compare($plugin->getVersion(), '2.0.0', '>=') ? '2.0.0' : null;
+        }
+        if (Craft::$app->getPlugins()->isPluginInstalled('workflow')) {
+            $pluginHandle = 'workflow';
+            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
+            $plugins[$pluginHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($pluginHandle);
+            $plugins[$pluginHandle]['name'] = $plugin->name;
+            $plugins[$pluginHandle]['version'] = version_compare($plugin->getVersion(), '3.0.0', '>=') ? '3.0.0' : null;
         }
 
         return $plugins;
@@ -197,7 +241,7 @@ class AdminBar extends Plugin
             'admin-bar/_settings',
             [
                 'settings' => self::$settings,
-                'widgetPlugins' => AdminBar::$widgetPlugins ?? [],
+                'widgetPlugins' => $this->widgetPlugins() ?? [],
             ]
         );
     }
