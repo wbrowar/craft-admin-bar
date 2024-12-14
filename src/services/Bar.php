@@ -12,13 +12,10 @@ namespace wbrowar\adminbar\services;
 
 use Craft;
 use craft\base\Component;
-use craft\base\Element;
 use craft\helpers\Html;
 use craft\web\View;
-use putyourlightson\blitz\Blitz;
-use putyourlightson\blitz\models\SiteUriModel;
 use wbrowar\adminbar\AdminBar;
-use wbrowar\guide\Guide;
+use wbrowar\adminbar\helpers\AdminBarWidget;
 
 
 /**
@@ -71,8 +68,7 @@ class Bar extends Component
     {
         try {
             $entry = $config['entry'] ?? null;
-            $section = !empty($entry) ? Craft::$app->getEntries()->getSectionById($entry['sectionId']) : null;
-            
+
             $settings = AdminBar::$settings;
             $config['customLinks'] = $settings['customLinks'] ?? [];
             $config['editLinkLabel'] = $config['editLinkLabel'] ?? null;
@@ -111,65 +107,19 @@ class Bar extends Component
             $config['displaySettingsLink'] = $settings->displaySettingsLink && Craft::$app->getConfig()->getGeneral()->allowAdminChanges;
 
             // Pro features
-            $config['pro'] = AdminBar::$pro ?? false;
-            $config['widgetPlugins'] = AdminBar::$pro ? AdminBar::$plugin->widgetPlugins() ?? [] : [];
+            $config['pro'] = AdminBar::$pro;
+            $config['widgetPlugins'] = AdminBar::$pro ? AdminBarWidget::getAdminBarWidgets() ?? [] : [];
+
+            $config['displayWidgetLabels'] = $config['pro'] ? $settings->displayWidgetLabels : false;
+            $config['widgetEnabledBlitz'] = $config['pro'] ? $settings->widgetEnabledBlitz : false;
+            $config['widgetEnabledCraftNewEntry'] = $config['pro'] ? $settings->widgetEnabledCraftNewEntry : false;
+            $config['widgetEnabledCraftSites'] = $config['pro'] ? $settings->widgetEnabledCraftSites : false;
+            $config['widgetEnabledGuide'] = $config['pro'] ? $settings->widgetEnabledGuide : false;
+            $config['widgetEnabledSeomatic'] = $config['pro'] ? $settings->widgetEnabledSeomatic : false;
+            $config['widgetEnabledViewCount'] = $config['pro'] ? $settings->widgetEnabledViewCount : false;
 
             if ($config['pro'] && !empty($config['widgetPlugins'])) {
-                $config['displayWidgetLabels'] = $settings->displayWidgetLabels;
-                $config['widgetEnabledBlitz'] = $settings->widgetEnabledBlitz;
-                $config['widgetEnabledGuide'] = $settings->widgetEnabledGuide;
-                $config['widgetEnabledSeomatic'] = $settings->widgetEnabledSeomatic;
-                $config['widgetEnabledViewCount'] = $settings->widgetEnabledViewCount;
-
-                // Blitz Widget
-                $config['blitzCached'] = false;
-                if (
-                    !empty($entry)
-                    && $settings->widgetEnabledBlitz
-                    && ($config['widgetPlugins']['blitz']['version'] ?? false)
-                    && class_exists(Blitz::class)
-                    && class_exists(SiteUriModel::class)
-                ) {
-                    $siteUri = new SiteUriModel([
-                        'siteId' => $entry->siteId,
-                        'uri' => $entry->uri,
-                    ]);
-                    if ($siteUri->uri === Element::HOMEPAGE_URI) {
-                        $siteUri->uri = '';
-                    }
-                    $cachedValue = Blitz::$plugin->cacheStorage->get($siteUri);
-
-                    $config['blitzCached'] = !empty($cachedValue);
-                }
-
-                // Guide Widget
-                $config['guides'] = [];
-                if (
-                    !empty($entry)
-                    && $settings->widgetEnabledGuide
-                    && ($config['widgetPlugins']['guide']['version'] ?? false)
-                    && class_exists(Guide::class)
-                ) {
-                    $guideIds = [];
-
-                    $entryGuidePlacements = Guide::$plugin->placement->getPlacements([
-                        'group' => 'entry',
-                        'groupId' => null,
-                    ]);
-
-                    $sectionGuidePlacements = Guide::$plugin->placement->getPlacements([
-                        'group' => 'section',
-                        'groupId' => $section->uid,
-                    ]);
-
-                    $placements = array_merge($entryGuidePlacements, $sectionGuidePlacements);
-
-                    foreach ($placements as $placement) {
-                        $guideIds[] = $placement->guideId;
-                    }
-
-                    $config['guides'] = Guide::$plugin->guide->getGuides(['id' => $guideIds]);
-                }
+                $config = array_merge($config, AdminBarWidget::getWidgetConfigForEntry($entry, $settings));
             }
             
             $oldMode = Craft::$app->getView()->getTemplateMode();

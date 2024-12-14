@@ -122,6 +122,20 @@ class Settings extends Model
      *
      * @var bool
      */
+    public bool $widgetEnabledCraftNewEntry = false;
+
+    /**
+     * Enables the Admin Bar Widget: Guide
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledCraftSites = false;
+
+    /**
+     * Enables the Admin Bar Widget: Guide
+     *
+     * @var bool
+     */
     public bool $widgetEnabledGuide = false;
 
     /**

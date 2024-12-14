@@ -1,0 +1,14 @@
+{% set pluginHandle = 'craft-new-entry' %}
+
+<admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem" title="{{ widgetPlugins[pluginHandle].name }}">
+  {{ iconSvg('plus')|attr({ class: 'icon' }) }}
+  {{ displayWidgetLabels ? widgetPlugins[pluginHandle].name : '' }}
+  <div slot="popover">
+    {% for section in newEntrySections %}
+      <admin-bar-button button-href="{{ cpUrl('entries/' ~ section.handle ~ '/new') }}" {% if guides|length %}style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);"{% endif %}>
+        <span style="--admin-bar-icon-width: 0.9rem">{{ svg('@appicons/' ~ section.icon ~ '.svg')|attr({ class: 'icon' }) }}</span>
+        {{ section.name }}
+      </admin-bar-button>
+    {% endfor %}
+  </div>
+</admin-bar-button>

@@ -14,14 +14,10 @@
     }
   }').data.entry.seomatic %}
 
-{#  {% dd seomaticMetaGql %}#}
-
   {% set metaTitleContainer = seomaticMetaGql.metaTitleContainer|json_decode %}
   {% set metaTagContainer = seomaticMetaGql.metaTagContainer|json_decode %}
   {% set metaLinkContainer = seomaticMetaGql.metaLinkContainer|json_decode %}
   {% set metaJsonLdContainer = seomaticMetaGql.metaJsonLdContainer|json_decode %}
-
-{#  {% dd metaJsonLdContainer %}#}
 
   {% set meta = {
     canonical: metaLinkContainer.canonical.href ?? null,
@@ -32,16 +28,14 @@
     title: metaTitleContainer.title.title ?? null,
   } %}
 
-{#  {% dd meta %}#}
-
   <admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem" title="{{ widgetPlugins[pluginHandle].name }}">
     {{ svg('@nystudio107/seomatic/icon-mask.svg')|attr({ class: 'icon' }) }}
     {{ displayWidgetLabels ? widgetPlugins[pluginHandle].name : '' }}
-    <div slot="popover" style="max-width: 800px; padding: clamp(4px, 1vw, 13px);">
-      <img src="{{ meta.imageUrl }}" alt="{{ meta.imageAlt }}" style="display: block; width: min(400px, 70vw); height: auto; border-radius: var(--admin-bar-border-radius);">
-      <p><em><a href="{{ meta.canonical }}" style="color: var(--admin-bar-button-popover-color-text, rgb(255 255 255)); word-break: break-all">{{ meta.canonical }}</a></em></p>
+    <div slot="popover" style="max-width: 400px; padding: clamp(4px, 1vw, 13px);">
+      <img src="{{ meta.imageUrl }}" alt="{{ meta.imageAlt }}" style="display: block; width: min(374px, 70vw); height: auto; border-radius: var(--admin-bar-border-radius);">
       <p><strong>{{ meta.title }}</strong></p>
       <p>{{ meta.description }}</p>
+      <p><em><a href="{{ meta.canonical }}" style="color: var(--admin-bar-button-popover-color-text, rgb(255 255 255)); word-break: break-all">{{ meta.canonical }}</a></em></p>
       <p><strong>Main Entity:</strong> {{ meta.mainEntity }}</p>
     </div>
   </admin-bar-button>

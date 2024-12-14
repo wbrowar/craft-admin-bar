@@ -15,6 +15,7 @@ use craft\base\Model;
 use craft\base\Plugin;
 use craft\helpers\App;
 use craft\helpers\Json;
+use wbrowar\adminbar\helpers\AdminBarWidget;
 use wbrowar\adminbar\models\Settings;
 use wbrowar\adminbar\services\Bar;
 use wbrowar\adminbar\twigextensions\AdminBarTwigExtension;
@@ -135,82 +136,6 @@ class AdminBar extends Plugin
     // Private Methods
     // =========================================================================
 
-    /**
-     * List of plugins installed in same project that can be used as Admin Bar Widgets.
-     * Strings are formatted in `handle-version`.
-     * The version number is pulled from the plugin version that is supported for a widget’s features.
-     *
-     * @return string[]
-     */
-    public function widgetPlugins(): array
-    {
-        $plugins = [
-            'blitz' => [
-                'name' => 'Blitz',
-                'widgetDescription' => Craft::t('admin-bar', 'Displays cache status for the current page.'),
-                'version' => null
-            ],
-            'guide' => [
-                'name' => 'Guide',
-                'widgetDescription' => Craft::t('admin-bar', 'Displays all of the guides for the current page entry.'),
-                'version' => null
-            ],
-            'seomatic' => [
-                'name' => 'Seomatic',
-                'widgetDescription' => Craft::t('admin-bar', 'Displays meta details for the current page.'),
-                'version' => null
-            ],
-            'view-count' => [
-                'name' => 'View Count',
-                'widgetDescription' => Craft::t('admin-bar', 'Displays number of times the current page has been viewed.'),
-                'version' => null
-            ],
-            'workflow' => [
-                'name' => 'Workflow',
-                'widgetDescription' => Craft::t('admin-bar', 'Displays workflow status for the current page.'),
-                'version' => null
-            ],
-        ];
-
-        if (Craft::$app->getPlugins()->isPluginInstalled('blitz')) {
-            $pluginHandle = 'blitz';
-            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-            $plugins[$pluginHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($pluginHandle);
-            $plugins[$pluginHandle]['name'] = $plugin->name;
-            $plugins[$pluginHandle]['version'] = version_compare($plugin->getVersion(), '5.9.0', '>=') ? '5.9.0' : null;
-        }
-        if (Craft::$app->getPlugins()->isPluginInstalled('guide')) {
-            $pluginHandle = 'guide';
-            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-            $plugins[$pluginHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($pluginHandle);
-            $plugins[$pluginHandle]['name'] = $plugin->name;
-            $plugins[$pluginHandle]['version'] = version_compare($plugin->getVersion(), '5.2.0', '>=') ? '5.2.0' : null;
-        }
-        if (Craft::$app->getPlugins()->isPluginInstalled('seomatic')) {
-            $pluginHandle = 'seomatic';
-            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-            $plugins[$pluginHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($pluginHandle);
-            $plugins[$pluginHandle]['name'] = $plugin->name;
-            $plugins[$pluginHandle]['version'] = version_compare($plugin->getVersion(), '5.1.0', '>=') ? '5.1.0' : null;
-        }
-        if (Craft::$app->getPlugins()->isPluginInstalled('view-count')) {
-            $pluginHandle = 'view-count';
-            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-            $plugins[$pluginHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($pluginHandle);
-            $plugins[$pluginHandle]['name'] = $plugin->name;
-            $plugins[$pluginHandle]['version'] = version_compare($plugin->getVersion(), '2.0.0', '>=') ? '2.0.0' : null;
-        }
-        if (Craft::$app->getPlugins()->isPluginInstalled('workflow')) {
-            $pluginHandle = 'workflow';
-            $plugin = Craft::$app->getPlugins()->getPlugin($pluginHandle);
-            $plugins[$pluginHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($pluginHandle);
-            $plugins[$pluginHandle]['name'] = $plugin->name;
-            $plugins[$pluginHandle]['version'] = version_compare($plugin->getVersion(), '3.0.0', '>=') ? '3.0.0' : null;
-        }
-
-        return $plugins;
-    }
-
     // Protected Methods
     // =========================================================================
 
@@ -240,8 +165,9 @@ class AdminBar extends Plugin
         return Craft::$app->view->renderTemplate(
             'admin-bar/_settings',
             [
+                'proEdition' => self::$pro,
                 'settings' => self::$settings,
-                'widgetPlugins' => $this->widgetPlugins() ?? [],
+                'widgetPlugins' => AdminBarWidget::getAdminBarWidgets() ?? [],
             ]
         );
     }

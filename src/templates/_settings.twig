@@ -45,81 +45,116 @@
 
 <hr>
 
-{% set installedPlugins = [] %}
+{% set availableAdminBarWidgets = [] %}
 {% for plugin in widgetPlugins|keys %}
     {% if widgetPlugins[plugin].version %}
-        {% set installedPlugins = installedPlugins|merge([plugin]) %}
+        {% set availableAdminBarWidgets = availableAdminBarWidgets|merge([plugin]) %}
     {% endif %}
 {% endfor %}
 
 <h2>{{ 'Admin Bar Widgets'|t('admin-bar') }}</h2>
 
-<p>{{ 'Admin Bar Widgets display statuses and page-specific information based on the plugins that you currently have installed.'|t('admin-bar') }}</p>
+<div class="readable" style="max-width: 70ch; text-wrap: balance;">
+    <p>{{ 'Admin Bar Widgets display links, statuses, and page-specific information based on some of the Craft CMS features you are using and the plugins that you currently have installed.'|t('admin-bar') }} {% if not proEdition %}<a class="go" href="{{ cpUrl('plugin-store/admin-bar') }}">{{ 'Get Admin Bar PRO to enable Admin Bar Widgets.'|t('admin-bar') }}</a>{% endif %}</p>
+</div>
 
-<div class="admin-bar-settings-2-column" style="margin-block-start: var(--xl);">
-    {% if installedPlugins|length %}
+<div class="admin-bar-settings-2-column {{ proEdition ? 'admin-bar-pro' : '' }}" style="margin-block-start: calc(2 * var(--l));">
+    {% if availableAdminBarWidgets|length %}
         <div>
-            {% if 'seomatic' in installedPlugins %}
-                <div class="admin-bar-settings-plugin-settings">
-                    {{ svg(widgetPlugins['seomatic'].icon) }}
+            {% if 'craft-new-entry' in availableAdminBarWidgets %}
+                <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
+                    {{ svg(widgetPlugins['craft-new-entry'].icon) }}
                     {{ forms.lightswitchField({
-                        label: widgetPlugins['seomatic'].name,
-                        id: 'widgetEnabledSeomatic',
-                        name: 'widgetEnabledSeomatic',
-                        on: settings.widgetEnabledSeomatic,
-                        instructions: widgetPlugins['seomatic'].widgetDescription,
+                        disabled: not proEdition,
+                        id: 'widgetEnabledCraftNewEntry',
+                        instructions: widgetPlugins['craft-new-entry'].widgetDescription,
+                        label: widgetPlugins['craft-new-entry'].name,
+                        name: 'widgetEnabledCraftNewEntry',
+                        on: settings.widgetEnabledCraftNewEntry,
                     }) }}
                 </div>
             {% endif %}
 
-            {% if 'guide' in installedPlugins %}
-                <div class="admin-bar-settings-plugin-settings">
+            {% if 'craft-sites' in availableAdminBarWidgets %}
+                <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
+                    {{ svg(widgetPlugins['craft-sites'].icon) }}
+                    {{ forms.lightswitchField({
+                        disabled: not proEdition,
+                        id: 'widgetEnabledCraftSites',
+                        instructions: widgetPlugins['craft-sites'].widgetDescription,
+                        label: widgetPlugins['craft-sites'].name,
+                        name: 'widgetEnabledCraftSites',
+                        on: settings.widgetEnabledCraftSites,
+                    }) }}
+                </div>
+            {% endif %}
+
+            {% if 'guide' in availableAdminBarWidgets %}
+                <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
                     {{ svg(widgetPlugins['guide'].icon) }}
                     {{ forms.lightswitchField({
-                        label: widgetPlugins['guide'].name,
+                        disabled: not proEdition,
                         id: 'widgetEnabledGuide',
+                        instructions: widgetPlugins['guide'].widgetDescription,
+                        label: widgetPlugins['guide'].name,
                         name: 'widgetEnabledGuide',
                         on: settings.widgetEnabledGuide,
-                        instructions: widgetPlugins['guide'].widgetDescription,
                     }) }}
                 </div>
             {% endif %}
 
-            {% if 'blitz' in installedPlugins %}
-                <div class="admin-bar-settings-plugin-settings">
+            {% if 'seomatic' in availableAdminBarWidgets %}
+                <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
+                    {{ svg(widgetPlugins['seomatic'].icon) }}
+                    {{ forms.lightswitchField({
+                        disabled: not proEdition,
+                        id: 'widgetEnabledSeomatic',
+                        instructions: widgetPlugins['seomatic'].widgetDescription,
+                        label: widgetPlugins['seomatic'].name,
+                        name: 'widgetEnabledSeomatic',
+                        on: settings.widgetEnabledSeomatic,
+                    }) }}
+                </div>
+            {% endif %}
+
+            {% if 'blitz' in availableAdminBarWidgets %}
+                <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
                     {{ svg(widgetPlugins['blitz'].icon) }}
                     {{ forms.lightswitchField({
-                        label: widgetPlugins['blitz'].name,
+                        disabled: not proEdition,
                         id: 'widgetEnabledBlitz',
+                        instructions: widgetPlugins['blitz'].widgetDescription,
+                        label: widgetPlugins['blitz'].name,
                         name: 'widgetEnabledBlitz',
                         on: settings.widgetEnabledBlitz,
-                        instructions: widgetPlugins['blitz'].widgetDescription,
                     }) }}
                 </div>
             {% endif %}
 
-            {% if 'view-count' in installedPlugins %}
-                <div class="admin-bar-settings-plugin-settings">
+            {% if 'view-count' in availableAdminBarWidgets %}
+                <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
                     {{ svg(widgetPlugins['view-count'].icon) }}
                     {{ forms.lightswitchField({
-                        label: widgetPlugins['view-count'].name,
+                        disabled: not proEdition,
                         id: 'widgetEnabledViewCount',
+                        instructions: widgetPlugins['view-count'].widgetDescription,
+                        label: widgetPlugins['view-count'].name,
                         name: 'widgetEnabledViewCount',
                         on: settings.widgetEnabledViewCount,
-                        instructions: widgetPlugins['view-count'].widgetDescription,
                     }) }}
                 </div>
             {% endif %}
 
-            {% if 'workflow' in installedPlugins %}
-                <div class="admin-bar-settings-plugin-settings">
+            {% if 'workflow' in availableAdminBarWidgets %}
+                <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
                     {{ svg(widgetPlugins['workflow'].icon) }}
                     {{ forms.lightswitchField({
-                        label: widgetPlugins['workflow'].name,
+                        disabled: not proEdition,
                         id: 'widgetEnabledViewCount',
+                        instructions: widgetPlugins['workflow'].widgetDescription,
+                        label: widgetPlugins['workflow'].name,
                         name: 'widgetEnabledViewCount',
                         on: settings.widgetEnabledViewCount,
-                        instructions: widgetPlugins['workflow'].widgetDescription,
                     }) }}
                 </div>
             {% endif %}
@@ -127,30 +162,32 @@
     {% endif %}
 
     <div>
-        {{ forms.lightswitchField({
-            label: 'Displays labels next to Admin Bar Widget icons?'|t('guide'),
-            id: 'displayWidgetLabels',
-            name: 'displayWidgetLabels',
-            on: settings.displayWidgetLabels,
-        }) }}
+        <div class="requires-admin-bar-pro">
+            {{ forms.lightswitchField({
+                disabled: not proEdition,
+                label: 'Displays labels next to Admin Bar Widget icons?'|t('guide'),
+                id: 'displayWidgetLabels',
+                name: 'displayWidgetLabels',
+                on: settings.displayWidgetLabels,
+            }) }}
+        </div>
 
         {% set notInstalledPlugins = [] %}
         {% for plugin in widgetPlugins|keys %}
-            {% if plugin not in installedPlugins %}
+            {% if plugin not in availableAdminBarWidgets %}
                 {% set notInstalledPlugins = notInstalledPlugins|merge([plugin]) %}
             {% endif %}
         {% endfor %}
 
         {% if notInstalledPlugins|length %}
-            <details>
-                <summary>{{ 'Plugins that also work with Admin Bar Widgets.'|t('admin-bar') }}</summary>
+            <hr>
 
-                <ul>
-                    {% for plugin in notInstalledPlugins %}
-                        <li><a href="https://plugins.craftcms.com/{{ plugin }}">{{ widgetPlugins[plugin].name }}</a>: {{ widgetPlugins[plugin].widgetDescription }}</li>
-                    {% endfor %}
-                </ul>
-            </details>
+            <h3>{{ 'More Admin Bar Widgets:'|t('admin-bar') }}</h3>
+            <ul>
+                {% for plugin in notInstalledPlugins %}
+                    <li><a href="https://plugins.craftcms.com/{{ plugin }}">{{ widgetPlugins[plugin].name }}</a>: {{ widgetPlugins[plugin].widgetDescription }}</li>
+                {% endfor %}
+            </ul>
         {% endif %}
     </div>
 </div>
@@ -205,6 +242,7 @@ admin-bar {
     .admin-bar-settings-2-column {
         &:has(:nth-child(2)) {
             display: flex;
+            flex-flow: row wrap;
             justify-content: space-between;
             gap: var(--l);
 
@@ -213,16 +251,31 @@ admin-bar {
             }
         }
     }
-    .admin-bar-settings-plugin-settings {
+    .admin-bar-settings-plugin-setting {
         display: grid;
         grid-template-columns: 45px 1fr;
-        align-items: center;
         gap: var(--m);
+
+        &:not(:first-child) {
+            margin-block-start: var(--xl);
+        }
 
         & svg {
             display: block;
             width: 45px;
             height: auto;
+        }
+
+        .field {
+            margin-block-start: 0;
+        }
+    }
+
+    .requires-admin-bar-pro {
+        opacity: .6;
+
+        .admin-bar-pro & {
+            opacity: unset;
         }
     }
 {% endcss %}
