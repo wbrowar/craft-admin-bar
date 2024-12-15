@@ -31,12 +31,12 @@
   <admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem" title="{{ widgetPlugins[pluginHandle].name }}">
     {{ svg('@nystudio107/seomatic/icon-mask.svg')|attr({ class: 'icon' }) }}
     {{ displayWidgetLabels ? widgetPlugins[pluginHandle].name : '' }}
-    <div slot="popover" style="max-width: 400px; padding: clamp(4px, 1vw, 13px);">
-      <img src="{{ meta.imageUrl }}" alt="{{ meta.imageAlt }}" style="display: block; width: min(374px, 70vw); height: auto; border-radius: var(--admin-bar-border-radius);">
-      <p><strong>{{ meta.title }}</strong></p>
-      <p>{{ meta.description }}</p>
-      <p><em><a href="{{ meta.canonical }}" style="color: var(--admin-bar-button-popover-color-text, rgb(255 255 255)); word-break: break-all">{{ meta.canonical }}</a></em></p>
-      <p><strong>Main Entity:</strong> {{ meta.mainEntity }}</p>
+    <div slot="popover" style="--admin-bar-text-padding: 0; display: flex; flex-flow: row wrap; gap: 14px; width: min(400px, 90vw); padding: clamp(4px, 1vw, 13px);">
+      <img src="{{ meta.imageUrl }}" alt="{{ meta.imageAlt }}" style="display: block; max-width: 100%; height: auto; border-radius: var(--admin-bar-border-radius);">
+      <admin-bar-text multi-line><strong style="text-wrap: pretty;">{{ meta.title }}</strong></admin-bar-text>
+      <admin-bar-text multi-line><span style="text-wrap: pretty;">{{ meta.description }}</span></admin-bar-text>
+      <admin-bar-text multi-line><em><a href="{{ meta.canonical }}" style="color: var(--admin-bar-button-popover-color-text, rgb(255 255 255)); word-break: break-all">{{ meta.canonical }}</a></em></admin-bar-text>
+      <admin-bar-text multi-line><strong>Main Entity:</strong> {{ meta.mainEntity }}</admin-bar-text>
     </div>
   </admin-bar-button>
 {% endif %}
