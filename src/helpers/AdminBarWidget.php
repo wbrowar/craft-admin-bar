@@ -75,19 +75,17 @@ class AdminBarWidget
                 'widgetDescription' => Craft::t('admin-bar', 'Displays the number of times the current page has been viewed.'),
                 'version' => null
             ],
-            'workflow' => [
-                'name' => 'Workflow',
-                'widgetDescription' => Craft::t('admin-bar', 'The workflow status for the current page.'),
-                'version' => null
-            ],
         ];
 
-        if (Craft::$app->getPlugins()->isPluginInstalled('blitz')) {
+        if (Craft::$app->getPlugins()->isPluginInstalled('blitz') && Craft::$app->getPlugins()->isPluginEnabled('blitz')) {
             $widgetHandle = 'blitz';
             $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
             $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
             $widgets[$widgetHandle]['name'] = $plugin->name;
-            $widgets[$widgetHandle]['version'] = version_compare($plugin->getVersion(), '5.9.0', '>=') ? '5.9.0' : null;
+            $version = $plugin->getVersion();
+            if (version_compare($version, '5.9.0', '>=') && version_compare($version, '6.0.0', '<')) {
+                $widgets[$widgetHandle]['version'] = '5.9.0';
+            }
         }
 
         $widgetHandle = 'craft-new-entry';
@@ -98,36 +96,48 @@ class AdminBarWidget
         $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
         $widgets[$widgetHandle]['version'] = '5.5.0';
 
-        if (Craft::$app->getPlugins()->isPluginInstalled('guide')) {
+        if (Craft::$app->getPlugins()->isPluginInstalled('guide') && Craft::$app->getPlugins()->isPluginEnabled('guide')) {
             $widgetHandle = 'guide';
             $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
             $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
             $widgets[$widgetHandle]['name'] = $plugin->name;
-            $widgets[$widgetHandle]['version'] = version_compare($plugin->getVersion(), '5.2.0', '>=') ? '5.2.0' : null;
+            $version = $plugin->getVersion();
+            if (version_compare($version, '5.2.0', '>=') && version_compare($version, '6.0.0', '<')) {
+                $widgets[$widgetHandle]['version'] = '5.2.0';
+            }
         }
 
-        if (Craft::$app->getPlugins()->isPluginInstalled('seomatic')) {
+        if (Craft::$app->getPlugins()->isPluginInstalled('seomatic') && Craft::$app->getPlugins()->isPluginEnabled('seomatic')) {
             $widgetHandle = 'seomatic';
             $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
             $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
             $widgets[$widgetHandle]['name'] = $plugin->name;
-            $widgets[$widgetHandle]['version'] = version_compare($plugin->getVersion(), '5.1.0', '>=') ? '5.1.0' : null;
+            $version = $plugin->getVersion();
+            if (version_compare($version, '5.1.0', '>=') && version_compare($version, '6.0.0', '<')) {
+                $widgets[$widgetHandle]['version'] = '5.1.0';
+            }
         }
 
-        if (Craft::$app->getPlugins()->isPluginInstalled('view-count')) {
+        if (Craft::$app->getPlugins()->isPluginInstalled('view-count') && Craft::$app->getPlugins()->isPluginEnabled('view-count')) {
             $widgetHandle = 'view-count';
             $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
             $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
             $widgets[$widgetHandle]['name'] = $plugin->name;
-            $widgets[$widgetHandle]['version'] = version_compare($plugin->getVersion(), '2.0.0', '>=') ? '2.0.0' : null;
+            $version = $plugin->getVersion();
+            if (version_compare($version, '2.0.0', '>=') && version_compare($version, '3.0.0', '<')) {
+                $widgets[$widgetHandle]['version'] = '2.0.0';
+            }
         }
 
-        if (Craft::$app->getPlugins()->isPluginInstalled('workflow')) {
+        if (Craft::$app->getPlugins()->isPluginInstalled('workflow') && Craft::$app->getPlugins()->isPluginEnabled('workflow')) {
             $widgetHandle = 'workflow';
             $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
             $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
             $widgets[$widgetHandle]['name'] = $plugin->name;
-            $widgets[$widgetHandle]['version'] = version_compare($plugin->getVersion(), '3.0.0', '>=') ? '3.0.0' : null;
+            $version = $plugin->getVersion();
+            if (version_compare($version, '3.0.0', '>=') && version_compare($version, '4.0.0', '<')) {
+                $widgets[$widgetHandle]['version'] = '3.0.0';
+            }
         }
 
         return $widgets;
@@ -170,7 +180,8 @@ class AdminBarWidget
         }
 
         // Craft New Entry
-        if (!empty($entry) && $settings->widgetEnabledCraftNewEntry) {
+        $config['newEntrySections'] = [];
+        if ($settings->widgetEnabledCraftNewEntry) {
             $sections = [];
             $editableSections = Craft::$app->getEntries()->getEditableSections();
 

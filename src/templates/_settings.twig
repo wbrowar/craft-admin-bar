@@ -19,7 +19,7 @@
 
 {{ forms.editableTableField({
     label: 'Additional Links'|t('admin-bar'),
-    instructions: 'Add your own links to the Admin Bar.'|t('admin-bar'),
+    instructions: 'Add your own links to Admin Bar.'|t('admin-bar'),
     id: 'customLinks',
     name: 'customLinks',
     addRowLabel: 'Add a link'|t('little-layout'),
@@ -268,6 +268,10 @@ admin-bar {
 
         .field {
             margin-block-start: 0;
+
+            & .instructions {
+                text-wrap: balance;
+            }
         }
     }
 
