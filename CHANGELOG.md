@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Changed
 - Admin Bar Preview is now sticky to the top of the Admin Bar Settings page, so you can more easily preview your CSS changes.
 - Updated Admin Bar Component to version `1.1.3`
+- Changed the plugin license from MIT to the Craft license
 
 
 ## 5.0.1 - 2024-12-04
