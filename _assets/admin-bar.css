@@ -16,11 +16,9 @@
     }
   }
   admin-bar-button {
-    &:hover {
-      & admin-bar-text {
+    &:hover > :is([slot="label-after"], [slot="label-before"]) admin-bar-text, &:hover > admin-bar-text {
         --admin-bar-text-label-color-bg: var(--admin-bar-color-highlight);
         --admin-bar-text-label-color-text: var(--admin-bar-button-color-bg-hover);
-      }
     }
   }
   .admin-bar-widget {

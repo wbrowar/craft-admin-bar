@@ -188,7 +188,6 @@ class AdminBar extends Plugin
             'js' => '',
         ];
 
-        // testinggg
         if (App::parseEnv('$VITE_ADMIN_BAR_HMR')) {
             return [
                 'css' => '',

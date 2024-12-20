@@ -201,7 +201,16 @@ The list of widgets that can be enabled will include some widgets based around C
 
 When enabled, a widget might use the current user’s permissions or other factors to decide what to display. When no relevant information or actions are available a widget will not be shown.
 
-Because Craft CMS plugins can change over time, features and availability of Admin Bar Widgets may change in future updates.
+Because Craft CMS plugins can change over time, features and availability of Admin Bar Widgets may change in future updates. Here is the list of currently supported widgets:
+
+| Name  | Plugin                                                | Plugin Version | Widget Description                                                                                                |
+|-------|-------------------------------------------------------|----------------|-------------------------------------------------------------------------------------------------------------------|
+| Blitz | [Blitz](https://plugins.craftcms.com/blitz)           | `>= 5.9.0`     | The Blitz cache status for the current page.                                                                      |
+| New Entry | Craft CMS                                             | `>= 5.5.0`     | Links to create a new entry from sections that the author has permission to create.                               |
+| Guide | [Guide](https://plugins.craftcms.com/guide)           | `>= 5.2.0`     | Links to guides assigned to the current page entry.                                                               |
+| SEOmatic | [SEOmatic](https://plugins.craftcms.com/seomatic)     | `>= 5.1.0`     | SEO preview for the current page.                                                                                 |
+| Sites | Craft CMS                                             | `>= 5.5.0`     | Displays the name of the site for the current page, and displays links for the same page on all propagated sites. |
+| View Count | [View Count](https://plugins.craftcms.com/view-count) | `>= 2.0.0`     | Displays the number of times the current page has been viewed.                                                    |
 
 ### Requesting a New Admin Bar Widget
 

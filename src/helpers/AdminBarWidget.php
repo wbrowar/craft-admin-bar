@@ -14,8 +14,10 @@ use Craft;
 use craft\base\Element;
 use craft\elements\Entry;
 use craft\helpers\Cp;
+use craft\helpers\DateTimeHelper;
 use putyourlightson\blitz\Blitz;
 use putyourlightson\blitz\models\SiteUriModel;
+use putyourlightson\blitz\records\CacheRecord;
 use wbrowar\adminbar\models\Settings;
 use wbrowar\guide\Guide;
 
@@ -62,11 +64,11 @@ class AdminBarWidget
             ],
             'guide' => [
                 'name' => 'Guide',
-                'widgetDescription' => Craft::t('admin-bar', 'Links to guides for the current page entry.'),
+                'widgetDescription' => Craft::t('admin-bar', 'Links to guides assigned to the current page entry'),
                 'version' => null
             ],
             'seomatic' => [
-                'name' => 'Seomatic',
+                'name' => 'SEOmatic',
                 'widgetDescription' => Craft::t('admin-bar', 'SEO preview for the current page.'),
                 'version' => null
             ],
@@ -160,6 +162,7 @@ class AdminBarWidget
 
         // Blitz Widget
         $config['blitzCached'] = false;
+        $config['blitzCachedDate'] = null;
         if (
             !empty($entry)
             && $settings->widgetEnabledBlitz
@@ -174,9 +177,14 @@ class AdminBarWidget
             if ($siteUri->uri === Element::HOMEPAGE_URI) {
                 $siteUri->uri = '';
             }
-            $cachedValue = Blitz::$plugin->cacheStorage->get($siteUri);
+            $cacheRecord = CacheRecord::find()
+                ->where($siteUri->toArray())
+                ->one();
 
-            $config['blitzCached'] = !empty($cachedValue);
+            if (!empty($cacheRecord)) {
+                $config['blitzCached'] = true;
+                $config['blitzCachedDate'] = DateTimeHelper::toDateTime($cacheRecord->dateCached);
+            }
         }
 
         // Craft New Entry
