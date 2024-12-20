@@ -15,6 +15,14 @@ If you are creating a headless site, or a site that is statically cached, you ma
 ## Requirements
 * Craft 5.5.0
 
+## Editions
+
+The LITE edition of Admin Bar gives you quick links to frequently-used pages in the Craft CMS Control Panel. You can also use settings to add custom links or rebrand Admin Bar with CSS.
+
+The PRO edition adds interactive menus, statuses, and other information relevant to the page your users are on. Admin Bar PRO integrates Admin Bar with third-party plugins and Craft CMS features.
+
+The LITE edition is free and the PRO edition can be purchased on the [Craft CMS Plugin Store](https://plugins.craftcms.com/admin-bar).
+
 ## Installation
 To install the plugin, you can find it in the [Craft Plugin Store](https://plugins.craftcms.com/admin-bar), or follow these instructions:
 
@@ -90,15 +98,21 @@ Here are the settings you can change with the config file:
 
 ### Admin Bar
 
-| Setting | Default | Description                                                                                                             |
-| --- | --- |-------------------------------------------------------------------------------------------------------------------------|
-| `additionalLinks` | *[]* | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/craft-admin-bar#additional-links). |
-| `displayGreeting` | *true* | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]".                                             |
-| `displayDashboardLink` | *true* | A link to the CP Dashboard.                                                                                             |
-| `displayDefaultEditSection` | *true* | Display the name of the section in the default entry/category edit link if the user has permission to edit it.          |
-| `displayGuideLink` | *true* | If the [Guide](https://plugins.craftcms.com/guide) plugin is installed, a link to the Guide CP Section is displayed.    |
-| `displayLogout` | *true* | Displays a button that logs you out of Craft CMS.                                                                       |
-| `displaySettingsLink` | *true* | A link to the CP Settings page that appears only to admins.                                                             |
+| Setting | Default | Description                                                                                                            |
+| --- |---------|------------------------------------------------------------------------------------------------------------------------|
+| `additionalLinks` | *[]*    | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/craft-admin-bar#additional-links). |
+| `displayGreeting` | *true*  | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]".                                            |
+| `displayDashboardLink` | *true*  | A link to the CP Dashboard.                                                                                            |
+| `displayDefaultEditSection` | *true*  | Display the name of the section in the default entry/category edit link if the user has permission to edit it.         |
+| `displayGuideLink` | *true*  | If the [Guide](https://plugins.craftcms.com/guide) plugin is installed, a link to the Guide CP Section is displayed.   |
+| `displayLogout` | *true*  | Displays a button that logs you out of Craft CMS.                                                                      |
+| `displayWidgetLabels` | *false* | Displays labels next to Admin Bar Widget icons.                                                                        |
+| `widgetEnabledBlitz` | *false* | Enables the Admin Bar Widget: Blitz                                                                                    |
+| `widgetEnabledCraftNewEntry` | *false* | Enables the Admin Bar Widget: Guide                                                                                    |
+| `widgetEnabledCraftSites` | *false* | Enables the Admin Bar Widget: New Entry                                                                                |
+| `widgetEnabledGuide` | *false* | Enables the Admin Bar Widget: Sites                                                                                    |
+| `widgetEnabledSeomatic` | *false* | Enables the Admin Bar Widget: Seomatic                                                                                 |
+| `widgetEnabledViewCount` | *false* | Enables the Admin Bar Widget: View Count                                                                               |
 
 #### Additional Links
 You can add links to Admin Bar using the config file by passing properties into an array, called `additionalLinks`. There are examples commented out in the `config.php` file, and here are the properties you can use to create links.
@@ -176,6 +190,40 @@ Next, call the `dynamicInclude()` function in the place in your layout or page t
 You can pass parameters into `includeDynamic()`, so we can pass the URI of the current page entry—which will be used to figure out what page Admin Bar will use as the "Edit" button.
 
 In order to load Admin Bar’s CSS and JS onto the front end, we can use Admin Bar’s built-in Twig functions anywhere within our template.
+
+## Admin Bar Widgets
+
+**Admin Bar PRO** provides widgets based on the features you are using in Craft CMS and the other Craft CMS plugins you have installed in your project.
+
+When you visit the Admin Bar Plugin Settings page you’ll see a section that lets you enable Admin Bar Widgets. Most of the widgets require that you pass an `entry` into your `adminBar` Twig tag (`{{ adminBar({ entry: entry }) }}`) in order to display relevant information for the current page you are on. The **Preview** area on the settings page will try to load an entry from your site and pass it into the Admin Bar Preview so you can see how the widgets would work for that entry.
+
+The list of widgets that can be enabled will include some widgets based around Craft CMS features. Other widgets will be available if you have their third-party plugin installed. A list of supported plugins that are not installed will appear on the Admin Bar Settings page for reference.
+
+When enabled, a widget might use the current user’s permissions or other factors to decide what to display. When no relevant information or actions are available a widget will not be shown.
+
+Because Craft CMS plugins can change over time, features and availability of Admin Bar Widgets may change in future updates. Here is the list of currently supported widgets:
+
+| Name  | Plugin                                                | Plugin Version | Widget Description                                                                                                |
+|-------|-------------------------------------------------------|----------------|-------------------------------------------------------------------------------------------------------------------|
+| Blitz | [Blitz](https://plugins.craftcms.com/blitz)           | `>= 5.9.0`     | The Blitz cache status for the current page.                                                                      |
+| New Entry | Craft CMS                                             | `>= 5.5.0`     | Links to create a new entry from sections that the author has permission to create.                               |
+| Guide | [Guide](https://plugins.craftcms.com/guide)           | `>= 5.2.0`     | Links to guides assigned to the current page entry.                                                               |
+| SEOmatic | [SEOmatic](https://plugins.craftcms.com/seomatic)     | `>= 5.1.0`     | SEO preview for the current page.                                                                                 |
+| Sites | Craft CMS                                             | `>= 5.5.0`     | Displays the name of the site for the current page, and displays links for the same page on all propagated sites. |
+| View Count | [View Count](https://plugins.craftcms.com/view-count) | `>= 2.0.0`     | Displays the number of times the current page has been viewed.                                                    |
+
+### Requesting a New Admin Bar Widget
+
+If you have an idea for an Admin Bar Widget, please start a new discussion on the [Admin Bar Github Discussions page](https://github.com/wbrowar/craft-admin-bar/discussions) with your idea for a new widget. PRs are also welcome (but the final implementation may differ)!
+
+While there are no hard rules for creating a widget, here is some general criteria:
+
+- When displayed on a page, the widget should provide information or actions relevant to the current page entry, current user, or the current Craft CMS Site.
+- Widgets should use stable, public APIs and Twig tags provided by Craft CMS or Craft CMS plugins.
+- Where possible, Widgets should be optimized for quick loading performance
+- Widget code should follow accesibilty patterns and use web standard HTML and CSS.
+- Widgets shouldn’t expose any sensitive information.
+- Widgets should utilize the components built into [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) to minimize CSS leaking in from the page Admin Bar is embedded on.
 
 ---
 

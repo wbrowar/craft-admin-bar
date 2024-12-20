@@ -1,0 +1,13 @@
+{% set pluginHandle = 'view-count' %}
+
+{% if entry ?? false %}
+  <admin-bar-text
+      class="admin-bar-widget"
+      label-content="{{ craft.viewCount.total(entry.id) }} {{ displayWidgetLabels ? '' : 'Views'|t('admin-bar') }}"
+      label-position="before"
+      title="{{ widgetPlugins[pluginHandle].name }}"
+  >
+    {{ displayWidgetLabels ? widgetPlugins[pluginHandle].name : '' }}
+  </admin-bar-text>
+{% endif %}
+

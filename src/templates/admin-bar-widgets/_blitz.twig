@@ -1,0 +1,26 @@
+{% set pluginHandle = 'blitz' %}
+
+{% set widgetElement = blitzCachedDate ?? false ? 'admin-bar-button' : 'admin-bar-text' %}
+
+{% if currentSite %}
+  {% set widgetContent %}
+    <div style="aspect-ratio: 1; width: 0.85em; border: 1px solid var(--admin-bar-color-text); border-radius: 50%; background-color: {{ blitzCached ? '#fec136' : '#333f4c' }};"></div>
+    {{ displayWidgetLabels ? widgetPlugins[pluginHandle].name : '' }}
+    {{ blitzCached ? 'Cached'|t('admin-bar') : 'Uncached'|t('admin-bar') }}
+
+    {% if blitzCachedDate ?? false %}
+      <div slot="popover">
+        <admin-bar-text
+            label-content="{{ blitzCachedDate|datetime('short') }}"
+            label-position="after"
+        >{{ 'Cached Date'|t('admin-bar') }}</admin-bar-text>
+      </div>
+    {% endif %}
+  {% endset %}
+  <{{ widgetElement }}
+  class="admin-bar-widget"
+  title="{{ widgetPlugins[pluginHandle].name }}"
+  style="--admin-bar-icon-width: 1.5rem"
+  >{{ widgetContent }}</{{ widgetElement }}>
+{% endif %}
+

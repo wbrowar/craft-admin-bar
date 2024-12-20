@@ -10,13 +10,12 @@
 
 namespace wbrowar\adminbar\services;
 
-use craft\base\UtilityInterface;
-use craft\helpers\Html;
-use wbrowar\adminbar\AdminBar;
-
 use Craft;
 use craft\base\Component;
+use craft\helpers\Html;
 use craft\web\View;
+use wbrowar\adminbar\AdminBar;
+use wbrowar\adminbar\helpers\AdminBarWidget;
 
 
 /**
@@ -68,6 +67,8 @@ class Bar extends Component
     public function render(array $config = []): string
     {
         try {
+            $entry = $config['entry'] ?? null;
+
             $settings = AdminBar::$settings;
             $config['customLinks'] = $settings['customLinks'] ?? [];
             $config['editLinkLabel'] = $config['editLinkLabel'] ?? null;
@@ -105,19 +106,35 @@ class Bar extends Component
             $config['displayUtilitiesLink'] = $settings->displayUtilitiesLink && !empty($userUtilities);
             $config['displaySettingsLink'] = $settings->displaySettingsLink && Craft::$app->getConfig()->getGeneral()->allowAdminChanges;
 
+            // Pro features
+            $config['proEdition'] = AdminBar::$pro;
+            $config['widgetPlugins'] = AdminBar::$pro ? AdminBarWidget::getAdminBarWidgets() ?? [] : [];
+
+            $config['displayWidgetLabels'] = AdminBar::$pro ? $settings->displayWidgetLabels : false;
+            $config['widgetEnabledBlitz'] = AdminBar::$pro ? $settings->widgetEnabledBlitz : false;
+            $config['widgetEnabledCraftNewEntry'] = AdminBar::$pro ? $settings->widgetEnabledCraftNewEntry : false;
+            $config['widgetEnabledCraftSites'] = AdminBar::$pro ? $settings->widgetEnabledCraftSites : false;
+            $config['widgetEnabledGuide'] = AdminBar::$pro ? $settings->widgetEnabledGuide : false;
+            $config['widgetEnabledSeomatic'] = AdminBar::$pro ? $settings->widgetEnabledSeomatic : false;
+            $config['widgetEnabledViewCount'] = AdminBar::$pro ? $settings->widgetEnabledViewCount : false;
+
+            if (AdminBar::$pro && !empty($config['widgetPlugins'])) {
+                $config = array_merge($config, AdminBarWidget::getWidgetConfigForEntry($entry, $settings, $config['widgetPlugins']));
+            }
+            
             $oldMode = Craft::$app->getView()->getTemplateMode();
             Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
 
-             $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
+            $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
 
-             if (($assets['css'] ?? false) && $config['useCss']) {
-                 Craft::$app->getView()->registerCssFile($assets['css']);
-             }
-             if (($assets['js'] ?? false) && $config['useJs']) {
-                 Craft::$app->getView()->registerJsFile($assets['js'], ['defer' => true, 'type' => 'module']);
-             }
+            if (($assets['css'] ?? false) && $config['useCss']) {
+                Craft::$app->getView()->registerCssFile($assets['css']);
+            }
+            if (($assets['js'] ?? false) && $config['useJs']) {
+                Craft::$app->getView()->registerJsFile($assets['js'], ['defer' => true, 'type' => 'module']);
+            }
 
-            $html = Craft::$app->getView()->renderTemplate('admin-bar/bar', $config);
+            $html = Craft::$app->getView()->renderTemplate('admin-bar/_bar', $config);
             Craft::$app->getView()->setTemplateMode($oldMode);
         } catch (\Throwable $e) {
             return $this->_error($e->getMessage(), 'error');

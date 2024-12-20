@@ -103,6 +103,55 @@ class Settings extends Model
      */
     public bool $displaySettingsLink = true;
 
+    /**
+     * Displays labels next to Admin Bar Widget icons.
+     *
+     * @var bool
+     */
+    public bool $displayWidgetLabels = false;
+
+    /**
+     * Enables the Admin Bar Widget: Blitz
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledBlitz = false;
+
+    /**
+     * Enables the Admin Bar Widget: Guide
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledCraftNewEntry = false;
+
+    /**
+     * Enables the Admin Bar Widget: New Entry
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledCraftSites = false;
+
+    /**
+     * Enables the Admin Bar Widget: Sites
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledGuide = false;
+
+    /**
+     * Enables the Admin Bar Widget: Seomatic
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledSeomatic = false;
+
+    /**
+     * Enables the Admin Bar Widget: View Count
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledViewCount = false;
+
     // Public Methods
     // =========================================================================
 

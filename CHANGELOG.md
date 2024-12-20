@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.1.0 - 2024-12-20
+### Added
+- Added PRO edition.
+- Added Admin Bar Widgets logic and settings.
+- Added the following Admin Bar widgets:
+  - Blitz
+  - New Entry
+  - Guide
+  - SEOmatic
+  - Sites
+  - View Count
+
+### Changed
+- Admin Bar Preview is now sticky to the top of the Admin Bar Settings page, so you can more easily preview your CSS changes.
+- Updated Admin Bar Component to version `1.1.3`
+- Changed the plugin license from MIT to the Craft license
+
+
 ## 5.0.1 - 2024-12-04
 ### Added
 - Added `id` argument to `{{ adminBar() }}` Twig tags—letting you set the `id` for the Admin Bar wrapper element.

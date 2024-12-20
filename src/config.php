@@ -30,6 +30,14 @@ return array(
     'displayUtilitiesLink' => true,
     'displaySettingsLink' => true,
     'displayLogout' => true,
+    // Admin Bar PRO
+    'displayWidgetLabels' => false,
+    'widgetEnabledBlitz' => false,
+    'widgetEnabledCraftNewEntry' => false,
+    'widgetEnabledCraftSites' => false,
+    'widgetEnabledGuide' => false,
+    'widgetEnabledSeomatic' => false,
+    'widgetEnabledViewCount' => false,
 );
 
 // EXAMPLES
