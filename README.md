@@ -220,7 +220,7 @@ While there are no hard rules for creating a widget, here is some general criter
 
 - When displayed on a page, the widget should provide information or actions relevant to the current page entry, current user, or the current Craft CMS Site.
 - Widgets should use stable, public APIs and Twig tags provided by Craft CMS or Craft CMS plugins.
-- Where possible, Widgets should be optimized for quick loading performance
+- Where possible, Widgets should be optimized for quick loading performance.
 - Widget code should follow accesibilty patterns and use web standard HTML and CSS.
 - Widgets shouldn’t expose any sensitive information.
 - Widgets should utilize the components built into [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) to minimize CSS leaking in from the page Admin Bar is embedded on.
