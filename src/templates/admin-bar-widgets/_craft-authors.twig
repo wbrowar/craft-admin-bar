@@ -1,0 +1,56 @@
+{% import _self as self %}
+
+{% set authors = widgetConfig['entryAuthors'] %}
+{% set widgetLabel = displayWidgetLabels ? widgets[pluginHandle].name : '' %}
+
+{% if authors|length > 1 %}
+  <admin-bar-button class="admin-bar-widget admin-bar-widget--craft-authors" title="{{ widgets[pluginHandle].name }}">
+    <div style="display: flex; flex-flow: row nowrap;">
+      {% for author in authors %}
+        <span {% if not loop.first %}style="margin-inline-start: -8px;"{% endif %}>
+          {{ self.authorImage(author) }}
+        </span>
+      {% endfor %}
+    </div>
+    {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
+    <div slot="popover">
+      {% for author in authors %}
+        {{ self.authorDisplay(author) }}
+      {% endfor %}
+    </div>
+  </admin-bar-button>
+
+  <style>
+    @scope(.admin-bar-widget--craft-authors) {
+      :scope:hover {
+        & > div > span > div {
+          --admin-bar-color-text: var(--admin-bar-color-highlight);
+        }
+      }
+    }
+  </style>
+{% elseif authors|length %}
+  {{ self.authorDisplay(authors[0], displayWidgetLabels ? 'Author: '|t('admin-bar') : '') }}
+{% endif %}
+
+{% macro authorImage(author) %}
+  {% if author.photo %}
+    <img
+        width="25px"
+        height="25px"
+        alt="{{ author.name }} {{ 'avatar' }}"
+        src="{{ author.photo }}"
+        style="display:block; max-width: 25px; width: 25px; height: auto; border-radius: 50%;"
+    >
+  {% else %}
+    <div class="admin-bar-widget--craft-authors__avatar-text" style="display: flex; align-items: center; justify-content: center; background-color: color-mix(in srgb, var(--admin-bar-color-text), rgba(92, 92, 92, 0.8) 70%); box-sizing: border-box; width: 25px; height: 25px; border: 2px solid color-mix(in srgb, var(--admin-bar-color-text), transparent 30%); border-radius: 50%; font-size: 13px; color: color-mix(in srgb, var(--admin-bar-color-text), transparent 30%);">{{ author.name|slice(0,1)|upper }}</div>
+  {% endif %}
+{% endmacro %}
+
+{% macro authorDisplay(author, widgetlabel) %}
+  <admin-bar-text style="display:block;">
+    {{ self.authorImage(author) }}
+
+    <div>{{ widgetlabel ?? '' }}{{ author.name }}</div>
+  </admin-bar-text>
+{% endmacro %}
