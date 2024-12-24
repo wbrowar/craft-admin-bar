@@ -81,6 +81,8 @@
       }
       &:not(.admin-bar-button--logout):hover {
         --admin-bar-button-color-bg: var(--admin-bar-button-color-bg-hover, var(--admin-bar-button-color-text, white));
+        --admin-bar-text-label-color-bg: var(--admin-bar-color-highlight);
+        --admin-bar-text-label-color-text: var(--admin-bar-button-color-bg-hover);
         color: var(--admin-bar-color-highlight, oklch(0.6 0.4 83));
       }
 

@@ -1,17 +1,15 @@
-{% set pluginHandle = 'craft-sites' %}
+{% set widgetElement = widgetConfig['entrySiteLinks']|length ? 'admin-bar-button' : 'admin-bar-text' %}
 
-{% set widgetElement = entrySiteLinks|length ? 'admin-bar-button' : 'admin-bar-text' %}
-
-{% if currentSite %}
+{% if widgetConfig['currentSite'] %}
   {% set widgetContent %}
-    {{ svg('@appicons/' ~ earthIcon ~ '.svg')|attr({ class: 'icon' }) }}
-    {{ currentSite.name }}
+    {{ svg('@appicons/' ~ widgetConfig['earthIcon'] ~ '.svg')|attr({ class: 'icon' }) }}
+    {{ widgetConfig['currentSite'].name }}
 
-    {% if entrySiteLinks|length %}
+    {% if widgetConfig['entrySiteLinks']|length %}
       <div slot="popover">
-        {% for link in entrySiteLinks %}
+        {% for link in widgetConfig['entrySiteLinks'] %}
           <admin-bar-button button-href="{{ link.url }}" title="{{ 'Go to this entry on the site: '|t('admin-bar') ~ link.title }}">
-            <span style="--admin-bar-icon-width: 1rem">{{ svg('@appicons/' ~ earthIcon ~ '.svg')|attr({ class: 'icon' }) }}</span>
+            <span style="--admin-bar-icon-width: 1rem">{{ svg('@appicons/' ~ widgetConfig['earthIcon'] ~ '.svg')|attr({ class: 'icon' }) }}</span>
             {{ link.title }}
           </admin-bar-button>
         {% endfor %}
@@ -20,7 +18,7 @@
   {% endset %}
   <{{ widgetElement }}
       class="admin-bar-widget"
-      title="{{ widgetPlugins[pluginHandle].name }}"
+      title="{{ widgets[pluginHandle].name }}"
       style="--admin-bar-icon-width: 1.5rem"
   >{{ widgetContent }}</{{ widgetElement }}>
 {% endif %}

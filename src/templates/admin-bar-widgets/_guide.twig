@@ -1,11 +1,9 @@
-{% set pluginHandle = 'guide' %}
-
-<admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem" title="{{ widgetPlugins[pluginHandle].name }}">
+<admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem" title="{{ widgets[pluginHandle].name }}">
   {{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}
-  {{ displayWidgetLabels ? widgetPlugins[pluginHandle].name : '' }}
+  {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
   <div slot="popover">
-    {% if guides|length %}
-      {% for guide in guides %}
+    {% if widgetConfig['guides']|length %}
+      {% for guide in widgetConfig['guides'] %}
         <admin-bar-button button-href="{{ cpUrl('guide/page/' ~ guide.slug) }}" title="{{ 'Go to the page for the guide: '|t('admin-bar') ~ guide.title }}">
           <span style="--admin-bar-icon-width: 1rem">{{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}</span>
           {{ guide.title }}
@@ -14,7 +12,7 @@
     {% endif %}
     <admin-bar-button
         button-href="{{ cpUrl('guide') }}"
-        {% if guides|length %}style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);"{% endif %}
+        {% if widgetConfig['guides']|length %}style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);"{% endif %}
         title="{{ 'Go to the CMS Guide page'|t('admin-bar') }}"
     >
       <span style="--admin-bar-icon-width: 1.3rem">{{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}</span>

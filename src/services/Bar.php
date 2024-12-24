@@ -108,18 +108,13 @@ class Bar extends Component
 
             // Pro features
             $config['proEdition'] = AdminBar::$pro;
-            $config['widgetPlugins'] = AdminBar::$pro ? AdminBarWidget::getAdminBarWidgets() ?? [] : [];
-
+            $config['widgets'] = AdminBar::$pro ? AdminBarWidget::getAdminBarWidgets(true) ?? [] : [];
             $config['displayWidgetLabels'] = AdminBar::$pro ? $settings->displayWidgetLabels : false;
-            $config['widgetEnabledBlitz'] = AdminBar::$pro ? $settings->widgetEnabledBlitz : false;
-            $config['widgetEnabledCraftNewEntry'] = AdminBar::$pro ? $settings->widgetEnabledCraftNewEntry : false;
-            $config['widgetEnabledCraftSites'] = AdminBar::$pro ? $settings->widgetEnabledCraftSites : false;
-            $config['widgetEnabledGuide'] = AdminBar::$pro ? $settings->widgetEnabledGuide : false;
-            $config['widgetEnabledSeomatic'] = AdminBar::$pro ? $settings->widgetEnabledSeomatic : false;
-            $config['widgetEnabledViewCount'] = AdminBar::$pro ? $settings->widgetEnabledViewCount : false;
 
-            if (AdminBar::$pro && !empty($config['widgetPlugins'])) {
-                $config = array_merge($config, AdminBarWidget::getWidgetConfigForEntry($entry, $settings, $config['widgetPlugins']));
+            $config['enabledWidgets'] = [];
+            if (AdminBar::$pro && !empty($config['widgets'])) {
+                $config['widgetsConfig'] = AdminBarWidget::getWidgetConfigForEntry($entry, $settings, $config['widgets']);
+                $config['enabledWidgets'] = AdminBarWidget::getEnabledWidgets();
             }
             
             $oldMode = Craft::$app->getView()->getTemplateMode();
