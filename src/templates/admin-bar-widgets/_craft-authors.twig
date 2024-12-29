@@ -20,7 +20,7 @@
     </div>
   </admin-bar-button>
 {% elseif authors|length %}
-  {{ self.authorDisplay(authors[0], displayWidgetLabels ? 'Author: '|t('admin-bar') : '') }}
+  {{ self.authorDisplay(authors[0], displayWidgetLabels ? 'Author'|t('admin-bar') : '') }}
 {% endif %}
 
 {% macro authorImage(author) %}
@@ -37,10 +37,22 @@
   {% endif %}
 {% endmacro %}
 
-{% macro authorDisplay(author, widgetlabel) %}
-  <admin-bar-text style="display:block;">
-    {{ self.authorImage(author) }}
-
-    <div>{{ widgetlabel ?? '' }}{{ author.name }}</div>
-  </admin-bar-text>
+{% macro authorDisplay(author, widgetLabel) %}
+  {% if widgetLabel ?? false %}
+    <admin-bar-text
+        style="display:block;"
+    >
+      {{ self.authorImage(author) }}
+      <admin-bar-text
+          label-content="{{ author.name }}"
+          style="--admin-bar-text-padding: 0; display: block;"
+      ></admin-bar-text>
+      {{ widgetLabel }}
+    </admin-bar-text>
+  {% else %}
+    <admin-bar-text style="display:block;">
+      {{ self.authorImage(author) }}
+      {{ author.name }}
+    </admin-bar-text>
+  {% endif %}
 {% endmacro %}

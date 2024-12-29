@@ -34,6 +34,7 @@ return array(
     'displayWidgetLabels' => false,
     'widgetEnabledBlitz' => false,
     'widgetEnabledCraftNewEntry' => false,
+    'widgetEnabledCraftPublished' => false,
     'widgetEnabledCraftSites' => false,
     'widgetEnabledGuide' => false,
     'widgetEnabledSeomatic' => false,

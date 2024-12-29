@@ -42,6 +42,7 @@ class AdminBarWidget
     private const WIDGET_BLITZ = 'blitz';
     private const WIDGET_CRAFT_AUTHORS = 'craft-authors';
     private const WIDGET_CRAFT_NEW_ENTRY = 'craft-new-entry';
+    private const WIDGET_CRAFT_PUBLISHED = 'craft-published';
     private const WIDGET_CRAFT_SITES = 'craft-sites';
     private const WIDGET_GUIDE = 'guide';
     private const WIDGET_SEOMATIC = 'seomatic';
@@ -59,6 +60,7 @@ class AdminBarWidget
             (self::WIDGET_BLITZ) => AdminBar::$pro ? $settings->widgetEnabledBlitz : false,
             (self::WIDGET_CRAFT_AUTHORS) => AdminBar::$pro ? $settings->widgetEnabledCraftAuthors : false,
             (self::WIDGET_CRAFT_NEW_ENTRY) => AdminBar::$pro ? $settings->widgetEnabledCraftNewEntry : false,
+            (self::WIDGET_CRAFT_PUBLISHED) => AdminBar::$pro ? $settings->widgetEnabledCraftPublished : false,
             (self::WIDGET_CRAFT_SITES) => AdminBar::$pro ? $settings->widgetEnabledCraftSites : false,
             (self::WIDGET_GUIDE) => AdminBar::$pro ? $settings->widgetEnabledGuide : false,
             (self::WIDGET_SEOMATIC) => AdminBar::$pro ? $settings->widgetEnabledSeomatic : false,
@@ -91,6 +93,11 @@ class AdminBarWidget
             (self::WIDGET_CRAFT_NEW_ENTRY) => [
                 'name' => 'New Entry',
                 'widgetDescription' => Craft::t('admin-bar', 'Links to create a new entry from sections that the author has permission to create.'),
+                'version' => null
+            ],
+            (self::WIDGET_CRAFT_PUBLISHED) => [
+                'name' => 'Published',
+                'widgetDescription' => Craft::t('admin-bar', 'Displays the publish date for the current page, along with other publishing information.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_SITES) => [
@@ -135,6 +142,12 @@ class AdminBarWidget
         }
 
         $widgetHandle = self::WIDGET_CRAFT_NEW_ENTRY;
+        if (in_array($widgetHandle, $enabledWidgets)) {
+            $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
+            $widgets[$widgetHandle]['version'] = '5.5.0';
+        }
+
+        $widgetHandle = self::WIDGET_CRAFT_PUBLISHED;
         if (in_array($widgetHandle, $enabledWidgets)) {
             $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
             $widgets[$widgetHandle]['version'] = '5.5.0';

@@ -117,6 +117,20 @@
                 </div>
             {% endif %}
 
+            {% if 'craft-published' in availableAdminBarWidgets %}
+                <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
+                    {{ svg(widgetPlugins['craft-published'].icon) }}
+                    {{ forms.lightswitchField({
+                        disabled: not proEdition,
+                        id: 'widgetEnabledCraftPublished',
+                        instructions: widgetPlugins['craft-published'].widgetDescription,
+                        label: widgetPlugins['craft-published'].name,
+                        name: 'widgetEnabledCraftPublished',
+                        on: settings.widgetEnabledCraftPublished,
+                    }) }}
+                </div>
+            {% endif %}
+
             {% if 'craft-sites' in availableAdminBarWidgets %}
                 <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
                     {{ svg(widgetPlugins['craft-sites'].icon) }}

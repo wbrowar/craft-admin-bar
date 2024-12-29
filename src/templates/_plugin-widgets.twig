@@ -25,6 +25,12 @@
   } %}
 {% endif %}
 
+{% if 'craft-published' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-published' with {
+    pluginHandle: 'craft-published',
+  } %}
+{% endif %}
+
 {% if 'craft-authors' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_craft-authors' with {
     pluginHandle: 'craft-authors',
