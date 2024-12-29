@@ -19,16 +19,6 @@
       {% endfor %}
     </div>
   </admin-bar-button>
-
-  <style>
-    @scope(.admin-bar-widget--craft-authors) {
-      :scope:hover {
-        & > div > span > div {
-          --admin-bar-color-text: var(--admin-bar-color-highlight);
-        }
-      }
-    }
-  </style>
 {% elseif authors|length %}
   {{ self.authorDisplay(authors[0], displayWidgetLabels ? 'Author: '|t('admin-bar') : '') }}
 {% endif %}
@@ -43,7 +33,7 @@
         style="display:block; max-width: 25px; width: 25px; height: auto; border-radius: 50%;"
     >
   {% else %}
-    <div class="admin-bar-widget--craft-authors__avatar-text" style="display: flex; align-items: center; justify-content: center; background-color: color-mix(in srgb, var(--admin-bar-color-text), rgba(92, 92, 92, 0.8) 70%); box-sizing: border-box; width: 25px; height: 25px; border: 2px solid color-mix(in srgb, var(--admin-bar-color-text), transparent 30%); border-radius: 50%; font-size: 13px; color: color-mix(in srgb, var(--admin-bar-color-text), transparent 30%);">{{ author.name|slice(0,1)|upper }}</div>
+    <div class="admin-bar-widget--craft-authors__avatar-text" style="display: flex; align-items: center; justify-content: center; background-color: color-mix(in srgb, var(--admin-bar-color-text), rgba(73, 73, 73, 0.8) 70%); box-sizing: border-box; width: 25px; height: 25px; border: 2px solid color-mix(in srgb, var(--admin-bar-color-text), transparent 30%); border-radius: 50%; font-size: 13px; color: color-mix(in srgb, var(--admin-bar-color-text), transparent 30%);">{{ author.name|slice(0,1)|upper }}</div>
   {% endif %}
 {% endmacro %}
 
