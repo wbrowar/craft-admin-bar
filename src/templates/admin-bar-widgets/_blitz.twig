@@ -21,10 +21,8 @@
 
   {% if widgetConfig['cachedDate'] ?? false %}
     <div slot="popover">
-      <admin-bar-text
-          label-content="{{ widgetConfig['cachedDate']|datetime('short') }}"
-          label-position="after"
-      >{{ 'Cached Date'|t('admin-bar') }}</admin-bar-text>
+      {% set popoverInfo = [['Cached Date'|t('admin-bar'), widgetConfig['cachedDate']|datetime('short')]] %}
+      <admin-bar-text dl-content="{{ popoverInfo|json_encode }}"></admin-bar-text>
     </div>
   {% endif %}
 {% endset %}

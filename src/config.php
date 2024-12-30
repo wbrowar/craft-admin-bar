@@ -33,6 +33,7 @@ return array(
     // Admin Bar PRO
     'displayWidgetLabels' => false,
     'widgetEnabledBlitz' => false,
+    'widgetEnabledCraftAuthors' => false,
     'widgetEnabledCraftNewEntry' => false,
     'widgetEnabledCraftPublished' => false,
     'widgetEnabledCraftSites' => false,

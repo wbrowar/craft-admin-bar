@@ -1,4 +1,22 @@
 {% if entry ?? false %}
+  {% set popoverInfo = [] %}
+
+  {% if entry.dateCreated %}
+    {% set popoverInfo = popoverInfo|merge([['Created at'|t('admin-bar'), entry.dateCreated|date('medium') ~ ' ' ~ entry.dateCreated|time('short')]]) %}
+  {% endif %}
+
+  {% if entry.dateUpdated %}
+    {% set popoverInfo = popoverInfo|merge([['Updated at'|t('admin-bar'), entry.dateUpdated|date('medium') ~ ' ' ~ entry.dateUpdated|time('short')]]) %}
+  {% endif %}
+
+  {% if entry.id %}
+    {% set popoverInfo = popoverInfo|merge([['Entry ID'|t('admin-bar'), entry.id]]) %}
+  {% endif %}
+
+  {% if entry.currentRevision.revisionNotes ?? false %}
+    {% set popoverInfo = popoverInfo|merge([['Notes'|t('admin-bar'), entry.currentRevision.revisionNotes]]) %}
+  {% endif %}
+
   <admin-bar-button class="admin-bar-widget admin-bar-widget--craft-authors" title="{{ widgets[pluginHandle].name }}">
     {{ iconSvg('newspaper')|attr({ class: 'icon' }) }}
     {% set postDateValue = entry.postDate|date('medium') ~ ' ' ~ entry.postDate|time('short') %}
@@ -11,37 +29,11 @@
     {% else %}
       {{ postDateValue }}
     {% endif %}
-    <div slot="popover">
-      {% if entry.dateCreated %}
-        <admin-bar-text
-            label-content="{{ entry.dateCreated|date('medium') ~ ' ' ~ entry.dateCreated|time('short') }}"
-            text-content="{{ 'Created at'|t('admin-bar') }}"
-            style="display: block;"
-        ></admin-bar-text>
-      {% endif %}
 
-      {% if entry.dateUpdated %}
-        <admin-bar-text
-            label-content="{{ entry.dateUpdated|date('medium') ~ ' ' ~ entry.dateUpdated|time('short') }}"
-            text-content="{{ 'Updated at'|t('admin-bar') }}"
-            style="display: block;"
-        ></admin-bar-text>
-      {% endif %}
-
-      {% if entry.id %}
-        <admin-bar-text
-            label-content="{{ entry.id }}"
-            text-content="{{ 'Entry ID'|t('admin-bar') }}"
-            style="display: block;"
-        ></admin-bar-text>
-      {% endif %}
-
-      {% if entry.currentRevision.revisionNotes ?? false %}
-        <admin-bar-text
-            label-content="{{ entry.currentRevision.revisionNotes }}"
-            style="display: block; border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);"
-        >{{ 'Notes'|t('admin-bar') }}</admin-bar-text>
-      {% endif %}
-    </div>
+    {% if popoverInfo|length %}
+      <div slot="popover">
+        <admin-bar-text dl-content="{{ popoverInfo|json_encode }}"></admin-bar-text>
+      </div>
+    {% endif %}
   </admin-bar-button>
 {% endif %}
