@@ -87,7 +87,7 @@ class AdminBarWidget
             ],
             (self::WIDGET_CRAFT_AUTHORS) => [
                 'name' => 'Authors',
-                'widgetDescription' => Craft::t('admin-bar', 'See the authors for the current entry.'),
+                'widgetDescription' => Craft::t('admin-bar', 'The authors for the current entry.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_NEW_ENTRY) => [
@@ -97,12 +97,12 @@ class AdminBarWidget
             ],
             (self::WIDGET_CRAFT_PUBLISHED) => [
                 'name' => 'Published',
-                'widgetDescription' => Craft::t('admin-bar', 'Displays the publish date for the current page, along with other publishing information.'),
+                'widgetDescription' => Craft::t('admin-bar', 'The Post Date for when the current page entry was published, along with other publishing information.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_SITES) => [
                 'name' => 'Sites',
-                'widgetDescription' => Craft::t('admin-bar', 'Displays the name of the site for the current page, and displays links for the same page on all propagated sites.'),
+                'widgetDescription' => Craft::t('admin-bar', 'The name of the site for the current page and links to the same page on all propagated sites.'),
                 'version' => null
             ],
             (self::WIDGET_GUIDE) => [
@@ -117,7 +117,7 @@ class AdminBarWidget
             ],
             (self::WIDGET_VIEW_COUNT) => [
                 'name' => 'View Count',
-                'widgetDescription' => Craft::t('admin-bar', 'Displays the number of times the current page has been viewed.'),
+                'widgetDescription' => Craft::t('admin-bar', 'The number of times the current page has been viewed.'),
                 'version' => null
             ],
         ];
@@ -234,8 +234,8 @@ class AdminBarWidget
                 ->one();
 
             if (!empty($cacheRecord)) {
-                $config['blitzCached'] = true;
-                $config['blitzCachedDate'] = DateTimeHelper::toDateTime($cacheRecord->dateCached);
+                $config[self::WIDGET_BLITZ]['cached'] = true;
+                $config[self::WIDGET_BLITZ]['cachedDate'] = DateTimeHelper::toDateTime($cacheRecord->dateCached);
             }
         }
 

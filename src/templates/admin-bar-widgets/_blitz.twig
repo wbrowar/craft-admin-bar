@@ -3,7 +3,7 @@
 {% set widgetContent %}
   {{ iconSvg('bolt')|attr({ class: 'icon', style: {
     '--admin-bar-icon-width': '1rem',
-    color: widgetConfig['cached'] ? '#fec136' : '#333f4c',
+    color: widgetConfig['cached'] ? '#fec136' : 'color-mix(in srgb, #333f4c, transparent 50%)',
     stroke: widgetConfig['cached'] ? null : 'var(--admin-bar-button-color-text)',
     'stroke-width': widgetConfig['cached'] ? null : '15px',
     'stroke-linejoin': widgetConfig['cached'] ? null : 'round',
