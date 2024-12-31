@@ -41,6 +41,7 @@
   {% if widgetLabel ?? false %}
     <admin-bar-text
         style="display:block;"
+        title="{{ 'Author'|t('admin-bar') }}"
     >
       {{ self.authorImage(author) }}
       <admin-bar-text
@@ -50,7 +51,10 @@
       {{ widgetLabel }}
     </admin-bar-text>
   {% else %}
-    <admin-bar-text style="display:block;">
+    <admin-bar-text
+        style="display:block;"
+        title="{{ 'Author'|t('admin-bar') }}"
+    >
       {{ self.authorImage(author) }}
       {{ author.name }}
     </admin-bar-text>
