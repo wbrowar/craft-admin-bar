@@ -68,7 +68,7 @@
       {% endif %}
     {% endif %}
 
-    {% if not widgetEnabledGuide and displayGuideLink and plugin('guide') and (currentUser ? currentUser.can('accessPlugin-guide') : true) %}
+    {% if not 'guide' in widgets|keys and displayGuideLink and plugin('guide') and (currentUser ? currentUser.can('accessPlugin-guide') : true) %}
         <admin-bar-button button-href="{{ cpUrl('guide') }}" label-text="{{ 'CMS Guide'|t('admin-bar') }}"><span slot="label-before">{{ self.iconGuide }}</span></admin-bar-button>
     {% endif %}
 
@@ -88,7 +88,7 @@
         {{ self.addConfigLink(link) }}
     {% endfor %}
 
-    {% if not (proEdition and widgetPlugins|length) %}
+    {% if not (proEdition and widgets|length) %}
         <span style="flex-grow: 1;"></span>
     {% endif %}
 
@@ -106,7 +106,7 @@
         <admin-bar-button button-href="{{ cpUrl('settings') }}" label-text="{{ 'Settings'|t('admin-bar') }}"><span slot="label-before">{{ self.iconSettings }}</span></admin-bar-button>
     {% endif %}
 
-    {% if proEdition and widgetPlugins|length %}
+    {% if proEdition and widgets|length %}
         <span style="flex-grow: 1;"></span>
 
         {% include 'admin-bar/_plugin-widgets.twig' %}

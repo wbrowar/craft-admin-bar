@@ -15,9 +15,11 @@ use craft\base\Element;
 use craft\elements\Entry;
 use craft\helpers\Cp;
 use craft\helpers\DateTimeHelper;
+use craft\models\ImageTransform;
 use putyourlightson\blitz\Blitz;
 use putyourlightson\blitz\models\SiteUriModel;
 use putyourlightson\blitz\records\CacheRecord;
+use wbrowar\adminbar\AdminBar;
 use wbrowar\adminbar\models\Settings;
 use wbrowar\guide\Guide;
 
@@ -37,50 +39,93 @@ use wbrowar\guide\Guide;
  */
 class AdminBarWidget
 {
+    private const WIDGET_BLITZ = 'blitz';
+    private const WIDGET_CRAFT_AUTHORS = 'craft-authors';
+    private const WIDGET_CRAFT_NEW_ENTRY = 'craft-new-entry';
+    private const WIDGET_CRAFT_PUBLISHED = 'craft-published';
+    private const WIDGET_CRAFT_SITES = 'craft-sites';
+    private const WIDGET_GUIDE = 'guide';
+    private const WIDGET_SEOMATIC = 'seomatic';
+    private const WIDGET_VIEW_COUNT = 'view-count';
+
+    /**
+     * List of widgets enabled by plugin settings.
+     *
+     * @return string[]
+     */
+    public static function getEnabledWidgets(): array
+    {
+        $settings = AdminBar::$settings;
+        $widgets = [
+            (self::WIDGET_BLITZ) => AdminBar::$pro ? $settings->widgetEnabledBlitz : false,
+            (self::WIDGET_CRAFT_AUTHORS) => AdminBar::$pro ? $settings->widgetEnabledCraftAuthors : false,
+            (self::WIDGET_CRAFT_NEW_ENTRY) => AdminBar::$pro ? $settings->widgetEnabledCraftNewEntry : false,
+            (self::WIDGET_CRAFT_PUBLISHED) => AdminBar::$pro ? $settings->widgetEnabledCraftPublished : false,
+            (self::WIDGET_CRAFT_SITES) => AdminBar::$pro ? $settings->widgetEnabledCraftSites : false,
+            (self::WIDGET_GUIDE) => AdminBar::$pro ? $settings->widgetEnabledGuide : false,
+            (self::WIDGET_SEOMATIC) => AdminBar::$pro ? $settings->widgetEnabledSeomatic : false,
+            (self::WIDGET_VIEW_COUNT) => AdminBar::$pro ? $settings->widgetEnabledViewCount : false,
+        ];
+        return array_keys(array_filter($widgets));
+    }
+
     /**
      * List of plugins installed in same project that can be used as Admin Bar Widgets.
      * Strings are formatted in `handle-version`.
      * The version number is pulled from the plugin version that is supported for a widget’s features.
      *
+     * @param bool $onlyEnabled Set to `true` to filter list down to only widgets enabled by plugin settings.
      * @return string[]
      */
-    public static function getAdminBarWidgets(): array
+    public static function getAdminBarWidgets(bool $onlyEnabled = false): array
     {
         $widgets = [
-            'blitz' => [
+            (self::WIDGET_BLITZ) => [
                 'name' => 'Blitz',
                 'widgetDescription' => Craft::t('admin-bar', 'The Blitz cache status for the current page.'),
                 'version' => null
             ],
-            'craft-new-entry' => [
+            (self::WIDGET_CRAFT_AUTHORS) => [
+                'name' => 'Authors',
+                'widgetDescription' => Craft::t('admin-bar', 'The authors for the current entry.'),
+                'version' => null
+            ],
+            (self::WIDGET_CRAFT_NEW_ENTRY) => [
                 'name' => 'New Entry',
                 'widgetDescription' => Craft::t('admin-bar', 'Links to create a new entry from sections that the author has permission to create.'),
                 'version' => null
             ],
-            'craft-sites' => [
-                'name' => 'Sites',
-                'widgetDescription' => Craft::t('admin-bar', 'Displays the name of the site for the current page, and displays links for the same page on all propagated sites.'),
+            (self::WIDGET_CRAFT_PUBLISHED) => [
+                'name' => 'Published',
+                'widgetDescription' => Craft::t('admin-bar', 'The Post Date for when the current page entry was published, along with other publishing information.'),
                 'version' => null
             ],
-            'guide' => [
+            (self::WIDGET_CRAFT_SITES) => [
+                'name' => 'Sites',
+                'widgetDescription' => Craft::t('admin-bar', 'The name of the site for the current page and links to the same page on all propagated sites.'),
+                'version' => null
+            ],
+            (self::WIDGET_GUIDE) => [
                 'name' => 'Guide',
                 'widgetDescription' => Craft::t('admin-bar', 'Links to guides assigned to the current page entry'),
                 'version' => null
             ],
-            'seomatic' => [
+            (self::WIDGET_SEOMATIC) => [
                 'name' => 'SEOmatic',
                 'widgetDescription' => Craft::t('admin-bar', 'SEO preview for the current page.'),
                 'version' => null
             ],
-            'view-count' => [
+            (self::WIDGET_VIEW_COUNT) => [
                 'name' => 'View Count',
-                'widgetDescription' => Craft::t('admin-bar', 'Displays the number of times the current page has been viewed.'),
+                'widgetDescription' => Craft::t('admin-bar', 'The number of times the current page has been viewed.'),
                 'version' => null
             ],
         ];
 
-        if (Craft::$app->getPlugins()->isPluginInstalled('blitz') && Craft::$app->getPlugins()->isPluginEnabled('blitz')) {
-            $widgetHandle = 'blitz';
+        $enabledWidgets = $onlyEnabled ? AdminBarWidget::getEnabledWidgets() : array_keys($widgets);
+
+        $widgetHandle = self::WIDGET_BLITZ;
+        if (in_array($widgetHandle, $enabledWidgets) && Craft::$app->getPlugins()->isPluginInstalled($widgetHandle) && Craft::$app->getPlugins()->isPluginEnabled($widgetHandle)) {
             $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
             $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
             $widgets[$widgetHandle]['name'] = $plugin->name;
@@ -90,16 +135,32 @@ class AdminBarWidget
             }
         }
 
-        $widgetHandle = 'craft-new-entry';
-        $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
-        $widgets[$widgetHandle]['version'] = '5.5.0';
+        $widgetHandle = self::WIDGET_CRAFT_AUTHORS;
+        if (in_array($widgetHandle, $enabledWidgets)) {
+            $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
+            $widgets[$widgetHandle]['version'] = '5.5.0';
+        }
 
-        $widgetHandle = 'craft-sites';
-        $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
-        $widgets[$widgetHandle]['version'] = '5.5.0';
+        $widgetHandle = self::WIDGET_CRAFT_NEW_ENTRY;
+        if (in_array($widgetHandle, $enabledWidgets)) {
+            $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
+            $widgets[$widgetHandle]['version'] = '5.5.0';
+        }
 
-        if (Craft::$app->getPlugins()->isPluginInstalled('guide') && Craft::$app->getPlugins()->isPluginEnabled('guide')) {
-            $widgetHandle = 'guide';
+        $widgetHandle = self::WIDGET_CRAFT_PUBLISHED;
+        if (in_array($widgetHandle, $enabledWidgets)) {
+            $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
+            $widgets[$widgetHandle]['version'] = '5.5.0';
+        }
+
+        $widgetHandle = self::WIDGET_CRAFT_SITES;
+        if (in_array($widgetHandle, $enabledWidgets)) {
+            $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
+            $widgets[$widgetHandle]['version'] = '5.5.0';
+        }
+
+        $widgetHandle = self::WIDGET_GUIDE;
+        if (in_array($widgetHandle, $enabledWidgets) && Craft::$app->getPlugins()->isPluginInstalled($widgetHandle) && Craft::$app->getPlugins()->isPluginEnabled($widgetHandle)) {
             $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
             $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
             $widgets[$widgetHandle]['name'] = $plugin->name;
@@ -109,8 +170,8 @@ class AdminBarWidget
             }
         }
 
-        if (Craft::$app->getPlugins()->isPluginInstalled('seomatic') && Craft::$app->getPlugins()->isPluginEnabled('seomatic')) {
-            $widgetHandle = 'seomatic';
+        $widgetHandle = self::WIDGET_SEOMATIC;
+        if (in_array($widgetHandle, $enabledWidgets) && Craft::$app->getPlugins()->isPluginInstalled($widgetHandle) && Craft::$app->getPlugins()->isPluginEnabled($widgetHandle)) {
             $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
             $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
             $widgets[$widgetHandle]['name'] = $plugin->name;
@@ -120,25 +181,14 @@ class AdminBarWidget
             }
         }
 
-        if (Craft::$app->getPlugins()->isPluginInstalled('view-count') && Craft::$app->getPlugins()->isPluginEnabled('view-count')) {
-            $widgetHandle = 'view-count';
+        $widgetHandle = self::WIDGET_VIEW_COUNT;
+        if (in_array($widgetHandle, $enabledWidgets) && Craft::$app->getPlugins()->isPluginInstalled($widgetHandle) && Craft::$app->getPlugins()->isPluginEnabled($widgetHandle)) {
             $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
             $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
             $widgets[$widgetHandle]['name'] = $plugin->name;
             $version = $plugin->getVersion();
             if (version_compare($version, '2.0.0', '>=') && version_compare($version, '3.0.0', '<')) {
                 $widgets[$widgetHandle]['version'] = '2.0.0';
-            }
-        }
-
-        if (Craft::$app->getPlugins()->isPluginInstalled('workflow') && Craft::$app->getPlugins()->isPluginEnabled('workflow')) {
-            $widgetHandle = 'workflow';
-            $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
-            $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
-            $widgets[$widgetHandle]['name'] = $plugin->name;
-            $version = $plugin->getVersion();
-            if (version_compare($version, '3.0.0', '>=') && version_compare($version, '4.0.0', '<')) {
-                $widgets[$widgetHandle]['version'] = '3.0.0';
             }
         }
 
@@ -154,19 +204,21 @@ class AdminBarWidget
      *
      * @return array
      */
-    public static function getWidgetConfigForEntry($entry, $settings, $widgetPlugins): array
+    public static function getWidgetConfigForEntry(Entry | null $entry, Settings $settings, array $widgetPlugins): array
     {
         $config = [];
 
         $entrySection = !empty($entry) ? Craft::$app->getEntries()->getSectionById($entry['sectionId']) : null;
 
         // Blitz Widget
-        $config['blitzCached'] = false;
-        $config['blitzCachedDate'] = null;
+        $config[self::WIDGET_BLITZ] = [
+            'cached' => false,
+            'cachedDate' => null,
+        ];
         if (
             !empty($entry)
             && $settings->widgetEnabledBlitz
-            && ($widgetPlugins['blitz']['version'] ?? false)
+            && ($widgetPlugins[self::WIDGET_BLITZ]['version'] ?? false)
             && class_exists(Blitz::class)
             && class_exists(SiteUriModel::class)
         ) {
@@ -182,13 +234,36 @@ class AdminBarWidget
                 ->one();
 
             if (!empty($cacheRecord)) {
-                $config['blitzCached'] = true;
-                $config['blitzCachedDate'] = DateTimeHelper::toDateTime($cacheRecord->dateCached);
+                $config[self::WIDGET_BLITZ]['cached'] = true;
+                $config[self::WIDGET_BLITZ]['cachedDate'] = DateTimeHelper::toDateTime($cacheRecord->dateCached);
             }
         }
 
+        // Craft Authors
+        $config[self::WIDGET_CRAFT_AUTHORS] = [
+            'entryAuthors' => [],
+        ];
+        if (
+            !empty($entry)
+            && $settings->widgetEnabledCraftAuthors
+        ) {
+            $config[self::WIDGET_CRAFT_AUTHORS]['entryAuthors'] = array_map(function ($author) {
+                $photo = $author->getPhoto();
+                $photoUrl = !empty($photo) ? $photo->getUrl(new ImageTransform([
+                    'mode' => 'crop',
+                    'width' => 50,
+                    'height' => 50,
+                ])) : null;
+
+                return [
+                    'name' => $author->friendlyName,
+                    'photo' => $photoUrl,
+                ];
+            }, $entry->authors);
+        }
+
         // Craft New Entry
-        $config['newEntrySections'] = [];
+        $config[self::WIDGET_CRAFT_NEW_ENTRY] = ['sections' => []];
         if ($settings->widgetEnabledCraftNewEntry) {
             $sections = [];
             $editableSections = Craft::$app->getEntries()->getEditableSections();
@@ -203,16 +278,19 @@ class AdminBarWidget
                 }
             }
 
-            $config['newEntrySections'] = $sections;
+            $config[self::WIDGET_CRAFT_NEW_ENTRY]['sections'] = $sections;
         }
 
         // Craft Sites
-        $config['currentSite'] = null;
-        $config['entrySiteLinks'] = [];
+        $config[self::WIDGET_CRAFT_SITES] = [
+            'currentSite' => null,
+            'earthIcon' => null,
+            'entrySiteLinks' => [],
+        ];
         if ($settings->widgetEnabledCraftSites) {
             $currentSite = Craft::$app->getSites()->getCurrentSite();
-            $config['currentSite'] = ['name' => $currentSite->name];
-            $config['earthIcon'] = Cp::earthIcon();
+            $config[self::WIDGET_CRAFT_SITES]['currentSite'] = ['name' => $currentSite->name];
+            $config[self::WIDGET_CRAFT_SITES]['earthIcon'] = Cp::earthIcon();
 
             if (!empty($entry)) {
                 $supportedSites = $entry->supportedSites;
@@ -227,7 +305,7 @@ class AdminBarWidget
                         if ($propagatedEntry->siteId !== $currentSite->id) {
                             $site = Craft::$app->getSites()->getSiteById($propagatedEntry->siteId);
 
-                            $config['entrySiteLinks'][] = [
+                            $config[self::WIDGET_CRAFT_SITES]['entrySiteLinks'][] = [
                                 'title' => $site->name,
                                 'url' => $propagatedEntry->getUrl(),
                             ];
@@ -238,11 +316,13 @@ class AdminBarWidget
         }
 
         // Guide Widget
-        $config['guides'] = [];
+        $config[self::WIDGET_GUIDE] = [
+            'guides' => [],
+        ];
         if (
             !empty($entry)
             && $settings->widgetEnabledGuide
-            && ($widgetPlugins['guide']['version'] ?? false)
+            && ($widgetPlugins[self::WIDGET_GUIDE]['version'] ?? false)
             && class_exists(Guide::class)
         ) {
             $guideIds = [];
@@ -263,7 +343,7 @@ class AdminBarWidget
                 $guideIds[] = $placement->guideId;
             }
 
-            $config['guides'] = Guide::$plugin->guide->getGuides(['id' => $guideIds]);
+            $config[self::WIDGET_GUIDE]['guides'] = Guide::$plugin->guide->getGuides(['id' => $guideIds]);
         }
 
         return $config;

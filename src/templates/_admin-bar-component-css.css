@@ -14,7 +14,7 @@
     /* Adds an effect to blur. */
     --admin-bar-backdrop-filter: blur(20px) saturate(200%);
 
-    /* The color used on hover changes. */
+    /* The color of the text and icons during the hover state. */
     --admin-bar-color-highlight: oklch(0.6 0.4 83);
 
     /* The highlight color specific to logout buttons. That can be set to

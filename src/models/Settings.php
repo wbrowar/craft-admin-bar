@@ -125,6 +125,20 @@ class Settings extends Model
     public bool $widgetEnabledCraftNewEntry = false;
 
     /**
+     * Enables the Admin Bar Widget: Authors
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledCraftAuthors = false;
+
+    /**
+     * Enables the Admin Bar Widget: Published
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledCraftPublished = false;
+
+    /**
      * Enables the Admin Bar Widget: New Entry
      *
      * @var bool

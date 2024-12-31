@@ -1,23 +1,54 @@
-{% if widgetEnabledCraftNewEntry and 'craft-new-entry' in widgetPlugins|keys %}
-  {{ include('admin-bar/admin-bar-widgets/_craft-new-entry') }}
+{# This file determines the order that Admin Bar Widgets appear. #}
+
+{% if 'craft-new-entry' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-new-entry' with {
+    pluginHandle: 'craft-new-entry',
+    widgetConfig: widgetsConfig['craft-new-entry'],
+  } %}
 {% endif %}
 
-{% if widgetEnabledGuide and 'guide' in widgetPlugins|keys %}
-  {{ include('admin-bar/admin-bar-widgets/_guide') }}
+{% if 'guide' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_guide' with {
+    pluginHandle: 'guide',
+    widgetConfig: widgetsConfig['guide'],
+  } %}
 {% endif %}
 
-{% if widgetEnabledSeomatic and 'seomatic' in widgetPlugins|keys %}
-  {{ include('admin-bar/admin-bar-widgets/_seomatic') }}
+{% if 'seomatic' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_seomatic' with {
+    pluginHandle: 'seomatic',
+  } %}
 {% endif %}
 
-{% if widgetEnabledCraftSites and 'craft-sites' in widgetPlugins|keys %}
-  {{ include('admin-bar/admin-bar-widgets/_craft-sites') }}
+{% if 'craft-sites' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-sites' with {
+    pluginHandle: 'craft-sites',
+    widgetConfig: widgetsConfig['craft-sites'],
+  } %}
 {% endif %}
 
-{% if widgetEnabledBlitz and 'blitz' in widgetPlugins|keys %}
-  {{ include('admin-bar/admin-bar-widgets/_blitz') }}
+{% if 'craft-authors' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-authors' with {
+    pluginHandle: 'craft-authors',
+    widgetConfig: widgetsConfig['craft-authors'],
+  } %}
 {% endif %}
 
-{% if widgetEnabledViewCount and 'view-count' in widgetPlugins|keys %}
-  {{ include('admin-bar/admin-bar-widgets/_view-count') }}
+{% if 'craft-published' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-published' with {
+    pluginHandle: 'craft-published',
+  } %}
+{% endif %}
+
+{% if 'blitz' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_blitz' with {
+    pluginHandle: 'blitz',
+    widgetConfig: widgetsConfig['blitz'],
+  } %}
+{% endif %}
+
+{% if 'view-count' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_view-count' with {
+    pluginHandle: 'view-count',
+  } %}
 {% endif %}

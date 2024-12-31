@@ -117,6 +117,34 @@
                 </div>
             {% endif %}
 
+            {% if 'craft-authors' in availableAdminBarWidgets %}
+                <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
+                    {{ svg(widgetPlugins['craft-authors'].icon) }}
+                    {{ forms.lightswitchField({
+                        disabled: not proEdition,
+                        id: 'widgetEnabledCraftAuthors',
+                        instructions: widgetPlugins['craft-authors'].widgetDescription,
+                        label: widgetPlugins['craft-authors'].name,
+                        name: 'widgetEnabledCraftAuthors',
+                        on: settings.widgetEnabledCraftAuthors,
+                    }) }}
+                </div>
+            {% endif %}
+
+            {% if 'craft-published' in availableAdminBarWidgets %}
+                <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
+                    {{ svg(widgetPlugins['craft-published'].icon) }}
+                    {{ forms.lightswitchField({
+                        disabled: not proEdition,
+                        id: 'widgetEnabledCraftPublished',
+                        instructions: widgetPlugins['craft-published'].widgetDescription,
+                        label: widgetPlugins['craft-published'].name,
+                        name: 'widgetEnabledCraftPublished',
+                        on: settings.widgetEnabledCraftPublished,
+                    }) }}
+                </div>
+            {% endif %}
+
             {% if 'blitz' in availableAdminBarWidgets %}
                 <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
                     {{ svg(widgetPlugins['blitz'].icon) }}
@@ -139,20 +167,6 @@
                         id: 'widgetEnabledViewCount',
                         instructions: widgetPlugins['view-count'].widgetDescription,
                         label: widgetPlugins['view-count'].name,
-                        name: 'widgetEnabledViewCount',
-                        on: settings.widgetEnabledViewCount,
-                    }) }}
-                </div>
-            {% endif %}
-
-            {% if 'workflow' in availableAdminBarWidgets %}
-                <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
-                    {{ svg(widgetPlugins['workflow'].icon) }}
-                    {{ forms.lightswitchField({
-                        disabled: not proEdition,
-                        id: 'widgetEnabledViewCount',
-                        instructions: widgetPlugins['workflow'].widgetDescription,
-                        label: widgetPlugins['workflow'].name,
                         name: 'widgetEnabledViewCount',
                         on: settings.widgetEnabledViewCount,
                     }) }}

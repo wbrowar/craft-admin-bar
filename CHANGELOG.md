@@ -4,9 +4,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.2.0 - 2024-12-31
+### Added
+- Added new Admin Bar Widget: Authors
+  - Lets you quickly see who the author was for the current page you are on—without needing to go to the edit page.
+- Added new Admin Bar Widget: Published
+  - See the Post Date for the current entry. Click on the widget to see the Created Date, Updated Date, Entry ID, and Revision Notes.
+- Added `widgetEnabledCraftAuthors` and `widgetEnabledCraftPublished` settings.
+
+### Changed
+- Refactored `AdminBarWidget` class for simpler maintainence and to remove unneeded queries.
+- Updated Admin Bar Component to version `1.2.0`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)
+- Changed the display of the Blitz widget to a lightning bolt for the cached indicator.
+- Changed the display of title/value-style text pairs to definition lists in the Blitz and SEOmatic widgets.
+
+
 ## 5.1.1 - 2024-12-20
 ### Fixed
 - Fixed issue with Blitz widget not showing cache status.
+
 
 ## 5.1.0 - 2024-12-20
 ### Added
