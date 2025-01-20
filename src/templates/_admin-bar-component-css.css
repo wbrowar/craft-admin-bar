@@ -96,7 +96,7 @@
     --admin-bar-button-popover-border-radius: var(--admin-bar-border-radius);
 
     /* The value of the padding property on `admin-bar-text` components. */
-    --admin-bar-text-padding: 0 clamp(4px, 1vw, 13px);
+    /*--admin-bar-text-padding: 0 clamp(4px, 1vw, 13px);*/
 
     /* The background for labels in `admin-bar-text` components. */
     --admin-bar-text-label-color-bg: rgb(255 255 255 / 0.9);
