@@ -53,6 +53,13 @@ class Settings extends Model
     public array $customLinks = [];
 
     /**
+     * Add your own custom Admin Bar Widgets using Twig.
+     *
+     * @var string
+     */
+    public string $customWidgets = '';
+
+    /**
      * Adds the Dashboard link to Admin Bar.
      *
      * @var bool

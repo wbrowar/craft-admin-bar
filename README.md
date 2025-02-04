@@ -53,6 +53,7 @@ Here is a list of available arguments:
 
 | Argument        | Default       | Description                                                                                                                                                                                                                       |
 |-----------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `customWidgets` | *null*        | Use Twig to add custom widgets to Admin Bar.                                                                                                                                                                                      |
 | `editLinkLabel` | *null*        | Set a custom label for the Edit Link when `editLinkUrl` is set to a custom URL.                                                                                                                                                   |
 | `editLinkUrl`   | *null*        | Override the Edit Link with a custom URL or URI (this will be run through the `url()` Twig function).                                                                                                                             |
 | `entry`         | *null*        | Pass in an entry object to add an edit link for that entry .                                                                                                                                                                      |
@@ -213,6 +214,31 @@ Because Craft CMS plugins can change over time, features and availability of Adm
 | Guide      | [Guide](https://plugins.craftcms.com/guide)           | `>= 5.2.0`     | Links to guides assigned to the current page entry                                                    |
 | SEOmatic   | [SEOmatic](https://plugins.craftcms.com/seomatic)     | `>= 5.1.0`     | SEO preview for the current page.                                                                     |
 | View Count | [View Count](https://plugins.craftcms.com/view-count) | `>= 2.0.0`     | The number of times the current page has been viewed.                                                 |
+
+### Custom Admin Bar Widgets
+
+The Admin Bar Plugin Settings page includes a code editor field that lets you use Twig to create your own Admin Bar Widgets.
+
+While any Twig/HTML can be rendered here, it’s highly recommended that you check out [the docs for Admin Bar Component](https://github.com/wbrowar/admin-bar-component) and use `<admin-bar-text>` and `<admin-bar-button>`. This will help in keeping styles consistent.
+
+> [!WARNING]
+> The Twig code in this field will be rendered on your front-end. Be careful when using `{% js %}` or `{% css %}` tags, since they may affect elements on your front-end.
+
+You may also add custom widgets by passing a Twig template string into the `{{ adminBar() }}` function in your Twig template. This can be especially useful if you have a page-specific info to show.
+
+For example, this will add two widgets, a link and the title of the page as plain text:
+
+```twig
+{% set customWidgets %}
+  <admin-bar-button button-href="/a-link">A Link</admin-bar-button>
+  <admin-bar-text>{{ entry.title }}</admin-bar-text>
+{% endset %}
+
+{{ adminBar({
+  customWidgets,
+  entry: entry,
+}) }}
+```
 
 ### Requesting a New Admin Bar Widget
 

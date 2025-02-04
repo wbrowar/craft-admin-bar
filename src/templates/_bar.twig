@@ -88,7 +88,7 @@
         {{ self.addConfigLink(link) }}
     {% endfor %}
 
-    {% if not (proEdition and widgets|length) %}
+    {% if not proEdition %}
         <span style="flex-grow: 1;"></span>
     {% endif %}
 
@@ -106,10 +106,20 @@
         <admin-bar-button button-href="{{ cpUrl('settings') }}" label-text="{{ 'Settings'|t('admin-bar') }}"><span slot="label-before">{{ self.iconSettings }}</span></admin-bar-button>
     {% endif %}
 
-    {% if proEdition and widgets|length %}
+    {% if proEdition %}
         <span style="flex-grow: 1;"></span>
 
-        {% include 'admin-bar/_plugin-widgets.twig' %}
+        {% if widgets|length %}
+            {% include 'admin-bar/_plugin-widgets.twig' %}
+        {% endif %}
+
+        {% if customWidgets ?? false %}
+            {{ include(template_from_string(customWidgets)) }}
+        {% endif %}
+
+        {% if globalCustomWidgets ?? false %}
+            {{ include(template_from_string(globalCustomWidgets)) }}
+        {% endif %}
     {% endif %}
 
     {% if textElements|length %}

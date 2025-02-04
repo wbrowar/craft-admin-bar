@@ -110,6 +110,8 @@ class Bar extends Component
             $config['proEdition'] = AdminBar::$pro;
             $config['widgets'] = AdminBar::$pro ? AdminBarWidget::getAdminBarWidgets(true) ?? [] : [];
             $config['displayWidgetLabels'] = AdminBar::$pro ? $settings->displayWidgetLabels : false;
+            $config['customWidgets'] = AdminBar::$pro ? $config['customWidgets'] ?? '' : '';
+            $config['globalCustomWidgets'] = AdminBar::$pro ? $settings->customWidgets ?? '' : '';
 
             $config['enabledWidgets'] = [];
             if (AdminBar::$pro && !empty($config['widgets'])) {
