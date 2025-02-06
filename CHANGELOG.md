@@ -9,8 +9,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Custom Widgets (Admin Bar PRO)
   - Added a new property to the `{{ adminBar() }}` method, called `customWidgets`, that lets you pass widgets in as a template string.
   - Added a code editor field to the plugin settings page, letting you add custom widgets via Twig and HTML.
+- Added a menu below the greeting area that links to account settings pages.
 ### Changed
-- Updated Admin Bar Component to version `1.2.1`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)
+- Updated Admin Bar Component to version `1.3.0`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)
 
 
 ## 5.2.1 - 2024-12-31
