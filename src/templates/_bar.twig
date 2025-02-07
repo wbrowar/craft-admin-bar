@@ -53,6 +53,37 @@
 {% endif %}
 
 <admin-bar {{ attr(adminBarAttributes) }}>
+    <nav slot="greeting-popover">
+        <admin-bar-text multi-line {% if currentUser.admin %}label-content="ADMIN"{% endif %}>
+            <div style="margin-inline-end: 1em;">
+                <strong style="display: block">{{ currentUser.fullName }}</strong>
+                <em style="display: block">{{ currentUser.username }}</em>
+            </div>
+        </admin-bar-text>
+
+        <admin-bar-button button-href="{{ cpUrl('myaccount') }}" style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);">
+            {{ 'Profile'|t('admin-bar') }}
+            <span slot="label-before">{{ self.iconUser }}</span>
+        </admin-bar-button>
+
+        {% if currentUser.can('assignUserPermissions') %}
+            <admin-bar-button button-href="{{ cpUrl('myaccount/permissions') }}">
+                {{ 'Permissions'|t('admin-bar') }}
+                <span slot="label-before">{{ self.iconUserPermissions }}</span>
+            </admin-bar-button>
+        {% endif %}
+
+        <admin-bar-button button-href="{{ cpUrl('myaccount/preferences') }}">
+            {{ 'Preferences'|t('admin-bar') }}
+            <span slot="label-before">{{ self.iconUserPreferences }}</span>
+        </admin-bar-button>
+
+        <admin-bar-button button-href="{{ cpUrl('myaccount/addresses') }}">
+            {{ 'Addresses'|t('admin-bar') }}
+            <span slot="label-before">{{ self.iconUserAddresses }}</span>
+        </admin-bar-button>
+    </nav>
+
     {% if displayDashboardLink ?? true %}
         <admin-bar-button button-href="{{ cpUrl('dashboard') }}" label-text="{{ 'Dashboard'|t }}"><span slot="label-before">{{ self.iconDashboard }}</span></admin-bar-button>
     {% endif %}
@@ -88,7 +119,7 @@
         {{ self.addConfigLink(link) }}
     {% endfor %}
 
-    {% if not (proEdition and widgets|length) %}
+    {% if not proEdition %}
         <span style="flex-grow: 1;"></span>
     {% endif %}
 
@@ -106,10 +137,20 @@
         <admin-bar-button button-href="{{ cpUrl('settings') }}" label-text="{{ 'Settings'|t('admin-bar') }}"><span slot="label-before">{{ self.iconSettings }}</span></admin-bar-button>
     {% endif %}
 
-    {% if proEdition and widgets|length %}
+    {% if proEdition %}
         <span style="flex-grow: 1;"></span>
 
-        {% include 'admin-bar/_plugin-widgets.twig' %}
+        {% if widgets|length %}
+            {% include 'admin-bar/_plugin-widgets.twig' %}
+        {% endif %}
+
+        {% if customWidgets ?? false %}
+            {{ include(template_from_string(customWidgets)) }}
+        {% endif %}
+
+        {% if globalCustomWidgets ?? false %}
+            {{ include(template_from_string(globalCustomWidgets)) }}
+        {% endif %}
     {% endif %}
 
     {% if textElements|length %}
@@ -190,7 +231,22 @@
 
 {# user #}
 {% macro iconUser() %}{% apply spaceless %}
-    {{ svg('@appicons/user.svg')|attr({ class: 'icon' }) }}
+    {{ svg('@appicons/address-card.svg')|attr({ class: 'icon' }) }}
+{% endapply %}{% endmacro %}
+
+{# user #}
+{% macro iconUserPermissions() %}{% apply spaceless %}
+    {{ svg('@appicons/key-skeleton.svg')|attr({ class: 'icon' }) }}
+{% endapply %}{% endmacro %}
+
+{# user #}
+{% macro iconUserPreferences() %}{% apply spaceless %}
+    {{ svg('@appicons/swatchbook.svg')|attr({ class: 'icon' }) }}
+{% endapply %}{% endmacro %}
+
+{# user #}
+{% macro iconUserAddresses() %}{% apply spaceless %}
+    {{ svg('@appicons/map-location.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
 {# utilities #}

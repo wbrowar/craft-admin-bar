@@ -45,6 +45,12 @@
     /* The height of the bar and all of the buttons. */
     --admin-bar-height: 43px;
 
+    /* The vertical padding default for Admin Bar child elements. */
+    --admin-bar-block-padding: 0;
+
+    /* The horizontal padding default for Admin Bar child elements. */
+    --admin-bar-inline-padding: clamp(4px, 1vw, 13px);
+
     /* When `show-environment` is added to an `<admin-bar>` an environment
     warning will appear. The default looks like yellow, striped police tape,
     but you can use any CSS value used in the background shorthand property. */
@@ -96,7 +102,7 @@
     --admin-bar-button-popover-border-radius: var(--admin-bar-border-radius);
 
     /* The value of the padding property on `admin-bar-text` components. */
-    /*--admin-bar-text-padding: 0 clamp(4px, 1vw, 13px);*/
+    /*--admin-bar-text-padding: var(--admin-bar-block-padding) var(--admin-bar-inline-padding);*/
 
     /* The background for labels in `admin-bar-text` components. */
     --admin-bar-text-label-color-bg: rgb(255 255 255 / 0.9);

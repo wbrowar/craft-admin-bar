@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.3.0 - 2025-02-07
+### Added
+- Added a menu below the greeting area (Hi, User) that links to account settings pages for the current user.
+- Custom Widgets (Admin Bar PRO)
+  - Added a new property to the `{{ adminBar() }}` method, called `customWidgets`, that lets you pass widgets in as a template string.
+  - Added a code editor field to the plugin settings page, letting you add custom widgets via Twig and HTML.
+### Changed
+- Updated Admin Bar Component to version `1.3.0`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)
+
+
 ## 5.2.1 - 2024-12-31
 ### Changed
 - Changed labels on Authors and Published widgets to be more descriptive.

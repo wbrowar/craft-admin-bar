@@ -206,6 +206,28 @@
     </div>
 </div>
 
+{% set placeholder %}{% verbatim %}{# Example Popover Widget #}
+<admin-bar-button>
+üüüüShow Popover
+üüüü<span slot="popover">
+üüüüüüüü<admin-bar-text>Popover content.</admin-bar-text>
+üüüü</span>
+</admin-bar-button>{% endverbatim %}{% endset %}
+
+{{ codeEditor.textareaField({
+    label: 'Custom Widgets'|t('admin-bar'),
+    instructions: 'Use Twig to add your own widgets to Admin Bar. See [the docs for Admin Bar Component](https://github.com/wbrowar/admin-bar-component) to learn how to add buttons, text, and popover HTML.'|t('admin-bar'),
+    id: 'customWidgets',
+    name: "customWidgets",
+    placeholder: placeholder|e('html')|nl2br|replace({"ü": "&nbsp;"}),
+    value: settings.customWidgets,
+    rows: 5,
+}, "Custom Widgets", {
+    language: "twig",
+}, {
+    wrapperClass: 'content-pane',
+}) }}
+
 <hr>
 
 {% set placeholder %}
