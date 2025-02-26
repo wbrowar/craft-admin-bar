@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.3.1 - 2025-02-25
+### Changed
+- Updated Admin Bar Component to version `1.3.1`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)
+
+
 ## 5.3.0 - 2025-02-07
 ### Added
 - Added a menu below the greeting area (Hi, User) that links to account settings pages for the current user.
