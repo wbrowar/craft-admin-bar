@@ -38,6 +38,8 @@ return array(
     'widgetEnabledCraftPublished' => false,
     'widgetEnabledCraftSites' => false,
     'widgetEnabledGuide' => false,
+    'widgetEnabledNavigation' => false,
+    'widgetEnabledSeo' => false,
     'widgetEnabledSeomatic' => false,
     'widgetEnabledViewCount' => false,
 );

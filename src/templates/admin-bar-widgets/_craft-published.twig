@@ -17,7 +17,7 @@
     {% set popoverInfo = popoverInfo|merge([['Notes'|t('admin-bar'), entry.currentRevision.revisionNotes]]) %}
   {% endif %}
 
-  <admin-bar-button class="admin-bar-widget admin-bar-widget--craft-authors" title="{{ 'Post Date'|t('admin-bar') }}">
+  <admin-bar-button class="admin-bar-widget" title="{{ 'Post Date'|t('admin-bar') }}">
     {{ iconSvg('newspaper')|attr({ class: 'icon' }) }}
     {% set postDateValue = entry.postDate|date('medium') ~ ' ' ~ entry.postDate|time('short') %}
     {% if displayWidgetLabels %}

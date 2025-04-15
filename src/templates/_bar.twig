@@ -141,7 +141,13 @@
         <span style="flex-grow: 1;"></span>
 
         {% if widgets|length %}
-            {% include 'admin-bar/_plugin-widgets.twig' %}
+            {% include 'admin-bar/_plugin-widgets.twig' with {
+                displayWidgetLabels,
+                enabledWidgets,
+                entry,
+                widgets,
+                widgetsConfig,
+            } only %}
         {% endif %}
 
         {% if customWidgets ?? false %}

@@ -1,3 +1,5 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
 {% if entry ?? false %}
   {% set seomaticMetaGql = gql('{
     entry(id: "' ~ entry.id ~ '", siteId: "' ~ entry.siteId ~ '") {
@@ -17,51 +19,28 @@
   {% set metaLinkContainer = seomaticMetaGql.metaLinkContainer|json_decode %}
   {% set metaJsonLdContainer = seomaticMetaGql.metaJsonLdContainer|json_decode %}
 
+  {% set extrasList = [] %}
+
+  {% set mainEntity = metaJsonLdContainer.mainEntityOfPage['@type'] ?? null %}
+  {% if mainEntity ?? false %}
+    {% set extrasList = extrasList|merge([['Main Entity'|t('admin-bar'), mainEntity]]) %}
+  {% endif %}
+
   {% set meta = {
     canonical: metaLinkContainer.canonical.href ?? null,
     description: metaTagContainer.description.content ?? null,
+    extrasList,
     imageAlt: metaTagContainer['og:image:alt'].content ?? null,
     imageUrl: metaTagContainer['og:image'].content ?? null,
     mainEntity: metaJsonLdContainer.mainEntityOfPage['@type'] ?? null,
     title: metaTitleContainer.title.title ?? null,
   } %}
 
-  {% set popoverInfo = [] %}
-
-  {% if meta.mainEntity ?? false %}
-    {% set popoverInfo = popoverInfo|merge([['Main Entity'|t('admin-bar'), meta.mainEntity]]) %}
-  {% endif %}
-
   <admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem" title="{{ widgets[pluginHandle].name }}">
     {{ svg('@nystudio107/seomatic/icon-mask.svg')|attr({ class: 'icon' }) }}
     {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
     <div slot="popover">
-      <div style="--admin-bar-text-padding: 0; display: flex; flex-flow: row wrap; gap: 14px; width: min(400px, 90vw); padding: clamp(4px, 1vw, 13px); {% if popoverInfo|length %}border-block-end: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);{% endif %}">
-        {% if meta.imageUrl ?? false %}
-          <img
-              src="{{ meta.imageUrl }}"
-              alt="{{ meta.imageAlt }}"
-              style="display: block; max-width: 100%; height: auto; border-radius: var(--admin-bar-border-radius);"
-              title="og:image"
-          >
-        {% endif %}
-
-        {% if meta.title ?? false %}
-          <admin-bar-text multi-line title="{{ 'Page Title'|t('admin-bar') }}"><strong style="text-wrap: pretty;">{{ meta.title }}</strong></admin-bar-text>
-        {% endif %}
-
-        {% if meta.description ?? false %}
-          <admin-bar-text multi-line title="{{ 'Page Description'|t('admin-bar') }}"><span style="text-wrap: pretty;">{{ meta.description }}</span></admin-bar-text>
-        {% endif %}
-
-        {% if meta.canonical ?? false %}
-          <admin-bar-text multi-line title="{{ 'Canonical URL'|t('admin-bar') }}"><em><a href="{{ meta.canonical }}" style="color: var(--admin-bar-button-popover-color-text, rgb(255 255 255)); word-break: break-all">{{ meta.canonical }}</a></em></admin-bar-text>
-        {% endif %}
-      </div>
-
-      {% if popoverInfo|length %}
-        <admin-bar-text dl-content="{{ popoverInfo|json_encode }}"></admin-bar-text>
-      {% endif %}
+      {{ pluginWidgets.seoMeta(meta) }}
     </div>
   </admin-bar-button>
 {% endif %}

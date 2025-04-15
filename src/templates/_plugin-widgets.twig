@@ -14,9 +14,22 @@
   } %}
 {% endif %}
 
+{% if 'seo' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_seo' with {
+    pluginHandle: 'seo',
+    widgetConfig: widgetsConfig['seo'],
+  } %}
+{% endif %}
+
 {% if 'seomatic' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_seomatic' with {
     pluginHandle: 'seomatic',
+  } %}
+{% endif %}
+
+{% if 'navigation' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_navigation' with {
+    pluginHandle: 'navigation',
   } %}
 {% endif %}
 

@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.4.0 - 2025-04-15
+### Added
+- Added SEO Admin Bar Widget
+  - View SEO meta info for the current page, as managed by the [SEO](https://plugins.craftcms.com/seo) plugin.
+- Added Navigation Admin Bar Widget
+  - View the current page and where it appears for each navigation.
+- Added Twig method to see if Admin Bar will be rendered based on the conidtions Admin Bar checks for.
+  - You can use `{% if adminBarCanRender() %}{# add assets or other markup #}{% endif %}` to add code that only renders when Admin bar does.
+
+### Deprecated
+- The `canEmbed()` PHP method has been deprecated and renamed to `canRender()`.
+  - The `canEmbed()` method will be removed in the next major version of Admin Bar.
+
+
 ## 5.3.2 - 2025-03-25
 ### Changed
 - Updated Admin Bar Component to version `1.3.5`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)

@@ -51,6 +51,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
     {
         return [
             new \Twig\TwigFunction('adminBar', [$this, 'adminBar']),
+            new \Twig\TwigFunction('adminBarCanRender', [$this, 'adminBarCanRender']),
             new \Twig\TwigFunction('adminBarCssFile', [$this, 'adminBarCssFile']),
             new \Twig\TwigFunction('adminBarJsFile', [$this, 'adminBarJsFile']),
             new \Twig\TwigFunction('adminBarOnPageCss', [$this, 'adminBarOnPageCss']),
@@ -65,7 +66,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
      */
     public function adminBar(array $config = []): string | null
     {
-        if (AdminBar::$plugin->bar->canEmbed() || ($config['force'] ?? false)) {
+        if (AdminBar::$plugin->bar->canRender() || ($config['force'] ?? false)) {
             if (!isset($config['entry']) && !isset($config['url'])) {
                 // get current page element
                 $element = Craft::$app->getUrlManager()->getMatchedElement();
@@ -82,6 +83,16 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
         }
 
         return null;
+    }
+
+    /**
+     * Lets you check to see if Admin Bar can be rendered before loading assets.
+     *
+     * @return bool
+     */
+    public function adminBarCanRender(): bool
+    {
+        return AdminBar::$plugin->bar->canRender();
     }
 
     /**

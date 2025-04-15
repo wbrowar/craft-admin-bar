@@ -45,6 +45,8 @@ class AdminBarWidget
     private const WIDGET_CRAFT_PUBLISHED = 'craft-published';
     private const WIDGET_CRAFT_SITES = 'craft-sites';
     private const WIDGET_GUIDE = 'guide';
+    private const WIDGET_NAVIGATION = 'navigation';
+    private const WIDGET_SEO = 'seo';
     private const WIDGET_SEOMATIC = 'seomatic';
     private const WIDGET_VIEW_COUNT = 'view-count';
 
@@ -63,6 +65,8 @@ class AdminBarWidget
             (self::WIDGET_CRAFT_PUBLISHED) => AdminBar::$pro ? $settings->widgetEnabledCraftPublished : false,
             (self::WIDGET_CRAFT_SITES) => AdminBar::$pro ? $settings->widgetEnabledCraftSites : false,
             (self::WIDGET_GUIDE) => AdminBar::$pro ? $settings->widgetEnabledGuide : false,
+            (self::WIDGET_NAVIGATION) => AdminBar::$pro ? $settings->widgetEnabledNavigation : false,
+            (self::WIDGET_SEO) => AdminBar::$pro ? $settings->widgetEnabledSeo : false,
             (self::WIDGET_SEOMATIC) => AdminBar::$pro ? $settings->widgetEnabledSeomatic : false,
             (self::WIDGET_VIEW_COUNT) => AdminBar::$pro ? $settings->widgetEnabledViewCount : false,
         ];
@@ -108,6 +112,17 @@ class AdminBarWidget
             (self::WIDGET_GUIDE) => [
                 'name' => 'Guide',
                 'widgetDescription' => Craft::t('admin-bar', 'Links to guides assigned to the current page entry'),
+                'version' => null
+            ],
+            (self::WIDGET_NAVIGATION) => [
+                'name' => 'Navigation',
+                'widgetDescription' => Craft::t('admin-bar', 'Breadcrumbs for the current page in all navigations.'),
+                'version' => null
+            ],
+            (self::WIDGET_SEO) => [
+                'name' => 'SEO',
+                'widgetDescription' => Craft::t('admin-bar', 'SEO preview for the current page.'),
+                'widgetSettingsWarning' => Craft::t('admin-bar', 'Requires field handle to be set in Twig settings. See [Admin Bar Documentation]({docsUrl}) for details.', ['docsUrl' => 'https://github.com/wbrowar/craft-admin-bar/blob/main/README.md#configuring-an-admin-bar-widget-via-twig']),
                 'version' => null
             ],
             (self::WIDGET_SEOMATIC) => [
@@ -170,6 +185,28 @@ class AdminBarWidget
             }
         }
 
+        $widgetHandle = self::WIDGET_NAVIGATION;
+        if (in_array($widgetHandle, $enabledWidgets) && Craft::$app->getPlugins()->isPluginInstalled($widgetHandle) && Craft::$app->getPlugins()->isPluginEnabled($widgetHandle)) {
+            $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
+            $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
+            $widgets[$widgetHandle]['name'] = $plugin->name;
+            $version = $plugin->getVersion();
+            if (version_compare($version, '3.0.0', '>=') && version_compare($version, '4.0.0', '<')) {
+                $widgets[$widgetHandle]['version'] = '3.0.0';
+            }
+        }
+
+        $widgetHandle = self::WIDGET_SEO;
+        if (in_array($widgetHandle, $enabledWidgets) && Craft::$app->getPlugins()->isPluginInstalled($widgetHandle) && Craft::$app->getPlugins()->isPluginEnabled($widgetHandle)) {
+            $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
+            $widgets[$widgetHandle]['icon'] = Craft::$app->getPlugins()->getPluginIconSvg($widgetHandle);
+            $widgets[$widgetHandle]['name'] = $plugin->name;
+            $version = $plugin->getVersion();
+            if (version_compare($version, '5.0.0', '>=') && version_compare($version, '6.0.0', '<')) {
+                $widgets[$widgetHandle]['version'] = '5.0.0';
+            }
+        }
+
         $widgetHandle = self::WIDGET_SEOMATIC;
         if (in_array($widgetHandle, $enabledWidgets) && Craft::$app->getPlugins()->isPluginInstalled($widgetHandle) && Craft::$app->getPlugins()->isPluginEnabled($widgetHandle)) {
             $plugin = Craft::$app->getPlugins()->getPlugin($widgetHandle);
@@ -204,7 +241,7 @@ class AdminBarWidget
      *
      * @return array
      */
-    public static function getWidgetConfigForEntry(Entry | null $entry, Settings $settings, array $widgetPlugins): array
+    public static function getWidgetConfigForEntry(Entry | null $entry, Settings $settings, array $widgetPlugins, array $userWidgetsConfig): array
     {
         $config = [];
 
@@ -344,6 +381,18 @@ class AdminBarWidget
             }
 
             $config[self::WIDGET_GUIDE]['guides'] = Guide::$plugin->guide->getGuides(['id' => $guideIds]);
+        }
+
+        // SEO
+        $config[self::WIDGET_SEO] = [
+            'handle' => 'seo',
+        ];
+        if (
+            !empty($entry)
+            && $settings->widgetEnabledSeo
+            && ($widgetPlugins[self::WIDGET_SEO]['version'] ?? false)
+        ) {
+            $config[self::WIDGET_SEO]['handle'] = $userWidgetsConfig['seo']['handle'] ?? null;
         }
 
         return $config;

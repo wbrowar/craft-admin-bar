@@ -160,6 +160,20 @@ class Settings extends Model
     public bool $widgetEnabledGuide = false;
 
     /**
+     * Enables the Admin Bar Widget: Navigation
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledNavigation = false;
+
+    /**
+     * Enables the Admin Bar Widget: Seo
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledSeo = false;
+
+    /**
      * Enables the Admin Bar Widget: Seomatic
      *
      * @var bool

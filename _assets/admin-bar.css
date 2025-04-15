@@ -1,23 +1,45 @@
 @import url(admin-bar-component/dist/admin-bar.css);
 
-@layer admin-bar {
-  admin-bar {
-    --admin-bar-bg-color: oklch(0.131 0.036 248.399);
-    --admin-bar-color-highlight: oklch(0.55 0.23 28.77);
+admin-bar {
+  --admin-bar-bg-color: oklch(0.131 0.036 248.399);
+  --admin-bar-color-highlight: oklch(0.55 0.23 28.77);
 
-    & svg.icon {
-      display: block;
-      width: var(--admin-bar-icon-width, 1rem);
-      height: auto;
+  & svg.icon {
+    display: block;
+    width: var(--admin-bar-icon-width, 1rem);
+    height: auto;
 
-      & :is(circle, ellipse, line, path, polygon, polyline, rect, text) {
-        fill: currentColor;
+    & :is(circle, ellipse, line, path, polygon, polyline, rect, text) {
+      fill: currentColor !important;
+    }
+  }
+}
+.admin-bar-widget {
+  [slot="popover"] {
+    max-height: calc(90dvh - var(--admin-bar-height) - clamp(4px, 1vw, 13px));
+
+    & a:not(.admin-bar-button) {
+      text-decoration: underline;
+      color: var(--admin-bar-button-popover-color-text, rgb(255, 255, 255));
+      transition: color var(--admin-bar-transition-duration) ease-out;
+
+      &:hover {
+        color: color-mix(in srgb, currentColor, transparent 30%);
       }
     }
   }
-  .admin-bar-widget {
-    [slot="popover"] {
-      max-height: calc(90dvh - var(--admin-bar-height) - clamp(4px, 1vw, 13px));
+
+  &.admin-bar-widget--navigation {
+    span:has(a svg) {
+      & a {
+        transition: color var(--admin-bar-transition-duration) ease-out, opacity calc(var(--admin-bar-transition-duration) * .5) ease-out !important;
+        opacity: 0;
+      }
+      &:hover {
+        & a {
+          opacity: 1;
+        }
+      }
     }
   }
 }

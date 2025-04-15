@@ -37,14 +37,27 @@ class Bar extends Component
     // =========================================================================
 
     /**
-     * Checks to see if Admin Bar should be rendered based on the type of request
-     * and the permissions of the currently logged-in user.
+     * Deprecated: use `canRender()` instead.
      *
-     *     AdminBar::$plugin->bar->canEmbed()
-     *
+     * @deprecated in 5.4.0
      * @return bool
      */
     public function canEmbed(): bool
+    {
+        Craft::$app->getDeprecator()->log(__METHOD__, 'Admin Bar’s `canEmbed()` method has been deprecated. Use `canRender()` instead.');
+
+        return $this->canRender();
+    }
+
+    /**
+     * Checks to see if Admin Bar should be rendered based on the type of request
+     * and the permissions of the currently logged-in user.
+     *
+     *     AdminBar::$plugin->bar->canRender()
+     *
+     * @return bool
+     */
+    public function canRender(): bool
     {
         return (
             !Craft::$app->getRequest()->getIsAjax() &&
@@ -55,6 +68,7 @@ class Bar extends Component
             (Craft::$app->getUser()->getIsAdmin() || Craft::$app->getUser()->checkPermission('accessCp'))
         );
     }
+
     /**
      * Render an Admin Bar based on the config params passed in, the settings saved
      * in the database, and the config options set in `config/admin-bar.php`
@@ -108,6 +122,7 @@ class Bar extends Component
 
             // Pro features
             $config['proEdition'] = AdminBar::$pro;
+            $userWidgetsConfig = $config['widgets'] ?? [];
             $config['widgets'] = AdminBar::$pro ? AdminBarWidget::getAdminBarWidgets(true) ?? [] : [];
             $config['displayWidgetLabels'] = AdminBar::$pro ? $settings->displayWidgetLabels : false;
             $config['customWidgets'] = AdminBar::$pro ? $config['customWidgets'] ?? '' : '';
@@ -115,7 +130,7 @@ class Bar extends Component
 
             $config['enabledWidgets'] = [];
             if (AdminBar::$pro && !empty($config['widgets'])) {
-                $config['widgetsConfig'] = AdminBarWidget::getWidgetConfigForEntry($entry, $settings, $config['widgets']);
+                $config['widgetsConfig'] = AdminBarWidget::getWidgetConfigForEntry($entry, $settings, $config['widgets'], $userWidgetsConfig);
                 $config['enabledWidgets'] = AdminBarWidget::getEnabledWidgets();
             }
             
@@ -139,7 +154,6 @@ class Bar extends Component
 
         return $html;
     }
-
 
     /**
      * Renders an error message.
