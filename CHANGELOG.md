@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.5.2 - 2025-04-24
+### Changed
+- Added CSS Custom Properties to style the API status line and search input (and future input fields).
+
+
 ## 5.5.1 - 2025-04-24
 ### Fixed
 - Fixed an issue that occurs when no icon is set on an additional link.
