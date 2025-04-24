@@ -114,9 +114,9 @@
             {% for link in customLinks %}
                 {% if link.linkUrl ?? false %}
                     {% if link.adminOnly != true %}
-                        <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ self.customLinkIcon(link.icon) }}</admin-bar-button>
+                        <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
                     {% elseif link.adminOnly and currentUser and currentUser.admin %}
-                        <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ self.customLinkIcon(link.icon) }}</admin-bar-button>
+                        <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
                     {% endif %}
                 {% endif %}
             {% endfor %}
@@ -203,12 +203,12 @@
     {% endif %}
 
     {% if link.type == 'url' and userHasPermission %}
-        <admin-bar-button button-href="{{ url(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar') }}">{{ self.customLinkIcon(link.icon) }}</admin-bar-button>
+        <admin-bar-button button-href="{{ url(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
     {% elseif link.type == 'cpUrl' and userHasPermission %}
-        <admin-bar-button button-href="{{ cpUrl(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar') }}">{{ self.customLinkIcon(link.icon) }}</admin-bar-button>
+        <admin-bar-button button-href="{{ cpUrl(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
     {% elseif link.type == 'action' and userHasPermission %}
         {% set actionParams = params|length ? params ~ '&returnUrl=' ~ craft.request.url : 'returnUrl=' ~ craft.request.url %}
-        <admin-bar-button button-href="{{ actionUrl(link.url, actionParams) }}" label-text="{{ link.title|t('admin-bar') }}">{{ self.customLinkIcon(link.icon) }}</admin-bar-button>
+        <admin-bar-button button-href="{{ actionUrl(link.url, actionParams) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
     {% endif %}
 {% endmacro %}
 

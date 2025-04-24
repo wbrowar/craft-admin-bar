@@ -12,17 +12,18 @@
         <template id="admin-bar-search-template">
           <style>
             form {
-              display: flex;
+              display: grid;
+              grid-template-columns: auto max-content;
               align-items: center;
             }
             input {
-              flex: 1 1 300px;
               padding-inline: var(--admin-bar-inline-padding);
+              min-width: 300px;
               height: 44px;
-              background: var(--admin-bar-button-color-text, white);
+              background: var(--craft-admin-bar-color-input-bg, rgb(255 255 255 / .9));
               border: none;
               font-size: 16px;
-              color: var(--admin-bar-color-highlight, white);
+              color: var(--craft-admin-bar-color-input-text, oklch(0.55 0.23 28.77));
             }
             button {
               appearance: none;
