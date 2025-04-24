@@ -21,14 +21,17 @@
 
   {% if widgetConfig['cachedDate'] ?? false %}
     <div slot="popover">
-      {% set popoverInfo = [['Cached Date'|t('admin-bar'), widgetConfig['cachedDate']|datetime('short')]] %}
+      {% set popoverInfo = [['Cached Date'|t('admin-bar'), widgetConfig['cachedDate']|datetime()]] %}
       <admin-bar-text dl-content="{{ popoverInfo|json_encode }}"></admin-bar-text>
+      <admin-bar-button onclick="window.adminBarPostRequest(this, 'blitz-refresh-cache', {{ widgetConfig['siteUri']|json_encode|json_encode }})" style="--admin-bar-icon-width: 1rem">
+        {{ iconSvg('arrows-rotate')|attr({ class: 'icon' }) }}
+        {{ 'Refresh Page'|t('admin-bar') }}
+      </admin-bar-button>
     </div>
   {% endif %}
 {% endset %}
 <{{ widgetElement }}
-class="admin-bar-widget"
-title="{{ widgets[pluginHandle].name }}"
+class="admin-bar-widget admin-bar-widget--blitz"
 style="--admin-bar-icon-width: 1.5rem"
 >{{ widgetContent }}</{{ widgetElement }}>
 

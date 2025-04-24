@@ -8,7 +8,7 @@
     {% if widgetConfig['entrySiteLinks']|length %}
       <div slot="popover">
         {% for link in widgetConfig['entrySiteLinks'] %}
-          <admin-bar-button button-href="{{ link.url }}" title="{{ 'Go to this entry on the site: '|t('admin-bar') ~ link.title }}">
+          <admin-bar-button button-href="{{ link.url }}">
             <span style="--admin-bar-icon-width: 1rem">{{ svg('@appicons/' ~ widgetConfig['earthIcon'] ~ '.svg')|attr({ class: 'icon' }) }}</span>
             {{ link.title }}
           </admin-bar-button>
@@ -18,7 +18,6 @@
   {% endset %}
   <{{ widgetElement }}
       class="admin-bar-widget"
-      title="{{ widgets[pluginHandle].name }}"
       style="--admin-bar-icon-width: 1.5rem"
   >{{ widgetContent }}</{{ widgetElement }}>
 {% endif %}

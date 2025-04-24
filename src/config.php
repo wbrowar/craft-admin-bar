@@ -36,6 +36,7 @@ return array(
     'widgetEnabledCraftAuthors' => false,
     'widgetEnabledCraftNewEntry' => false,
     'widgetEnabledCraftPublished' => false,
+    'widgetEnabledCraftSearch' => false,
     'widgetEnabledCraftSites' => false,
     'widgetEnabledGuide' => false,
     'widgetEnabledNavigation' => false,
@@ -50,6 +51,7 @@ return array(
 'additionalLinks' => [
   // an example of a simple url link
   [
+    'icon' => 'book',
     'title' => 'Craft CMS',
     'url' => 'http://craftcms.com',
     'type' => 'url',

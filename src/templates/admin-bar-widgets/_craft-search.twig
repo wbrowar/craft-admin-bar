@@ -1,0 +1,95 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
+<admin-bar-button class="admin-bar-widget admin-bar-widget--craft-search" style="--admin-bar-icon-width: 1.3rem">
+  {{ iconSvg('magnifying-glass')|attr({ class: 'icon' }) }}
+  {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
+
+  <div slot="popover">
+    {% if widgetConfig.onSettingsPreivew %}
+      {{ pluginWidgets.onSettingsPreivew(widgets[pluginHandle].name) }}
+    {% else %}
+      <craft-admin-bar-search>
+        <template id="admin-bar-search-template">
+          <style>
+            form {
+              display: flex;
+              align-items: center;
+            }
+            input {
+              flex: 1 1 300px;
+              padding-inline: var(--admin-bar-inline-padding);
+              height: 44px;
+              background: var(--admin-bar-button-color-text, white);
+              border: none;
+              font-size: 16px;
+              color: var(--admin-bar-color-highlight, white);
+            }
+            button {
+              appearance: none;
+              background: none;
+              border: none;
+              padding-inline: var(--admin-bar-inline-padding);
+
+              svg {
+                width: 20px;
+                height: 20px;
+                fill: var(--admin-bar-button-color-text, white);
+              }
+            }
+            ul {
+              margin: 0;
+              padding: 0;
+            }
+          </style>
+
+          <form>
+            <input type="search" name="admin-bar-widget-craft-search-input" placeholder="{{ 'Search entries'|t('admin-bar') }}">
+            <button type="submit">{{ iconSvg('magnifying-glass') }}</button>
+          </form>
+          <div></div>
+        </template>
+
+        <template id="admin-bar-search-results-template">
+          <li>
+            <admin-bar-text class="view"></admin-bar-text>
+            <admin-bar-button class="view"></admin-bar-button>
+            <admin-bar-button class="edit">{{ iconSvg('pencil') }} {{ 'Edit'|t('admin-bar') }}</admin-bar-button>
+            <style>
+              li {
+                list-style: none;
+
+                &:hover {
+                  --edit-opacity: 1;
+                }
+                &:has(:nth-child(2)) {
+                  display: grid;
+                  grid-template-columns: auto max-content;
+                }
+              }
+              svg {
+                width: 14px;
+                height: 15px;
+                fill: currentColor;
+              }
+              .edit {
+                opacity: var(--edit-opacity, 0);
+                transition: opacity var(--admin-bar-transition-duration, 0) ease-out;
+
+                &:focus {
+                  --edit-opacity: 1;
+                }
+              }
+              admin-bar-text.view {
+                font-style: italic;
+              }
+            </style>
+          </li>
+        </template>
+
+        <template id="admin-bar-search-no-results-template">
+          <admin-bar-text>{{ 'No search results found.'|t('admin-bar') }}</admin-bar-text>
+        </template>
+      </craft-admin-bar-search>
+    {% endif %}
+  </div>
+</admin-bar-button>

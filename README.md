@@ -39,7 +39,7 @@ To install the plugin, you can find it in the [Craft Plugin Store](https://plugi
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Admin Bar.
 
 ## Add Admin Bar to Your Twig Template
-To add Admin Bar to your website add the `{{ adminBar() }}` tag within your Twig template. Admin Bar will be displayed on any page that includes this tag when someone—who has the permission to view the CP—is logged into your website.
+To add Admin Bar to your website add the `{{ adminBar() }}` function within your Twig template. Admin Bar will be displayed on any page that includes this tag when someone—who has the permission to view the CP—is logged into your website.
 
 In your plugin settings you can use CSS Custom Properties to override the look of your admin bar to match your website’s look and feel.
 
@@ -49,6 +49,8 @@ You may pass in an array of arguments to make some changes on how Admin Bar look
 {{ adminBar({ entry: entry }) }}
 ```
 
+Admin Bar Widgets will also use this entry value to change their content and functionality.
+
 Here is a list of available arguments:
 
 | Argument        | Default       | Description                                                                                                                                                                                                                       |
@@ -56,14 +58,14 @@ Here is a list of available arguments:
 | `customWidgets` | *null*        | Use Twig to add custom widgets to Admin Bar.                                                                                                                                                                                      |
 | `editLinkLabel` | *null*        | Set a custom label for the Edit Link when `editLinkUrl` is set to a custom URL.                                                                                                                                                   |
 | `editLinkUrl`   | *null*        | Override the Edit Link with a custom URL or URI (this will be run through the `url()` Twig function).                                                                                                                             |
-| `entry`         | *null*        | Pass in an entry object to add an edit link for that entry .                                                                                                                                                                      |
-| `fixed`         | *false*       | Use CSS `position: fixed` instead of `position: sticky;`.                                                                                                                                                                         |
-| `force`         | *false*       | Bypasses the default check that `{{ adminBar() }}` does to see if Admin Bar can be rendered.                                                                                                                                      |
+| `entry`         | *null*        | Pass in an entry object to add an edit link for that entry. This value will also be used in Admin Bar Widgets.                                                                                                                    |
+| `fixed`         | *false*       | Use CSS `position: fixed` instead of `position: sticky;` to pin Admin Bar to the top or bottom of your page.                                                                                                                      |
+| `force`         | *false*       | Bypasses the default check that `{{ adminBar() }}` does to see if Admin Bar can be rendered. This is intended to be used on the Admin Bar plugin settings page, or for edge cases.                                                |
 | `id`            | *'admin-bar'* | Set the `id` attribute on the Admin Bar wrapper element.                                                                                                                                                                          |
 | `position`      | *'top'*       | When set to `'bottom'` and used with `fixed: true`, Admin Bar will be fixed to the bottom of the page. Accepts: `'bottom'`, `'top'`                                                                                               |
 | `rtl`           | *false*       | Changes the reading direction from `ltr` to `rtl` in situations where you need to manually set it. Admin Bar Component will automatcally switch to RTL if your page is set to RTL or if you have the CSS set to `direction: rtl`. |
 | `sticky`        | *true*        | Uses CSS to `position: sticky;` Admin Bar to the top of the page.                                                                                                                                                                 |
-| `textElements`  | *[]*          | Add text elements to admin bar using an array of objects.                                                                                                                                                                         |
+| `textElements`  | *[]*          | Add text elements to Admin Bar using an array of objects.                                                                                                                                                                         |
 | `useCss`        | *true*        | Add the default styles to Admin Bar or leave them out to load the stylesheet with your project’s CSS.                                                                                                                             |
 | `useJs`         | *true*        | Use the Admin Bar's default Javascript or set this to `false` to import the [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) into your project’s JS bundle.                                                  |
 
@@ -99,36 +101,43 @@ Here are the settings you can change with the config file:
 
 ### Admin Bar
 
-| Setting                      | Default | Description                                                                                                             |
-|------------------------------|---------|-------------------------------------------------------------------------------------------------------------------------|
-| `additionalLinks`            | *[]*    | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/craft-admin-bar#additional-links). |
-| `displayGreeting`            | *true*  | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]".                                             |
-| `displayDashboardLink`       | *true*  | A link to the CP Dashboard.                                                                                             |
-| `displayDefaultEditSection`  | *true*  | Display the name of the section in the default entry/category edit link if the user has permission to edit it.          |
-| `displayGuideLink`           | *true*  | If the [Guide](https://plugins.craftcms.com/guide) plugin is installed, a link to the Guide CP Section is displayed.    |
-| `displayLogout`              | *true*  | Displays a button that logs you out of Craft CMS.                                                                       |
-| `displayWidgetLabels`        | *false* | Displays labels next to Admin Bar Widget icons.                                                                         |
-| `widgetEnabledBlitz`         | *false* | Enables the Admin Bar Widget: Blitz                                                                                     |
-| `widgetEnabledCraftNewEntry` | *false* | Enables the Admin Bar Widget: Guide                                                                                     |
-| `widgetEnabledCraftSites`    | *false* | Enables the Admin Bar Widget: New Entry                                                                                 |
-| `widgetEnabledGuide`         | *false* | Enables the Admin Bar Widget: Sites                                                                                     |
-| `widgetEnabledNavigation`    | *false* | Enables the Admin Bar Widget: Navigation                                                                                |
-| `widgetEnabledSeo`           | *false* | Enables the Admin Bar Widget: Seo                                                                                       |
-| `widgetEnabledSeomatic`      | *false* | Enables the Admin Bar Widget: Seomatic                                                                                  |
-| `widgetEnabledViewCount`     | *false* | Enables the Admin Bar Widget: View Count                                                                                |
+| Setting                       | Default | Description                                                                                                             |
+|-------------------------------|---------|-------------------------------------------------------------------------------------------------------------------------|
+| `additionalLinks`             | *[]*    | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/craft-admin-bar#additional-links). |
+| `displayGreeting`             | *true*  | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]".                                             |
+| `displayDashboardLink`        | *true*  | Displays a link to the CP Dashboard.                                                                                    |
+| `displayDefaultEditSection`   | *true*  | Display the name of the section in the default entry edit link if the user has permission to edit it.                   |
+| `displayGuideLink`            | *true*  | If the [Guide](https://plugins.craftcms.com/guide) plugin is installed, a link to the Guide CP Section is displayed.    |
+| `displayLogout`               | *true*  | Displays a button that logs you out of Craft CMS.                                                                       |
+| `displayUtilitiesLink`        | *true*  | Adds the Utilities link to Admin Bar.                                                                                   |
+| `displaySettingsLink`         | *true*  | Adds the Settings link to Admin Bar.                                                                                    |
+| `displayWidgetLabels`         | *false* | Displays labels next to Admin Bar Widget icons.                                                                         |
+| `widgetEnabledBlitz`          | *false* | Enables the Admin Bar Widget: Blitz                                                                                     |
+| `widgetEnabledCraftAuthors`   | *false* | Enables the Admin Bar Widget: Authors                                                                                     |
+| `widgetEnabledCraftNewEntry`  | *false* | Enables the Admin Bar Widget: New Entry                                                                                 |
+| `widgetEnabledCraftPublished` | *false* | Enables the Admin Bar Widget: Published                                                                                     |
+| `widgetEnabledCraftSearch`    | *false* | Enables the Admin Bar Widget: Search                                                                                     |
+| `widgetEnabledCraftSites`     | *false* | Enables the Admin Bar Widget: Sites                                                                                     |
+| `widgetEnabledGuide`          | *false* | Enables the Admin Bar Widget: Guide                                                                                     |
+| `widgetEnabledNavigation`     | *false* | Enables the Admin Bar Widget: Navigation                                                                                |
+| `widgetEnabledSeo`            | *false* | Enables the Admin Bar Widget: Seo                                                                                       |
+| `widgetEnabledSeomatic`       | *false* | Enables the Admin Bar Widget: Seomatic                                                                                  |
+| `widgetEnabledViewCount`      | *false* | Enables the Admin Bar Widget: View Count                                                                                |
+
 
 #### Additional Links
 You can add links to Admin Bar using the config file by passing properties into an array, called `additionalLinks`. There are examples commented out in the `config.php` file, and here are the properties you can use to create links.
 
-| Property | Values | Description |
-| --- | --- | --- |
-| `title` | *string* | Appears as the label for the link |
-| `url` | *string* | Depending on the `type` property, the `url` represents the location or action of the link |
-| `title` | `'url'`, `'cpUrl'`, `'action'` | If the `type` is `'url'`, the `url` value should be an absolute URL or a path relative to the site root. If the `type` is `'cpUrl'`, the `url` value should be a path relative to your site's CP root. If the `type` is `'action'`, set the value for `url` to the path used by the Controller Action |
-| `params` | *string* | Passes along url parameters, as [documented here](https://craftcms.com/docs/templating/functions#url). This only supports this string format: `'foo=1&bar=2'` |
-| `protocol` | *string* | Changes the url protocol, as [documented here](https://craftcms.com/docs/templating/functions#url) |
-| `mustShowScriptName` | *string* | Appends `index.php`, as [documented here](https://craftcms.com/docs/templating/functions#url) |
-| `permissions` | *array* | An array of required permissions that are needed for this link to be displayed. All permissions in this array will be required for the link to appear |
+| Property             | Values | Description                                                                                                                                                                                                                                                                                           |
+|----------------------| --- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `icon`               | *string* | Adds an icon before the label of the link. The value of `icon` is based on the icon set in the icon picker of Craft CMS.                                                                                                                                                                              |
+| `mustShowScriptName` | *string* | Appends `index.php`, as [documented here](https://craftcms.com/docs/templating/functions#url)                                                                                                                                                                                                         |
+| `params`             | *string* | Passes along url parameters, as [documented here](https://craftcms.com/docs/templating/functions#url). This only supports this string format: `'foo=1&bar=2'`                                                                                                                                         |
+| `permissions`        | *array* | An array of required permissions that are needed for this link to be displayed. All permissions in this array will be required for the link to appear                                                                                                                                                 |
+| `protocol`           | *string* | Changes the url protocol, as [documented here](https://craftcms.com/docs/templating/functions#url)                                                                                                                                                                                                    |
+| `title`              | *string* | Appears as the label for the link                                                                                                                                                                                                                                                                     |
+| `type`               | `'url'`, `'cpUrl'`, `'action'` | If the `type` is `'url'`, the `url` value should be an absolute URL or a path relative to the site root. If the `type` is `'cpUrl'`, the `url` value should be a path relative to your site's CP root. If the `type` is `'action'`, set the value for `url` to the path used by the Controller Action |
+| `url`                | *string* | Depending on the `type` property, the `url` represents the location or action of the link                                                                                                                                                                                                             |
 
 ## Optimizing CSS and JS Delivery for Performance
 
@@ -162,9 +171,9 @@ If you prefer to only load Admin Bar’s CSS and JS files when Admin Bar is rend
 
 ```twig
 {% if adminBarCanRender() %}
-    {% css adminBarCssFile({ contents: true }) %}
+    {% css adminBarCssFile() %}
     {% css adminBarOnPageCss() %}
-    {% js adminBarJsFile({ contents: true }) %}
+    {% js adminBarJsFile() %}
 {% endif %}
 ```
 
@@ -188,7 +197,7 @@ With Blitz installed, you can start by moving the `{{ adminBar() }}` method from
 }) }}
 ```
 
-Notice that `useCss` and `useJs` are both set to `false`. This is because registering CSS and JS files from dynamic includes won’t work on a statically-cached page. You can set any other `adminBar()` argument that you’d like here.
+Notice that `useCss` and `useJs` are both set to `false`? This is because registering CSS and JS files from dynamic includes won’t work on a statically-cached page. You can set any other `adminBar()` argument that you’d like here.
 
 Next, call the `dynamicInclude()` function in the place in your layout or page template where you would like Admin Bar to be embedded:
 
@@ -216,18 +225,19 @@ When enabled, a widget might use the current user’s permissions or other facto
 
 Because Craft CMS plugins can change over time, features and availability of Admin Bar Widgets may change in future updates. Here is the list of currently supported widgets:
 
-| Name       | Plugin                                                | Plugin Version | Widget Description                                                                                    |
-|------------|-------------------------------------------------------|----------------|-------------------------------------------------------------------------------------------------------|
-| Blitz      | [Blitz](https://plugins.craftcms.com/blitz)           | `>= 5.9.0`     | The Blitz cache status for the current page.                                                          |
-| Authors    | Craft CMS                                             | `>= 5.5.0`     | The authors for the current entry.                                                                    |
-| New Entry  | Craft CMS                                             | `>= 5.5.0`     | Links to create a new entry from sections that the author has permission to create.                   |
-| Published  | Craft CMS                                             | `>= 5.5.0`     | The Post Date for when the current page entry was published, along with other publishing information. |
-| Sites      | Craft CMS                                             | `>= 5.5.0`     | The name of the site for the current page and links to the same page on all propagated sites.         |
-| Guide      | [Guide](https://plugins.craftcms.com/guide)           | `>= 5.2.0`     | Links to guides assigned to the current page entry.                                                   |
-| Navigation | [Navigation](https://plugins.craftcms.com/navigation) | `>= 3.0.0`     | Breadcrumbs for the current page in all navigations.                                                  |
-| SEO        | [SEO](https://plugins.craftcms.com/seo)               | `>= 5.0.0`     | SEO preview for the current page.                                                                     |
-| SEOmatic   | [SEOmatic](https://plugins.craftcms.com/seomatic)     | `>= 5.1.0`     | SEO preview for the current page.                                                                     |
-| View Count | [View Count](https://plugins.craftcms.com/view-count) | `>= 2.0.0`     | The number of times the current page has been viewed.                                                 |
+| Name       | Plugin                                                | Plugin/Craft CMS Version | Widget Description                                                                                    |
+|------------|-------------------------------------------------------|--------------------------|-------------------------------------------------------------------------------------------------------|
+| Blitz      | [Blitz](https://plugins.craftcms.com/blitz)           | `>= 5.9.0`               | View the Blitz cache status for the current page and refresh the Blitz cache for the current page.    |
+| Authors    | Craft CMS                                             | `>= 5.5.0`               | The authors for the current entry.                                                                    |
+| New Entry  | Craft CMS                                             | `>= 5.5.0`               | Links to create a new entry from sections that the author has permission to create.                   |
+| Published  | Craft CMS                                             | `>= 5.5.0`               | The Post Date for when the current page entry was published, along with other publishing information. |
+| Guide      | [Guide](https://plugins.craftcms.com/guide)           | `>= 5.2.0`               | Links to guides assigned to the current page entry.                                                   |
+| Navigation | [Navigation](https://plugins.craftcms.com/navigation) | `>= 3.0.0`               | Breadcrumbs for the current page in all navigations.                                                  |
+| Search     | Craft CMS                                             | `>= 5.5.0`               | Use Craft CMS’s search to find, edit, and jump to other pages in your site.                           |
+| Sites      | Craft CMS                                             | `>= 5.5.0`               | The name of the site for the current page and links to the same page on all propagated sites.         |
+| SEO        | [SEO](https://plugins.craftcms.com/seo)               | `>= 5.0.0`               | SEO preview for the current page.                                                                     |
+| SEOmatic   | [SEOmatic](https://plugins.craftcms.com/seomatic)     | `>= 5.1.0`               | SEO preview for the current page.                                                                     |
+| View Count | [View Count](https://plugins.craftcms.com/view-count) | `>= 2.0.0`               | The number of times the current page has been viewed.                                                 |
 
 ### Configuring an Admin Bar Widget via Twig
 
@@ -246,15 +256,17 @@ Some Admin Bar Widgets can be configured for each page using the `widgets` param
 
 Here is a list of all available Admin Bar widget config options:
 
-| Widget | Param                | Default | Description                                             |
-|--------|----------------------|---------|---------------------------------------------------------|
-| SEO    | `widgets.seo.handle` | *'seo'* | Used to match the handle of the SEO field on the entry. |
+| Widget | Param                                | Default    | Description                                                                                                                                 |
+|--------|--------------------------------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| SEO    | `widgets.craft-published.dateFormat` | *'medium'* | Formats the date format using values valid for [Craft CMS’s `date` filter](https://craftcms.com/docs/5.x/reference/twig/filters.html#date). |
+| SEO    | `widgets.craft-published.timeFormat` | *'short'*  | Formats the time format using values valid for [Craft CMS’s `time` filter](https://craftcms.com/docs/5.x/reference/twig/filters.html#time). |
+| SEO    | `widgets.seo.handle`                 | *'seo'*    | Used to match the handle of the SEO field on the entry.                                                                                     |
 
 ### Custom Admin Bar Widgets
 
 The Admin Bar Plugin Settings page includes a code editor field that lets you use Twig to create your own Admin Bar Widgets.
 
-While any Twig/HTML can be rendered here, it’s highly recommended that you check out [the docs for Admin Bar Component](https://github.com/wbrowar/admin-bar-component) and use `<admin-bar-text>` and `<admin-bar-button>`. This will help in keeping styles consistent.
+While any Twig or HTML can be rendered here, it’s highly recommended that you check out [the docs for Admin Bar Component](https://github.com/wbrowar/admin-bar-component) and use `<admin-bar-text>` and `<admin-bar-button>`. This will help in keeping styles consistent and avoid clashing with your front-end styles.
 
 > [!WARNING]
 > The Twig code in this field will be rendered on your front-end. Be careful when using `{% js %}` or `{% css %}` tags, since they may affect elements on your front-end.
@@ -265,13 +277,13 @@ For example, this will add two widgets, a link and the title of the page as plai
 
 ```twig
 {% set customWidgets %}
-  <admin-bar-button button-href="/a-link">A Link</admin-bar-button>
+  <admin-bar-button button-href="{{ url('a-link') }}">A Link</admin-bar-button>
   <admin-bar-text>{{ entry.title }}</admin-bar-text>
 {% endset %}
 
 {{ adminBar({
   customWidgets,
-  entry: entry,
+  entry,
 }) }}
 ```
 

@@ -1,10 +1,10 @@
-<admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem" title="{{ widgets[pluginHandle].name }}">
+<admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem">
   {{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}
   {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
   <div slot="popover">
     {% if widgetConfig['guides']|length %}
       {% for guide in widgetConfig['guides'] %}
-        <admin-bar-button button-href="{{ cpUrl('guide/page/' ~ guide.slug) }}" title="{{ 'Go to the page for the guide: '|t('admin-bar') ~ guide.title }}">
+        <admin-bar-button button-href="{{ cpUrl('guide/page/' ~ guide.slug) }}">
           <span style="--admin-bar-icon-width: 1rem">{{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}</span>
           {{ guide.title }}
         </admin-bar-button>
@@ -13,7 +13,6 @@
     <admin-bar-button
         button-href="{{ cpUrl('guide') }}"
         {% if widgetConfig['guides']|length %}style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);"{% endif %}
-        title="{{ 'Go to the CMS Guide page'|t('admin-bar') }}"
     >
       <span style="--admin-bar-icon-width: 1.3rem">{{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}</span>
       {{ 'CMS Guide'|t('guide') }}

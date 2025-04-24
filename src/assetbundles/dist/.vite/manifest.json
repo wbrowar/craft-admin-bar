@@ -1,11 +1,11 @@
 {
   "admin-bar.ts": {
-    "file": "assets/admin-bar-uMnHPZnp.js",
+    "file": "assets/admin-bar-j94Wl9PZ.js",
     "name": "admin-bar",
     "src": "admin-bar.ts",
     "isEntry": true,
     "css": [
-      "assets/admin-bar-c_9w3Q5i.css"
+      "assets/admin-bar-CBUIe4yv.css"
     ]
   }
 }

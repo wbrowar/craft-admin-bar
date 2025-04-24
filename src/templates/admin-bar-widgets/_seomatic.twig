@@ -36,7 +36,7 @@
     title: metaTitleContainer.title.title ?? null,
   } %}
 
-  <admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem" title="{{ widgets[pluginHandle].name }}">
+  <admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem">
     {{ svg('@nystudio107/seomatic/icon-mask.svg')|attr({ class: 'icon' }) }}
     {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
     <div slot="popover">

@@ -27,6 +27,11 @@
     allowDelete: true,
     allowReorder: true,
     cols: {
+        icon: {
+            heading: 'Icon'|t('admin-bar'),
+            thin: true,
+            type: 'icon',
+        },
         linkLabel: {
             heading: 'Label'|t('admin-bar'),
             type: 'singleline',
@@ -37,7 +42,8 @@
         },
         adminOnly: {
             heading: 'Admin only?'|t('admin-bar'),
-            type: 'checkbox',
+            thin: true,
+            type: 'lightswitch',
         },
     },
     rows: settings.customLinks ?? [],
@@ -97,6 +103,10 @@
                 {
                     handle: 'blitz',
                     setting: 'widgetEnabledBlitz',
+                },
+                {
+                    handle: 'craft-search',
+                    setting: 'widgetEnabledCraftSearch',
                 },
                 {
                     handle: 'view-count',

@@ -4,7 +4,7 @@
 {% set widgetLabel = displayWidgetLabels ? widgets[pluginHandle].name : '' %}
 
 {% if authors|length > 1 %}
-  <admin-bar-button class="admin-bar-widget admin-bar-widget--craft-authors" title="{{ widgets[pluginHandle].name }}">
+  <admin-bar-button class="admin-bar-widget admin-bar-widget--craft-authors">
     <div style="display: flex; flex-flow: row nowrap;">
       {% for author in authors %}
         <span {% if not loop.first %}style="margin-inline-start: -8px;"{% endif %}>
@@ -41,7 +41,6 @@
   {% if widgetLabel ?? false %}
     <admin-bar-text
         style="display:block;"
-        title="{{ 'Author'|t('admin-bar') }}"
     >
       {{ self.authorImage(author) }}
       <admin-bar-text
@@ -53,7 +52,6 @@
   {% else %}
     <admin-bar-text
         style="display:block;"
-        title="{{ 'Author'|t('admin-bar') }}"
     >
       {{ self.authorImage(author) }}
       {{ author.name }}

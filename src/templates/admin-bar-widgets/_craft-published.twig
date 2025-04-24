@@ -2,11 +2,11 @@
   {% set popoverInfo = [] %}
 
   {% if entry.dateCreated %}
-    {% set popoverInfo = popoverInfo|merge([['Created at'|t('admin-bar'), entry.dateCreated|date('medium') ~ ' ' ~ entry.dateCreated|time('short')]]) %}
+    {% set popoverInfo = popoverInfo|merge([['Created at'|t('admin-bar'), entry.dateCreated|date(widgetConfig.dateFormat) ~ ' ' ~ entry.dateCreated|time(widgetConfig.timeFormat)]]) %}
   {% endif %}
 
   {% if entry.dateUpdated %}
-    {% set popoverInfo = popoverInfo|merge([['Updated at'|t('admin-bar'), entry.dateUpdated|date('medium') ~ ' ' ~ entry.dateUpdated|time('short')]]) %}
+    {% set popoverInfo = popoverInfo|merge([['Updated at'|t('admin-bar'), entry.dateUpdated|date(widgetConfig.dateFormat) ~ ' ' ~ entry.dateUpdated|time(widgetConfig.timeFormat)]]) %}
   {% endif %}
 
   {% if entry.id %}
@@ -17,9 +17,9 @@
     {% set popoverInfo = popoverInfo|merge([['Notes'|t('admin-bar'), entry.currentRevision.revisionNotes]]) %}
   {% endif %}
 
-  <admin-bar-button class="admin-bar-widget" title="{{ 'Post Date'|t('admin-bar') }}">
+  <admin-bar-button class="admin-bar-widget admin-bar-widget--published">
     {{ iconSvg('newspaper')|attr({ class: 'icon' }) }}
-    {% set postDateValue = entry.postDate|date('medium') ~ ' ' ~ entry.postDate|time('short') %}
+    {% set postDateValue = entry.postDate|date(widgetConfig.dateFormat) ~ ' ' ~ entry.postDate|time(widgetConfig.timeFormat) %}
     {% if displayWidgetLabels %}
       <admin-bar-text
           label-content="{{ postDateValue }}"
@@ -32,7 +32,7 @@
 
     {% if popoverInfo|length %}
       <div slot="popover">
-        <admin-bar-text dl-content="{{ popoverInfo|json_encode }}" title="{{ 'Publishing Information'|t('admin-bar') }}"></admin-bar-text>
+        <admin-bar-text dl-content="{{ popoverInfo|json_encode }}"></admin-bar-text>
       </div>
     {% endif %}
   </admin-bar-button>

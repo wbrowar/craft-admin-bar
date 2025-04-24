@@ -5,11 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.5.0 - 2025-04-24
+### Added
+- Added a new Search Admin Bar Widget.
+- Added button to Blitz Admin Bar Widget that refreshes the cache for the current page.
+- Added a controller and the abilty to perform POST requests from Admin Bar Widgets.
+- Added the ability to set an icon on Additional Links (via plugin settings) and `additionalLinks` (via an `admin-bar.php` config file).
+  - Icons use the icon set built into Craft CMS’s Control Panel.
+- Added widget config settings for Craft Published date and time formats.
+  - Set `widgets.craft-published.dateFormat` to set the date format.
+  - Set `widgets.craft-published.timeFormat` to set the time format.
+- Added placeholder content for widgets that can’t be correctly displayed on the Admin Bar plugin settings page.
+
+### Changed
+- Updated Admin Bar Component to version `1.4.2`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)
+- Bumped the minimum Craft CMS version to `5.7.0`.
+
+### Fixed
+- Fixed an issue where CSS in some widgets wrapped text for incorrectly.
+
+### Removed
+- Removed the `title` attribute from all Admin Bar Widgets.
+- Removed the home icon getting added when an Additional Link was added with the URL, `/`.
+  - If you would like to add this back in, use the `house` icon name 🏠
+
+
 ## 5.4.0 - 2025-04-15
 ### Added
-- Added SEO Admin Bar Widget
+- Added SEO Admin Bar Widget.
   - View SEO meta info for the current page, as managed by the [SEO](https://plugins.craftcms.com/seo) plugin.
-- Added Navigation Admin Bar Widget
+- Added Navigation Admin Bar Widget.
   - View the current page and where it appears for each navigation.
 - Added Twig method to see if Admin Bar will be rendered based on the conidtions Admin Bar checks for.
   - You can use `{% if adminBarCanRender() %}{# add assets or other markup #}{% endif %}` to add code that only renders when Admin bar does.

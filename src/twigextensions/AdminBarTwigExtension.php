@@ -68,7 +68,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
     {
         if (AdminBar::$plugin->bar->canRender() || ($config['force'] ?? false)) {
             if (!isset($config['entry']) && !isset($config['url'])) {
-                // get current page element
+                // Get the current page element
                 $element = Craft::$app->getUrlManager()->getMatchedElement();
 
                 if (!empty($element)) {
@@ -78,7 +78,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
                 }
             }
 
-            // show admin bar in template
+            // Show admin bar in template
             print AdminBar::$plugin->bar->render($config);
         }
 

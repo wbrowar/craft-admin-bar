@@ -125,18 +125,18 @@ class Settings extends Model
     public bool $widgetEnabledBlitz = false;
 
     /**
-     * Enables the Admin Bar Widget: Guide
-     *
-     * @var bool
-     */
-    public bool $widgetEnabledCraftNewEntry = false;
-
-    /**
      * Enables the Admin Bar Widget: Authors
      *
      * @var bool
      */
     public bool $widgetEnabledCraftAuthors = false;
+
+    /**
+     * Enables the Admin Bar Widget: New Entry
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledCraftNewEntry = false;
 
     /**
      * Enables the Admin Bar Widget: Published
@@ -146,14 +146,21 @@ class Settings extends Model
     public bool $widgetEnabledCraftPublished = false;
 
     /**
-     * Enables the Admin Bar Widget: New Entry
+     * Enables the Admin Bar Widget: Search
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledCraftSearch = false;
+
+    /**
+     * Enables the Admin Bar Widget: Sites
      *
      * @var bool
      */
     public bool $widgetEnabledCraftSites = false;
 
     /**
-     * Enables the Admin Bar Widget: Sites
+     * Enables the Admin Bar Widget: Guide
      *
      * @var bool
      */

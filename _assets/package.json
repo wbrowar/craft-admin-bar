@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "admin-bar-component": "^1.3.5",
+    "admin-bar-component": "^1.4.2",
     "prettier": "^3.5.3",
     "typescript": "^5.8.2",
     "vite": "^6.2.3"

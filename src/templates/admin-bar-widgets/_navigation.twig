@@ -37,14 +37,14 @@
       {% endfor %}
 
       {% set breadcrumbLinks = links|join(' ⇢ ') %}
-      {% set breadcrumb = '<span style="display: flex; align-items: center; gap: .5em; margin-block-end: .2em; font-weight: 700;">' ~ navigation.name ~ ' <a href="' ~ cpUrl('navigation/navs/build/' ~ navigation.id) ~ '" title="Edit ' ~ navigation.name ~ '" style="--admin-bar-icon-width: .9rem">' ~ svg('@appicons/gear.svg')|attr({ class: 'icon' }) ~ '</a></span><span style="display: flex; flex-flow: row wrap; gap: .2em;">' ~ breadcrumbLinks ~ '</span>' %}
+      {% set breadcrumb = '<span style="display: flex; align-items: center; gap: .5em; margin-block-end: .2em; font-weight: 700;">' ~ navigation.name ~ ' <a href="' ~ cpUrl('navigation/navs/build/' ~ navigation.id) ~ '" style="--admin-bar-icon-width: .9rem">' ~ svg('@appicons/gear.svg')|attr({ class: 'icon' }) ~ '</a></span><span style="display: flex; flex-flow: row wrap; gap: .2em;">' ~ breadcrumbLinks ~ '</span>' %}
 
       {% set popoverInfo = popoverInfo|merge([breadcrumb]) %}
     {% endif %}
   {% endfor %}
 
   {% if popoverInfo|length %}
-    <admin-bar-button class="admin-bar-widget admin-bar-widget--navigation" style="--admin-bar-icon-width: 1.3rem" title="{{ widgets[pluginHandle].name }}">
+    <admin-bar-button class="admin-bar-widget admin-bar-widget--navigation" style="--admin-bar-icon-width: 1.3rem">
       {{ svg('@verbb/navigation/icon-mask.svg')|attr({ class: 'icon' }) }}
       {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
 
@@ -53,7 +53,7 @@
           <admin-bar-text style="--admin-bar-block-padding: 0; --admin-bar-inline-padding: 0; --admin-bar-height: auto;">
             <ul style="display: grid; grid-template-columns: auto; gap: 1rem; margin: 0; padding: 0;">
               {% for row in popoverInfo %}
-                <li style="list-style: none;" title="{{ 'Breadcrumb for the current page'|t('admin-bar') }}">{{ row|raw }}</li>
+                <li style="list-style: none;">{{ row|raw }}</li>
               {% endfor %}
             </ul>
           </admin-bar-text>

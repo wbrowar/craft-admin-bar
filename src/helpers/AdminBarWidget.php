@@ -43,6 +43,7 @@ class AdminBarWidget
     private const WIDGET_CRAFT_AUTHORS = 'craft-authors';
     private const WIDGET_CRAFT_NEW_ENTRY = 'craft-new-entry';
     private const WIDGET_CRAFT_PUBLISHED = 'craft-published';
+    private const WIDGET_CRAFT_SEARCH = 'craft-search';
     private const WIDGET_CRAFT_SITES = 'craft-sites';
     private const WIDGET_GUIDE = 'guide';
     private const WIDGET_NAVIGATION = 'navigation';
@@ -63,6 +64,7 @@ class AdminBarWidget
             (self::WIDGET_CRAFT_AUTHORS) => AdminBar::$pro ? $settings->widgetEnabledCraftAuthors : false,
             (self::WIDGET_CRAFT_NEW_ENTRY) => AdminBar::$pro ? $settings->widgetEnabledCraftNewEntry : false,
             (self::WIDGET_CRAFT_PUBLISHED) => AdminBar::$pro ? $settings->widgetEnabledCraftPublished : false,
+            (self::WIDGET_CRAFT_SEARCH) => AdminBar::$pro ? $settings->widgetEnabledCraftSearch : false,
             (self::WIDGET_CRAFT_SITES) => AdminBar::$pro ? $settings->widgetEnabledCraftSites : false,
             (self::WIDGET_GUIDE) => AdminBar::$pro ? $settings->widgetEnabledGuide : false,
             (self::WIDGET_NAVIGATION) => AdminBar::$pro ? $settings->widgetEnabledNavigation : false,
@@ -86,7 +88,7 @@ class AdminBarWidget
         $widgets = [
             (self::WIDGET_BLITZ) => [
                 'name' => 'Blitz',
-                'widgetDescription' => Craft::t('admin-bar', 'The Blitz cache status for the current page.'),
+                'widgetDescription' => Craft::t('admin-bar', 'View the Blitz cache status for the current page and refresh the Blitz cache for the current page.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_AUTHORS) => [
@@ -104,6 +106,11 @@ class AdminBarWidget
                 'widgetDescription' => Craft::t('admin-bar', 'The Post Date for when the current page entry was published, along with other publishing information.'),
                 'version' => null
             ],
+            (self::WIDGET_CRAFT_SEARCH) => [
+                'name' => 'Search',
+                'widgetDescription' => Craft::t('admin-bar', 'Use Craft CMS’s search to find, edit, and jump to other pages in your site.'),
+                'version' => null
+            ],
             (self::WIDGET_CRAFT_SITES) => [
                 'name' => 'Sites',
                 'widgetDescription' => Craft::t('admin-bar', 'The name of the site for the current page and links to the same page on all propagated sites.'),
@@ -111,7 +118,7 @@ class AdminBarWidget
             ],
             (self::WIDGET_GUIDE) => [
                 'name' => 'Guide',
-                'widgetDescription' => Craft::t('admin-bar', 'Links to guides assigned to the current page entry'),
+                'widgetDescription' => Craft::t('admin-bar', 'Links to guides assigned to the current page entry.'),
                 'version' => null
             ],
             (self::WIDGET_NAVIGATION) => [
@@ -163,6 +170,12 @@ class AdminBarWidget
         }
 
         $widgetHandle = self::WIDGET_CRAFT_PUBLISHED;
+        if (in_array($widgetHandle, $enabledWidgets)) {
+            $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
+            $widgets[$widgetHandle]['version'] = '5.5.0';
+        }
+
+        $widgetHandle = self::WIDGET_CRAFT_SEARCH;
         if (in_array($widgetHandle, $enabledWidgets)) {
             $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
             $widgets[$widgetHandle]['version'] = '5.5.0';
@@ -245,12 +258,15 @@ class AdminBarWidget
     {
         $config = [];
 
+        $onSettingsPreivew = implode('/', Craft::$app->getRequest()->getSegments()) == 'settings/plugins/admin-bar';
+
         $entrySection = !empty($entry) ? Craft::$app->getEntries()->getSectionById($entry['sectionId']) : null;
 
         // Blitz Widget
         $config[self::WIDGET_BLITZ] = [
             'cached' => false,
             'cachedDate' => null,
+            'siteUri' => [],
         ];
         if (
             !empty($entry)
@@ -273,6 +289,7 @@ class AdminBarWidget
             if (!empty($cacheRecord)) {
                 $config[self::WIDGET_BLITZ]['cached'] = true;
                 $config[self::WIDGET_BLITZ]['cachedDate'] = DateTimeHelper::toDateTime($cacheRecord->dateCached);
+                $config[self::WIDGET_BLITZ]['siteUri'] = $siteUri->toArray();
             }
         }
 
@@ -317,6 +334,21 @@ class AdminBarWidget
 
             $config[self::WIDGET_CRAFT_NEW_ENTRY]['sections'] = $sections;
         }
+
+        // Craft Published
+        $config[self::WIDGET_CRAFT_PUBLISHED] = [
+            'dateFormat' => 'medium',
+            'timeFormat' => 'short',
+        ];
+        if ($settings->widgetEnabledCraftPublished) {
+            $config[self::WIDGET_CRAFT_PUBLISHED]['dateFormat'] = $userWidgetsConfig[self::WIDGET_CRAFT_PUBLISHED]['dateFormat'] ?? $config[self::WIDGET_CRAFT_PUBLISHED]['dateFormat'];
+            $config[self::WIDGET_CRAFT_PUBLISHED]['timeFormat'] = $userWidgetsConfig[self::WIDGET_CRAFT_PUBLISHED]['timeFormat'] ?? $config[self::WIDGET_CRAFT_PUBLISHED]['timeFormat'];
+        }
+
+        // Craft Search
+        $config[self::WIDGET_CRAFT_SEARCH] = [
+            'onSettingsPreivew' => $onSettingsPreivew,
+        ];
 
         // Craft Sites
         $config[self::WIDGET_CRAFT_SITES] = [
@@ -386,15 +418,95 @@ class AdminBarWidget
         // SEO
         $config[self::WIDGET_SEO] = [
             'handle' => 'seo',
+            'onSettingsPreivew' => $onSettingsPreivew,
         ];
         if (
             !empty($entry)
             && $settings->widgetEnabledSeo
             && ($widgetPlugins[self::WIDGET_SEO]['version'] ?? false)
         ) {
-            $config[self::WIDGET_SEO]['handle'] = $userWidgetsConfig['seo']['handle'] ?? null;
+            $config[self::WIDGET_SEO]['handle'] = $userWidgetsConfig[self::WIDGET_SEO]['handle'] ?? $config[self::WIDGET_SEO]['handle'];
         }
 
         return $config;
+    }
+
+    /**
+     * Performs an action from an Admin Bar widget.
+     *
+     * @param string $handle The handle for the Admin Bar Widget’s plugin.
+     * @param string $action The handle for the action being fired.
+     * @param array $params Parameters that can be passed into the action to change its behavior.
+     * @return array
+     */
+    public static function performWidgetAction(string $handle, string $action, array $params = []): array
+    {
+        $results = [
+            'message' => Craft::t('admin-bar', 'Controller action could not be performed.'),
+            'status' => 'error',
+        ];
+
+        if (AdminBar::$pro) {
+            if ($handle == self::WIDGET_BLITZ) {
+                if ($action === 'refresh-cache') {
+                    $siteUri = new SiteUriModel([
+                        'siteId' => $params['siteId'],
+                        'uri' => $params['uri'],
+                    ]);
+
+                    Blitz::$plugin->refreshCache->refreshSiteUris([$siteUri], [], true);
+
+                    $results = [
+                        'message' => Craft::t('admin-bar', 'Blitz cache refreshed.'),
+                        'refreshPage' => true,
+                        'status' => 'success',
+                    ];
+                }
+            } elseif ($handle == self::WIDGET_CRAFT_SEARCH) {
+                if ($action === 'search') {
+                    $data = [
+                        'searchResults' => [],
+                        'searchResultsStatus' => 'NO_RESULTS',
+                    ];
+                    
+                    if ($params['query'] ?? false) {
+                        $searchResponse = Entry::find()
+                            ->section('*')
+                            ->search($params['query'])
+                            ->orderBy('score')
+                            ->limit(25)
+                            ->all();
+
+                        if (!empty($searchResponse)) {
+                            $resultsFormatted = [];
+                            $editableSectionIds = Craft::$app->getEntries()->getEditableSectionIds();
+
+//                            (entry.section.id in craft.app.entries.editableSectionIds)
+
+                            foreach ($searchResponse as $entry) {
+                                $addEditUrl = in_array($entry->section->id, $editableSectionIds);
+
+                                $resultsFormatted[] = [
+                                    'cpEditUrl' => $addEditUrl ? $entry->getCpEditUrl() : '',
+                                    'title' => $entry->title,
+                                    'url' => $entry->url ?? '',
+                                ];
+                            }
+
+                            $data['searchResults'] = $resultsFormatted;
+                            $data['searchResultsStatus'] = 'OK';
+                        }
+                    }
+                    
+                    $results = [
+                        'data' => $data,
+                        'message' => Craft::t('admin-bar', 'Blitz cache refreshed.'),
+                        'status' => 'success',
+                    ];
+                }
+            }
+        }
+
+        return $results;
     }
 }

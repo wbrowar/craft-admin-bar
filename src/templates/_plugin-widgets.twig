@@ -50,6 +50,7 @@
 {% if 'craft-published' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_craft-published' with {
     pluginHandle: 'craft-published',
+    widgetConfig: widgetsConfig['craft-published'],
   } %}
 {% endif %}
 
@@ -57,6 +58,13 @@
   {% include 'admin-bar/admin-bar-widgets/_blitz' with {
     pluginHandle: 'blitz',
     widgetConfig: widgetsConfig['blitz'],
+  } %}
+{% endif %}
+
+{% if 'craft-search' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-search' with {
+    pluginHandle: 'craft-search',
+    widgetConfig: widgetsConfig['craft-search'],
   } %}
 {% endif %}
 
