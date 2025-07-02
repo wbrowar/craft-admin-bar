@@ -7,49 +7,49 @@
 {% set classes = [] %}
 
 {% if fixed ?? false %}
-    {% set classes = classes|merge(['fixed']) %}
+  {% set classes = classes|merge(['fixed']) %}
 {% elseif sticky ?? false %}
-    {% set classes = classes|merge(['sticky']) %}
+  {% set classes = classes|merge(['sticky']) %}
 {% endif %}
 
 {% if position ?? false and position == 'bottom' %}
-    {% set classes = classes|merge(['bottom']) %}
+  {% set classes = classes|merge(['bottom']) %}
 {% endif %}
 
 {% if rtl ?? false %}
-    {% set classes = classes|merge(['rtl']) %}
+  {% set classes = classes|merge(['rtl']) %}
 {% endif %}
 
 {% set adminBarAttributes = {
-    class: classes,
-    'greeting-text': 'greeting-text'|t('admin-bar', params = { name: currentUser.friendlyName }),
-    id: id ?? 'admin-bar',
-    'logout-href': url(logoutUrl),
-    'logout-label': 'logout-label'|t('admin-bar'),
-    'show-environment': devMode,
-    'show-greeting': displayGreeting,
-    'show-logout': displayLogout,
+  class: classes,
+  'greeting-text': 'greeting-text'|t('admin-bar', params = { name: currentUser.friendlyName }),
+  id: id ?? 'admin-bar',
+  'logout-href': url(logoutUrl),
+  'logout-label': 'logout-label'|t('admin-bar'),
+  'show-environment': devMode,
+  'show-greeting': displayGreeting,
+  'show-logout': displayLogout,
 } %}
 
 {% if currentUser and (currentUser.photo ?? false) %}
-    {% set adminBarAttributes = adminBarAttributes|merge({
-        'avatar-alt': 'avatar-alt'|t('admin-bar', params = { name: currentUser.friendlyName }),
-        'avatar-src': currentUser.photo.getUrl({
-            mode: 'crop',
-            width: 50,
-            height: 50,
-        }),
-    }) %}
+  {% set adminBarAttributes = adminBarAttributes|merge({
+    'avatar-alt': 'avatar-alt'|t('admin-bar', params = { name: currentUser.friendlyName }),
+    'avatar-src': currentUser.photo.getUrl({
+      mode: 'crop',
+      width: 50,
+      height: 50,
+    }),
+  }) %}
 {% endif %}
 
 {% set textElements = textElements ?? [] %}
 
 {% if devMode %}
-    {% set textElements = textElements|merge([{
-        'label-content': craft.app.config.env|upper,
-        style: { '--admin-bar-text-label-color-bg': 'var(--admin-bar-environment-bg-color)' },
-        title: 'Craft CMS is running in Dev Mode.'|t('admin-bar'),
-    }]) %}
+  {% set textElements = textElements|merge([{
+    'label-content': craft.app.config.env|upper,
+    style: { '--admin-bar-text-label-color-bg': 'var(--admin-bar-environment-bg-color)' },
+    title: 'Craft CMS is running in Dev Mode.'|t('admin-bar'),
+  }]) %}
 {% endif %}
 
 <craft-admin-bar
@@ -57,210 +57,216 @@
     data-api-status="ready"
     data-session-action-url="{{ actionUrl('users/session-info') }}"
 >
-    <admin-bar {{ attr(adminBarAttributes) }}>
-        {% if displayGreeting %}
-            <nav slot="greeting-popover">
-                <admin-bar-text multi-line {% if currentUser.admin %}label-content="ADMIN"{% endif %}>
-                    <div style="margin-inline-end: 1em;">
-                        <strong style="display: block">{{ currentUser.fullName }}</strong>
-                        <em style="display: block">{{ currentUser.username }}</em>
-                    </div>
-                </admin-bar-text>
+  <admin-bar {{ attr(adminBarAttributes) }}>
+    {% if displayGreeting %}
+      <nav slot="greeting-popover">
+        <admin-bar-text multi-line {% if currentUser.admin %}label-content="ADMIN"{% endif %}>
+          <div style="margin-inline-end: 1em;">
+            <strong style="display: block">{{ currentUser.fullName }}</strong>
+            <em style="display: block">{{ currentUser.username }}</em>
+          </div>
+        </admin-bar-text>
 
-                <admin-bar-button button-href="{{ cpUrl('myaccount') }}" style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);">
-                    {{ 'Profile'|t('admin-bar') }}
-                    <span slot="before-label">{{ self.iconUser }}</span>
-                </admin-bar-button>
+        <admin-bar-button button-href="{{ cpUrl('myaccount') }}" style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);">
+          {{ 'Profile'|t('admin-bar') }}
+          <span slot="before-label">{{ self.iconUser }}</span>
+        </admin-bar-button>
 
-                {% if currentUser.can('assignUserPermissions') %}
-                    <admin-bar-button button-href="{{ cpUrl('myaccount/permissions') }}">
-                        {{ 'Permissions'|t('admin-bar') }}
-                        <span slot="before-label">{{ self.iconUserPermissions }}</span>
-                    </admin-bar-button>
-                {% endif %}
-
-                <admin-bar-button button-href="{{ cpUrl('myaccount/preferences') }}">
-                    {{ 'Preferences'|t('admin-bar') }}
-                    <span slot="before-label">{{ self.iconUserPreferences }}</span>
-                </admin-bar-button>
-
-                <admin-bar-button button-href="{{ cpUrl('myaccount/addresses') }}">
-                    {{ 'Addresses'|t('admin-bar') }}
-                    <span slot="before-label">{{ self.iconUserAddresses }}</span>
-                </admin-bar-button>
-            </nav>
+        {% if currentUser.can('assignUserPermissions') %}
+          <admin-bar-button button-href="{{ cpUrl('myaccount/permissions') }}">
+            {{ 'Permissions'|t('admin-bar') }}
+            <span slot="before-label">{{ self.iconUserPermissions }}</span>
+          </admin-bar-button>
         {% endif %}
 
-        {% if displayDashboardLink ?? true %}
-            <admin-bar-button button-href="{{ cpUrl('dashboard') }}" label-text="{{ 'Dashboard'|t }}"><span slot="before-label">{{ self.iconDashboard }}</span></admin-bar-button>
-        {% endif %}
+        <admin-bar-button button-href="{{ cpUrl('myaccount/preferences') }}">
+          {{ 'Preferences'|t('admin-bar') }}
+          <span slot="before-label">{{ self.iconUserPreferences }}</span>
+        </admin-bar-button>
 
-        {% if editLinkUrl ?? false %}
-            <admin-bar-button button-href="{{ cpUrl(editLinkUrl) }}" label-text="{{ 'Edit {name}'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
+        <admin-bar-button button-href="{{ cpUrl('myaccount/addresses') }}">
+          {{ 'Addresses'|t('admin-bar') }}
+          <span slot="before-label">{{ self.iconUserAddresses }}</span>
+        </admin-bar-button>
+      </nav>
+    {% endif %}
+
+    {% if displayDashboardLink ?? true %}
+      <admin-bar-button button-href="{{ cpUrl('dashboard') }}" label-text="{{ 'Dashboard'|t }}"><span slot="before-label">{{ self.iconDashboard }}</span></admin-bar-button>
+    {% endif %}
+
+    {% if editLinkUrl ?? false %}
+    <admin-bar-button button-href="{{ cpUrl(editLinkUrl) }}" label-text="{{ 'Edit {name}'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
+    {% else %}
+      {% if entry ?? false and ((userCanEdit ?? false) or (entry.section.id in craft.app.entries.editableSectionIds)) %}
+        {% set sectionName = displayDefaultEditSection ? ' ' ~ entry.section : ''  %}
+        {% set entryEditUrl = entry.cpEditUrl %}
+
+        {% if (returnUrl is defined and returnUrl != null) or returnUrl is not defined %}
+          {% set entryEditUrlFormatted = cpUrl(entryEditUrl, { returnUrl: returnUrl|default('{url}')|hash }) %}
         {% else %}
-          {% if entry ?? false and ((userCanEdit ?? false) or (entry.section.id in craft.app.entries.editableSectionIds)) %}
-            {% set sectionName = displayDefaultEditSection ? ' ' ~ entry.section : ''  %}
-            {% set entryEditUrl = entry.cpEditUrl %}
+          {% set entryEditUrlFormatted = cpUrl(entryEditUrl) %}
+        {% endif %}
 
-            <admin-bar-button button-href="{{ cpUrl(entryEditUrl) }}" label-text="{{ 'Edit {name}'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
+        <admin-bar-button button-href="{{ entryEditUrlFormatted }}" label-text="{{ 'Edit {name}'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
+      {% endif %}
+    {% endif %}
+
+    {% if not 'guide' in widgets|keys and displayGuideLink and plugin('guide') and (currentUser ? currentUser.can('accessPlugin-guide') : true) %}
+      <admin-bar-button button-href="{{ cpUrl('guide') }}" label-text="{{ 'CMS Guide'|t('admin-bar') }}"><span slot="before-label">{{ self.iconGuide }}</span></admin-bar-button>
+    {% endif %}
+
+    {% if customLinks ?? false %}
+      {% for link in customLinks %}
+        {% if link.linkUrl ?? false %}
+          {% if link.adminOnly != true %}
+            <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
+          {% elseif link.adminOnly and currentUser and currentUser.admin %}
+            <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
           {% endif %}
         {% endif %}
+      {% endfor %}
+    {% endif %}
 
-        {% if not 'guide' in widgets|keys and displayGuideLink and plugin('guide') and (currentUser ? currentUser.can('accessPlugin-guide') : true) %}
-            <admin-bar-button button-href="{{ cpUrl('guide') }}" label-text="{{ 'CMS Guide'|t('admin-bar') }}"><span slot="before-label">{{ self.iconGuide }}</span></admin-bar-button>
-        {% endif %}
+    {% for link in additionalLinks %}
+      {{ self.addConfigLink(link) }}
+    {% endfor %}
 
-        {% if customLinks ?? false %}
-            {% for link in customLinks %}
-                {% if link.linkUrl ?? false %}
-                    {% if link.adminOnly != true %}
-                        <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
-                    {% elseif link.adminOnly and currentUser and currentUser.admin %}
-                        <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
+    {% if not proEdition %}
+      <span style="flex-grow: 1;"></span>
+    {% endif %}
 
-        {% for link in additionalLinks %}
-            {{ self.addConfigLink(link) }}
-        {% endfor %}
+    {% if currentUser and displayUtilitiesLink ?? true %}
+      <admin-bar-button button-href="{{ cpUrl('utilities') }}" label-text="{{ 'Utilities'|t('admin-bar') }}">{% apply spaceless %}
+          {% if utilitiesNotificationCount > 0 %}
+            <span slot="before-label"><admin-bar-text aria-hidden="true" label-content="{{ utilitiesNotificationCount }}" style="--admin-bar-text-padding: 0"></admin-bar-text></span>
+          {% else %}
+            <span slot="before-label">{{ self.iconUtilities }}</span>
+          {% endif %}
+        {% endapply %}</admin-bar-button>
+    {% endif %}
 
-        {% if not proEdition %}
-            <span style="flex-grow: 1;"></span>
-        {% endif %}
+    {% if currentUser and currentUser.admin and displaySettingsLink ?? true %}
+      <admin-bar-button button-href="{{ cpUrl('settings') }}" label-text="{{ 'Settings'|t('admin-bar') }}"><span slot="before-label">{{ self.iconSettings }}</span></admin-bar-button>
+    {% endif %}
 
-        {% if currentUser and displayUtilitiesLink ?? true %}
-            <admin-bar-button button-href="{{ cpUrl('utilities') }}" label-text="{{ 'Utilities'|t('admin-bar') }}">{% apply spaceless %}
-                {% if utilitiesNotificationCount > 0 %}
-                    <span slot="before-label"><admin-bar-text aria-hidden="true" label-content="{{ utilitiesNotificationCount }}" style="--admin-bar-text-padding: 0"></admin-bar-text></span>
-                {% else %}
-                    <span slot="before-label">{{ self.iconUtilities }}</span>
-                {% endif %}
-            {% endapply %}</admin-bar-button>
-        {% endif %}
+    {% if proEdition %}
+      <span style="flex-grow: 1;"></span>
 
-        {% if currentUser and currentUser.admin and displaySettingsLink ?? true %}
-            <admin-bar-button button-href="{{ cpUrl('settings') }}" label-text="{{ 'Settings'|t('admin-bar') }}"><span slot="before-label">{{ self.iconSettings }}</span></admin-bar-button>
-        {% endif %}
+      {% if widgets|length %}
+        {% include 'admin-bar/_plugin-widgets.twig' with {
+          displayWidgetLabels,
+          enabledWidgets,
+          entry,
+          widgets,
+          widgetsConfig,
+        } only %}
+      {% endif %}
 
-        {% if proEdition %}
-            <span style="flex-grow: 1;"></span>
+      {% if customWidgets ?? false %}
+        {{ include(template_from_string(customWidgets)) }}
+      {% endif %}
 
-            {% if widgets|length %}
-                {% include 'admin-bar/_plugin-widgets.twig' with {
-                    displayWidgetLabels,
-                    enabledWidgets,
-                    entry,
-                    widgets,
-                    widgetsConfig,
-                } only %}
-            {% endif %}
+      {% if globalCustomWidgets ?? false %}
+        {{ include(template_from_string(globalCustomWidgets)) }}
+      {% endif %}
+    {% endif %}
 
-            {% if customWidgets ?? false %}
-                {{ include(template_from_string(customWidgets)) }}
-            {% endif %}
-
-            {% if globalCustomWidgets ?? false %}
-                {{ include(template_from_string(globalCustomWidgets)) }}
-            {% endif %}
-        {% endif %}
-
-        {% if textElements|length %}
-            {% for textAttrs in textElements %}
-                <admin-bar-text {{ attr(textAttrs) }}></admin-bar-text>
-            {% endfor %}
-        {% endif %}
-    </admin-bar>
+    {% if textElements|length %}
+      {% for textAttrs in textElements %}
+        <admin-bar-text {{ attr(textAttrs) }}></admin-bar-text>
+      {% endfor %}
+    {% endif %}
+  </admin-bar>
 </craft-admin-bar>
 
 {% if useCss %}
-    {% css adminBarOnPageCss() %}
+  {% css adminBarOnPageCss() %}
 {% endif %}
 
 {% macro addConfigLink(link) %}
-    {% if link.linkParams ?? false %}
-        {% set params = link.linkParams %}
-    {% else %}
-        {% set params = '' %}
-    {% endif %}
+  {% if link.linkParams ?? false %}
+    {% set params = link.linkParams %}
+  {% else %}
+    {% set params = '' %}
+  {% endif %}
 
-    {% set params = link.params ?? '' %}
-    {% set protocol = link.protocol ?? '' %}
-    {% set mustShowScriptName = link.mustShowScriptName ?? '' %}
+  {% set params = link.params ?? '' %}
+  {% set protocol = link.protocol ?? '' %}
+  {% set mustShowScriptName = link.mustShowScriptName ?? '' %}
 
-    {% set userHasPermission = true %}
-    {% if link.admin ?? false %}
-        {% if currentUser and not currentUser.admin %}
-            {% set userHasPermission = false %}
-        {% endif %}
-    {% elseif link.permissions ?? false %}
-        {% for permission in link.permissions %}
-            {% if currentUser and not currentUser.can(permission) %}
-                {% set userHasPermission = false %}
-            {% endif %}
-        {% endfor %}
+  {% set userHasPermission = true %}
+  {% if link.admin ?? false %}
+    {% if currentUser and not currentUser.admin %}
+      {% set userHasPermission = false %}
     {% endif %}
+  {% elseif link.permissions ?? false %}
+    {% for permission in link.permissions %}
+      {% if currentUser and not currentUser.can(permission) %}
+        {% set userHasPermission = false %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 
-    {% if link.type == 'url' and userHasPermission %}
-        <admin-bar-button button-href="{{ url(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
-    {% elseif link.type == 'cpUrl' and userHasPermission %}
-        <admin-bar-button button-href="{{ cpUrl(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
-    {% elseif link.type == 'action' and userHasPermission %}
-        {% set actionParams = params|length ? params ~ '&returnUrl=' ~ craft.request.url : 'returnUrl=' ~ craft.request.url %}
-        <admin-bar-button button-href="{{ actionUrl(link.url, actionParams) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
-    {% endif %}
+  {% if link.type == 'url' and userHasPermission %}
+    <admin-bar-button button-href="{{ url(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
+  {% elseif link.type == 'cpUrl' and userHasPermission %}
+    <admin-bar-button button-href="{{ cpUrl(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
+  {% elseif link.type == 'action' and userHasPermission %}
+    {% set actionParams = params|length ? params ~ '&returnUrl=' ~ craft.request.url : 'returnUrl=' ~ craft.request.url %}
+    <admin-bar-button button-href="{{ actionUrl(link.url, actionParams) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
+  {% endif %}
 {% endmacro %}
 
 {% macro customLinkIcon(icon) %}{% apply spaceless %}
-    {% set iconSvg = svg('@appicons/' ~ icon ~ '.svg')|attr({ class: 'icon' }) %}
+  {% set iconSvg = svg('@appicons/' ~ icon ~ '.svg')|attr({ class: 'icon' }) %}
 
-    {% if iconSvg ?? false %}
-        <span slot="before-label">{{ iconSvg|raw }}</span>
-    {% endif %}
+  {% if iconSvg ?? false %}
+    <span slot="before-label">{{ iconSvg|raw }}</span>
+  {% endif %}
 {% endapply %}{% endmacro %}
 
 {# dashboard #}
 {% macro iconDashboard() %}{% apply spaceless %}
-    {{ svg('@appicons/gauge.svg')|attr({ class: 'icon' }) }}
+  {{ svg('@appicons/gauge.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
 {# edit #}
 {% macro iconEdit() %}{% apply spaceless %}
-    {{ svg('@appicons/pencil.svg')|attr({ class: 'icon' }) }}
+  {{ svg('@appicons/pencil.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
 {# guide #}
 {% macro iconGuide() %}{% apply spaceless %}
-    {{ svg('@wbrowar/guide/assetbundles/static/icon-mask.svg')|attr({ class: 'icon' }) }}
+  {{ svg('@wbrowar/guide/assetbundles/static/icon-mask.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
 {# settings #}
 {% macro iconSettings() %}{% apply spaceless %}
-    {{ svg('@appicons/gear.svg')|attr({ class: 'icon' }) }}
+  {{ svg('@appicons/gear.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
 {# user #}
 {% macro iconUser() %}{% apply spaceless %}
-    {{ svg('@appicons/address-card.svg')|attr({ class: 'icon' }) }}
+  {{ svg('@appicons/address-card.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
 {# user #}
 {% macro iconUserPermissions() %}{% apply spaceless %}
-    {{ svg('@appicons/key-skeleton.svg')|attr({ class: 'icon' }) }}
+  {{ svg('@appicons/key-skeleton.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
 {# user #}
 {% macro iconUserPreferences() %}{% apply spaceless %}
-    {{ svg('@appicons/swatchbook.svg')|attr({ class: 'icon' }) }}
+  {{ svg('@appicons/swatchbook.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
 {# user #}
 {% macro iconUserAddresses() %}{% apply spaceless %}
-    {{ svg('@appicons/map-location.svg')|attr({ class: 'icon' }) }}
+  {{ svg('@appicons/map-location.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
 {# utilities #}
 {% macro iconUtilities() %}{% apply spaceless %}
-    {{ svg('@appicons/wrench.svg')|attr({ class: 'icon' }) }}
+  {{ svg('@appicons/wrench.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}

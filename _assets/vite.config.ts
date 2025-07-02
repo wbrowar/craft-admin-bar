@@ -8,6 +8,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         'admin-bar': './admin-bar.ts',
+        'admin-bar-builder': './admin-bar-builder.ts',
       },
     },
   },

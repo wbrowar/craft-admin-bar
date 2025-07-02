@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.6.0 - 2025-07-01
+### Added
+- When on an entry page and clicking on the Edit button, a `returnUrl` parameter is passed to the edit page, returning you back to the front-end URL upon save. [#47](https://github.com/wbrowar/craft-admin-bar/issues/47)
+- Added an optional `returnUrl` parameter to the `{{ adminBar() }}` Twig method, allowing you to set the URL that you return to upon saving an entry.
+  - Setting the `returnUrl` parameter to `null` returns you to the default return URL for that entry type.
+
+### Changed
+- Updated Admin Bar Component to version `1.5.4`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)
+- Bumped the minimum Craft CMS version to `5.8.0`.
+
+
 ## 5.5.2 - 2025-04-24
 ### Changed
 - Added CSS Custom Properties to style the API status line and search input (and future input fields).

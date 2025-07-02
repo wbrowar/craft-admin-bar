@@ -13,7 +13,7 @@ If you are creating a headless site, or a site that is statically cached, you ma
 > :warning: Admin Bar’s composer package name has changed from `wbrowar/adminbar` to `wbrowar/craft-admin-bar`. Update your composer.json to point to [the new package on Packagist.](https://packagist.org/packages/wbrowar/craft-admin-bar)
 
 ## Requirements
-* Craft 5.5.0
+* Craft 5.8.0
 
 ## Editions
 
@@ -63,6 +63,7 @@ Here is a list of available arguments:
 | `force`         | *false*       | Bypasses the default check that `{{ adminBar() }}` does to see if Admin Bar can be rendered. This is intended to be used on the Admin Bar plugin settings page, or for edge cases.                                                |
 | `id`            | *'admin-bar'* | Set the `id` attribute on the Admin Bar wrapper element.                                                                                                                                                                          |
 | `position`      | *'top'*       | When set to `'bottom'` and used with `fixed: true`, Admin Bar will be fixed to the bottom of the page. Accepts: `'bottom'`, `'top'`                                                                                               |
+| `returnUrl`     | *'{url}'*     | Sets the URL that you are taken to after saving an entry. Set this to `null` to redirect to the default `returnUrl` for the entry type. Variables in `{}` are replaced based on the entry values after save.                      |
 | `rtl`           | *false*       | Changes the reading direction from `ltr` to `rtl` in situations where you need to manually set it. Admin Bar Component will automatcally switch to RTL if your page is set to RTL or if you have the CSS set to `direction: rtl`. |
 | `sticky`        | *true*        | Uses CSS to `position: sticky;` Admin Bar to the top of the page.                                                                                                                                                                 |
 | `textElements`  | *[]*          | Add text elements to Admin Bar using an array of objects.                                                                                                                                                                         |
