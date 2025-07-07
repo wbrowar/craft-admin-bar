@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.6.1 - 2025-07-04
+### Changed
+- Updated Admin Bar Component to version `1.6.1`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)
+  - _NOTE: this includes some changes to CSS variables and their defaults. If you have overridden CSS variables for Admin Bar, take a look at the changelog to see what variables got affected._ 
+
+### Fixed
+- Set the style for links in the Seomatic and SEO widgets to match the rest of the text in the widget. This avoids links being hard to read because they picked up the text color from the page.
+
+
 ## 5.6.0 - 2025-07-01
 ### Added
 - When on an entry page and clicking on the Edit button, a `returnUrl` parameter is passed to the edit page, returning you back to the front-end URL upon save. [#47](https://github.com/wbrowar/craft-admin-bar/issues/47)

@@ -7,7 +7,6 @@
 
 @layer admin-bar {
   admin-bar {
-    --admin-bar-bg-color: oklch(0.131 0.036 248.399);
     --admin-bar-color-highlight: oklch(0.55 0.23 28.77);
     --craft-admin-bar-color-api-status-color: oklch(0.55 0.23 28.77);
     --craft-admin-bar-color-input-bg: rgb(255 255 255);
@@ -32,17 +31,20 @@
 
     /* Adds a line below Admin Bar to show API status.*/
     &:after {
+      --_color: var(--craft-admin-bar-color-api-status-color, oklch(0.55 0.23 28.77));
+      --_color-transparent: color-mix(in srgb, var(--_color), transparent 100%);
       content: "";
       display: block;
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: var(--admin-bar-api-status-width, 0);
-      height: var(--admin-bar-glass-thickness, 2px);
-      background-color: var(--craft-admin-bar-color-api-status-color, oklch(0.55 0.23 28.77));
+      bottom: -1px;
+      left: var(--admin-bar-border-radius);
+      width: calc(var(--admin-bar-api-status-width, 0) - calc(var(--admin-bar-border-radius) * 2));
+      height: 2px;
+      background-image: linear-gradient(to right, var(--_color-transparent),var(--_color) 5%, 95% ,var(--_color-transparent));
       box-shadow: 0 0 16px var(--craft-admin-bar-color-api-status-color, oklch(0.55 0.23 28.77));
       animation: var(--admin-bar-api-status-animation);
       transition: var(--admin-bar-api-status-transition, background-color var(--admin-bar-transition-duration, 0s) ease-out, width calc(var(--admin-bar-transition-duration, 0s) * 2) var(--admin-bar-api-status-width-delay, 0s) ease-in);
+      z-index: calc(var(--admin-bar-z, 5) + 5);
     }
   }
 }

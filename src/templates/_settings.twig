@@ -227,7 +227,7 @@ admin-bar {
 {% css %}
     @layer admin-bar {
         .admin-bar-settings-preview {
-            top: var(--header-height);
+            top: calc(var(--header-height) + 6px);
             position: sticky;
             z-index: 1;
         }
