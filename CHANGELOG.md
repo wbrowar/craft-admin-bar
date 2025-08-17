@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.6.2 - 2025-08-17
+### Changed
+- Refactored CSS and JavaScript files to be registered as asset bundles, instead of individual file registration.
+
+### Fixed
+- The Admin Bar settings page no longer displays an empty table row by default.
+
+
+
 ## 5.6.1 - 2025-07-04
 ### Changed
 - Updated Admin Bar Component to version `1.6.1`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)

@@ -15,6 +15,7 @@ use craft\base\Component;
 use craft\helpers\Html;
 use craft\web\View;
 use wbrowar\adminbar\AdminBar;
+use wbrowar\adminbar\helpers\AdminBarAsset;
 use wbrowar\adminbar\helpers\AdminBarWidget;
 
 
@@ -137,14 +138,7 @@ class Bar extends Component
             $oldMode = Craft::$app->getView()->getTemplateMode();
             Craft::$app->getView()->setTemplateMode(View::TEMPLATE_MODE_CP);
 
-            $assets = AdminBar::$plugin->getPathsToAssetFiles('admin-bar.ts');
-
-            if (($assets['css'] ?? false) && $config['useCss']) {
-                Craft::$app->getView()->registerCssFile($assets['css']);
-            }
-            if (($assets['js'] ?? false) && $config['useJs']) {
-                Craft::$app->getView()->registerJsFile($assets['js'], ['defer' => true, 'type' => 'module']);
-            }
+            AdminBarAsset::registerAssetFiles($config['useCss'], $config['useJs']);
 
             $html = Craft::$app->getView()->renderTemplate('admin-bar/_bar', $config);
             Craft::$app->getView()->setTemplateMode($oldMode);
