@@ -13,7 +13,7 @@ namespace wbrowar\adminbar\twigextensions;
 use Craft;
 use craft\elements\Entry;
 use wbrowar\adminbar\AdminBar;
-use wbrowar\adminbar\helpers\AdminBarAsset;
+use wbrowar\adminbar\helpers\AdminBarAssetHelper;
 
 /**
  * Twig can be extended in many ways; you can add extra tags, filters, tests, operators,
@@ -109,7 +109,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
             return file_get_contents($glob[0] ?? null);
         }
 
-        $assets = AdminBarAsset::getPathsToAssetFiles('admin-bar.ts');
+        $assets = AdminBarAssetHelper::getPathsToAssetFiles('admin-bar.ts');
 
         return $assets['css']['path'] ?? null;
     }
@@ -122,7 +122,7 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
      */
     public function adminBarJsFile(array $config = ['contents' => false]): string | null
     {
-        $assets = AdminBarAsset::getPathsToAssetFiles('admin-bar.ts');
+        $assets = AdminBarAssetHelper::getPathsToAssetFiles('admin-bar.ts');
         
         if ($config['contents'] ?? false) {
             $glob = glob(AdminBar::$plugin->getBasePath() . '/web/assets/dist/assets/admin-bar-*.js');

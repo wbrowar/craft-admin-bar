@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 5.6.2 - 2025-08-17
 ### Changed
-- Refactored CSS and JavaScript files to be registered as asset bundles, instead of individual file registration.
+- Refactored CSS and JavaScript files to be registered as asset bundles, instead of individual file registrations.
 
 ### Fixed
 - The Admin Bar settings page no longer displays an empty table row by default.

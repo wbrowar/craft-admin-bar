@@ -3,7 +3,7 @@
 namespace wbrowar\adminbar\web\assets;
 
 use craft\web\AssetBundle;
-use wbrowar\adminbar\helpers\AdminBarAsset;
+use wbrowar\adminbar\helpers\AdminBarAssetHelper;
 
 /**
  * Admin Bar asset bundle
@@ -14,7 +14,7 @@ class AdminBarAssetCss extends AssetBundle
     {
         $this->sourcePath = '@wbrowar/adminbar/web/assets/dist/assets';
 
-        $assets = AdminBarAsset::getPathsToAssetFiles('admin-bar.ts');
+        $assets = AdminBarAssetHelper::getPathsToAssetFiles('admin-bar.ts');
 
         $this->css = [$assets['css']['filename']] ?? [];
 

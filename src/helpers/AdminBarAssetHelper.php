@@ -9,7 +9,7 @@ use wbrowar\adminbar\AdminBar;
 use wbrowar\adminbar\web\assets\AdminBarAssetCss;
 use wbrowar\adminbar\web\assets\AdminBarAssetJs;
 
-class AdminBarAsset
+class AdminBarAssetHelper
 {
     /**
      * When in local development mode, register the Vite dev server.
