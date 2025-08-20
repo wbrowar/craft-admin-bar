@@ -1,17 +1,11 @@
 {
-  "admin-bar-builder.ts": {
-    "file": "assets/admin-bar-builder-l0sNRNKZ.js",
-    "name": "admin-bar-builder",
-    "src": "admin-bar-builder.ts",
-    "isEntry": true
-  },
   "admin-bar.ts": {
-    "file": "assets/admin-bar-Cx-wBmMN.js",
+    "file": "assets/admin-bar.js",
     "name": "admin-bar",
     "src": "admin-bar.ts",
     "isEntry": true,
     "css": [
-      "assets/admin-bar-C40_4Bs4.css"
+      "assets/admin-bar.css"
     ]
   }
 }

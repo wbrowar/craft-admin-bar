@@ -8,7 +8,11 @@ export default defineConfig({
     rollupOptions: {
       input: {
         'admin-bar': './admin-bar.ts',
-        'admin-bar-builder': './admin-bar-builder.ts',
+      },
+      output: {
+        entryFileNames: `assets/[name].js`,
+        chunkFileNames: `assets/[name].js`,
+        assetFileNames: `assets/[name].[ext]`,
       },
     },
   },

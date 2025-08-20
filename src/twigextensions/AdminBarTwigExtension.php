@@ -13,7 +13,6 @@ namespace wbrowar\adminbar\twigextensions;
 use Craft;
 use craft\elements\Entry;
 use wbrowar\adminbar\AdminBar;
-use wbrowar\adminbar\helpers\AdminBarAssetHelper;
 
 /**
  * Twig can be extended in many ways; you can add extra tags, filters, tests, operators,
@@ -104,14 +103,13 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
      */
     public function adminBarCssFile(array $config = ['contents' => false]): string | null
     {
+        $path = Craft::$app->getAssetManager()->getPublishedUrl('@wbrowar/adminbar/web/assets/dist/assets/admin-bar.css', true);
+
         if ($config['contents'] ?? false) {
-            $glob = glob(AdminBar::$plugin->getBasePath() . '/web/assets/dist/assets/admin-bar-*.css');
-            return file_get_contents($glob[0] ?? null);
+            return file_get_contents($path ?? null);
         }
 
-        $assets = AdminBarAssetHelper::getPathsToAssetFiles('admin-bar.ts');
-
-        return $assets['css']['path'] ?? null;
+        return $path ?? null;
     }
 
     /**
@@ -122,15 +120,13 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
      */
     public function adminBarJsFile(array $config = ['contents' => false]): string | null
     {
-        $assets = AdminBarAssetHelper::getPathsToAssetFiles('admin-bar.ts');
+        $path = Craft::$app->getAssetManager()->getPublishedUrl('@wbrowar/adminbar/web/assets/dist/assets/admin-bar.js', true);
         
         if ($config['contents'] ?? false) {
-            $glob = glob(AdminBar::$plugin->getBasePath() . '/web/assets/dist/assets/admin-bar-*.js');
-
-            return file_get_contents($glob[0] ?? null);
+            return file_get_contents($path ?? null);
         }
 
-        return $assets['js']['path'] ?? null;
+        return $path ?? null;
     }
 
     /**
