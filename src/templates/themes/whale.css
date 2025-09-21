@@ -1,0 +1,20 @@
+@layer admin-bar {
+  admin-bar {
+    --admin-bar-bg-color: oklch(0.55 0.27 259.03 / 0.6);
+    --admin-bar-border-radius: 10px;
+    --admin-bar-button-color-bg-hover: oklch(0.55 0.27 259.03 / 0.6);
+    --admin-bar-button-color-text: oklch(0.971 0.014 258.345);
+    --admin-bar-color-highlight: oklch(0.879 0.055 252.669);
+    --admin-bar-color-text: oklch(0.971 0.014 258.345 / 0.9);
+    --admin-bar-text-label-color-bg: oklch(0.971 0.014 258.345);
+    --admin-bar-text-label-color-text: oklch(0.346 0.167 262.55);
+    --admin-bar-bg-filter: blur(14px) brightness(0.6) saturate(0.3);
+
+    @supports (not (-webkit-backdrop-filter: blur(1px))) and (backdrop-filter: url(#filter)) {
+      & {
+        --admin-bar-enable-glass: true;
+        --admin-bar-bg-filter: blur(2px) brightness(0.4) saturate(0.3);
+      }
+    }
+  }
+}

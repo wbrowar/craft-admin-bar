@@ -138,17 +138,22 @@ class AdminBarTwigExtension extends \Twig\Extension\AbstractExtension
     {
         $settings = AdminBar::$plugin->getSettings();
 
-        return '@layer admin-bar {
-            admin-bar {
-                &:not(:defined) {
-                    display: block;
-                    height: var(--admin-bar-height, 43px);
-                    
-                    & > * {
-                        display: none;
-                    }
-                }
-            }
-        }' . "\n" . ($settings['customCss'] ?? '');
+        $css = '';
+
+        $onPageCssFile = AdminBar::$plugin->basePath . '/templates/on-page.css';
+        if (file_exists($onPageCssFile)) {
+            $css .= file_get_contents($onPageCssFile);
+        }
+
+        $themeFile = AdminBar::$plugin->basePath . '/templates/themes/' . $settings['theme'] . '.css';
+        if (file_exists($themeFile)) {
+            $css .= "\n\n" . '/* CSS for theme selected in Admin Bar plugin settings. */' . "\n" . file_get_contents($themeFile);
+        }
+
+        if ($settings['customCss'] ?? '') {
+            $css .= "\n\n" .'/* Custom CSS from Admin Bar plugin settings. */' . "\n" . $settings['customCss'];
+        }
+
+        return $css;
     }
 }

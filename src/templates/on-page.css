@@ -1,0 +1,13 @@
+/* CSS added to the page to display a placeholder before Admin Bar is loaded. */
+@layer admin-bar {
+  admin-bar {
+    &:not(:defined) {
+      display: block;
+      height: var(--admin-bar-height, 43px);
+
+      & > * {
+        display: none;
+      }
+    }
+  }
+}

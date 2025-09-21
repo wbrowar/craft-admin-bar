@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.7.0 - 2025-09-21
+### Added
+- Added new Theme setting, allowing you to select a theme for Admin Bar.
+  - The theme sets CSS variables that can be overridden using the Custom CSS field.
+- Placed the CSS loaded for Admin Bar into the Default CSS field on the Admin Bar plugin settings page.
+  - This will make it easier to know what CSS variables can be overridden.
+
+### Changed
+- Updated Admin Bar Component to version `1.7.3`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)
+
+### Fixed
+- Fixed a few minor CSS bugs in Admin Bar PRO widgets.
+
+
 ## 5.6.3 - 2025-08-25
 ### Fixed
 - Removed an unneeded dependency that allowed Craft CP styles to appear on the front-end [#48](https://github.com/wbrowar/craft-admin-bar/issues/48)
@@ -16,7 +30,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Fixed
 - The Admin Bar settings page no longer displays an empty table row by default.
-
 
 
 ## 5.6.1 - 2025-07-04

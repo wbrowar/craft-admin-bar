@@ -120,6 +120,7 @@ class Bar extends Component
             $config['displayGuideLink'] = $settings->displayGuideLink;
             $config['displayUtilitiesLink'] = $settings->displayUtilitiesLink && !empty($userUtilities);
             $config['displaySettingsLink'] = $settings->displaySettingsLink && Craft::$app->getConfig()->getGeneral()->allowAdminChanges;
+            $config['theme'] = $settings->theme;
 
             // Pro features
             $config['proEdition'] = AdminBar::$pro;

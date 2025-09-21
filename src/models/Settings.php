@@ -118,6 +118,13 @@ class Settings extends Model
     public bool $displayWidgetLabels = false;
 
     /**
+     * Sets CSS variables based on a set of predefined themes.
+     *
+     * @var string
+     */
+    public string $theme = 'default';
+
+    /**
      * Enables the Admin Bar Widget: Blitz
      *
      * @var bool
@@ -210,7 +217,8 @@ class Settings extends Model
     public function rules(): array
     {
         return [
-            [['customCss'], 'string'],
+            [['customCss', 'theme'], 'string'],
+            ['theme', 'default', 'value' => 'default'],
         ];
     }
 }

@@ -1,0 +1,11 @@
+@layer admin-bar {
+  admin-bar {
+    --admin-bar-bg-color: oklch(0 0 0 / 0.8);
+    --admin-bar-border-radius: 0;
+    --admin-bar-button-color-bg-hover: oklch(0.64 0.19 25.24);
+    --admin-bar-color-highlight: oklch(1 0 89.876);
+    --admin-bar-inset-size: 0;
+    --admin-bar-button-popover-border-radius: 4px;
+    --admin-bar-color-highlight-logout: oklch(0.64 0.19 25.24);
+  }
+}

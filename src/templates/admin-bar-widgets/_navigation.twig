@@ -28,7 +28,7 @@
       {% set links = [] %}
       {% for link in breadcrumbsInMenu %}
         {% if not link.isActive and link.url %}
-          {% set linkString %}<a style="font-weight: 400;" href="{{ link.url }}">{{ link.title }}</a>{% endset %}
+          {% set linkString %}<a style="color: var(--admin-bar-color-text); font-weight: 500; text-decoration: underline;" href="{{ link.url }}">{{ link.title }}</a>{% endset %}
         {% else %}
           {% set linkString %}<span>{{ link.title }}</span>{% endset %}
         {% endif %}

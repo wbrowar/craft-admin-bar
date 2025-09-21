@@ -1,0 +1,14 @@
+@layer admin-bar {
+  admin-bar {
+    --admin-bar-bg-color: oklch(0.448 0.041 165.077 / 0.3);
+    --admin-bar-color-highlight: oklch(0.55 0.23 28.77 / 0.8);
+    --admin-bar-color-highlight-logout: oklch(0.55 0.23 28.77 / 0.8);
+
+    @supports (not (-webkit-backdrop-filter: blur(1px))) and (backdrop-filter: url(#filter)) {
+      & {
+        --admin-bar-enable-glass: true;
+        --admin-bar-bg-filter: blur(2px) brightness(0.65) saturate(2.5);
+      }
+    }
+  }
+}

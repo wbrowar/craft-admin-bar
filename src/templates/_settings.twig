@@ -187,6 +187,29 @@
 
 <hr>
 
+{% set themeOptions = [
+  { label: 'Admin Bar Default', value: 'default' },
+  { label: 'Classic', value: 'classic' },
+  { label: 'Craft Control Panel', value: 'craft-cp' },
+  { label: 'Debug', value: 'debug' },
+  { label: 'EV', value: 'ev' },
+  { label: 'Glass', value: 'glass' },
+  { label: 'Lemon & Tonic', value: 'lemon-and-tonic' },
+  { label: 'Sakura', value: 'sakura' },
+  { label: 'Stark', value: 'stark' },
+  { label: 'Whale', value: 'whale' },
+  { label: 'Whiskey', value: 'whiskey' },
+] %}
+
+{{ forms.selectField({
+  label: 'Theme'|t('guide'),
+  id: 'theme',
+  name: 'theme',
+  options: themeOptions,
+  value: settings.theme,
+  instructions: 'Style Admin Bar with a preset theme, then override it using the Custom CSS field below.'|t('admin-bar'),
+}) }}
+
 {% set placeholder %}
 admin-bar {
     --admin-bar-bg-color: oklch(0.131 0.036 248.399);
@@ -210,11 +233,11 @@ admin-bar {
     wrapperClass: 'content-pane',
 }) }}
 
-{% set cssDefaults = include('admin-bar/_admin-bar-component-css.css') %}
+{% set cssDefaults = include('admin-bar/_admin-bar-component-css.css') ~ "\n" ~ adminBarOnPageCss() %}
 
 {{ codeEditor.textareaField({
     label: 'CSS Defaults'|t('admin-bar'),
-    instructions: 'Below are the contents of the CSS file for the Admin Bar Component. You can override any of these CSS variables in your front-end stylesheet, or in the Custom CSS field above.'|t('admin-bar'),
+    instructions: 'Below is all of the CSS loaded for Admin Bar by default. You can override any of these CSS variables in your front-end stylesheet, or in the Custom CSS field above.'|t('admin-bar'),
     value: cssDefaults|raw,
 }, "Code Editor", {
     language: "css",

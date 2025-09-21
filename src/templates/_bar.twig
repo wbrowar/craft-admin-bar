@@ -45,9 +45,11 @@
 {% set textElements = textElements ?? [] %}
 
 {% if devMode %}
+  {% set envLabelStyle = (theme in ['craft-cp', 'sakura', 'stark']) ? {} : { '--admin-bar-text-label-color-bg': 'var(--admin-bar-environment-bg-color)' } %}
+
   {% set textElements = textElements|merge([{
     'label-content': craft.app.config.env|upper,
-    style: { '--admin-bar-text-label-color-bg': 'var(--admin-bar-environment-bg-color)' },
+    style: envLabelStyle,
     title: 'Craft CMS is running in Dev Mode.'|t('admin-bar'),
   }]) %}
 {% endif %}

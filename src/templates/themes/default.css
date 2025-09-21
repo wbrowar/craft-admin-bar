@@ -1,0 +1,6 @@
+@layer admin-bar {
+  admin-bar {
+    --admin-bar-color-highlight: oklch(0.55 0.23 28.77);
+    --admin-bar-color-highlight-logout: oklch(0.55 0.23 28.77);
+  }
+}
