@@ -9,8 +9,9 @@
     --admin-bar-text-label-color-bg: oklch(0.971 0.014 258.345);
     --admin-bar-text-label-color-text: oklch(0.346 0.167 262.55);
     --admin-bar-bg-filter: blur(14px) brightness(0.6) saturate(0.3);
+    --admin-bar-progress-color: oklch(1 0 0 / 0.4);
 
-    @supports (not (-webkit-backdrop-filter: blur(1px))) and (backdrop-filter: url(#filter)) {
+    @supports (not (font: -apple-system-body)) and (not (-moz-appearance: none)) {
       & {
         --admin-bar-enable-glass: true;
         --admin-bar-bg-filter: blur(2px) brightness(0.4) saturate(0.3);

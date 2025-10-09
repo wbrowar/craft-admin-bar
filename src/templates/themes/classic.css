@@ -7,5 +7,6 @@
     --admin-bar-inset-size: 0;
     --admin-bar-button-popover-border-radius: 4px;
     --admin-bar-color-highlight-logout: oklch(0.64 0.19 25.24);
+    --admin-bar-progress-height: 3px;
   }
 }

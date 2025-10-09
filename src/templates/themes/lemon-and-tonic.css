@@ -11,8 +11,10 @@
     --admin-bar-color-highlight-logout: oklch(0.55 0.23 28.77);
     --admin-bar-color-text-logout: oklch(1 0 89.876);
     --admin-bar-bg-filter: blur(8px) brightness(2) saturate(3);
+    --admin-bar-progress-color: oklch(0.96 0.24 110.68 / 0.95);
+    --admin-bar-progress-height: 3px;
 
-    @supports (not (-webkit-backdrop-filter: blur(1px))) and (backdrop-filter: url(#filter)) {
+    @supports (not (font: -apple-system-body)) and (not (-moz-appearance: none)) {
       & {
         --admin-bar-enable-glass: true;
         --admin-bar-bg-filter: blur(2px) brightness(2) saturate(3);

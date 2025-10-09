@@ -3,8 +3,11 @@
     --admin-bar-bg-color: oklch(0.448 0.041 165.077 / 0.3);
     --admin-bar-color-highlight: oklch(0.55 0.23 28.77 / 0.8);
     --admin-bar-color-highlight-logout: oklch(0.55 0.23 28.77 / 0.8);
+    --admin-bar-progress-color: oklch(0.6 0.24 253.14 / 0.6);
+    --admin-bar-progress-color-error: oklch(0.66 0.29 30.27 / 0.6);
+    --admin-bar-progress-color-success: oklch(0.85 0.36 146.38 / 0.6);
 
-    @supports (not (-webkit-backdrop-filter: blur(1px))) and (backdrop-filter: url(#filter)) {
+    @supports (not (font: -apple-system-body)) and (not (-moz-appearance: none)) {
       & {
         --admin-bar-enable-glass: true;
         --admin-bar-bg-filter: blur(2px) brightness(0.65) saturate(2.5);

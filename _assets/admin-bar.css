@@ -1,53 +1,5 @@
 @import url(admin-bar-component/dist/admin-bar.css);
 
-@keyframes admin-bar-api-status-error {
-  0% { background-color: color-mix(in srgb, var(--craft-admin-bar-color-api-status-color), black 50%) }
-  100% { background-color: var(--craft-admin-bar-color-api-status-color) }
-}
-
-@layer admin-bar {
-  admin-bar {
-    --craft-admin-bar-color-api-status-color: oklch(0.55 0.23 28.77);
-    --craft-admin-bar-color-input-bg: rgb(255 255 255);
-    --craft-admin-bar-color-input-text: oklch(0.55 0.23 28.77);
-
-    /* Change the line below Admin Bar based on API status. */
-    craft-admin-bar[data-api-status="errored"] & {
-      --admin-bar-api-status-animation: admin-bar-api-status-error 1s ease-in-out alternate-reverse infinite;
-      --admin-bar-api-status-transition: none;
-      --admin-bar-api-status-width: 100%;
-    }
-    craft-admin-bar[data-api-status="loading"] & {
-      --admin-bar-api-status-width: 50%;
-    }
-    craft-admin-bar[data-api-status="ready"] & {
-      --admin-bar-api-status-color: color-mix(in srgb, var(--admin-bar-color-highlight), transparent 100%);
-      --admin-bar-api-status-width-delay: var(--admin-bar-transition-duration, 0s);
-    }
-    craft-admin-bar[data-api-status="resolved"] & {
-      --admin-bar-api-status-width: 100%;
-    }
-
-    /* Adds a line below Admin Bar to show API status.*/
-    &:after {
-      --_color: var(--craft-admin-bar-color-api-status-color, oklch(0.55 0.23 28.77));
-      --_color-transparent: color-mix(in srgb, var(--_color), transparent 100%);
-      content: "";
-      display: block;
-      position: absolute;
-      bottom: -1px;
-      left: var(--admin-bar-border-radius);
-      width: calc(var(--admin-bar-api-status-width, 0) - calc(var(--admin-bar-border-radius) * 2));
-      height: 2px;
-      background-image: linear-gradient(to right, var(--_color-transparent),var(--_color) 5%, 95% ,var(--_color-transparent));
-      box-shadow: 0 0 16px var(--craft-admin-bar-color-api-status-color, oklch(0.55 0.23 28.77));
-      animation: var(--admin-bar-api-status-animation);
-      transition: var(--admin-bar-api-status-transition, background-color var(--admin-bar-transition-duration, 0s) ease-out, width calc(var(--admin-bar-transition-duration, 0s) * 2) var(--admin-bar-api-status-width-delay, 0s) ease-in);
-      z-index: calc(var(--admin-bar-z, 5) + 5);
-    }
-  }
-}
-
 admin-bar {
   & svg.icon {
     display: block;

@@ -11,5 +11,7 @@
     --admin-bar-text-label-color-text: oklch(0.969 0.027 325.784);
     --admin-bar-color-highlight-logout: oklch(0.327 0.043 72.558);
     --admin-bar-color-text-logout: oklch(0.864 0.214 123.919);
+    --admin-bar-progress-color: oklch(0.7 0.317 328.334);
+    --admin-bar-progress-height: 3px;
   }
 }
