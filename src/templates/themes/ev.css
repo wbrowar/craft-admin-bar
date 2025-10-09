@@ -8,11 +8,13 @@
     --admin-bar-color-text: oklch(0.98 0.01 226.44 / 0.9);
     --admin-bar-text-label-color-bg: oklch(0 0 0 / 0.9);
     --admin-bar-text-label-color-text: oklch(0.98 0.01 226.44);
-    --admin-bar-color-highlight-logout: oklch(0.88 0.21 92.24);
+    --admin-bar-color-highlight-logout: oklch(0.88 0.21 93.32);
     --admin-bar-color-text-logout: oklch(0 0 0 / 0.9);
     --admin-bar-bg-filter: blur(2px) brightness(0.4) saturate(0.3);
+    --admin-bar-progress-color: oklch(0.88 0.21 93.32 / 0.8);
+    --admin-bar-progress-height: 4px;
 
-    @supports (not (-webkit-backdrop-filter: blur(1px))) and (backdrop-filter: url(#filter)) {
+    @supports (not (font: -apple-system-body)) and (not (-moz-appearance: none)) {
       & {
         --admin-bar-enable-glass: true;
         --admin-bar-bg-filter: blur(2px) brightness(1.5) saturate(0.3);

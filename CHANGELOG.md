@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.7.1 - 2025-10-09
+### Changed
+- Changed the progress bar to the `progress` attribute built into Admin Bar Component
+- Updated all themes to style the progress bar
+  - In most themes the progress bar is blue or matches the theme, when it turns green the AJAX request was successful, red when the request fails.
+  - These colors and the height of the progress bar can be overwritten in CSS
+- Changed all detections for themes that use the glass effect to specifically exclude Safari and Firefox for the SVG filter effect.
+- Updated Admin Bar Component to version `1.8.0`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)
+
+
 ## 5.7.0 - 2025-09-21
 ### Added
 - Added new Theme setting, allowing you to select a theme for Admin Bar.

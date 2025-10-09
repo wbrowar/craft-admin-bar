@@ -10,5 +10,7 @@
     --admin-bar-color-highlight-logout: oklch(0.71 0.35 337.35 / 0.95);
     --admin-bar-color-text-logout: oklch(1 0 89.876);
     --admin-bar-bg-filter: blur(8px) brightness(2) saturate(3);
+    --admin-bar-progress-color: oklch(0.71 0.35 337.35 / 0.8);
+    --admin-bar-progress-color-success: oklch(0.91 0.28 129.6 / 0.8);
   }
 }

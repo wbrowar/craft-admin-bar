@@ -116,6 +116,7 @@ export default class CraftAdminBar extends HTMLElement {
         },
         method: 'POST',
       })
+
       // If request is not complete, throw error.
       if (!response.ok) {
         this.setApiStatus(ApiStatus.Errored)
@@ -155,6 +156,23 @@ export default class CraftAdminBar extends HTMLElement {
    * @private
    */
   private setApiStatus(apiStatus: ApiStatus) {
+    // Visually show the progress of the request.
+    const adminBarElement = this.querySelector('admin-bar')
+    if (adminBarElement) {
+      switch (apiStatus) {
+        case ApiStatus.Errored:
+          adminBarElement.setAttribute('progress', '-1')
+          break
+        case ApiStatus.Loading:
+          adminBarElement.setAttribute('progress', '50')
+          break
+        case ApiStatus.Resolved:
+          adminBarElement.setAttribute('progress', '100')
+          break
+      }
+    }
+
+    // Change the status attribute on the `<craft-admin-bar>` element.
     this.dataset.apiStatus = apiStatus
   }
 }

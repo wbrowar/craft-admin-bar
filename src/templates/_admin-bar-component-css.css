@@ -82,6 +82,26 @@
 
     /* ====================================================================== */
 
+    /* The color used for the the progress bar when displaying progress below 100. */
+    --admin-bar-progress-color: oklch(0.6 0.24 253.14 / 0.7);
+
+    /**
+     * The color used for the the progress bar when displaying an error.
+     * (When the `progress` attribute is set below 0)
+     */
+    --admin-bar-progress-color-error: oklch(0.66 0.29 30.27 / 0.7);
+
+    /**
+     * The color used for the the progress bar when displaying a successful action.
+     * (When the `progress` attribute is set to 100 or higher)
+     */
+    --admin-bar-progress-color-success: oklch(0.85 0.36 146.38 / 0.7);
+
+    /* The height of the progress bar. */
+    --admin-bar-progress-height: var(--admin-bar-height);
+
+    /* ====================================================================== */
+
     /* The background of all buttons. */
     --admin-bar-button-color-bg: transparent;
 
@@ -172,7 +192,7 @@
     }
 
     /* Opt into glass distortion effect on browsers that support SVG filtering and boolean style queries. */
-    @supports (not (-webkit-backdrop-filter: blur(1px))) and (backdrop-filter: url(#filter)) {
+    @supports (not (font: -apple-system-body)) and (not (-moz-appearance: none)) {
       & {
         /*--admin-bar-enable-glass: true;*/
         /*--admin-bar-bg-filter: blur(2px) brightness(0.65) saturate(2.5);*/
