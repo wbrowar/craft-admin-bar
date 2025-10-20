@@ -39,6 +39,14 @@ class Settings extends Model
     public array $additionalLinks = [];
 
     /**
+     * Automatically renders Admin Bar at the top of the page and makes it sticky.
+     * If the page is an entry, an edit link will be added to the Admin Bar.
+     *
+     * @var boolean
+     */
+    public bool $autoRender = true;
+
+    /**
      * Some field model attribute
      *
      * @var string Custom CSS used to style Guide components.

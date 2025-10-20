@@ -102,29 +102,30 @@ Here are the settings you can change with the config file:
 
 ### Admin Bar
 
-| Setting                       | Default     | Description                                                                                                            |
-|-------------------------------|-------------|------------------------------------------------------------------------------------------------------------------------|
-| `additionalLinks`             | *[]*        | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/craft-admin-bar#additional-links). |
-| `displayGreeting`             | *true*      | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]".                                            |
-| `displayDashboardLink`        | *true*      | Displays a link to the CP Dashboard.                                                                                   |
-| `displayDefaultEditSection`   | *true*      | Display the name of the section in the default entry edit link if the user has permission to edit it.                  |
-| `displayGuideLink`            | *true*      | If the [Guide](https://plugins.craftcms.com/guide) plugin is installed, a link to the Guide CP Section is displayed.   |
-| `displayLogout`               | *true*      | Displays a button that logs you out of Craft CMS.                                                                      |
-| `displayUtilitiesLink`        | *true*      | Adds the Utilities link to Admin Bar.                                                                                  |
-| `displaySettingsLink`         | *true*      | Adds the Settings link to Admin Bar.                                                                                   |
-| `displayWidgetLabels`         | *false*     | Displays labels next to Admin Bar Widget icons.                                                                        |
-| `theme`                       | *'default'* | Sets CSS variables based on a set of predefined themes.                                                                |
-| `widgetEnabledBlitz`          | *false*     | Enables the Admin Bar Widget: Blitz                                                                                    |
-| `widgetEnabledCraftAuthors`   | *false*     | Enables the Admin Bar Widget: Authors                                                                                  |
-| `widgetEnabledCraftNewEntry`  | *false*     | Enables the Admin Bar Widget: New Entry                                                                                |
-| `widgetEnabledCraftPublished` | *false*     | Enables the Admin Bar Widget: Published                                                                                |
-| `widgetEnabledCraftSearch`    | *false*     | Enables the Admin Bar Widget: Search                                                                                   |
-| `widgetEnabledCraftSites`     | *false*     | Enables the Admin Bar Widget: Sites                                                                                    |
-| `widgetEnabledGuide`          | *false*     | Enables the Admin Bar Widget: Guide                                                                                    |
-| `widgetEnabledNavigation`     | *false*     | Enables the Admin Bar Widget: Navigation                                                                               |
-| `widgetEnabledSeo`            | *false*     | Enables the Admin Bar Widget: Seo                                                                                      |
-| `widgetEnabledSeomatic`       | *false*     | Enables the Admin Bar Widget: Seomatic                                                                                 |
-| `widgetEnabledViewCount`      | *false*     | Enables the Admin Bar Widget: View Count                                                                               |
+| Setting                       | Default     | Description                                                                                                                                       |
+|-------------------------------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| `autoRender`                  | *false*     | Automatically renders Admin Bar at the top of the page and makes it sticky. If the page is an entry, an edit link will be added to the Admin Bar. |
+| `additionalLinks`             | *[]*        | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/craft-admin-bar#additional-links).                           |
+| `displayGreeting`             | *true*      | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]".                                                                       |
+| `displayDashboardLink`        | *true*      | Displays a link to the CP Dashboard.                                                                                                              |
+| `displayDefaultEditSection`   | *true*      | Display the name of the section in the default entry edit link if the user has permission to edit it.                                             |
+| `displayGuideLink`            | *true*      | If the [Guide](https://plugins.craftcms.com/guide) plugin is installed, a link to the Guide CP Section is displayed.                              |
+| `displayLogout`               | *true*      | Displays a button that logs you out of Craft CMS.                                                                                                 |
+| `displayUtilitiesLink`        | *true*      | Adds the Utilities link to Admin Bar.                                                                                                             |
+| `displaySettingsLink`         | *true*      | Adds the Settings link to Admin Bar.                                                                                                              |
+| `displayWidgetLabels`         | *false*     | Displays labels next to Admin Bar Widget icons.                                                                                                   |
+| `theme`                       | *'default'* | Sets CSS variables based on a set of predefined themes.                                                                                           |
+| `widgetEnabledBlitz`          | *false*     | Enables the Admin Bar Widget: Blitz                                                                                                               |
+| `widgetEnabledCraftAuthors`   | *false*     | Enables the Admin Bar Widget: Authors                                                                                                             |
+| `widgetEnabledCraftNewEntry`  | *false*     | Enables the Admin Bar Widget: New Entry                                                                                                           |
+| `widgetEnabledCraftPublished` | *false*     | Enables the Admin Bar Widget: Published                                                                                                           |
+| `widgetEnabledCraftSearch`    | *false*     | Enables the Admin Bar Widget: Search                                                                                                              |
+| `widgetEnabledCraftSites`     | *false*     | Enables the Admin Bar Widget: Sites                                                                                                               |
+| `widgetEnabledGuide`          | *false*     | Enables the Admin Bar Widget: Guide                                                                                                               |
+| `widgetEnabledNavigation`     | *false*     | Enables the Admin Bar Widget: Navigation                                                                                                          |
+| `widgetEnabledSeo`            | *false*     | Enables the Admin Bar Widget: Seo                                                                                                                 |
+| `widgetEnabledSeomatic`       | *false*     | Enables the Admin Bar Widget: Seomatic                                                                                                            |
+| `widgetEnabledViewCount`      | *false*     | Enables the Admin Bar Widget: View Count                                                                                                          |
 
 
 #### Additional Links

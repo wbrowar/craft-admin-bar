@@ -17,6 +17,14 @@
 
 <hr>
 
+{{ forms.lightswitchField({
+  label: 'Auto Render'|t('guide'),
+  instructions: 'Render Admin Bar on all front-end pages. If set to `false`, Admin Bar can be renderd using the `adminBar()` Twig method.'|t('admin-bar'),
+  id: 'autoRender',
+  name: 'autoRender',
+  on: settings.autoRender,
+}) }}
+
 {{ forms.editableTableField({
     label: 'Additional Links'|t('admin-bar'),
     instructions: 'Add your own links to Admin Bar.'|t('admin-bar'),
@@ -64,9 +72,9 @@
     <p>{{ 'Admin Bar Widgets display links, statuses, and page-specific information based on some of the Craft CMS features you are using and the plugins that you currently have installed.'|t('admin-bar') }} {% if not proEdition %}<a class="go" href="{{ cpUrl('plugin-store/admin-bar') }}">{{ 'Get Admin Bar PRO to enable Admin Bar Widgets.'|t('admin-bar') }}</a>{% endif %}</p>
 </div>
 
-<div class="admin-bar-settings-2-column {{ proEdition ? 'admin-bar-pro' : '' }}" style="margin-block-start: calc(2 * var(--l));">
+<div class="{{ proEdition ? 'admin-bar-pro' : '' }}" style="margin-block-start: calc(2 * var(--l));">
     {% if availableAdminBarWidgets|length %}
-        <div>
+        <div class="admin-bar-settings-widget-grid">
             {% set widgetFields = [
                 {
                     handle: 'craft-new-entry',
@@ -118,21 +126,24 @@
                 {% if widgetField.handle in availableAdminBarWidgets %}
                     <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
                         {{ svg(widgetPlugins[widgetField.handle].icon) }}
-                        {{ forms.lightswitchField({
-                            disabled: not proEdition,
-                            id: widgetField.setting,
-                            instructions: widgetPlugins[widgetField.handle].widgetDescription ~ ' ' ~ widgetPlugins[widgetField.handle].widgetSettingsWarning ?? '',
-                            label: widgetPlugins[widgetField.handle].name,
-                            name: widgetField.setting,
-                            on: settings[widgetField.setting],
-                        }) }}
+                        <div>
+                          {{ forms.lightswitchField({
+                              disabled: not proEdition,
+                              id: widgetField.setting,
+                              label: widgetPlugins[widgetField.handle].name,
+                              name: widgetField.setting,
+                              on: settings[widgetField.setting],
+                          }) }}
+
+                          <p>{{ (widgetPlugins[widgetField.handle].widgetDescription ~ ' ' ~ widgetPlugins[widgetField.handle].widgetSettingsWarning ?? '')|md(inlineOnly=true) }}</p>
+                        </div>
                     </div>
                 {% endif %}
             {% endfor %}
         </div>
     {% endif %}
 
-    <div>
+    <div style="margin-block-start: var(--xl);">
         <div class="requires-admin-bar-pro">
             {{ forms.lightswitchField({
                 disabled: not proEdition,
@@ -252,7 +263,17 @@ admin-bar {
         .admin-bar-settings-preview {
             top: calc(var(--header-height) + 6px);
             position: sticky;
-            z-index: 1;
+            z-index: 999999999;
+        }
+    }
+    .admin-bar-settings-widget-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(30ch, 1fr));
+        gap: var(--xl) calc(var(--xl) * 2);
+        margin-block-end: calc(var(--xl) * 2);
+
+        .field {
+            margin-block: 0;
         }
     }
     .admin-bar-settings-2-column {
@@ -271,10 +292,6 @@ admin-bar {
         display: grid;
         grid-template-columns: 45px 1fr;
         gap: var(--m);
-
-        &:not(:first-child) {
-            margin-block-start: var(--xl);
-        }
 
         & svg {
             display: block;
