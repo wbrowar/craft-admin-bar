@@ -22,8 +22,8 @@
     {% set postDateValue = entry.postDate|date(widgetConfig.dateFormat) ~ ' ' ~ entry.postDate|time(widgetConfig.timeFormat) %}
     {% if displayWidgetLabels %}
       <admin-bar-text
-          label-content="{{ postDateValue }}"
-          style="--admin-bar-text-padding: 0; display: block;"
+          badge-content="{{ postDateValue }}"
+          style="--admin-bar-text-padding: 0;"
       ></admin-bar-text>
       {{ 'Post Date'|t('admin-bar') }}
     {% else %}

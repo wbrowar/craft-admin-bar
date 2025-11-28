@@ -22,8 +22,8 @@
     <div slot="popover">
       {% if meta ?? false %}
         {{ pluginWidgets.seoMeta(meta) }}
-      {% elseif widgetConfig.onSettingsPreivew %}
-        {{ pluginWidgets.onSettingsPreivew(widgets[pluginHandle].name) }}
+      {% else %}
+        <admin-bar-text>{{ 'This page does not include an SEO field.'|t('admin-bar') }}</admin-bar-text>
       {% endif %}
     </div>
   </admin-bar-button>

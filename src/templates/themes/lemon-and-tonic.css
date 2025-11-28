@@ -6,8 +6,8 @@
     --admin-bar-button-color-text: oklch(0 0 0);
     --admin-bar-color-highlight: oklch(0.403 0.083 97.313);
     --admin-bar-color-text: oklch(0 0 0 / 0.9);
-    --admin-bar-text-label-color-bg: oklch(0 0 0 / 0.9);
-    --admin-bar-text-label-color-text: oklch(0.96 0.24 110.68 / 0.95);
+    --admin-bar-text-badge-color-bg: oklch(0 0 0 / 0.9);
+    --admin-bar-text-badge-color-text: oklch(0.96 0.24 110.68 / 0.95);
     --admin-bar-color-highlight-logout: oklch(0.55 0.23 28.77);
     --admin-bar-color-text-logout: oklch(1 0 89.876);
     --admin-bar-bg-filter: blur(8px) brightness(2) saturate(3);

@@ -25,6 +25,7 @@ class AdminBarController extends Controller
             'message' => Craft::t('admin-bar', 'Controller action was not valid.'),
             'status' => 'error',
         ];
+        $user = self::currentUser();
 
         // Prepare arguments to pass into actions.
         $actionParams = [];
@@ -32,7 +33,23 @@ class AdminBarController extends Controller
             $actionParams = json_decode($params['params']);
         }
 
-        if ($params['requestHandle'] == 'blitz-refresh-cache') {
+        if ($params['requestHandle'] == 'admin-bar-debug-toolbar-toggle') {
+            /**
+             * Toggle the front-end debug toolbar for the current user.
+             */
+            if (Craft::$app->getUser()->getIsAdmin()) {
+                $preferences = $user->getPreferences();
+                $preferences['enableDebugToolbarForSite'] = !$preferences['enableDebugToolbarForSite'];
+                Craft::$app->getUsers()->saveUserPreferences($user, $preferences);
+            }
+            
+            $response = [
+                'data' => Craft::$app->getUser()->getIdentity()->getPreference('enableDebugToolbarForSite'),
+                'message' => Craft::t('admin-bar', 'Debug toolbar toggled.'),
+                'refreshPage' => true,
+                'status' => 'success',
+            ];
+        } elseif ($params['requestHandle'] == 'blitz-refresh-cache') {
             /**
              * Refreshes the Blitz Cache based on the user’s Blitz settings.
              */
@@ -42,7 +59,7 @@ class AdminBarController extends Controller
             ]);
         } elseif ($params['requestHandle'] == 'craft-search-search') {
             /**
-             * Refreshes the Blitz Cache based on the user’s Blitz settings.
+             * Search for entries that have URLs.
              */
             if (isset($actionParams->query)) {
                 $response = AdminBarWidget::performWidgetAction('craft-search', 'search', ['query' => $actionParams->query]);

@@ -1,4 +1,4 @@
-import 'admin-bar-component'
+import { AdminBarButton, AdminBarCheckbox, AdminBarText } from 'admin-bar-component'
 import './admin-bar.css'
 import './components/CraftAdminBar.ts'
 import type CraftAdminBar from './components/CraftAdminBar.ts'
@@ -17,6 +17,26 @@ export interface CraftAdminBarResponse {
   status: 'success' | 'error'
 }
 
+/**
+ * Define `<admin-bar>` and subcomponents as custom elements.
+ */
+if (!customElements.get('admin-bar-button')) {
+  customElements.define('admin-bar-button', AdminBarButton)
+}
+if (!customElements.get('admin-bar-checkbox')) {
+  customElements.define('admin-bar-checkbox', AdminBarCheckbox)
+}
+if (!customElements.get('admin-bar-text')) {
+  customElements.define('admin-bar-text', AdminBarText)
+}
+
+/**
+ * Fires a POST request to the Craft Admin Bar Controller action.
+ *
+ * @param target
+ * @param request
+ * @param body
+ */
 window.adminBarPostRequest = async (target: HTMLElement, request: string, body: string = '') => {
   try {
     if (import.meta.env.DEV) {

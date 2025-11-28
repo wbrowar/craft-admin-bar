@@ -1,0 +1,20 @@
+@layer admin-bar {
+  admin-bar {
+    --admin-bar-height: max-content;
+    --admin-bar-progress-height: 4px;
+
+    &::part(avatar) {
+      border-radius: 5px;
+      width: 43px;
+    }
+    &::part(buttons) {
+      flex-flow: row wrap;
+      justify-content: end;
+      overflow: auto;
+    }
+
+    & > * {
+      --admin-bar-height: 50px;
+    }
+  }
+}

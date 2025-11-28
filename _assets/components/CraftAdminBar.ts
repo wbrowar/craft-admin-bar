@@ -1,4 +1,5 @@
 import { CraftAdminBarResponse } from '../admin-bar.ts'
+import { AdminBarCheckbox, AdminBarCheckboxChangeEvent } from 'admin-bar-component'
 
 enum ApiStatus {
   Errored = 'errored',
@@ -13,6 +14,7 @@ enum ErrorCode {
   CSRF_TOKEN_NAME_INVALID = 'csrf-token-name-invalid',
 }
 
+// TODO change this to extend AdminBar class
 export default class CraftAdminBar extends HTMLElement {
   static observedAttributes = ['data-api-status']
 
@@ -61,6 +63,8 @@ export default class CraftAdminBar extends HTMLElement {
     this._sessionActionUrl = this.dataset.sessionActionUrl
 
     this.setApiStatus(ApiStatus.Ready)
+
+    this.setUpDebugToolbarCheckbox()
   }
 
   /**
@@ -174,6 +178,20 @@ export default class CraftAdminBar extends HTMLElement {
 
     // Change the status attribute on the `<craft-admin-bar>` element.
     this.dataset.apiStatus = apiStatus
+  }
+
+  private setUpDebugToolbarCheckbox() {
+    const checkboxElement: AdminBarCheckbox = this.querySelector('#admin-bar-checkbox-debug-toolbar')
+
+    if (checkboxElement) {
+      // Add event listener to toggle debug toolbar
+      checkboxElement.addEventListener('change', async (e: AdminBarCheckboxChangeEvent) => {
+        checkboxElement.setAttribute('disabled', true)
+
+        await window.adminBarPostRequest(this, 'admin-bar-debug-toolbar-toggle', JSON.stringify({ query: e.checked }))
+        checkboxElement.removeAttribute('disabled')
+      })
+    }
   }
 }
 

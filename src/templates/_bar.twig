@@ -5,6 +5,7 @@
 {% set devMode = craft.app.config.general.devMode %}
 
 {% set classes = [] %}
+{% set styles = {} %}
 
 {% if fixed ?? false %}
   {% set classes = classes|merge(['fixed']) %}
@@ -20,6 +21,14 @@
   {% set classes = classes|merge(['rtl']) %}
 {% endif %}
 
+{% if mobileMode ?? false %}
+  {% set classes = classes|merge(['vertical']) %}
+{% endif %}
+
+{% if toolbarToggle ?? false %}
+  {% set styles = styles|merge({'--admin-bar-toolbar-toggle-display': 'inline-flex'}) %}
+{% endif %}
+
 {% set adminBarAttributes = {
   class: classes,
   'greeting-text': 'greeting-text'|t('admin-bar', params = { name: currentUser.friendlyName }),
@@ -29,6 +38,7 @@
   'show-environment': devMode,
   'show-greeting': displayGreeting,
   'show-logout': displayLogout,
+  style: styles,
 } %}
 
 {% if currentUser and (currentUser.photo ?? false) %}
@@ -36,21 +46,41 @@
     'avatar-alt': 'avatar-alt'|t('admin-bar', params = { name: currentUser.friendlyName }),
     'avatar-src': currentUser.photo.getUrl({
       mode: 'crop',
-      width: 50,
-      height: 50,
+      width: 100,
+      height: 100,
     }),
+  }) %}
+{% endif %}
+
+{% if mobileMode %}
+  {% set adminBarAttributes = adminBarAttributes|merge({
+    'auto-toggle-vertical': true,
+    'toolbar-toggle': '',
+  }) %}
+{% endif %}
+
+{% if toolbarToggle %}
+  {% set adminBarAttributes = adminBarAttributes|merge({
+    'toolbar-toggle': 'toolbar',
+  }) %}
+{% endif %}
+
+{% if toolbarToggleDraggable %}
+  {% set adminBarAttributes = adminBarAttributes|merge({
+    'toolbar-toggle-drag': true,
   }) %}
 {% endif %}
 
 {% set textElements = textElements ?? [] %}
 
 {% if devMode %}
-  {% set envLabelStyle = (theme in ['craft-cp', 'sakura', 'stark']) ? {} : { '--admin-bar-text-label-color-bg': 'var(--admin-bar-environment-bg-color)' } %}
+  {% set adminBarAttributes = adminBarAttributes|merge({ 'environment-description': 'Craft CMS is running in Dev Mode.'|t('admin-bar') }) %}
+
+  {% set envLabelStyle = (theme in ['craft-cp', 'sakura', 'stark']) ? {} : { '--admin-bar-text-badge-color-bg': 'var(--admin-bar-environment-bg-color)' } %}
 
   {% set textElements = textElements|merge([{
-    'label-content': craft.app.config.env|upper,
+    'badge-content': craft.app.config.env|upper,
     style: envLabelStyle,
-    title: 'Craft CMS is running in Dev Mode.'|t('admin-bar'),
   }]) %}
 {% endif %}
 
@@ -62,7 +92,7 @@
   <admin-bar {{ attr(adminBarAttributes) }}>
     {% if displayGreeting %}
       <nav slot="greeting-popover">
-        <admin-bar-text multi-line {% if currentUser.admin %}label-content="ADMIN"{% endif %}>
+        <admin-bar-text multi-line {% if currentUser.admin %}badge-content="ADMIN"{% endif %}>
           <div style="margin-inline-end: 1em;">
             <strong style="display: block">{{ currentUser.fullName }}</strong>
             <em style="display: block">{{ currentUser.username }}</em>
@@ -72,6 +102,11 @@
         <admin-bar-button button-href="{{ cpUrl('myaccount') }}" style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);">
           {{ 'Profile'|t('admin-bar') }}
           <span slot="before-label">{{ self.iconUser }}</span>
+        </admin-bar-button>
+
+        <admin-bar-button button-href="{{ cpUrl('myaccount/addresses') }}">
+          {{ 'Addresses'|t('admin-bar') }}
+          <span slot="before-label">{{ self.iconUserAddresses }}</span>
         </admin-bar-button>
 
         {% if currentUser.can('assignUserPermissions') %}
@@ -86,10 +121,13 @@
           <span slot="before-label">{{ self.iconUserPreferences }}</span>
         </admin-bar-button>
 
-        <admin-bar-button button-href="{{ cpUrl('myaccount/addresses') }}">
-          {{ 'Addresses'|t('admin-bar') }}
-          <span slot="before-label">{{ self.iconUserAddresses }}</span>
-        </admin-bar-button>
+        {% if currentUser and currentUser.admin %}
+          <admin-bar-checkbox id="admin-bar-checkbox-debug-toolbar" {% if currentUser.getPreference('enableDebugToolbarForSite') %}checked{% endif %} input-switch>
+            {{ 'Debug Toolbar'|t('admin-bar') }}
+            <span slot="checked-icon">{{ self.iconChecked }}</span>
+            <span slot="unchecked-icon">{{ self.iconUnchecked }}</span>
+          </admin-bar-checkbox>
+        {% endif %}
       </nav>
     {% endif %}
 
@@ -141,7 +179,7 @@
     {% if currentUser and displayUtilitiesLink ?? true %}
       <admin-bar-button button-href="{{ cpUrl('utilities') }}" label-text="{{ 'Utilities'|t('admin-bar') }}">{% apply spaceless %}
           {% if utilitiesNotificationCount > 0 %}
-            <span slot="before-label"><admin-bar-text aria-hidden="true" label-content="{{ utilitiesNotificationCount }}" style="--admin-bar-text-padding: 0"></admin-bar-text></span>
+            <span slot="before-label"><admin-bar-text aria-hidden="true" badge-content="{{ utilitiesNotificationCount }}" style="--admin-bar-text-padding: 0"></admin-bar-text></span>
           {% else %}
             <span slot="before-label">{{ self.iconUtilities }}</span>
           {% endif %}
@@ -233,6 +271,15 @@
   {{ svg('@appicons/gauge.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
+{# checkboxes #}
+{% macro iconChecked() %}{% apply spaceless %}
+  {{ svg('@appicons/square-check.svg')|attr({ class: 'icon' }) }}
+{% endapply %}{% endmacro %}
+
+{% macro iconUnchecked() %}{% apply spaceless %}
+  {{ svg('@appicons/square.svg')|attr({ class: 'icon' }) }}
+{% endapply %}{% endmacro %}
+
 {# edit #}
 {% macro iconEdit() %}{% apply spaceless %}
   {{ svg('@appicons/pencil.svg')|attr({ class: 'icon' }) }}
@@ -253,17 +300,14 @@
   {{ svg('@appicons/address-card.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
-{# user #}
 {% macro iconUserPermissions() %}{% apply spaceless %}
   {{ svg('@appicons/key-skeleton.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
-{# user #}
 {% macro iconUserPreferences() %}{% apply spaceless %}
   {{ svg('@appicons/swatchbook.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
-{# user #}
 {% macro iconUserAddresses() %}{% apply spaceless %}
   {{ svg('@appicons/map-location.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}

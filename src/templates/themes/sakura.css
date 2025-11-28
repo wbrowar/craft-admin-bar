@@ -7,8 +7,8 @@
     --admin-bar-color-highlight: oklch(0.7 0.317 328.334);
     --admin-bar-color-text: oklch(0.549 0.24 328.254);
     --admin-bar-environment-bg-color: oklch(0.661 0.289 328.254);
-    --admin-bar-text-label-color-bg: oklch(0.661 0.289 328.254);
-    --admin-bar-text-label-color-text: oklch(0.969 0.027 325.784);
+    --admin-bar-text-badge-color-bg: oklch(0.661 0.289 328.254);
+    --admin-bar-text-badge-color-text: oklch(0.969 0.027 325.784);
     --admin-bar-color-highlight-logout: oklch(0.327 0.043 72.558);
     --admin-bar-color-text-logout: oklch(0.864 0.214 123.919);
     --admin-bar-progress-color: oklch(0.7 0.317 328.334);

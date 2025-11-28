@@ -1,8 +1,8 @@
 {% if entry ?? false %}
   <admin-bar-text
       class="admin-bar-widget"
-      label-content="{{ craft.viewCount.total(entry.id) }} {{ displayWidgetLabels ? '' : 'Views'|t('admin-bar') }}"
-      label-position="before"
+      badge-content="{{ craft.viewCount.total(entry.id) }} {{ displayWidgetLabels ? '' : 'Views'|t('admin-bar') }}"
+      badge-position="before"
   >
     {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
   </admin-bar-text>

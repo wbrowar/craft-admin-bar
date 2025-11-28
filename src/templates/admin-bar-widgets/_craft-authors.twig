@@ -13,7 +13,7 @@
       {% endfor %}
     </div>
     {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
-    <div slot="popover">
+    <div slot="popover" style="display: flex;">
       {% for author in authors %}
         {{ self.authorDisplay(author) }}
       {% endfor %}
@@ -33,26 +33,22 @@
         style="display:block; max-width: 25px; width: 25px; height: auto; border-radius: 50%;"
     >
   {% else %}
-    <div class="admin-bar-widget--craft-authors__avatar-text" style="display: flex; align-items: center; justify-content: center; background-color: color-mix(in oklch, var(--admin-bar-text-label-color-bg), rgba(73, 73, 73, 0.8) 50%); box-sizing: border-box; width: 25px; height: 25px; border: 2px solid color-mix(in oklch, var(--admin-bar-text-label-color-bg), transparent 30%); border-radius: 50%; font-size: 13px; color: color-mix(in oklch, var(--admin-bar-text-label-color-text), transparent 30%);">{{ author.name|slice(0,1)|upper }}</div>
+    <div class="admin-bar-widget--craft-authors__avatar-text" style="display: flex; align-items: center; justify-content: center; background-color: color-mix(in oklch, var(--admin-bar-text-badge-color-bg), rgba(73, 73, 73, 0.8) 50%); box-sizing: border-box; width: 25px; height: 25px; border: 2px solid color-mix(in oklch, var(--admin-bar-text-badge-color-bg), transparent 30%); border-radius: 50%; font-size: 13px; color: color-mix(in oklch, var(--admin-bar-text-badge-color-text), transparent 30%);">{{ author.name|slice(0,1)|upper }}</div>
   {% endif %}
 {% endmacro %}
 
 {% macro authorDisplay(author, widgetLabel) %}
   {% if widgetLabel ?? false %}
-    <admin-bar-text
-        style="display:block;"
-    >
+    <admin-bar-text>
       {{ self.authorImage(author) }}
       <admin-bar-text
-          label-content="{{ author.name }}"
-          style="--admin-bar-text-padding: 0; display: block;"
+          badge-content="{{ author.name }}"
+          style="--admin-bar-text-padding: 0;"
       ></admin-bar-text>
       {{ widgetLabel }}
     </admin-bar-text>
   {% else %}
-    <admin-bar-text
-        style="display:block;"
-    >
+    <admin-bar-text>
       {{ self.authorImage(author) }}
       {{ author.name }}
     </admin-bar-text>

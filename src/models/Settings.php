@@ -126,11 +126,32 @@ class Settings extends Model
     public bool $displayWidgetLabels = false;
 
     /**
+     * TODO
+     *
+     * @var bool
+     */
+    public bool $mobileMode = false;
+
+    /**
      * Sets CSS variables based on a set of predefined themes.
      *
      * @var string
      */
     public string $theme = 'default';
+
+    /**
+     * TODO
+     *
+     * @var bool
+     */
+    public bool $toolbarToggle = false;
+
+    /**
+     * TODO
+     *
+     * @var bool
+     */
+    public bool $toolbarToggleDraggable = false;
 
     /**
      * Enables the Admin Bar Widget: Blitz

@@ -418,13 +418,19 @@ class AdminBarWidget
         // SEO
         $config[self::WIDGET_SEO] = [
             'handle' => 'seo',
-            'onSettingsPreivew' => $onSettingsPreivew,
         ];
         if (
             !empty($entry)
             && $settings->widgetEnabledSeo
             && ($widgetPlugins[self::WIDGET_SEO]['version'] ?? false)
         ) {
+            $seoFieldHandle = null;
+            $fields = $entry->getFieldLayout()->getCustomFields();
+            foreach ($fields as $field) {
+                if (get_class($field) == 'ether\seo\fields\SeoField') {
+                    $config[self::WIDGET_SEO]['handle'] = $field->handle;
+                }
+            }
             $config[self::WIDGET_SEO]['handle'] = $userWidgetsConfig[self::WIDGET_SEO]['handle'] ?? $config[self::WIDGET_SEO]['handle'];
         }
 
@@ -481,8 +487,6 @@ class AdminBarWidget
                             $resultsFormatted = [];
                             $editableSectionIds = Craft::$app->getEntries()->getEditableSectionIds();
 
-//                            (entry.section.id in craft.app.entries.editableSectionIds)
-
                             foreach ($searchResponse as $entry) {
                                 $addEditUrl = in_array($entry->section->id, $editableSectionIds);
 
@@ -500,7 +504,7 @@ class AdminBarWidget
                     
                     $results = [
                         'data' => $data,
-                        'message' => Craft::t('admin-bar', 'Blitz cache refreshed.'),
+                        'message' => Craft::t('admin-bar', 'Search was successful.'),
                         'status' => 'success',
                     ];
                 }

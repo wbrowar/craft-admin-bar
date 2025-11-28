@@ -11,8 +11,8 @@
 
   {% if displayWidgetLabels %}
     <admin-bar-text
-        label-content="{{ widgetConfig['cached'] ? 'Cached'|t('admin-bar') : 'Uncached'|t('admin-bar') }}"
-        style="--admin-bar-text-padding: 0; display: block;"
+        badge-content="{{ widgetConfig['cached'] ? 'Cached'|t('admin-bar') : 'Uncached'|t('admin-bar') }}"
+        style="--admin-bar-text-padding: 0;"
     ></admin-bar-text>
     {{ widgets[pluginHandle].name }}
   {% else %}

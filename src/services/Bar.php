@@ -120,7 +120,10 @@ class Bar extends Component
             $config['displayGuideLink'] = $settings->displayGuideLink;
             $config['displayUtilitiesLink'] = $settings->displayUtilitiesLink && !empty($userUtilities);
             $config['displaySettingsLink'] = $settings->displaySettingsLink && Craft::$app->getConfig()->getGeneral()->allowAdminChanges;
+            $config['mobileMode'] = $settings->mobileMode;
             $config['theme'] = $settings->theme;
+            $config['toolbarToggle'] = $settings->toolbarToggle;
+            $config['toolbarToggleDraggable'] = $settings->toolbarToggleDraggable;
 
             // Pro features
             $config['proEdition'] = AdminBar::$pro;

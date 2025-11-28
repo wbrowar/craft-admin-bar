@@ -6,8 +6,8 @@
     --admin-bar-button-color-text: oklch(0.971 0.014 258.345);
     --admin-bar-color-highlight: oklch(0.879 0.055 252.669);
     --admin-bar-color-text: oklch(0.971 0.014 258.345 / 0.9);
-    --admin-bar-text-label-color-bg: oklch(0.971 0.014 258.345);
-    --admin-bar-text-label-color-text: oklch(0.346 0.167 262.55);
+    --admin-bar-text-badge-color-bg: oklch(0.971 0.014 258.345);
+    --admin-bar-text-badge-color-text: oklch(0.346 0.167 262.55);
     --admin-bar-bg-filter: blur(14px) brightness(0.6) saturate(0.3);
     --admin-bar-progress-color: oklch(1 0 0 / 0.4);
 
