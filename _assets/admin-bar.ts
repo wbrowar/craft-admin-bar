@@ -1,4 +1,4 @@
-import { defineAdminBarElements } from 'admin-bar-component'
+import { AdminBar, defineAdminBarElements } from 'admin-bar-component'
 import './admin-bar.css'
 import './components/CraftAdminBar.ts'
 import type CraftAdminBar from './components/CraftAdminBar.ts'
@@ -29,7 +29,7 @@ defineAdminBarElements(['button', 'checkbox', 'text'])
  * @param request
  * @param body
  */
-window.adminBarPostRequest = async (target: HTMLElement | null, request: string, body: string = '') => {
+window.adminBarPostRequest = async (target: AdminBar | null, request: string, body: string = '') => {
   try {
     if (import.meta.env.DEV) {
       console.log('Firing adminBarPostRequest with params', target, request, body)

@@ -8,9 +8,12 @@
       width: 43px;
     }
     &::part(buttons) {
-      flex-flow: row wrap;
-      justify-content: end;
-      overflow: auto;
+      @container not style(--admin-bar-vertical: true) {
+        flex-flow: row wrap;
+        justify-content: end;
+        position: relative;
+        overflow-x: unset;
+      }
     }
 
     & > * {
