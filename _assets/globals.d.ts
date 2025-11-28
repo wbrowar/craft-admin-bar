@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    adminBarPostRequest(target: HTMLElement, request: string, body: string)
+    adminBarPostRequest(target: HTMLElement | null, request: string, body: string)
   }
 }
 

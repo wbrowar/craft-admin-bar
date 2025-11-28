@@ -85,140 +85,140 @@
 {% endif %}
 
 <craft-admin-bar
+    data-admin-bar="{{ adminBarAttributes.id }}"
     data-action-url="{{ actionUrl('admin-bar/admin-bar') }}"
     data-api-status="ready"
     data-session-action-url="{{ actionUrl('users/session-info') }}"
->
-  <admin-bar {{ attr(adminBarAttributes) }}>
-    {% if displayGreeting %}
-      <nav slot="greeting-popover">
-        <admin-bar-text multi-line {% if currentUser.admin %}badge-content="ADMIN"{% endif %}>
-          <div style="margin-inline-end: 1em;">
-            <strong style="display: block">{{ currentUser.fullName }}</strong>
-            <em style="display: block">{{ currentUser.username }}</em>
-          </div>
-        </admin-bar-text>
+></craft-admin-bar>
+<admin-bar {{ attr(adminBarAttributes) }}>
+  {% if displayGreeting %}
+    <nav slot="greeting-popover">
+      <admin-bar-text multi-line {% if currentUser.admin %}badge-content="ADMIN"{% endif %}>
+        <div style="margin-inline-end: 1em;">
+          <strong style="display: block">{{ currentUser.fullName }}</strong>
+          <em style="display: block">{{ currentUser.username }}</em>
+        </div>
+      </admin-bar-text>
 
-        <admin-bar-button button-href="{{ cpUrl('myaccount') }}" style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);">
-          {{ 'Profile'|t('admin-bar') }}
-          <span slot="before-label">{{ self.iconUser }}</span>
+      <admin-bar-button button-href="{{ cpUrl('myaccount') }}" style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);">
+        {{ 'Profile'|t('admin-bar') }}
+        <span slot="before-label">{{ self.iconUser }}</span>
+      </admin-bar-button>
+
+      <admin-bar-button button-href="{{ cpUrl('myaccount/addresses') }}">
+        {{ 'Addresses'|t('admin-bar') }}
+        <span slot="before-label">{{ self.iconUserAddresses }}</span>
+      </admin-bar-button>
+
+      {% if currentUser.can('assignUserPermissions') %}
+        <admin-bar-button button-href="{{ cpUrl('myaccount/permissions') }}">
+          {{ 'Permissions'|t('admin-bar') }}
+          <span slot="before-label">{{ self.iconUserPermissions }}</span>
         </admin-bar-button>
-
-        <admin-bar-button button-href="{{ cpUrl('myaccount/addresses') }}">
-          {{ 'Addresses'|t('admin-bar') }}
-          <span slot="before-label">{{ self.iconUserAddresses }}</span>
-        </admin-bar-button>
-
-        {% if currentUser.can('assignUserPermissions') %}
-          <admin-bar-button button-href="{{ cpUrl('myaccount/permissions') }}">
-            {{ 'Permissions'|t('admin-bar') }}
-            <span slot="before-label">{{ self.iconUserPermissions }}</span>
-          </admin-bar-button>
-        {% endif %}
-
-        <admin-bar-button button-href="{{ cpUrl('myaccount/preferences') }}">
-          {{ 'Preferences'|t('admin-bar') }}
-          <span slot="before-label">{{ self.iconUserPreferences }}</span>
-        </admin-bar-button>
-
-        {% if currentUser and currentUser.admin %}
-          <admin-bar-checkbox id="admin-bar-checkbox-debug-toolbar" {% if currentUser.getPreference('enableDebugToolbarForSite') %}checked{% endif %} input-switch>
-            {{ 'Debug Toolbar'|t('admin-bar') }}
-            <span slot="checked-icon">{{ self.iconChecked }}</span>
-            <span slot="unchecked-icon">{{ self.iconUnchecked }}</span>
-          </admin-bar-checkbox>
-        {% endif %}
-      </nav>
-    {% endif %}
-
-    {% if displayDashboardLink ?? true %}
-      <admin-bar-button button-href="{{ cpUrl('dashboard') }}" label-text="{{ 'Dashboard'|t }}"><span slot="before-label">{{ self.iconDashboard }}</span></admin-bar-button>
-    {% endif %}
-
-    {% if editLinkUrl ?? false %}
-    <admin-bar-button button-href="{{ cpUrl(editLinkUrl) }}" label-text="{{ 'Edit {name}'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
-    {% else %}
-      {% if entry ?? false and ((userCanEdit ?? false) or (entry.section.id in craft.app.entries.editableSectionIds)) %}
-        {% set sectionName = displayDefaultEditSection ? ' ' ~ entry.section : ''  %}
-        {% set entryEditUrl = entry.cpEditUrl %}
-
-        {% if (returnUrl is defined and returnUrl != null) or returnUrl is not defined %}
-          {% set entryEditUrlFormatted = cpUrl(entryEditUrl, { returnUrl: returnUrl|default('{url}')|hash }) %}
-        {% else %}
-          {% set entryEditUrlFormatted = cpUrl(entryEditUrl) %}
-        {% endif %}
-
-        <admin-bar-button button-href="{{ entryEditUrlFormatted }}" label-text="{{ 'Edit {name}'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
       {% endif %}
-    {% endif %}
 
-    {% if not 'guide' in widgets|keys and displayGuideLink and plugin('guide') and (currentUser ? currentUser.can('accessPlugin-guide') : true) %}
-      <admin-bar-button button-href="{{ cpUrl('guide') }}" label-text="{{ 'CMS Guide'|t('admin-bar') }}"><span slot="before-label">{{ self.iconGuide }}</span></admin-bar-button>
-    {% endif %}
+      <admin-bar-button button-href="{{ cpUrl('myaccount/preferences') }}">
+        {{ 'Preferences'|t('admin-bar') }}
+        <span slot="before-label">{{ self.iconUserPreferences }}</span>
+      </admin-bar-button>
 
-    {% if customLinks ?? false %}
-      {% for link in customLinks %}
-        {% if link.linkUrl ?? false %}
-          {% if link.adminOnly != true %}
-            <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
-          {% elseif link.adminOnly and currentUser and currentUser.admin %}
-            <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
-          {% endif %}
+      {% if currentUser and currentUser.admin %}
+        <admin-bar-checkbox id="admin-bar-checkbox-debug-toolbar" {% if currentUser.getPreference('enableDebugToolbarForSite') %}checked{% endif %} input-switch>
+          {{ 'Debug Toolbar'|t('admin-bar') }}
+          <span slot="checked-icon">{{ self.iconChecked }}</span>
+          <span slot="unchecked-icon">{{ self.iconUnchecked }}</span>
+        </admin-bar-checkbox>
+      {% endif %}
+    </nav>
+  {% endif %}
+
+  {% if displayDashboardLink ?? true %}
+    <admin-bar-button button-href="{{ cpUrl('dashboard') }}" label-text="{{ 'Dashboard'|t }}"><span slot="before-label">{{ self.iconDashboard }}</span></admin-bar-button>
+  {% endif %}
+
+  {% if editLinkUrl ?? false %}
+  <admin-bar-button button-href="{{ cpUrl(editLinkUrl) }}" label-text="{{ 'Edit {name}'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
+  {% else %}
+    {% if entry ?? false and ((userCanEdit ?? false) or (entry.section.id in craft.app.entries.editableSectionIds)) %}
+      {% set sectionName = displayDefaultEditSection ? ' ' ~ entry.section : ''  %}
+      {% set entryEditUrl = entry.cpEditUrl %}
+
+      {% if (returnUrl is defined and returnUrl != null) or returnUrl is not defined %}
+        {% set entryEditUrlFormatted = cpUrl(entryEditUrl, { returnUrl: returnUrl|default('{url}')|hash }) %}
+      {% else %}
+        {% set entryEditUrlFormatted = cpUrl(entryEditUrl) %}
+      {% endif %}
+
+      <admin-bar-button button-href="{{ entryEditUrlFormatted }}" label-text="{{ 'Edit {name}'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
+    {% endif %}
+  {% endif %}
+
+  {% if not 'guide' in widgets|keys and displayGuideLink and plugin('guide') and (currentUser ? currentUser.can('accessPlugin-guide') : true) %}
+    <admin-bar-button button-href="{{ cpUrl('guide') }}" label-text="{{ 'CMS Guide'|t('admin-bar') }}"><span slot="before-label">{{ self.iconGuide }}</span></admin-bar-button>
+  {% endif %}
+
+  {% if customLinks ?? false %}
+    {% for link in customLinks %}
+      {% if link.linkUrl ?? false %}
+        {% if link.adminOnly != true %}
+          <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
+        {% elseif link.adminOnly and currentUser and currentUser.admin %}
+          <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
         {% endif %}
-      {% endfor %}
-    {% endif %}
-
-    {% for link in additionalLinks %}
-      {{ self.addConfigLink(link) }}
+      {% endif %}
     {% endfor %}
+  {% endif %}
 
-    {% if not proEdition %}
-      <span style="flex-grow: 1;"></span>
+  {% for link in additionalLinks %}
+    {{ self.addConfigLink(link) }}
+  {% endfor %}
+
+  {% if not proEdition %}
+    <span style="flex-grow: 1;"></span>
+  {% endif %}
+
+  {% if currentUser and displayUtilitiesLink ?? true %}
+    <admin-bar-button button-href="{{ cpUrl('utilities') }}" label-text="{{ 'Utilities'|t('admin-bar') }}">{% apply spaceless %}
+        {% if utilitiesNotificationCount > 0 %}
+          <span slot="before-label"><admin-bar-text aria-hidden="true" badge-content="{{ utilitiesNotificationCount }}" style="--admin-bar-text-padding: 0"></admin-bar-text></span>
+        {% else %}
+          <span slot="before-label">{{ self.iconUtilities }}</span>
+        {% endif %}
+      {% endapply %}</admin-bar-button>
+  {% endif %}
+
+  {% if currentUser and currentUser.admin and displaySettingsLink ?? true %}
+    <admin-bar-button button-href="{{ cpUrl('settings') }}" label-text="{{ 'Settings'|t('admin-bar') }}"><span slot="before-label">{{ self.iconSettings }}</span></admin-bar-button>
+  {% endif %}
+
+  {% if proEdition %}
+    <span style="flex-grow: 1;"></span>
+
+    {% if widgets|length %}
+      {% include 'admin-bar/_plugin-widgets.twig' with {
+        displayWidgetLabels,
+        enabledWidgets,
+        entry,
+        widgets,
+        widgetsConfig,
+      } only %}
     {% endif %}
 
-    {% if currentUser and displayUtilitiesLink ?? true %}
-      <admin-bar-button button-href="{{ cpUrl('utilities') }}" label-text="{{ 'Utilities'|t('admin-bar') }}">{% apply spaceless %}
-          {% if utilitiesNotificationCount > 0 %}
-            <span slot="before-label"><admin-bar-text aria-hidden="true" badge-content="{{ utilitiesNotificationCount }}" style="--admin-bar-text-padding: 0"></admin-bar-text></span>
-          {% else %}
-            <span slot="before-label">{{ self.iconUtilities }}</span>
-          {% endif %}
-        {% endapply %}</admin-bar-button>
+    {% if customWidgets ?? false %}
+      {{ include(template_from_string(customWidgets)) }}
     {% endif %}
 
-    {% if currentUser and currentUser.admin and displaySettingsLink ?? true %}
-      <admin-bar-button button-href="{{ cpUrl('settings') }}" label-text="{{ 'Settings'|t('admin-bar') }}"><span slot="before-label">{{ self.iconSettings }}</span></admin-bar-button>
+    {% if globalCustomWidgets ?? false %}
+      {{ include(template_from_string(globalCustomWidgets)) }}
     {% endif %}
+  {% endif %}
 
-    {% if proEdition %}
-      <span style="flex-grow: 1;"></span>
-
-      {% if widgets|length %}
-        {% include 'admin-bar/_plugin-widgets.twig' with {
-          displayWidgetLabels,
-          enabledWidgets,
-          entry,
-          widgets,
-          widgetsConfig,
-        } only %}
-      {% endif %}
-
-      {% if customWidgets ?? false %}
-        {{ include(template_from_string(customWidgets)) }}
-      {% endif %}
-
-      {% if globalCustomWidgets ?? false %}
-        {{ include(template_from_string(globalCustomWidgets)) }}
-      {% endif %}
-    {% endif %}
-
-    {% if textElements|length %}
-      {% for textAttrs in textElements %}
-        <admin-bar-text {{ attr(textAttrs) }}></admin-bar-text>
-      {% endfor %}
-    {% endif %}
-  </admin-bar>
-</craft-admin-bar>
+  {% if textElements|length %}
+    {% for textAttrs in textElements %}
+      <admin-bar-text {{ attr(textAttrs) }}></admin-bar-text>
+    {% endfor %}
+  {% endif %}
+</admin-bar>
 
 {% if useCss %}
   {% css adminBarOnPageCss() %}

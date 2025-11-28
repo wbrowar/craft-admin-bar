@@ -23,7 +23,11 @@ export default class CraftAdminBarSearch extends HTMLElement {
       const response: {
         searchResults: { cpEditUrl: string; title: string; url: string }[]
         searchResultsStatus: 'OK' | 'NO_RESULTS'
-      } = await window.adminBarPostRequest(this, 'craft-search-search', JSON.stringify({ query: input.value }))
+      } = await window.adminBarPostRequest(
+        this.closest('admin-bar'),
+        'craft-search-search',
+        JSON.stringify({ query: input.value })
+      )
 
       if (this._resultsElement) {
         let template

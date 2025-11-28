@@ -1,5 +1,5 @@
 import { CraftAdminBarResponse } from '../admin-bar.ts'
-import { AdminBarCheckbox, AdminBarCheckboxChangeEvent } from 'admin-bar-component'
+import { AdminBar, AdminBarCheckbox, AdminBarCheckboxChangeEvent } from 'admin-bar-component'
 
 enum ApiStatus {
   Errored = 'errored',
@@ -17,6 +17,8 @@ enum ErrorCode {
 // TODO change this to extend AdminBar class
 export default class CraftAdminBar extends HTMLElement {
   static observedAttributes = ['data-api-status']
+
+  #adminBar: AdminBar | null = null
 
   /**
    * The url to the `admin-bar/admin-bar` controller action.
@@ -59,6 +61,8 @@ export default class CraftAdminBar extends HTMLElement {
   }
 
   connectedCallback(): void {
+    this.#adminBar = document.getElementById(this.dataset.adminBar ?? '') ?? null
+
     this._actionUrl = this.dataset.actionUrl
     this._sessionActionUrl = this.dataset.sessionActionUrl
 
@@ -161,17 +165,16 @@ export default class CraftAdminBar extends HTMLElement {
    */
   private setApiStatus(apiStatus: ApiStatus) {
     // Visually show the progress of the request.
-    const adminBarElement = this.querySelector('admin-bar')
-    if (adminBarElement) {
+    if (this.#adminBar) {
       switch (apiStatus) {
         case ApiStatus.Errored:
-          adminBarElement.setAttribute('progress', '-1')
+          this.#adminBar.setAttribute('progress', '-1')
           break
         case ApiStatus.Loading:
-          adminBarElement.setAttribute('progress', '50')
+          this.#adminBar.setAttribute('progress', '50')
           break
         case ApiStatus.Resolved:
-          adminBarElement.setAttribute('progress', '100')
+          this.#adminBar.setAttribute('progress', '100')
           break
       }
     }
@@ -181,14 +184,18 @@ export default class CraftAdminBar extends HTMLElement {
   }
 
   private setUpDebugToolbarCheckbox() {
-    const checkboxElement: AdminBarCheckbox = this.querySelector('#admin-bar-checkbox-debug-toolbar')
+    const checkboxElement: AdminBarCheckbox = this.#adminBar?.querySelector('#admin-bar-checkbox-debug-toolbar')
 
     if (checkboxElement) {
       // Add event listener to toggle debug toolbar
       checkboxElement.addEventListener('change', async (e: AdminBarCheckboxChangeEvent) => {
         checkboxElement.setAttribute('disabled', true)
 
-        await window.adminBarPostRequest(this, 'admin-bar-debug-toolbar-toggle', JSON.stringify({ query: e.checked }))
+        await window.adminBarPostRequest(
+          document.getElementById(this.dataset.adminBar ?? ''),
+          'admin-bar-debug-toolbar-toggle',
+          JSON.stringify({ query: e.checked })
+        )
         checkboxElement.removeAttribute('disabled')
       })
     }
