@@ -60,16 +60,7 @@ admin-bar {
   }
 }
 .admin-bar-widget-label {
-  /*: var(--admin-bar-button-color-bg);*/
-  /*: var(--admin-bar-button-color-bg-hover);*/
-  /*--admin-bar-color-text: var(--admin-bar-button-color-text);*/
-  /*--admin-bar-text-badge-color-bg: var(--admin-bar-button-color-bg);*/
-  /*--admin-bar-text-badge-color-text: var(--admin-bar-button-color-text);*/
   --admin-bar-text-padding: 0;
-
-  admin-bar-button:hover & {
-    --admin-bar-color-text: var(--admin-bar-color-highlight);
-  }
 
   @container not style(--admin-bar-vertical: true) {
     &.admin-bar-widget-label-hidden {
