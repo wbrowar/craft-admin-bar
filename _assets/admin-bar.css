@@ -1,6 +1,9 @@
 @import url(admin-bar-component/dist/admin-bar.css);
 
 admin-bar {
+  container-name: admin-bar;
+  container-type: inline-size;
+
   & svg.icon {
     display: block;
     width: var(--admin-bar-icon-width, 1rem);
@@ -47,6 +50,36 @@ admin-bar {
           opacity: 1;
         }
       }
+    }
+  }
+}
+.admin-bar-widget-badge {
+  admin-bar-button:hover & {
+    --admin-bar-text-badge-color-bg: var(--admin-bar-color-highlight);
+    --admin-bar-text-badge-color-text: var(--admin-bar-button-color-text);
+  }
+}
+.admin-bar-widget-label {
+  /*: var(--admin-bar-button-color-bg);*/
+  /*: var(--admin-bar-button-color-bg-hover);*/
+  /*--admin-bar-color-text: var(--admin-bar-button-color-text);*/
+  /*--admin-bar-text-badge-color-bg: var(--admin-bar-button-color-bg);*/
+  /*--admin-bar-text-badge-color-text: var(--admin-bar-button-color-text);*/
+  --admin-bar-text-padding: 0;
+
+  admin-bar-button:hover & {
+    --admin-bar-color-text: var(--admin-bar-color-highlight);
+  }
+
+  @container not style(--admin-bar-vertical: true) {
+    &.admin-bar-widget-label-hidden {
+      clip: rect(0 0 0 0);
+      clip-path: inset(100%);
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      white-space: nowrap;
+      overflow: hidden;
     }
   }
 }

@@ -1,3 +1,5 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
 {% if entry ?? false %}
   {% set popoverInfo = [] %}
 
@@ -20,15 +22,7 @@
   <admin-bar-button class="admin-bar-widget admin-bar-widget--published">
     {{ iconSvg('newspaper')|attr({ class: 'icon' }) }}
     {% set postDateValue = entry.postDate|date(widgetConfig.dateFormat) ~ ' ' ~ entry.postDate|time(widgetConfig.timeFormat) %}
-    {% if displayWidgetLabels %}
-      <admin-bar-text
-          badge-content="{{ postDateValue }}"
-          style="--admin-bar-text-padding: 0;"
-      ></admin-bar-text>
-      {{ 'Post Date'|t('admin-bar') }}
-    {% else %}
-      {{ postDateValue }}
-    {% endif %}
+    {{ pluginWidgets.widgetBadgeAndLabel(postDateValue, 'Post Date'|t('admin-bar'), displayWidgetLabels) }}
 
     {% if popoverInfo|length %}
       <div slot="popover">

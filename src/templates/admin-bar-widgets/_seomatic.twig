@@ -38,7 +38,7 @@
 
   <admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem">
     {{ svg('@nystudio107/seomatic/icon-mask.svg')|attr({ class: 'icon' }) }}
-    {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
+    {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
     <div slot="popover">
       {{ pluginWidgets.seoMeta(meta) }}
     </div>

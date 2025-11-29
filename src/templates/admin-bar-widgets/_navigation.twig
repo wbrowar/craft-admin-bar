@@ -1,3 +1,5 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
 {% if entry ?? false %}
   {% set popoverInfo = [] %}
 
@@ -46,7 +48,7 @@
   {% if popoverInfo|length %}
     <admin-bar-button class="admin-bar-widget admin-bar-widget--navigation" style="--admin-bar-icon-width: 1.3rem">
       {{ svg('@verbb/navigation/icon-mask.svg')|attr({ class: 'icon' }) }}
-      {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
+      {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
 
       <div slot="popover">
         <div style="padding: var(--admin-bar-inline-padding);">

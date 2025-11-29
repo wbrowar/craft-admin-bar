@@ -1,9 +1,11 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
 {% set widgetElement = widgetConfig['entrySiteLinks']|length ? 'admin-bar-button' : 'admin-bar-text' %}
 
 {% if widgetConfig['currentSite'] %}
   {% set widgetContent %}
     {{ svg('@appicons/' ~ widgetConfig['earthIcon'] ~ '.svg')|attr({ class: 'icon' }) }}
-    {{ widgetConfig['currentSite'].name }}
+    {{ pluginWidgets.widgetBadgeAndLabel(widgetConfig['currentSite'].name, widgets[pluginHandle].name, displayWidgetLabels) }}
 
     {% if widgetConfig['entrySiteLinks']|length %}
       <div slot="popover">

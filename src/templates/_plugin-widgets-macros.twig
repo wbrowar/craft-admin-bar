@@ -29,3 +29,14 @@
     <admin-bar-text dl-content="{{ meta.extrasList|json_encode }}"></admin-bar-text>
   {% endif %}
 {% endmacro %}
+
+{% macro widgetBadgeAndLabel(badge, text, visible) %}
+  {% if badge ?? false %}
+    <admin-bar-text
+        class="admin-bar-widget-badge"
+        badge-content="{{ badge }}"
+        style="--admin-bar-text-padding: 0;"
+    ></admin-bar-text>
+  {% endif %}
+  <admin-bar-text class="admin-bar-widget-label{{ not visible ? ' admin-bar-widget-label-hidden' : '' }}" text-content="{{ text }}"></admin-bar-text>
+{% endmacro %}

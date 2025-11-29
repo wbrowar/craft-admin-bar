@@ -1,6 +1,8 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
 <admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem">
   {{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}
-  {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
+  {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
   <div slot="popover">
     {% if widgetConfig['guides']|length %}
       {% for guide in widgetConfig['guides'] %}

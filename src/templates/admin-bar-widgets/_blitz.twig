@@ -1,3 +1,5 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
 {% set widgetElement = widgetConfig['cachedDate'] ?? false ? 'admin-bar-button' : 'admin-bar-text' %}
 
 {% set widgetContent %}
@@ -9,15 +11,7 @@
     'stroke-linejoin': widgetConfig['cached'] ? null : 'round',
   } }) }}
 
-  {% if displayWidgetLabels %}
-    <admin-bar-text
-        badge-content="{{ widgetConfig['cached'] ? 'Cached'|t('admin-bar') : 'Uncached'|t('admin-bar') }}"
-        style="--admin-bar-text-padding: 0;"
-    ></admin-bar-text>
-    {{ widgets[pluginHandle].name }}
-  {% else %}
-    {{ widgetConfig['cached'] ? 'Cached'|t('admin-bar') : 'Uncached'|t('admin-bar') }}
-  {% endif %}
+  {{ pluginWidgets.widgetBadgeAndLabel(widgetConfig['cached'] ? 'Cached'|t('admin-bar') : 'Uncached'|t('admin-bar'), widgets[pluginHandle].name, displayWidgetLabels) }}
 
   {% if widgetConfig['cachedDate'] ?? false %}
     <div slot="popover">
