@@ -29,6 +29,9 @@ admin-bar {
       }
     }
   }
+  [slot="popover"] {
+    width: stretch;
+  }
 
   &:is(.admin-bar-widget--blitz, .admin-bar-widget--published) admin-bar-text::part(dl) {
     grid-template-columns: max-content max-content;

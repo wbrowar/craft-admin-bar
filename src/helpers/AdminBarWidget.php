@@ -476,9 +476,11 @@ class AdminBarWidget
                     ];
                     
                     if ($params['query'] ?? false) {
+                        $formattedQuery = ctype_alpha($params['query']) ? '*' . $params['query'] . '*' : $params['query'];
+
                         $searchResponse = Entry::find()
                             ->section('*')
-                            ->search($params['query'])
+                            ->search($formattedQuery)
                             ->orderBy('score')
                             ->limit(25)
                             ->all();
@@ -492,6 +494,7 @@ class AdminBarWidget
 
                                 $resultsFormatted[] = [
                                     'cpEditUrl' => $addEditUrl ? $entry->getCpEditUrl() : '',
+                                    'status' => strtoupper($entry->getStatus()),
                                     'title' => $entry->title,
                                     'url' => $entry->url ?? '',
                                 ];

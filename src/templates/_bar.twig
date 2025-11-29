@@ -55,13 +55,13 @@
 {% if mobileMode %}
   {% set adminBarAttributes = adminBarAttributes|merge({
     'auto-toggle-vertical': true,
-    'toolbar-toggle': '',
+    'toolbar-toggle': true,
   }) %}
 {% endif %}
 
 {% if toolbarToggle %}
   {% set adminBarAttributes = adminBarAttributes|merge({
-    'toolbar-toggle': 'toolbar',
+    'toolbar-toggle': true,
   }) %}
 {% endif %}
 

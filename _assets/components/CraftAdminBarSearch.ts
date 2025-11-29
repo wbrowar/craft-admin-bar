@@ -21,7 +21,7 @@ export default class CraftAdminBarSearch extends HTMLElement {
 
     if (input) {
       const response: {
-        searchResults: { cpEditUrl: string; title: string; url: string }[]
+        searchResults: { cpEditUrl: string; title: string; status: string; url: string }[]
         searchResultsStatus: 'OK' | 'NO_RESULTS'
       } = await window.adminBarPostRequest(
         this.closest('admin-bar'),
@@ -55,10 +55,12 @@ export default class CraftAdminBarSearch extends HTMLElement {
 
             // If entry has a URL link to the page. If not, show the title as text.
             const viewButtonElement = liElement.querySelector('admin-bar-button.view')!
+            const viewButtonTitleElement = viewButtonElement.querySelector('admin-bar-text')!
             const entryTitleElement = liElement.querySelector('admin-bar-text.view')!
             if (entry.url ?? false) {
               viewButtonElement.setAttribute('button-href', entry.url)
-              viewButtonElement.setAttribute('label-text', entry.title)
+              viewButtonTitleElement.setAttribute('badge-content', entry.status)
+              viewButtonTitleElement.setAttribute('text-content', entry.title)
               entryTitleElement.remove()
             } else {
               entryTitleElement.setAttribute('text-content', entry.title)

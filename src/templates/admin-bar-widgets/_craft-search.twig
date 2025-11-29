@@ -13,12 +13,12 @@
           <style>
             form {
               display: grid;
-              grid-template-columns: auto max-content;
+              grid-template-columns: 1fr max-content;
               align-items: center;
+              width: 100%;
             }
             input {
               padding-inline: var(--admin-bar-inline-padding);
-              min-width: 300px;
               height: 44px;
               background: var(--craft-admin-bar-color-input-bg, rgb(255 255 255 / .9));
               border: none;
@@ -52,8 +52,8 @@
 
         <template id="admin-bar-search-results-template">
           <li>
-            <admin-bar-text class="view"></admin-bar-text>
-            <admin-bar-button class="view"></admin-bar-button>
+            <admin-bar-text class="view" multi-line></admin-bar-text>
+            <admin-bar-button class="view"><admin-bar-text multi-line></admin-bar-text></admin-bar-button>
             <admin-bar-button class="edit">{{ iconSvg('pencil') }} {{ 'Edit'|t('admin-bar') }}</admin-bar-button>
             <style>
               li {
@@ -61,7 +61,6 @@
 
                 &:hover {
                   --edit-opacity: 1;
-                  background-color: color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 95%);
                 }
                 &:has(:nth-child(2)) {
                   display: grid;
@@ -74,11 +73,22 @@
                 fill: currentColor;
               }
               .edit {
-                opacity: var(--edit-opacity, 0);
+                border-radius: 6px;
+                opacity: var(--edit-opacity, .2);
                 transition: opacity var(--admin-bar-transition-duration, 0) ease-out;
 
                 &:focus {
                   --edit-opacity: 1;
+                }
+              }
+              admin-bar-button.view {
+                &:hover {
+                  --admin-bar-color-text: var(--admin-bar-color-highlight);
+                  --admin-bar-text-badge-color-bg: var(--admin-bar-color-highlight);
+                  --admin-bar-text-badge-color-text: var(--admin-bar-button-color-text, white);
+                }
+                admin-bar-text {
+                  --admin-bar-inline-padding: 0;
                 }
               }
               admin-bar-text.view {
