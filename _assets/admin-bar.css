@@ -42,6 +42,7 @@ admin-bar {
   &.admin-bar-widget--navigation {
     span:has(a svg) {
       & a {
+        color: currentColor;
         transition: color var(--admin-bar-transition-duration) ease-out, opacity calc(var(--admin-bar-transition-duration) * .5) ease-out !important;
         opacity: 0;
       }
