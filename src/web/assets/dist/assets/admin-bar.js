@@ -578,7 +578,8 @@ var ft=e=>{throw TypeError(e)},yt=(e,t,r)=>t.has(e)||ft("Cannot "+r),nt=(e,t,r)=
     }
 
     admin-bar-button:is([greeting-button], [logout-button]),
-    .logout {
+    .logout,
+    .inner-toggle {
       display: block;
       height: 100%;
     }
@@ -757,7 +758,7 @@ var ft=e=>{throw TypeError(e)},yt=(e,t,r)=>t.has(e)||ft("Cannot "+r),nt=(e,t,r)=
                   ${this.tableContent.footers.map(o=>l`<td>${o??""}</td>`)}
                 </tr>
               </tfoot>`:h}
-        </table>`);let r=l`<slot>${t}</slot>`;return(this.badgeContent??!1)&&(r=this.badgePosition==="before"?l`<span class="badge">${this.badgeContent}</span>${r}`:l`${r}<span class="badge">${this.badgeContent}</span>`),l`<span class="admin-bar-text${this.multiLine?" multi-line":""}">${r}</span>`}};qt.styles=S`
+        </table>`);let r=l`<slot>${t}</slot>`;return(this.badgeContent??!1)&&(r=this.badgePosition==="before"?l`<span class="badge" part="badge">${this.badgeContent}</span>${r}`:l`${r}<span class="badge" part="badge">${this.badgeContent}</span>`),l`<span class="admin-bar-text${this.multiLine?" multi-line":""}">${r}</span>`}};qt.styles=S`
     :host {
       display: flex;
       align-items: center;
