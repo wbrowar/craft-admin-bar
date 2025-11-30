@@ -10,6 +10,7 @@
     --admin-bar-text-badge-color-text: oklch(0.346 0.167 262.55);
     --admin-bar-bg-filter: blur(14px) brightness(0.6) saturate(0.3);
     --admin-bar-progress-color: oklch(1 0 0 / 0.4);
+    --widget-search-results-text-badge-color-text: oklch(0.346 0.167 262.55);
 
     @supports (not (font: -apple-system-body)) and (not (-moz-appearance: none)) {
       & {

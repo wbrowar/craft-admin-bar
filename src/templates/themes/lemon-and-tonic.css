@@ -13,6 +13,7 @@
     --admin-bar-bg-filter: blur(8px) brightness(2) saturate(3);
     --admin-bar-progress-color: oklch(0.96 0.24 110.68 / 0.95);
     --admin-bar-progress-height: 3px;
+    --widget-search-results-text-badge-color-text: oklch(0.96 0.24 110.68 / 0.95);
 
     @supports (not (font: -apple-system-body)) and (not (-moz-appearance: none)) {
       & {

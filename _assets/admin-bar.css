@@ -53,12 +53,6 @@ admin-bar {
     }
   }
 }
-.admin-bar-widget-badge {
-  admin-bar-button:hover & {
-    --admin-bar-text-badge-color-bg: var(--admin-bar-color-highlight);
-    --admin-bar-text-badge-color-text: var(--admin-bar-button-color-text);
-  }
-}
 .admin-bar-widget-label {
   --admin-bar-text-padding: 0;
 
