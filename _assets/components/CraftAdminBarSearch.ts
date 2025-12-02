@@ -59,7 +59,7 @@ export default class CraftAdminBarSearch extends HTMLElement {
             const entryTitleElement = liElement.querySelector('admin-bar-text.view')!
             if (entry.url ?? false) {
               viewButtonElement.setAttribute('button-href', entry.url)
-              viewButtonTitleElement.setAttribute('badge-content', entry.status)
+              viewButtonElement.setAttribute('badge-content', entry.status)
               viewButtonTitleElement.setAttribute('text-content', entry.title)
               entryTitleElement.remove()
             } else {

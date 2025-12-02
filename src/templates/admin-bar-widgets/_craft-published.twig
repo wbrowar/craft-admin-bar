@@ -19,10 +19,10 @@
     {% set popoverInfo = popoverInfo|merge([['Notes'|t('admin-bar'), entry.currentRevision.revisionNotes]]) %}
   {% endif %}
 
-  <admin-bar-button class="admin-bar-widget admin-bar-widget--published">
-    {{ iconSvg('newspaper')|attr({ class: 'icon' }) }}
-    {% set postDateValue = entry.postDate|date(widgetConfig.dateFormat) ~ ' ' ~ entry.postDate|time(widgetConfig.timeFormat) %}
-    {{ pluginWidgets.widgetBadgeAndLabel(postDateValue, 'Post Date'|t('admin-bar'), displayWidgetLabels) }}
+  {% set postDateValue = entry.postDate|date(widgetConfig.dateFormat) ~ ' ' ~ entry.postDate|time(widgetConfig.timeFormat) %}
+  <admin-bar-button class="admin-bar-widget admin-bar-widget--published" badge-content="{{ postDateValue }}">
+    {{ iconSvg('newspaper')|attr({ class: 'icon', slot: "before-label" }) }}
+    {{ pluginWidgets.widgetBadgeAndLabel(null, 'Post Date'|t('admin-bar'), displayWidgetLabels) }}
 
     {% if popoverInfo|length %}
       <div slot="popover">

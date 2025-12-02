@@ -4,8 +4,8 @@
 
 {% if widgetConfig['currentSite'] %}
   {% set widgetContent %}
-    {{ svg('@appicons/' ~ widgetConfig['earthIcon'] ~ '.svg')|attr({ class: 'icon' }) }}
-    {{ pluginWidgets.widgetBadgeAndLabel(widgetConfig['currentSite'].name, widgets[pluginHandle].name, displayWidgetLabels) }}
+    {{ svg('@appicons/' ~ widgetConfig['earthIcon'] ~ '.svg')|attr({ class: 'icon', slot: "before-label" }) }}
+    {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
 
     {% if widgetConfig['entrySiteLinks']|length %}
       <div slot="popover">
@@ -20,6 +20,7 @@
   {% endset %}
   <{{ widgetElement }}
       class="admin-bar-widget"
+      badge-content="{{ widgetConfig['currentSite'].name }}"
       style="--admin-bar-icon-width: 1.5rem"
   >{{ widgetContent }}</{{ widgetElement }}>
 {% endif %}

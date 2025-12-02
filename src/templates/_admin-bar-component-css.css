@@ -1,23 +1,25 @@
-/* Added styles to CSS Cascade Layer to make it easier to override them. */
+/**
+ * Added styles to CSS Cascade Layer to make it easier to override them.
+ * Properties that are commented out are shown as examples of CSS variables that are used, but do not require a default to be set.
+ */
 @layer admin-bar {
   admin-bar {
-    /* The height and width of avatar images. */
+    /* The height and width of avatar images. By default the avatar has an aspect ratio of `1 / 1` but this can be overwritten using the `admin-bar::part(avatar)` selector. */
     --admin-bar-avatar-size: 25px;
 
-    /* Sets the background of the `<admin-bar>` elements and popovers using the background shorthand property,
-    allowing you to use a gradient, a solid color, or an image. Setting this removes the "glass" effect and transparencies in popovers. */
+    /* Sets the background of the `<admin-bar>` elements and popovers using the background shorthand property, allowing you to use a gradient, a solid color, or an image. */
     /*--admin-bar-bg: var(--admin-bar-bg-color);*/
 
-    /* The color of the glass background. Will get overridden if `--admin-bar-bg` is set. */
+    /* Used to set the background color and to define colors for minor UI elements. The background will get overridden if `--admin-bar-bg` is set. */
     --admin-bar-bg-color: oklch(0 0 0 / 0.5);
 
-    /* The backdrop-filter value for the glass background. */
+    /* The backdrop-filter value that affects elements behind Admin Bar Component. */
     --admin-bar-bg-filter: blur(13px) brightness(0.65) saturate(2.5);
 
     /* The vertical padding default for Admin Bar child elements. */
     --admin-bar-block-padding: 0;
 
-    /* Border radius value used in different places. */
+    /* The default border radius used on all surfaces. */
     --admin-bar-border-radius: 6px;
 
     /* The color of the text and icons during the hover state. */
@@ -27,14 +29,14 @@
     a different color to make it more obvious that the logout button is not a link. */
     --admin-bar-color-highlight-logout: var(--admin-bar-color-highlight);
 
-    /* The color of the text when the logout button is in the hover state. */
+    /* The color of text when the logout button is in the hover state. */
     --admin-bar-color-text-logout: var(--admin-bar-color-text);
 
-    /* The color of text for everything but button labels.. */
+    /* The color of text for everything but button labels. */
     --admin-bar-color-text: oklch(1 0 89.876 / 0.9);
 
     /* When the `show-environment` attribute is added to an `<admin-bar>` an environment
-    warning will appear. The default looks like yellow, striped police tape,
+    warning will appear. The default looks like yellow, striped hazard tape,
     but you can use any CSS value used in the background shorthand property. */
     --admin-bar-environment-bg: repeating-linear-gradient(
         -45deg,
@@ -56,11 +58,11 @@
     /* The font stack for all text. Set this to `inherit` to match the font-family of the parent element (including fonts set in @font-face). */
     --admin-bar-font-stack: system-ui, sans-serif;
 
-    /* The height of the bar and all of the buttons. */
+    /* The height of the bar and child elements. */
     --admin-bar-height: 43px;
 
     /* The horizontal padding default for Admin Bar child elements. */
-    --admin-bar-inline-padding: 14px;
+    --admin-bar-inline-padding: clamp(4px, 2vw, 13px);
 
     /* Sets the amount of space Admin Bar is inset from the top, bottom, and sides of the viewport. */
     --admin-bar-inset-size: clamp(2px, 1vw, 10px);
@@ -94,8 +96,8 @@
      */
     --admin-bar-progress-color-success: oklch(0.85 0.36 146.38 / 0.7);
 
-    /* The height of the progress bar. */
-    --admin-bar-progress-height: var(--admin-bar-height);
+    /* The height of the progress bar. The progress bar is attached to the bottom of the bar and goes behind all child elements. */
+    --admin-bar-progress-height: 100%;
 
     /* ====================================================================== */
 
@@ -119,26 +121,43 @@
     /* The background of the button popover element. */
     --admin-bar-button-popover-bg: var(--admin-bar-bg, var(--admin-bar-bg-color));
 
-    /* The `border-radius` property that changes based on the position of the popover.  */
+    /* The `border-radius` property of the button popover element.  */
     --admin-bar-button-popover-border-radius: var(--admin-bar-border-radius);
 
     /* ====================================================================== */
 
-    /* The value of the padding property on `admin-bar-text` components. */
+    /* The value of the padding property on `<admin-bar-text>` components. */
     /*--admin-bar-text-padding: var(--admin-bar-block-padding) var(--admin-bar-inline-padding);*/
 
-    /* The background for labels in `admin-bar-text` components. */
-    --admin-bar-text-badge-color-bg: oklch(1 0 89.876 / 0.9);
+    /* The background color for badge elements in `<admin-bar-text>` components. */
+    --admin-bar-badge-color-bg: oklch(1 0 89.876 / 0.9);
 
-    /* The text for labels in `admin-bar-text` components. */
-    --admin-bar-text-badge-color-text: oklch(0 0 0);
+    /* The text color for badge elements in `<admin-bar-text>` components. */
+    --admin-bar-badge-color-text: oklch(0 0 0);
 
     /* ====================================================================== */
 
-    /* Stop `admin-bar-button` elements from shrinking on resize. */
+    /* Stop `<admin-bar-button>` elements from shrinking on resize. */
     & > admin-bar-button {
       flex-shrink: 0;
     }
+
+    /* Removes redundant padding when a `<admin-bar-text>` element is nested inside a `<admin-bar-button>` element. */
+    admin-bar-button > admin-bar-text:not([slot="popover"]) {
+      --admin-bar-inline-padding: 0;
+    }
+
+    /* Set badge background color to highlight color when a `<admin-bar-text>` element is nested inside a `<admin-bar-button>` element. */
+    admin-bar-button:hover:not(:has([slot="popover"]:hover)) > admin-bar-text:not([slot="popover"]) {
+      --admin-bar-color-text: var(--admin-bar-color-highlight);
+
+      &::part(badge) {
+        background-color: var(--admin-bar-color-highlight);
+        color: var(--admin-bar-button-color-text);
+      }
+    }
+
+    /* ====================================================================== */
 
     /* Set read direction from right to left. */
     &.rtl {
@@ -219,12 +238,12 @@
     }
 
     /* Opt into glass distortion effect on browsers that support SVG filtering and boolean style queries. */
-    @supports (not (font: -apple-system-body)) and (not (-moz-appearance: none)) {
-      & {
-        /*--admin-bar-enable-glass: true;*/
-        /*--admin-bar-bg-filter: blur(2px) brightness(0.65) saturate(2.5);*/
-      }
-    }
+    /*@supports (not (font: -apple-system-body)) and (not (-moz-appearance: none)) {*/
+    /*  & {*/
+    /*    --admin-bar-enable-glass: true;*/
+    /*    --admin-bar-bg-filter: blur(2px) brightness(0.65) saturate(2.5);*/
+    /*  }*/
+    /*}*/
   }
 
   @media (prefers-reduced-motion) {

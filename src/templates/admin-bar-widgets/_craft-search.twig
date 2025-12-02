@@ -82,12 +82,14 @@
                 }
               }
               admin-bar-button.view {
-                &:hover admin-bar-text {
-                  --admin-bar-color-text: var(--widget-search-results-color-text, var(--admin-bar-color-highlight));
-
+                &:hover {
                   &::part(badge) {
-                    background-color: var(--widget-search-results-text-badge-color-bg, var(--admin-bar-color-highlight));
-                    color: var(--widget-search-results-text-badge-color-text, var(--admin-bar-button-color-text, white));
+                    background-color: var(--widget-search-results-badge-color-bg, var(--admin-bar-color-highlight));
+                    color: var(--widget-search-results-badge-color-text, var(--admin-bar-button-color-text, white));
+                  }
+
+                  admin-bar-text {
+                    --admin-bar-color-text: var(--widget-search-results-color-text, var(--admin-bar-color-highlight));
                   }
                 }
                 admin-bar-text {

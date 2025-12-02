@@ -76,7 +76,7 @@
 {% if devMode %}
   {% set adminBarAttributes = adminBarAttributes|merge({ 'environment-description': 'Craft CMS is running in Dev Mode.'|t('admin-bar') }) %}
 
-  {% set envLabelStyle = (theme in ['craft-cp', 'sakura', 'stark']) ? {} : { '--admin-bar-text-badge-color-bg': 'var(--admin-bar-environment-bg-color)' } %}
+  {% set envLabelStyle = (theme in ['craft-cp', 'sakura', 'stark']) ? {} : { '--admin-bar-badge-color-bg': 'var(--admin-bar-environment-bg-color)' } %}
 
   {% set textElements = textElements|merge([{
     'badge-content': craft.app.config.env|upper,
@@ -178,13 +178,11 @@
   {% endif %}
 
   {% if currentUser and displayUtilitiesLink ?? true %}
-    <admin-bar-button button-href="{{ cpUrl('utilities') }}" label-text="{{ 'Utilities'|t('admin-bar') }}">{% apply spaceless %}
-        {% if utilitiesNotificationCount > 0 %}
-          <admin-bar-text slot="before-label" aria-hidden="true" badge-content="{{ utilitiesNotificationCount }}" style="--admin-bar-text-padding: 0"></admin-bar-text>
-        {% else %}
-          <span slot="before-label">{{ self.iconUtilities }}</span>
-        {% endif %}
-      {% endapply %}</admin-bar-button>
+    <admin-bar-button
+        button-href="{{ cpUrl('utilities') }}"
+        label-text="{{ 'Utilities'|t('admin-bar') }}"
+        {% if utilitiesNotificationCount > 0 %}badge-content="{{ utilitiesNotificationCount }}"{% endif %}
+    ></admin-bar-button>
   {% endif %}
 
   {% if currentUser and currentUser.admin and displaySettingsLink ?? true %}

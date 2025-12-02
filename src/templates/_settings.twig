@@ -273,17 +273,20 @@ admin-bar {
 
 {% set cssDefaults = include('admin-bar/_admin-bar-component-css.css') ~ "\n" ~ adminBarOnPageCss() %}
 
-{{ codeEditor.textareaField({
+<details>
+  <summary>{{ 'See all of the CSS defaults that can be overwritten using the Custom CSS field, above.'|t('admin-bar') }}</summary>
+  {{ codeEditor.textareaField({
     label: 'CSS Defaults'|t('admin-bar'),
     instructions: 'Below is all of the CSS loaded for Admin Bar by default. You can override any of these CSS variables in your front-end stylesheet, or in the Custom CSS field above.'|t('admin-bar'),
     value: cssDefaults|raw,
-}, "Code Editor", {
+  }, "Code Editor", {
     language: "css",
     readOnly: true,
-}, {
+  }, {
     maxEditorRows: 0,
     wrapperClass: 'content-pane',
-}) }}
+  }) }}
+</details>
 
 {% css %}
     @layer admin-bar {

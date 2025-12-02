@@ -6,14 +6,14 @@
     --admin-bar-button-color-text: oklch(0.98 0.01 226.44);
     --admin-bar-color-highlight: oklch(1 0 89.876);
     --admin-bar-color-text: oklch(0.98 0.01 226.44 / 0.9);
-    --admin-bar-text-badge-color-bg: oklch(0 0 0 / 0.9);
-    --admin-bar-text-badge-color-text: oklch(0.98 0.01 226.44);
+    --admin-bar-badge-color-bg: oklch(0 0 0 / 0.9);
+    --admin-bar-badge-color-text: oklch(0.98 0.01 226.44);
     --admin-bar-color-highlight-logout: oklch(0.88 0.21 93.32);
     --admin-bar-color-text-logout: oklch(0 0 0 / 0.9);
     --admin-bar-bg-filter: blur(2px) brightness(0.4) saturate(0.3);
     --admin-bar-progress-color: oklch(0.88 0.21 93.32 / 0.8);
     --admin-bar-progress-height: 4px;
-    --widget-search-results-text-badge-color-text: oklch(0.164 0 89.876 / 0.9);
+    --widget-search-results-badge-color-text: oklch(0.164 0 89.876 / 0.9);
 
     @supports (not (font: -apple-system-body)) and (not (-moz-appearance: none)) {
       & {
@@ -21,5 +21,9 @@
         --admin-bar-bg-filter: blur(2px) brightness(1.5) saturate(0.3);
       }
     }
+  }
+
+  admin-bar-button:hover::part(badge) {
+    color: oklch(0.164 0 89.876 / 0.9);
   }
 }
