@@ -1,5 +1,5 @@
 @layer admin-bar {
-  admin-bar {
+  admin-bar.admin-bar {
     --admin-bar-bg-color: oklch(0.78 0.26 152.63 / 0.9);
     --admin-bar-button-color-bg-hover: oklch(0.71 0.35 337.35 / 0.95);
     --admin-bar-button-color-text: oklch(0.264 0 89.876);

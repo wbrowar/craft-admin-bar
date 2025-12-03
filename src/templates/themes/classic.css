@@ -1,5 +1,5 @@
 @layer admin-bar {
-  admin-bar {
+  admin-bar.admin-bar {
     --admin-bar-bg-color: oklch(0 0 0 / 0.8);
     --admin-bar-border-radius: 0;
     --admin-bar-button-color-bg-hover: oklch(0.64 0.19 25.24);
@@ -9,9 +9,9 @@
     --admin-bar-color-highlight-logout: oklch(0.64 0.19 25.24);
     --admin-bar-progress-height: 3px;
     --widget-search-results-badge-color-text: oklch(0 0 0 / 0.8);
-  }
 
-  admin-bar-button:hover::part(badge) {
-    color: oklch(0 0 0 / 0.8);
+    admin-bar-button:hover::part(badge) {
+      color: oklch(0 0 0 / 0.8);
+    }
   }
 }

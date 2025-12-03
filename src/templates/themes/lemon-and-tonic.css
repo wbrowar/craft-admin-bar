@@ -1,5 +1,5 @@
 @layer admin-bar {
-  admin-bar {
+  admin-bar.admin-bar {
     --admin-bar-bg: linear-gradient(to bottom, oklch(1 0 89.876 / 0.9), oklch(1 0 89.876 / 0.2));
     --admin-bar-border-radius: 10px;
     --admin-bar-button-color-bg-hover: oklch(0.96 0.24 110.68 / 0.95);
@@ -21,9 +21,9 @@
         --admin-bar-bg-filter: blur(2px) brightness(2) saturate(3);
       }
     }
-  }
 
-  admin-bar-button:hover::part(badge) {
-    color: oklch(0.96 0.24 110.68 / 0.95);
+    admin-bar-button:hover::part(badge) {
+      color: oklch(0.96 0.24 110.68 / 0.95);
+    }
   }
 }

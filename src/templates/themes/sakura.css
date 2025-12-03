@@ -1,5 +1,5 @@
 @layer admin-bar {
-  admin-bar {
+  admin-bar.admin-bar {
     --admin-bar-bg-color: oklch(0.969 0.027 325.784 / .9);
     --admin-bar-bg-filter: blur(10px) brightness(2) saturate(2.5);
     --admin-bar-button-color-bg-hover: oklch(1 0 89.876);
@@ -14,9 +14,9 @@
     --admin-bar-progress-color: oklch(0.7 0.317 328.334);
     --admin-bar-progress-height: 3px;
     --widget-search-results-badge-color-text: oklch(0.969 0.027 325.784 / .9);
-  }
 
-  admin-bar-button:hover::part(badge) {
-    color: oklch(0.969 0.027 325.784 / .9);
+    admin-bar-button:hover::part(badge) {
+      color: oklch(0.969 0.027 325.784 / .9);
+    }
   }
 }

@@ -1,5 +1,5 @@
 @layer admin-bar {
-  admin-bar {
+  admin-bar.admin-bar {
     --admin-bar-height: max-content;
     --admin-bar-progress-height: 4px;
 
