@@ -568,7 +568,7 @@ var $t=e=>{throw TypeError(e)},_t=(e,t,o)=>t.has(e)||$t("Cannot "+o),dt=(e,t,o)=
         }
       }
 
-      :host([vertical]) & {
+      :host(.vertical) & {
         height: auto;
       }
 
