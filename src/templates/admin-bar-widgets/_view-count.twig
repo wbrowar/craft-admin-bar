@@ -3,7 +3,7 @@
 {% if entry ?? false %}
   <admin-bar-text
       class="admin-bar-widget"
-      badge-content="{{ craft.viewCount.total(entry.id) }} {{ displayWidgetLabels ? '' : 'Views'|t('admin-bar') }}"
+      badge-content="{{ craft.viewCount.total(entry.id) }} {{ displayWidgetLabels ? '' : 'widget-view-count-views'|t('admin-bar', language = userLanguage) }}"
       badge-position="before"
   >
     {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}

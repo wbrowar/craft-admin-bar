@@ -4,25 +4,25 @@
   {% set popoverInfo = [] %}
 
   {% if entry.dateCreated %}
-    {% set popoverInfo = popoverInfo|merge([['Created at'|t('admin-bar'), entry.dateCreated|date(widgetConfig.dateFormat) ~ ' ' ~ entry.dateCreated|time(widgetConfig.timeFormat)]]) %}
+    {% set popoverInfo = popoverInfo|merge([['widget-craft-published-created-at'|t('admin-bar', language = userLanguage), entry.dateCreated|date(widgetConfig.dateFormat) ~ ' ' ~ entry.dateCreated|time(widgetConfig.timeFormat)]]) %}
   {% endif %}
 
   {% if entry.dateUpdated %}
-    {% set popoverInfo = popoverInfo|merge([['Updated at'|t('admin-bar'), entry.dateUpdated|date(widgetConfig.dateFormat) ~ ' ' ~ entry.dateUpdated|time(widgetConfig.timeFormat)]]) %}
+    {% set popoverInfo = popoverInfo|merge([['widget-craft-published-updated-at'|t('admin-bar', language = userLanguage), entry.dateUpdated|date(widgetConfig.dateFormat) ~ ' ' ~ entry.dateUpdated|time(widgetConfig.timeFormat)]]) %}
   {% endif %}
 
   {% if entry.id %}
-    {% set popoverInfo = popoverInfo|merge([['Entry ID'|t('admin-bar'), entry.id]]) %}
+    {% set popoverInfo = popoverInfo|merge([['widget-craft-published-entry-id'|t('admin-bar', language = userLanguage), entry.id]]) %}
   {% endif %}
 
   {% if entry.currentRevision.revisionNotes ?? false %}
-    {% set popoverInfo = popoverInfo|merge([['Notes'|t('admin-bar'), entry.currentRevision.revisionNotes]]) %}
+    {% set popoverInfo = popoverInfo|merge([['widget-craft-published-notes'|t('admin-bar', language = userLanguage), entry.currentRevision.revisionNotes]]) %}
   {% endif %}
 
   {% set postDateValue = entry.postDate|date(widgetConfig.dateFormat) ~ ' ' ~ entry.postDate|time(widgetConfig.timeFormat) %}
   <admin-bar-button class="admin-bar-widget admin-bar-widget--published" badge-content="{{ postDateValue }}">
     {{ iconSvg('newspaper')|attr({ class: 'icon', slot: "before-label" }) }}
-    {{ pluginWidgets.widgetBadgeAndLabel(null, 'Post Date'|t('admin-bar'), displayWidgetLabels) }}
+    {{ pluginWidgets.widgetBadgeAndLabel(null, 'widget-craft-published-post-date'|t('admin-bar', language = userLanguage), displayWidgetLabels) }}
 
     {% if popoverInfo|length %}
       <div slot="popover">

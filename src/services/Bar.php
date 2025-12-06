@@ -102,6 +102,12 @@ class Bar extends Component
             $config['useCss'] = key_exists('useCss', $config) ? $config['useCss'] : true;
             $config['useJs'] = key_exists('useJs', $config) ? $config['useJs'] : true;
 
+            // User language preferences
+            $userLanguage = Craft::$app->getUser()->getIdentity()->getPreferredLanguage();
+            $userLocale = Craft::$app->getI18n()->getLocaleById($userLanguage);
+            $config['userLanguageRtl'] = $userLocale->getOrientation() == 'rtl';
+            $config['userLanguage'] = $userLanguage;
+
             // Get utilities notification count
             $config['utilitiesNotificationCount'] = 0;
             $userUtilities = Craft::$app->getUtilities()->getAuthorizedUtilityTypes();

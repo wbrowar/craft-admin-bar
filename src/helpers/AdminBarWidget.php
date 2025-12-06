@@ -85,6 +85,8 @@ class AdminBarWidget
      */
     public static function getAdminBarWidgets(bool $onlyEnabled = false): array
     {
+        $userLanguage = Craft::$app->getUser()->getIdentity()->getPreferredLanguage();
+
         $widgets = [
             (self::WIDGET_BLITZ) => [
                 'name' => 'Blitz',
@@ -92,27 +94,27 @@ class AdminBarWidget
                 'version' => null
             ],
             (self::WIDGET_CRAFT_AUTHORS) => [
-                'name' => 'Authors',
+                'name' => Craft::t('admin-bar', 'widget-craft-authors-name', [], $userLanguage),
                 'widgetDescription' => Craft::t('admin-bar', 'The authors for the current entry.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_NEW_ENTRY) => [
-                'name' => 'New Entry',
+                'name' => Craft::t('admin-bar', 'widget-craft-new-entry-name', [], $userLanguage),
                 'widgetDescription' => Craft::t('admin-bar', 'Links to create a new entry from sections that the author has permission to create.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_PUBLISHED) => [
-                'name' => 'Published',
+                'name' => Craft::t('admin-bar', 'widget-craft-published-name', [], $userLanguage),
                 'widgetDescription' => Craft::t('admin-bar', 'The Post Date for when the current page entry was published, along with other publishing information.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_SEARCH) => [
-                'name' => 'Search',
+                'name' => Craft::t('admin-bar', 'widget-craft-search-name', [], $userLanguage),
                 'widgetDescription' => Craft::t('admin-bar', 'Use Craft CMS’s search to find, edit, and jump to other pages in your site.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_SITES) => [
-                'name' => 'Sites',
+                'name' => Craft::t('admin-bar', 'widget-craft-sites-name', [], $userLanguage),
                 'widgetDescription' => Craft::t('admin-bar', 'The name of the site for the current page and links to the same page on all propagated sites.'),
                 'version' => null
             ],

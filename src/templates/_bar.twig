@@ -17,7 +17,7 @@
   {% set classes = classes|merge(['bottom']) %}
 {% endif %}
 
-{% if rtl ?? false %}
+{% if rtl ?? false or userLanguageRtl ?? false %}
   {% set classes = classes|merge(['rtl']) %}
 {% endif %}
 
@@ -31,10 +31,10 @@
 
 {% set adminBarAttributes = {
   class: classes,
-  'greeting-text': 'greeting-text'|t('admin-bar', params = { name: currentUser.friendlyName }),
+  'greeting-text': 'greeting-text'|t('admin-bar', params = { name: currentUser.friendlyName }, language = userLanguage),
   id: id ?? 'admin-bar',
   'logout-href': url(logoutUrl),
-  'logout-label': 'logout-label'|t('admin-bar'),
+  'logout-label': 'logout-label'|t('admin-bar', language = userLanguage),
   'show-environment': devMode,
   'show-greeting': displayGreeting,
   'show-logout': displayLogout,
@@ -43,7 +43,7 @@
 
 {% if currentUser and (currentUser.photo ?? false) %}
   {% set adminBarAttributes = adminBarAttributes|merge({
-    'avatar-alt': 'avatar-alt'|t('admin-bar', params = { name: currentUser.friendlyName }),
+    'avatar-alt': 'avatar-alt'|t('admin-bar', params = { name: currentUser.friendlyName }, language = userLanguage),
     'avatar-src': currentUser.photo.getUrl({
       mode: 'crop',
       width: 100,
@@ -74,7 +74,7 @@
 {% set textElements = textElements ?? [] %}
 
 {% if devMode %}
-  {% set adminBarAttributes = adminBarAttributes|merge({ 'environment-description': 'Craft CMS is running in Dev Mode.'|t('admin-bar') }) %}
+  {% set adminBarAttributes = adminBarAttributes|merge({ 'environment-description': 'environment-description'|t('admin-bar', language = userLanguage) }) %}
 
   {% set envLabelStyle = (theme in ['craft-cp', 'sakura', 'stark']) ? {} : { '--admin-bar-badge-color-bg': 'var(--admin-bar-environment-bg-color)' } %}
 
@@ -93,7 +93,7 @@
 <admin-bar {{ attr(adminBarAttributes) }}>
   {% if displayGreeting %}
     <nav slot="greeting-popover">
-      <admin-bar-text multi-line {% if currentUser.admin %}badge-content="ADMIN"{% endif %}>
+      <admin-bar-text multi-line {% if currentUser.admin %}badge-content="{{ 'greeting-badge-admin'|t('admin-bar', language = userLanguage) }}"{% endif %}>
         <div style="margin-inline-end: 1em;">
           <strong style="display: block">{{ currentUser.fullName }}</strong>
           <em style="display: block">{{ currentUser.username }}</em>
@@ -101,30 +101,30 @@
       </admin-bar-text>
 
       <admin-bar-button button-href="{{ cpUrl('myaccount') }}" style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);">
-        {{ 'Profile'|t('admin-bar') }}
+        {{ 'label-greeting-profile'|t('admin-bar', language = userLanguage) }}
         <span slot="before-label">{{ self.iconUser }}</span>
       </admin-bar-button>
 
       <admin-bar-button button-href="{{ cpUrl('myaccount/addresses') }}">
-        {{ 'Addresses'|t('admin-bar') }}
+        {{ 'label-greeting-addresses'|t('admin-bar', language = userLanguage) }}
         <span slot="before-label">{{ self.iconUserAddresses }}</span>
       </admin-bar-button>
 
       {% if currentUser.can('assignUserPermissions') %}
         <admin-bar-button button-href="{{ cpUrl('myaccount/permissions') }}">
-          {{ 'Permissions'|t('admin-bar') }}
+          {{ 'label-greeting-permissions'|t('admin-bar', language = userLanguage) }}
           <span slot="before-label">{{ self.iconUserPermissions }}</span>
         </admin-bar-button>
       {% endif %}
 
       <admin-bar-button button-href="{{ cpUrl('myaccount/preferences') }}">
-        {{ 'Preferences'|t('admin-bar') }}
+        {{ 'label-greeting-preferences'|t('admin-bar', language = userLanguage) }}
         <span slot="before-label">{{ self.iconUserPreferences }}</span>
       </admin-bar-button>
 
       {% if currentUser and currentUser.admin %}
         <admin-bar-checkbox id="admin-bar-checkbox-debug-toolbar" {% if currentUser.getPreference('enableDebugToolbarForSite') %}checked{% endif %} input-switch>
-          {{ 'Debug Toolbar'|t('admin-bar') }}
+          {{ 'label-greeting-debug-toolbar'|t('admin-bar', language = userLanguage) }}
           <span slot="checked-icon">{{ self.iconChecked }}</span>
           <span slot="unchecked-icon">{{ self.iconUnchecked }}</span>
         </admin-bar-checkbox>
@@ -133,11 +133,11 @@
   {% endif %}
 
   {% if displayDashboardLink ?? true %}
-    <admin-bar-button button-href="{{ cpUrl('dashboard') }}" label-text="{{ 'Dashboard'|t }}"><span slot="before-label">{{ self.iconDashboard }}</span></admin-bar-button>
+    <admin-bar-button button-href="{{ cpUrl('dashboard') }}" label-text="{{ 'label-dashboard'|t('admin-bar', language = userLanguage) }}"><span slot="before-label">{{ self.iconDashboard }}</span></admin-bar-button>
   {% endif %}
 
   {% if editLinkUrl ?? false %}
-  <admin-bar-button button-href="{{ cpUrl(editLinkUrl) }}" label-text="{{ 'Edit {name}'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
+  <admin-bar-button button-href="{{ cpUrl(editLinkUrl) }}" label-text="{{ 'label-edit-name'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }, language = userLanguage) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
   {% else %}
     {% if entry ?? false and ((userCanEdit ?? false) or (entry.section.id in craft.app.entries.editableSectionIds)) %}
       {% set sectionName = displayDefaultEditSection ? ' ' ~ entry.section : ''  %}
@@ -149,21 +149,21 @@
         {% set entryEditUrlFormatted = cpUrl(entryEditUrl) %}
       {% endif %}
 
-      <admin-bar-button button-href="{{ entryEditUrlFormatted }}" label-text="{{ 'Edit {name}'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
+      <admin-bar-button button-href="{{ entryEditUrlFormatted }}" label-text="{{ 'label-edit-name'|t('admin-bar', params = { name: editLinkLabel ?? false ? ' ' ~ editLinkLabel : '' }, language = userLanguage) }}"><span slot="before-label">{{ self.iconEdit }}</span></admin-bar-button>
     {% endif %}
   {% endif %}
 
   {% if not 'guide' in widgets|keys and displayGuideLink and plugin('guide') and (currentUser ? currentUser.can('accessPlugin-guide') : true) %}
-    <admin-bar-button button-href="{{ cpUrl('guide') }}" label-text="{{ 'CMS Guide'|t('admin-bar') }}"><span slot="before-label">{{ self.iconGuide }}</span></admin-bar-button>
+    <admin-bar-button button-href="{{ cpUrl('guide') }}" label-text="{{ 'label-guide'|t('admin-bar', language = userLanguage) }}"><span slot="before-label">{{ self.iconGuide }}</span></admin-bar-button>
   {% endif %}
 
   {% if customLinks ?? false %}
     {% for link in customLinks %}
       {% if link.linkUrl ?? false %}
         {% if link.adminOnly != true %}
-          <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
+          <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar', language = userLanguage) }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
         {% elseif link.adminOnly and currentUser and currentUser.admin %}
-          <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
+          <admin-bar-button button-href="{{ url(link.linkUrl) }}" label-text="{{ link.linkLabel|t('admin-bar', language = userLanguage) }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
         {% endif %}
       {% endif %}
     {% endfor %}
@@ -180,13 +180,13 @@
   {% if currentUser and displayUtilitiesLink ?? true %}
     <admin-bar-button
         button-href="{{ cpUrl('utilities') }}"
-        label-text="{{ 'Utilities'|t('admin-bar') }}"
+        label-text="{{ 'label-utilities'|t('admin-bar', language = userLanguage) }}"
         {% if utilitiesNotificationCount > 0 %}badge-content="{{ utilitiesNotificationCount }}"{% endif %}
     ></admin-bar-button>
   {% endif %}
 
   {% if currentUser and currentUser.admin and displaySettingsLink ?? true %}
-    <admin-bar-button button-href="{{ cpUrl('settings') }}" label-text="{{ 'Settings'|t('admin-bar') }}"><span slot="before-label">{{ self.iconSettings }}</span></admin-bar-button>
+    <admin-bar-button button-href="{{ cpUrl('settings') }}" label-text="{{ 'label-settings'|t('admin-bar', language = userLanguage) }}"><span slot="before-label">{{ self.iconSettings }}</span></admin-bar-button>
   {% endif %}
 
   {% if proEdition %}
@@ -197,6 +197,7 @@
         displayWidgetLabels,
         enabledWidgets,
         entry,
+        userLanguage,
         widgets,
         widgetsConfig,
       } only %}
@@ -247,12 +248,12 @@
   {% endif %}
 
   {% if link.type == 'url' and userHasPermission %}
-    <admin-bar-button button-href="{{ url(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
+    <admin-bar-button button-href="{{ url(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar', language = userLanguage) }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
   {% elseif link.type == 'cpUrl' and userHasPermission %}
-    <admin-bar-button button-href="{{ cpUrl(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
+    <admin-bar-button button-href="{{ cpUrl(link.url, params, protocol, mustShowScriptName) }}" label-text="{{ link.title|t('admin-bar', language = userLanguage) }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
   {% elseif link.type == 'action' and userHasPermission %}
     {% set actionParams = params|length ? params ~ '&returnUrl=' ~ craft.request.url : 'returnUrl=' ~ craft.request.url %}
-    <admin-bar-button button-href="{{ actionUrl(link.url, actionParams) }}" label-text="{{ link.title|t('admin-bar') }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
+    <admin-bar-button button-href="{{ actionUrl(link.url, actionParams) }}" label-text="{{ link.title|t('admin-bar', language = userLanguage) }}">{{ (link.icon ?? false) ? self.customLinkIcon(link.icon) : '' }}</admin-bar-button>
   {% endif %}
 {% endmacro %}
 

@@ -17,7 +17,7 @@
         {% if widgetConfig['guides']|length %}style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);"{% endif %}
     >
       <span style="--admin-bar-icon-width: 1.3rem">{{ svg('@wbrowar/guide/icon-mask.svg')|attr({ class: 'icon' }) }}</span>
-      {{ 'CMS Guide'|t('guide') }}
+      {{ 'label-guide'|t('admin-bar', language = userLanguage) }}
     </admin-bar-button>
   </div>
 </admin-bar-button>

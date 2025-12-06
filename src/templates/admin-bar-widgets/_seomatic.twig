@@ -23,7 +23,7 @@
 
   {% set mainEntity = metaJsonLdContainer.mainEntityOfPage['@type'] ?? null %}
   {% if mainEntity ?? false %}
-    {% set extrasList = extrasList|merge([['Main Entity'|t('admin-bar'), mainEntity]]) %}
+    {% set extrasList = extrasList|merge([['widget-seomatic-main-entity'|t('admin-bar', language = userLanguage), mainEntity]]) %}
   {% endif %}
 
   {% set meta = {

@@ -44,7 +44,7 @@
           </style>
 
           <form>
-            <input type="search" name="admin-bar-widget-craft-search-input" placeholder="{{ 'Search entries'|t('admin-bar') }}">
+            <input type="search" name="admin-bar-widget-craft-search-input" placeholder="{{ 'widget-craft-search-search-placeholder'|t('admin-bar', language = userLanguage) }}">
             <button type="submit">{{ iconSvg('magnifying-glass') }}</button>
           </form>
           <div></div>
@@ -54,7 +54,7 @@
           <li>
             <admin-bar-text class="view" multi-line></admin-bar-text>
             <admin-bar-button class="view"><admin-bar-text multi-line></admin-bar-text></admin-bar-button>
-            <admin-bar-button class="edit">{{ iconSvg('pencil') }} {{ 'Edit'|t('admin-bar') }}</admin-bar-button>
+            <admin-bar-button class="edit">{{ iconSvg('pencil') }} {{ 'widget-craft-search-edit'|t('admin-bar', language = userLanguage) }}</admin-bar-button>
             <style>
               li {
                 list-style: none;
@@ -104,7 +104,7 @@
         </template>
 
         <template id="admin-bar-search-no-results-template">
-          <admin-bar-text>{{ 'No search results found.'|t('admin-bar') }}</admin-bar-text>
+          <admin-bar-text>{{ 'widget-craft-search-results-not-found'|t('admin-bar', language = userLanguage) }}</admin-bar-text>
         </template>
       </craft-admin-bar-search>
     {% endif %}

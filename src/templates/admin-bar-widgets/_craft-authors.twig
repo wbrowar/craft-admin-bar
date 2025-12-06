@@ -18,7 +18,7 @@
       {% for author in authors %}
         <admin-bar-text>
           {{ self.authorImage(author) }}
-          {{ pluginWidgets.widgetBadgeAndLabel(author.name, 'Author'|t('admin-bar'), displayWidgetLabels) }}
+          {{ pluginWidgets.widgetBadgeAndLabel(null, author.name, displayWidgetLabels) }}
         </admin-bar-text>
       {% endfor %}
     </div>
@@ -26,7 +26,7 @@
 {% elseif authors|length %}
   <admin-bar-text>
     {{ self.authorImage(authors[0]) }}
-    {{ pluginWidgets.widgetBadgeAndLabel(authors[0].name, 'Author'|t('admin-bar'), displayWidgetLabels) }}
+    {{ pluginWidgets.widgetBadgeAndLabel(authors[0].name, 'widget-craft-authors-author'|t('admin-bar', language = userLanguage), displayWidgetLabels) }}
   </admin-bar-text>
 {% endif %}
 

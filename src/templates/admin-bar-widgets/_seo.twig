@@ -23,7 +23,7 @@
       {% if meta ?? false %}
         {{ pluginWidgets.seoMeta(meta) }}
       {% else %}
-        <admin-bar-text>{{ 'This page does not include an SEO field.'|t('admin-bar') }}</admin-bar-text>
+        <admin-bar-text>{{ 'widget-seo-missing-seo-field'|t('admin-bar', language = userLanguage) }}</admin-bar-text>
       {% endif %}
     </div>
   </admin-bar-button>
