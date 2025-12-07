@@ -44,7 +44,7 @@ class Settings extends Model
      *
      * @var boolean
      */
-    public bool $autoRender = true;
+    public bool $autoRender = false;
 
     /**
      * Some field model attribute

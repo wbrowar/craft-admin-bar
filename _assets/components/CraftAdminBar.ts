@@ -14,7 +14,6 @@ enum ErrorCode {
   CSRF_TOKEN_NAME_INVALID = 'csrf-token-name-invalid',
 }
 
-// TODO change this to extend AdminBar class
 export default class CraftAdminBar extends HTMLElement {
   static observedAttributes = ['data-api-status']
 

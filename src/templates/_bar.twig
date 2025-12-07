@@ -122,7 +122,7 @@
         <span slot="before-label">{{ self.iconUserPreferences }}</span>
       </admin-bar-button>
 
-      {% if currentUser and currentUser.admin %}
+      {% if currentUser and currentUser.admin and proEdition %}
         <admin-bar-checkbox id="admin-bar-checkbox-debug-toolbar" {% if currentUser.getPreference('enableDebugToolbarForSite') %}checked{% endif %} input-switch>
           {{ 'label-greeting-debug-toolbar'|t('admin-bar', language = userLanguage) }}
           <span slot="checked-icon">{{ self.iconChecked }}</span>
