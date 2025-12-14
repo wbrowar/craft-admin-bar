@@ -38,11 +38,11 @@
   } %}
 {% endif %}
 
-{% if 'craft-sites' in enabledWidgets %}
-  {% include 'admin-bar/admin-bar-widgets/_craft-sites' with {
-    pluginHandle: 'craft-sites',
+{% if 'craft-related' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-related' with {
+    pluginHandle: 'craft-related',
     userLanguage,
-    widgetConfig: widgetsConfig['craft-sites'],
+    widgetConfig: widgetsConfig['craft-related'],
   } %}
 {% endif %}
 
@@ -51,6 +51,14 @@
     pluginHandle: 'craft-authors',
     userLanguage,
     widgetConfig: widgetsConfig['craft-authors'],
+  } %}
+{% endif %}
+
+{% if 'craft-sites' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-sites' with {
+    pluginHandle: 'craft-sites',
+    userLanguage,
+    widgetConfig: widgetsConfig['craft-sites'],
   } %}
 {% endif %}
 

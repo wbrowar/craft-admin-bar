@@ -103,7 +103,7 @@ class Bar extends Component
             $config['useJs'] = key_exists('useJs', $config) ? $config['useJs'] : true;
 
             // User language preferences
-            $userLanguage = Craft::$app->getUser()->getIdentity()->getPreferredLanguage();
+            $userLanguage = Craft::$app->getUser()->getIdentity()->getPreferredLanguage() ?? Craft::$app->language;
             $userLocale = Craft::$app->getI18n()->getLocaleById($userLanguage);
             $config['userLanguageRtl'] = $userLocale->getOrientation() == 'rtl';
             $config['userLanguage'] = $userLanguage;

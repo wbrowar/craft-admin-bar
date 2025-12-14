@@ -189,6 +189,13 @@ class Settings extends Model
     public bool $widgetEnabledCraftQueue = false;
 
     /**
+     * Enables the Admin Bar Widget: Related
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledCraftRelated = false;
+
+    /**
      * Enables the Admin Bar Widget: Search
      *
      * @var bool

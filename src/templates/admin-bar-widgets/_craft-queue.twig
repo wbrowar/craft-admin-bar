@@ -15,10 +15,10 @@
         jobsFailed: widgetConfig.jobsFailed ?? 0,
       } %}
       {% set tMessages = {
-        'jobStatusWaiting': 'Waiting jobs'|t('admin-bar', language = userLanguage),
-        'jobStatusDelayed': 'Delayed jobs'|t('admin-bar', language = userLanguage),
-        'jobStatusReserved': 'Reserved jobs'|t('admin-bar', language = userLanguage),
-        'jobStatusFailed': 'Failed jobs'|t('admin-bar', language = userLanguage),
+        'jobStatusWaiting': 'widget-craft-queue-waiting-jobs'|t('admin-bar', language = userLanguage),
+        'jobStatusDelayed': 'widget-craft-queue-delayed-jobs'|t('admin-bar', language = userLanguage),
+        'jobStatusReserved': 'widget-craft-queue-reserved-jobs'|t('admin-bar', language = userLanguage),
+        'jobStatusFailed': 'widget-craft-queue-failed-jobs'|t('admin-bar', language = userLanguage),
       } %}
       <craft-admin-bar-queue
           data-job-totals="{{ jobTotals|json_encode }}"
@@ -44,7 +44,7 @@
           <div class="job-status"></div>
 
           <admin-bar-button class="run-jobs">
-            {{ 'Run Queue'|t('admin-bar', language = userLanguage) }}
+            {{ 'widget-craft-queue-run-queue'|t('admin-bar', language = userLanguage) }}
             {{ iconSvg('right')|attr({ class: 'run-jobs-icon', slot: 'before-label' }) }}
           </admin-bar-button>
 

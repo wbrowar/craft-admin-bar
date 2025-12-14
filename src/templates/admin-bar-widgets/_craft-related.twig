@@ -1,0 +1,30 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
+{% set relatedEntries = craft.entries().orderBy('title').relatedTo(entry).section('*').all() %}
+
+<admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.3rem">
+  {{ svg('@appicons/tree.svg')|attr({ class: 'icon', slot: 'before-label' }) }}
+  {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
+
+  {% if relatedEntries|length %}
+    <nav slot="popover">
+      <ul style="display: grid; align-items: center; grid-template-columns: auto max-content; margin: 0; padding: 0;">
+        {% for relatedEntry in relatedEntries %}
+          <li style="display: grid; align-items: center; grid-template-columns: subgrid; grid-column: 1 / -1; list-style: none">
+            {% if relatedEntry.url ?? false %}
+              <admin-bar-button button-href="{{ relatedEntry.url }}"><span style="--admin-bar-icon-width: 0.9rem">{{ svg('@appicons/' ~ (relatedEntry.section.entryTypes[0].icon ?? 'newspaper') ~ '.svg')|attr({ class: 'icon' }) }}</span> {{ relatedEntry.title|truncate(80, '...') }}</admin-bar-button>
+            {% else %}
+              <admin-bar-text multi-line><span style="--admin-bar-icon-width: 0.9rem">{{ svg('@appicons/' ~ (relatedEntry.section.entryTypes[0].icon ?? 'newspaper') ~ '.svg')|attr({ class: 'icon' }) }}</span> {{ relatedEntry.title|truncate(80, '...') }}</admin-bar-text>
+            {% endif %}
+
+            {% if relatedEntry.section.handle in widgetConfig['editableSectionHandles'] ?? [] %}
+              <admin-bar-button class="edit" button-href="{{ cpUrl(relatedEntry.cpEditUrl, { returnUrl: returnUrl|default(entry.url)|hash }) }}" style="--admin-bar-icon-width: 1rem">{{ iconSvg('pencil')|attr({ class: 'icon', slot: 'before-label' }) }} {{ 'widget-craft-search-edit'|t('admin-bar', language = userLanguage) }}</admin-bar-button>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  {% else %}
+    <admin-bar-text text-content="No related entries found." slot="popover"></admin-bar-text>
+  {% endif %}
+</admin-bar-button>
