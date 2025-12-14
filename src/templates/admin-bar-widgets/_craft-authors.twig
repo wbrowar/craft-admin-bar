@@ -18,7 +18,7 @@
       {% for author in authors %}
         <admin-bar-text>
           {{ self.authorImage(author) }}
-          {{ pluginWidgets.widgetBadgeAndLabel(null, author.name, displayWidgetLabels) }}
+          {{ author.name }}
         </admin-bar-text>
       {% endfor %}
     </div>
