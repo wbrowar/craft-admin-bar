@@ -6,11 +6,9 @@ Admin Bar is made up of two parts:
 - [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) is a standalone web component that can be added to the front end of any project.
 - Admin Bar (this plugin) provides plugin settings, a Twig tag, and checks to see if the user is logged in to determine if the Admin Bar Component should be displayed on the page.
 
-If you are creating a Craft CMS site with a Twig front end, you can use this plugin and its Twig tag to add Admin Bar to your front end.
+If you are creating a Craft CMS site with a Twig front end, you can use this plugin to add Admin Bar to your front end.
 
 If you are creating a headless site, or a site that is statically cached, you may not need this plugin, and in that case you can add [Admin Bar Component](https://github.com/wbrowar/admin-bar-component) directly into your site’s JavaScript (via a bundler or a `<script>` tag).
-
-> :warning: Admin Bar’s composer package name has changed from `wbrowar/adminbar` to `wbrowar/craft-admin-bar`. Update your composer.json to point to [the new package on Packagist.](https://packagist.org/packages/wbrowar/craft-admin-bar)
 
 ## Requirements
 * Craft 5.8.0
@@ -24,6 +22,8 @@ The PRO edition adds interactive menus, statuses, and other information relevant
 The LITE edition is free and the PRO edition can be purchased on the [Craft CMS Plugin Store](https://plugins.craftcms.com/admin-bar).
 
 ## Installation
+> :warning: Admin Bar’s composer package name has changed from `wbrowar/adminbar` to `wbrowar/craft-admin-bar`. Update your composer.json to point to [the new package on Packagist.](https://packagist.org/packages/wbrowar/craft-admin-bar)
+
 To install the plugin, you can find it in the [Craft Plugin Store](https://plugins.craftcms.com/admin-bar), or follow these instructions:
 
 1. Open your terminal and go to your Craft project:
@@ -38,10 +38,10 @@ To install the plugin, you can find it in the [Craft Plugin Store](https://plugi
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Admin Bar.
 
+4. Once installed, Admin Bar can be added to our site by enabling the **Auto Render** setting in the Admin Bar plugin settings or by adding Admin Bar to your Twig template.
+
 ## Add Admin Bar to Your Twig Template
 To add Admin Bar to your website add the `{{ adminBar() }}` function within your Twig template. Admin Bar will be displayed on any page that includes this tag when someone—who has the permission to view the CP—is logged into your website.
-
-In your plugin settings you can use CSS Custom Properties to override the look of your admin bar to match your website’s look and feel.
 
 You may pass in an array of arguments to make some changes on how Admin Bar looks and functions. In this example, you may pass in the entry that you'd like to edit when someone clicks the "Edit" link.
 
@@ -80,7 +80,7 @@ For example, this will add a line of text that will display the number of entrie
 {{ adminBar({
     entry: entry ?? null,
     textElements: [
-        { 'label-content': craft.entries.section(entry.section.handle).count(), 'text-content': 'Entries in this section' },
+        { 'badge-content': craft.entries.section(entry.section.handle).count(), 'text-content': 'Entries in this section' },
     ],
 }) }}
 ```
@@ -123,6 +123,8 @@ Here are the settings you can change with the config file:
 | `widgetEnabledCraftSites`     | *false*     | Enables the Admin Bar Widget: Sites                                                                                                               |
 | `widgetEnabledGuide`          | *false*     | Enables the Admin Bar Widget: Guide                                                                                                               |
 | `widgetEnabledNavigation`     | *false*     | Enables the Admin Bar Widget: Navigation                                                                                                          |
+| `widgetEnabledQueue`          | *false*     | Enables the Admin Bar Widget: Queue                                                                                                          |
+| `widgetEnabledRelated`        | *false*     | Enables the Admin Bar Widget: Related                                                                                                          |
 | `widgetEnabledSeo`            | *false*     | Enables the Admin Bar Widget: Seo                                                                                                                 |
 | `widgetEnabledSeomatic`       | *false*     | Enables the Admin Bar Widget: Seomatic                                                                                                            |
 | `widgetEnabledViewCount`      | *false*     | Enables the Admin Bar Widget: View Count                                                                                                          |
@@ -236,6 +238,8 @@ Because Craft CMS plugins can change over time, features and availability of Adm
 | Published  | Craft CMS                                             | `>= 5.5.0`               | The Post Date for when the current page entry was published, along with other publishing information. |
 | Guide      | [Guide](https://plugins.craftcms.com/guide)           | `>= 5.2.0`               | Links to guides assigned to the current page entry.                                                   |
 | Navigation | [Navigation](https://plugins.craftcms.com/navigation) | `>= 3.0.0`               | Breadcrumbs for the current page in all navigations.                                                  |
+| Queue      | Craft CMS                                             | `>= 5.8.0`               | Displays the status of jobs in the Craft queue and automatically runs them on page load.              |
+| Related    | Craft CMS                                             | `>= 5.8.0`               | A list of entries related to the current page entry.                                                  |
 | Search     | Craft CMS                                             | `>= 5.5.0`               | Use Craft CMS’s search to find, edit, and jump to other pages in your site.                           |
 | Sites      | Craft CMS                                             | `>= 5.5.0`               | The name of the site for the current page and links to the same page on all propagated sites.         |
 | SEO        | [SEO](https://plugins.craftcms.com/seo)               | `>= 5.0.0`               | SEO preview for the current page.                                                                     |

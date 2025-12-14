@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - There is now a mobile mode that displays Admin Bar as a vertical menu on smaller screens.
 - A new setting allows you to toggle Admin Bar to get it out of the way of the content on the page.
 - A new setting lets you drag the toggle button when Admin Bar is toggled down to the collapsed size.
+- Added a new widget, called `Related`, that shows related entries for the current entry.
+  - Only entry types that the current user has permission to view will be shown.
+  - If the user has the abilty to edit the entry, an edit button will be shown.
 - Added a new widget, called `Queue`, that displays the current status of queued background jobs and will automatically run the job queue on page load.
   - It uses the same controller used in the CP, so it will check your settings to see if the queue should automatically run.
 - Added a new theme, called `Frosted`.
