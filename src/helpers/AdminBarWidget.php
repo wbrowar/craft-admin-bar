@@ -395,7 +395,7 @@ class AdminBarWidget
         $config[self::WIDGET_CRAFT_RELATED] = [
             'editableSectionHandles' => [],
         ];
-        if ($settings->widgetEnabledCraftSites) {
+        if ($settings->widgetEnabledCraftRelated) {
             $sectionHandles = [];
             foreach ($editableSections as $editableSection) {
                 $sectionHandles[] = $editableSection->handle;
