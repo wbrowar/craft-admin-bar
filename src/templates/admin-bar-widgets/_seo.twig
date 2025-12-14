@@ -17,7 +17,7 @@
   {% endif %}
 
   <admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.1rem">
-    {{ svg('@ether/seo/icon-mask.svg')|attr({ class: 'icon' }) }}
+    {{ svg('@ether/seo/icon-mask.svg')|attr({ class: 'icon', slot: 'before-label' }) }}
     {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
     <div slot="popover">
       {% if meta ?? false %}

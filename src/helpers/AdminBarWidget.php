@@ -43,6 +43,7 @@ class AdminBarWidget
     private const WIDGET_CRAFT_AUTHORS = 'craft-authors';
     private const WIDGET_CRAFT_NEW_ENTRY = 'craft-new-entry';
     private const WIDGET_CRAFT_PUBLISHED = 'craft-published';
+    private const WIDGET_CRAFT_QUEUE = 'craft-queue';
     private const WIDGET_CRAFT_SEARCH = 'craft-search';
     private const WIDGET_CRAFT_SITES = 'craft-sites';
     private const WIDGET_GUIDE = 'guide';
@@ -64,6 +65,7 @@ class AdminBarWidget
             (self::WIDGET_CRAFT_AUTHORS) => AdminBar::$pro ? $settings->widgetEnabledCraftAuthors : false,
             (self::WIDGET_CRAFT_NEW_ENTRY) => AdminBar::$pro ? $settings->widgetEnabledCraftNewEntry : false,
             (self::WIDGET_CRAFT_PUBLISHED) => AdminBar::$pro ? $settings->widgetEnabledCraftPublished : false,
+            (self::WIDGET_CRAFT_QUEUE) => AdminBar::$pro ? $settings->widgetEnabledCraftQueue : false,
             (self::WIDGET_CRAFT_SEARCH) => AdminBar::$pro ? $settings->widgetEnabledCraftSearch : false,
             (self::WIDGET_CRAFT_SITES) => AdminBar::$pro ? $settings->widgetEnabledCraftSites : false,
             (self::WIDGET_GUIDE) => AdminBar::$pro ? $settings->widgetEnabledGuide : false,
@@ -106,6 +108,11 @@ class AdminBarWidget
             (self::WIDGET_CRAFT_PUBLISHED) => [
                 'name' => Craft::t('admin-bar', 'widget-craft-published-name', [], $userLanguage),
                 'widgetDescription' => Craft::t('admin-bar', 'The Post Date for when the current page entry was published, along with other publishing information.'),
+                'version' => null
+            ],
+            (self::WIDGET_CRAFT_QUEUE) => [
+                'name' => Craft::t('admin-bar', 'widget-craft-queue-name', [], $userLanguage),
+                'widgetDescription' => Craft::t('admin-bar', 'The number of items waiting to be run in the queue manager.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_SEARCH) => [
@@ -175,6 +182,12 @@ class AdminBarWidget
         if (in_array($widgetHandle, $enabledWidgets)) {
             $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
             $widgets[$widgetHandle]['version'] = '5.5.0';
+        }
+
+        $widgetHandle = self::WIDGET_CRAFT_QUEUE;
+        if (in_array($widgetHandle, $enabledWidgets)) {
+            $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
+            $widgets[$widgetHandle]['version'] = '5.8.0';
         }
 
         $widgetHandle = self::WIDGET_CRAFT_SEARCH;
@@ -260,7 +273,7 @@ class AdminBarWidget
     {
         $config = [];
 
-        $onSettingsPreivew = implode('/', Craft::$app->getRequest()->getSegments()) == 'settings/plugins/admin-bar';
+        $onSettingsPreview = implode('/', Craft::$app->getRequest()->getSegments()) == 'settings/plugins/admin-bar';
 
         $entrySection = !empty($entry) ? Craft::$app->getEntries()->getSectionById($entry['sectionId']) : null;
 
@@ -347,9 +360,26 @@ class AdminBarWidget
             $config[self::WIDGET_CRAFT_PUBLISHED]['timeFormat'] = $userWidgetsConfig[self::WIDGET_CRAFT_PUBLISHED]['timeFormat'] ?? $config[self::WIDGET_CRAFT_PUBLISHED]['timeFormat'];
         }
 
+        // Craft Queue
+        $config[self::WIDGET_CRAFT_QUEUE] = [
+            'onSettingsPreview' => $onSettingsPreview,
+            'jobsWaiting' => 0,
+            'jobsDelayed' => 0,
+            'jobsReserved' => 0,
+            'jobsFailed' => 0,
+            'totalJobs' => 0,
+        ];
+        if ($settings->widgetEnabledCraftQueue) {
+            $config[self::WIDGET_CRAFT_QUEUE]['jobsWaiting'] = Craft::$app->queue->getTotalWaiting();
+            $config[self::WIDGET_CRAFT_QUEUE]['jobsDelayed'] = Craft::$app->queue->getTotalDelayed();
+            $config[self::WIDGET_CRAFT_QUEUE]['jobsReserved'] = Craft::$app->queue->getTotalReserved();
+            $config[self::WIDGET_CRAFT_QUEUE]['jobsFailed'] = Craft::$app->queue->getTotalFailed();
+            $config[self::WIDGET_CRAFT_QUEUE]['totalJobs'] = Craft::$app->queue->getTotalJobs();
+        }
+
         // Craft Search
         $config[self::WIDGET_CRAFT_SEARCH] = [
-            'onSettingsPreivew' => $onSettingsPreivew,
+            'onSettingsPreview' => $onSettingsPreview,
         ];
 
         // Craft Sites
@@ -467,6 +497,26 @@ class AdminBarWidget
                     $results = [
                         'message' => Craft::t('admin-bar', 'Blitz cache refreshed.'),
                         'refreshPage' => true,
+                        'status' => 'success',
+                    ];
+                }
+            } elseif ($handle == self::WIDGET_CRAFT_QUEUE) {
+                if ($action === 'check') {
+                    $data['jobsWaiting'] = Craft::$app->queue->getTotalWaiting();
+                    $data['jobsDelayed'] = Craft::$app->queue->getTotalDelayed();
+                    $data['jobsReserved'] = Craft::$app->queue->getTotalReserved();
+                    $data['jobsFailed'] = Craft::$app->queue->getTotalFailed();
+                    $data['totalJobs'] = Craft::$app->queue->getTotalJobs();
+
+                    $results = [
+                        'data' => $data,
+                        'message' => Craft::t('admin-bar', 'Job queue checked.'),
+                        'status' => 'success',
+                    ];
+                } elseif ($action === 'run') {
+                    $results = [
+                        'followupAction' => 'queue/run',
+                        'message' => Craft::t('admin-bar', 'Job queue ran.'),
                         'status' => 'success',
                     ];
                 }

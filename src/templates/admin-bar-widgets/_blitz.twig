@@ -17,15 +17,16 @@
     <div slot="popover">
       {% set popoverInfo = [['widget-blitz-cached-date'|t('admin-bar', language = userLanguage), widgetConfig['cachedDate']|datetime()]] %}
       <admin-bar-text dl-content="{{ popoverInfo|json_encode }}"></admin-bar-text>
-      <admin-bar-button onclick="window.adminBarPostRequest(this, 'blitz-refresh-cache', {{ widgetConfig['siteUri']|json_encode|json_encode }})" style="--admin-bar-icon-width: 1rem">
+      <admin-bar-button onclick="window.adminBarPostRequest(this.closest('admin-bar'), 'blitz-refresh-cache', {{ widgetConfig['siteUri']|json_encode|json_encode }})" style="--admin-bar-icon-width: 1rem">
         {{ iconSvg('arrows-rotate')|attr({ class: 'icon' }) }}
         {{ 'widget-blitz-refresh-page'|t('admin-bar', language = userLanguage) }}
       </admin-bar-button>
     </div>
   {% endif %}
 {% endset %}
-<{{ widgetElement }}
-class="admin-bar-widget admin-bar-widget--blitz"
-style="--admin-bar-icon-width: 1.5rem"
->{{ widgetContent }}</{{ widgetElement }}>
+{{ tag(widgetElement, {
+  class: 'admin-bar-widget admin-bar-widget--blitz',
+  html: widgetContent,
+  style: { '--admin-bar-icon-width': '1.5rem' }
+}) }}
 

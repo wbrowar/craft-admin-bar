@@ -40,6 +40,10 @@ admin-bar {
     grid-template-columns: max-content max-content;
   }
   &.admin-bar-widget--navigation {
+    &::part(popover) {
+      max-width: 500px;
+    }
+
     span:has(a svg) {
       & a {
         color: currentColor;
@@ -61,7 +65,7 @@ admin-bar {
     &.admin-bar-widget-label-hidden {
       clip: rect(0 0 0 0);
       clip-path: inset(100%);
-      position: absolute;
+      position: fixed;
       width: 1px;
       height: 1px;
       white-space: nowrap;

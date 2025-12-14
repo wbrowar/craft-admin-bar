@@ -126,7 +126,7 @@ class Settings extends Model
     public bool $displayWidgetLabels = false;
 
     /**
-     * TODO
+     * Switch to vertical mode on thinner screens (currently available in [these supported browsers](https://caniuse.com/css-container-queries-style)).
      *
      * @var bool
      */
@@ -140,14 +140,14 @@ class Settings extends Model
     public string $theme = 'default';
 
     /**
-     * TODO
+     * Adds a button to Admin Bar that lets you collapse the toolbar down to a single button.
      *
      * @var bool
      */
     public bool $toolbarToggle = false;
 
     /**
-     * TODO
+     * When collapsed, adds a drag handle to let you move the toggle button out of the way of page content.
      *
      * @var bool
      */
@@ -180,6 +180,13 @@ class Settings extends Model
      * @var bool
      */
     public bool $widgetEnabledCraftPublished = false;
+
+    /**
+     * Enables the Admin Bar Widget: Queue
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledCraftQueue = false;
 
     /**
      * Enables the Admin Bar Widget: Search

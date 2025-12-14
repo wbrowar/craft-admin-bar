@@ -57,6 +57,16 @@ class AdminBarController extends Controller
                 'siteId' => $actionParams->siteId,
                 'uri' => $actionParams->uri,
             ]);
+        } elseif ($params['requestHandle'] == 'craft-queue-check') {
+            /**
+             * Gets the total of items waiting in the job queue.
+             */
+            $response = AdminBarWidget::performWidgetAction('craft-queue', 'check', []);
+        } elseif ($params['requestHandle'] == 'craft-queue-run') {
+            /**
+             * Runs the job queue.
+             */
+            $response = AdminBarWidget::performWidgetAction('craft-queue', 'run', []);
         } elseif ($params['requestHandle'] == 'craft-search-search') {
             /**
              * Search for entries that have URLs.
@@ -71,6 +81,7 @@ class AdminBarController extends Controller
         if (isset($response)) {
             $results = [
                 'data' => $response['data'] ?? [],
+                'followupAction' => $response['followupAction'] ?? null,
                 'message' => $response['message'],
                 'refreshPage' => $response['refreshPage'] ?? false,
                 'status' => $response['status'],

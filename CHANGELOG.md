@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - There is now a mobile mode that displays Admin Bar as a vertical menu on smaller screens.
 - A new setting allows you to toggle Admin Bar to get it out of the way of the content on the page.
 - A new setting lets you drag the toggle button when Admin Bar is toggled down to the collapsed size.
+- Added a new theme, called `Frosted`.
 - Added a new theme, called `Stacked`, that wraps Admin Bar elements instead of using a hortizaon scroll.
 - Admin Bar now supports keyboard navigation top open popovers.
 - ARIA labels and descriptions have been added for better screen reader support.

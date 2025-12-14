@@ -65,7 +65,7 @@ export default class CraftAdminBar extends HTMLElement {
     this._actionUrl = this.dataset.actionUrl
     this._sessionActionUrl = this.dataset.sessionActionUrl
 
-    this.setApiStatus(ApiStatus.Ready)
+    this.setApiStatus(ApiStatus.Ready, true)
 
     this.setUpDebugToolbarCheckbox()
   }
@@ -73,9 +73,13 @@ export default class CraftAdminBar extends HTMLElement {
   /**
    * Performs a request to the AdminBarController default action.
    */
-  async actionRequest(request: string, actionParams: string = ''): Promise<CraftAdminBarResponse | undefined> {
+  async actionRequest(
+    request: string,
+    actionParams: string = '',
+    updateProgressBar = true
+  ): Promise<CraftAdminBarResponse | undefined> {
     // If a request is currently in progress, bail
-    if (this._requestStatus === ApiStatus.Loading) {
+    if (updateProgressBar && this._requestStatus === ApiStatus.Loading) {
       return
     }
 
@@ -104,7 +108,7 @@ export default class CraftAdminBar extends HTMLElement {
     }
 
     try {
-      this.setApiStatus(ApiStatus.Loading)
+      this.setApiStatus(ApiStatus.Loading, updateProgressBar)
 
       // Create new form data and populate it to pass into the controller action.
       const params = new FormData()
@@ -126,7 +130,6 @@ export default class CraftAdminBar extends HTMLElement {
 
       // If request is not complete, throw error.
       if (!response.ok) {
-        this.setApiStatus(ApiStatus.Errored)
         throw new Error(`Response status: ${response.status}`)
       }
 
@@ -136,10 +139,26 @@ export default class CraftAdminBar extends HTMLElement {
         throw json.message
       }
 
-      this.setApiStatus(ApiStatus.Resolved)
+      if (json.followupAction) {
+        const followupActionUrl = this._actionUrl.replace('admin-bar/admin-bar', json.followupAction)
+        const followupResponse = await fetch(followupActionUrl, {
+          headers: {
+            Accept: 'application/json',
+            'X-CSRF-Token': this._csrfToken ?? '',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          method: 'POST',
+        })
+
+        if (!followupResponse.ok) {
+          throw new Error(`Response status: ${followupResponse.status}`)
+        }
+      }
+
+      this.setApiStatus(ApiStatus.Resolved, updateProgressBar)
       return json
     } catch (error) {
-      this.setApiStatus(ApiStatus.Errored)
+      this.setApiStatus(ApiStatus.Errored, true)
       return {
         message: error as string,
         status: 'error',
@@ -162,9 +181,9 @@ export default class CraftAdminBar extends HTMLElement {
    * @param apiStatus A value from the `ApiStatus` enum.
    * @private
    */
-  private setApiStatus(apiStatus: ApiStatus) {
+  private setApiStatus(apiStatus: ApiStatus, updateProgressBar: boolean) {
     // Visually show the progress of the request.
-    if (this.#adminBar) {
+    if (this.#adminBar && updateProgressBar) {
       switch (apiStatus) {
         case ApiStatus.Errored:
           this.#adminBar.setAttribute('progress', '-1')

@@ -3,13 +3,13 @@ export default class CraftAdminBarSearch extends HTMLElement {
    * The form element that handles the search.
    * @private
    */
-  private _searchForm: HTMLFormElement | null = null
+  #searchForm: HTMLFormElement | null = null
 
   /**
    * The element that displays the search results
    * @private
    */
-  private _resultsElement: HTMLDivElement | null = null
+  #resultsElement: HTMLDivElement | null = null
 
   /**
    * Handles search via the Craft Search Admin Bar Widget
@@ -17,7 +17,7 @@ export default class CraftAdminBarSearch extends HTMLElement {
    */
   private _onSearchFormSubmit = async (e: Event) => {
     e.preventDefault()
-    const input: HTMLInputElement | null = this.shadowRoot?.querySelector('input[type="search"]') ?? null
+    const input: HTMLInputElement | null = this.#searchForm?.querySelector('input[type="search"]') ?? null
 
     if (input) {
       const response: {
@@ -29,7 +29,7 @@ export default class CraftAdminBarSearch extends HTMLElement {
         JSON.stringify({ query: input.value })
       )
 
-      if (this._resultsElement) {
+      if (this.#resultsElement) {
         let template
         let templateContent: DocumentFragment
 
@@ -71,12 +71,12 @@ export default class CraftAdminBarSearch extends HTMLElement {
             ulElement.append(liElement)
           })
 
-          this._resultsElement.replaceChildren(ulElement)
+          this.#resultsElement.replaceChildren(ulElement)
         } else {
           template = document.getElementById('admin-bar-search-no-results-template') as HTMLTemplateElement
           templateContent = template.content
 
-          this._resultsElement.replaceChildren(templateContent.cloneNode(true))
+          this.#resultsElement.replaceChildren(templateContent.cloneNode(true))
         }
       }
     }
@@ -91,18 +91,18 @@ export default class CraftAdminBarSearch extends HTMLElement {
     const shadowRoot = this.attachShadow({ mode: 'open' })
     shadowRoot.appendChild(templateContent.cloneNode(true))
 
-    this._searchForm = this.shadowRoot?.querySelector('form') ?? null
-    this._resultsElement = this.shadowRoot?.querySelector('form + div') ?? null
+    this.#searchForm = this.shadowRoot?.querySelector('form') ?? null
+    this.#resultsElement = this.shadowRoot?.querySelector('form + div') ?? null
   }
 
   connectedCallback(): void {
     // Set up search widget
-    this._searchForm?.addEventListener('submit', this._onSearchFormSubmit)
+    this.#searchForm?.addEventListener('submit', this._onSearchFormSubmit)
   }
 
   disconnectedCallback(): void {
     // Clean up search widget
-    this._searchForm?.removeEventListener('submit', this._onSearchFormSubmit)
+    this.#searchForm?.removeEventListener('submit', this._onSearchFormSubmit)
   }
 }
 

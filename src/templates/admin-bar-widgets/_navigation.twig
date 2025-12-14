@@ -47,12 +47,12 @@
 
   {% if popoverInfo|length %}
     <admin-bar-button class="admin-bar-widget admin-bar-widget--navigation" style="--admin-bar-icon-width: 1.3rem">
-      {{ svg('@verbb/navigation/icon-mask.svg')|attr({ class: 'icon' }) }}
+      {{ svg('@verbb/navigation/icon-mask.svg')|attr({ class: 'icon', slot: 'before-label' }) }}
       {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
 
       <div slot="popover">
         <div style="padding: var(--admin-bar-inline-padding);">
-          <admin-bar-text style="--admin-bar-block-padding: 0; --admin-bar-inline-padding: 0; --admin-bar-height: auto;">
+          <admin-bar-text multi-line style="--admin-bar-block-padding: 0; --admin-bar-inline-padding: 0; --admin-bar-height: auto;">
             <ul style="display: grid; grid-template-columns: auto; gap: 1rem; margin: 0; padding: 0;">
               {% for row in popoverInfo %}
                 <li style="list-style: none;">{{ row|raw }}</li>

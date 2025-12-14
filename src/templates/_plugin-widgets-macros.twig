@@ -1,4 +1,4 @@
-{% macro onSettingsPreivew(name) %}
+{% macro onSettingsPreview(name) %}
   <admin-bar-text multi-line style="font-style: italic;">{{ 'The content for {name} cannot be shown on the Admin Bar Settings page. It will be displayed correctly on other pages.'|t('admin-bar', {name}) }}</admin-bar-text>
 {% endmacro %}
 
@@ -31,7 +31,7 @@
 {% endmacro %}
 
 {% macro widgetBadgeAndLabel(badge, text, visible) %}
-  {% if badge ?? false %}
+  {% if badge != null %}
     <admin-bar-text
         class="admin-bar-widget-badge"
         badge-content="{{ badge }}"

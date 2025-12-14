@@ -70,6 +70,14 @@
   } %}
 {% endif %}
 
+{% if 'craft-queue' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-queue' with {
+    pluginHandle: 'craft-queue',
+    userLanguage,
+    widgetConfig: widgetsConfig['craft-queue'],
+  } %}
+{% endif %}
+
 {% if 'craft-search' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_craft-search' with {
     pluginHandle: 'craft-search',

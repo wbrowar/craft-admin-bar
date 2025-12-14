@@ -52,6 +52,7 @@ return [
     'widget-craft-published-notes' => 'Notes',
     'widget-craft-published-post-date' => 'Post Date',
     'widget-craft-published-updated-at' => 'Updated at',
+    'widget-craft-queue-name' => 'Queue',
     'widget-craft-search-edit' => 'Edit',
     'widget-craft-search-name' => 'Search',
     'widget-craft-search-results-not-found' => 'No search results found.',

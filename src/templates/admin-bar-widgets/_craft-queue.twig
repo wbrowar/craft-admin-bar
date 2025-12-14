@@ -1,0 +1,66 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
+<admin-bar-button class="admin-bar-widget admin-bar-widget--craft-queue" style="--admin-bar-icon-width: 1rem">
+  {{ iconSvg('play')|attr({ class: 'icon', slot: 'before-label' }) }}
+  {{ pluginWidgets.widgetBadgeAndLabel('', widgets[pluginHandle].name, displayWidgetLabels) }}
+
+  <div slot="popover">
+    {% if widgetConfig.onSettingsPreview %}
+      {{ pluginWidgets.onSettingsPreview(widgets[pluginHandle].name) }}
+    {% else %}
+      {% set jobTotals = {
+        jobsWaiting: widgetConfig.jobsWaiting ?? 0,
+        jobsDelayed: widgetConfig.jobsDelayed ?? 0,
+        jobsReserved: widgetConfig.jobsReserved ?? 0,
+        jobsFailed: widgetConfig.jobsFailed ?? 0,
+      } %}
+      {% set tMessages = {
+        'jobStatusWaiting': 'Waiting jobs'|t('admin-bar', language = userLanguage),
+        'jobStatusDelayed': 'Delayed jobs'|t('admin-bar', language = userLanguage),
+        'jobStatusReserved': 'Reserved jobs'|t('admin-bar', language = userLanguage),
+        'jobStatusFailed': 'Failed jobs'|t('admin-bar', language = userLanguage),
+      } %}
+      <craft-admin-bar-queue
+          data-job-totals="{{ jobTotals|json_encode }}"
+          data-queue-total="{{ widgetConfig.totalJobs }}"
+          data-t-messages="{{ tMessages|json_encode }}"
+      >
+        <template id="admin-bar-queue-template">
+          <style>
+            svg {
+              fill: currentColor;
+
+              &.queue-manager-icon {
+                width: 15px;
+                height: 15px;
+              }
+              &.run-jobs-icon {
+                width: 15px;
+                height: 15px;
+              }
+            }
+          </style>
+
+          <div class="job-status"></div>
+
+          <admin-bar-button class="run-jobs">
+            {{ 'Run Queue'|t('admin-bar', language = userLanguage) }}
+            {{ iconSvg('right')|attr({ class: 'run-jobs-icon', slot: 'before-label' }) }}
+          </admin-bar-button>
+
+          {% if currentUser.can('utility:queue-manager') %}
+            <admin-bar-button button-href="{{ cpUrl('utilities/queue-manager') }}" style="border-block-start: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);">
+              {{ 'Queue Manager'|t('app') }}
+              {{ iconSvg('play')|attr({ class: 'queue-manager-icon', slot: 'before-label' }) }}
+            </admin-bar-button>
+          {% endif %}
+        </template>
+
+        <template id="admin-bar-queue-job-status-template">
+          <admin-bar-text class="no-jobs">{{ 'No pending jobs.'|t('app') }}</admin-bar-text>
+          <admin-bar-text class="has-jobs"></admin-bar-text>
+        </template>
+      </craft-admin-bar-queue>
+    {% endif %}
+  </div>
+</admin-bar-button>
