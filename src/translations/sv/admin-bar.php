@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Körkö',
     'widget-craft-queue-waiting-jobs' => 'Väntande jobb',
     'widget-craft-related-name' => 'Relaterat',
+    'widget-craft-related-no-related-entries' => 'Inga relaterade poster hittades.',
     'widget-craft-search-edit' => 'Redigera',
     'widget-craft-search-name' => 'Sök',
     'widget-craft-search-results-not-found' => 'Inga sökresultat hittades.',

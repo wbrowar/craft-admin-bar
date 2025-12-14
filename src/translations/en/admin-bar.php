@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Run Queue',
     'widget-craft-queue-waiting-jobs' => 'Waiting jobs',
     'widget-craft-related-name' => 'Related',
+    'widget-craft-related-no-related-entries' => 'No related entries found.',
     'widget-craft-search-edit' => 'Edit',
     'widget-craft-search-name' => 'Search',
     'widget-craft-search-results-not-found' => 'No search results found.',

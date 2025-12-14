@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'คิวการทำงาน',
     'widget-craft-queue-waiting-jobs' => 'งานที่กำลังรอ',
     'widget-craft-related-name' => 'ที่เกี่ยวข้อง',
+    'widget-craft-related-no-related-entries' => 'ไม่พบรายการที่เกี่ยวข้อง',
     'widget-craft-search-edit' => 'แก้ไข',
     'widget-craft-search-name' => 'ค้นหา',
     'widget-craft-search-results-not-found' => 'ไม่พบผลการค้นหา',

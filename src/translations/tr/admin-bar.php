@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Çalışma Sırası',
     'widget-craft-queue-waiting-jobs' => 'Bekleyen işler',
     'widget-craft-related-name' => 'İlgili',
+    'widget-craft-related-no-related-entries' => 'İlgili kayıt bulunamadı.',
     'widget-craft-search-edit' => 'Düzenle',
     'widget-craft-search-name' => 'Ara',
     'widget-craft-search-results-not-found' => 'Arama sonucu bulunamadı.',

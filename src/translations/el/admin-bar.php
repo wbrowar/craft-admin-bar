@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Ουρά εκτέλεσης',
     'widget-craft-queue-waiting-jobs' => 'Εργασίες σε αναμονή',
     'widget-craft-related-name' => 'Σχετικές',
+    'widget-craft-related-no-related-entries' => 'Δεν βρέθηκαν σχετικές καταχωρήσεις.',
     'widget-craft-search-edit' => 'Επεξεργασία',
     'widget-craft-search-name' => 'Αναζήτηση',
     'widget-craft-search-results-not-found' => 'Δεν βρέθηκαν αποτελέσματα αναζήτησης.',

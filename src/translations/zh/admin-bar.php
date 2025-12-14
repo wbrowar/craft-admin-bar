@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => '运行队列',
     'widget-craft-queue-waiting-jobs' => '等待中的任务',
     'widget-craft-related-name' => '相关',
+    'widget-craft-related-no-related-entries' => '未找到相关条目。',
     'widget-craft-search-edit' => '编辑',
     'widget-craft-search-name' => '搜索',
     'widget-craft-search-results-not-found' => '未找到搜索结果。',

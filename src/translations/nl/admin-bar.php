@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Uitvoeringswachtrij',
     'widget-craft-queue-waiting-jobs' => 'Wachtende taken',
     'widget-craft-related-name' => 'Gerelateerd',
+    'widget-craft-related-no-related-entries' => 'Er zijn geen gerelateerde vermeldingen gevonden.',
     'widget-craft-search-edit' => 'Bewerken',
     'widget-craft-search-name' => 'Zoeken',
     'widget-craft-search-results-not-found' => 'Geen zoekresultaten gevonden.',

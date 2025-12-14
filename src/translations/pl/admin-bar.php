@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Kolejka zadań do wykonania',
     'widget-craft-queue-waiting-jobs' => 'Zadania oczekujące',
     'widget-craft-related-name' => 'Powiązane',
+    'widget-craft-related-no-related-entries' => 'Nie znaleziono powiązanych wpisów.',
     'widget-craft-search-edit' => 'Edytuj',
     'widget-craft-search-name' => 'Szukaj',
     'widget-craft-search-results-not-found' => 'Nie znaleziono wyników wyszukiwania.',

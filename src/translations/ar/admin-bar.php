@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'قائمة التشغيل',
     'widget-craft-queue-waiting-jobs' => 'الوظائف المنتظرة',
     'widget-craft-related-name' => 'ذات صلة',
+    'widget-craft-related-no-related-entries' => 'لم يتم العثور على أي إدخالات ذات صلة.',
     'widget-craft-search-edit' => 'تعديل',
     'widget-craft-search-name' => 'بحث',
     'widget-craft-search-results-not-found' => 'لم يتم العثور على نتائج بحث.',

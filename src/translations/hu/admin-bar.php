@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Futtatási sor',
     'widget-craft-queue-waiting-jobs' => 'Várakozó feladatok',
     'widget-craft-related-name' => 'Kapcsolódó',
+    'widget-craft-related-no-related-entries' => 'Nem található kapcsolódó bejegyzés.',
     'widget-craft-search-edit' => 'Szerkesztés',
     'widget-craft-search-name' => 'Keresés',
     'widget-craft-search-results-not-found' => 'Nincsenek keresési eredmények.',

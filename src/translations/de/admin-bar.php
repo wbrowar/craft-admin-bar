@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Ausführungswarteschlange',
     'widget-craft-queue-waiting-jobs' => 'Wartende Aufträge',
     'widget-craft-related-name' => 'Verwandte',
+    'widget-craft-related-no-related-entries' => 'Keine entsprechenden Einträge gefunden.',
     'widget-craft-search-edit' => 'Bearbeiten',
     'widget-craft-search-name' => 'Suchen',
     'widget-craft-search-results-not-found' => 'Keine Suchergebnisse gefunden.',

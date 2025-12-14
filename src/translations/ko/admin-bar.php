@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => '실행 대기열',
     'widget-craft-queue-waiting-jobs' => '대기 중인 작업',
     'widget-craft-related-name' => '관련 항목',
+    'widget-craft-related-no-related-entries' => '관련 항목을 찾을 수 없습니다.',
     'widget-craft-search-edit' => '수정',
     'widget-craft-search-name' => '검색',
     'widget-craft-search-results-not-found' => '검색 결과가 없습니다.',

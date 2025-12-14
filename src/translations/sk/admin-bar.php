@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Front spustených úloh',
     'widget-craft-queue-waiting-jobs' => 'Čakajúce úlohy',
     'widget-craft-related-name' => 'Súvisiace',
+    'widget-craft-related-no-related-entries' => 'Nenašli sa žiadne súvisiace záznamy.',
     'widget-craft-search-edit' => 'Upraviť',
     'widget-craft-search-name' => 'Vyhľadávanie',
     'widget-craft-search-results-not-found' => 'Nenašli sa žiadne výsledky vyhľadávania.',

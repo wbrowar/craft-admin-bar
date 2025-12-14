@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Keyrsluröð',
     'widget-craft-queue-waiting-jobs' => 'Verk í bið',
     'widget-craft-related-name' => 'Tengd',
+    'widget-craft-related-no-related-entries' => 'Engar tengdar færslur fundust.',
     'widget-craft-search-edit' => 'Breyta',
     'widget-craft-search-name' => 'Leita',
     'widget-craft-search-results-not-found' => 'Engar leitarniðurstöður fundust.',

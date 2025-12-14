@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Ciw Rhedeg',
     'widget-craft-queue-waiting-jobs' => 'Swyddi sy’n aros',
     'widget-craft-related-name' => 'Cysylltiedig',
+    'widget-craft-related-no-related-entries' => 'Ni chanfuwyd unrhyw gofnodion cysylltiedig.',
     'widget-craft-search-edit' => 'Golygu',
     'widget-craft-search-name' => 'Chwilio',
     'widget-craft-search-results-not-found' => 'Ni chafwyd unrhyw ganlyniadau chwilio.',

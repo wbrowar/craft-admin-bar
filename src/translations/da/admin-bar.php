@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Kør kø',
     'widget-craft-queue-waiting-jobs' => 'Ventende job',
     'widget-craft-related-name' => 'Relateret',
+    'widget-craft-related-no-related-entries' => 'Ingen relaterede poster fundet.',
     'widget-craft-search-edit' => 'Rediger',
     'widget-craft-search-name' => 'Søg',
     'widget-craft-search-results-not-found' => 'Ingen søgeresultater fundet.',

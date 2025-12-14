@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Fronta spuštěných úloh',
     'widget-craft-queue-waiting-jobs' => 'Čekající úlohy',
     'widget-craft-related-name' => 'Související',
+    'widget-craft-related-no-related-entries' => 'Nebyly nalezeny žádné související položky.',
     'widget-craft-search-edit' => 'Upravit',
     'widget-craft-search-name' => 'Hledat',
     'widget-craft-search-results-not-found' => 'Nebyly nalezeny žádné výsledky vyhledávání.',

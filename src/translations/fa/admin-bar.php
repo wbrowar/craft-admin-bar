@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'اجرای صف',
     'widget-craft-queue-waiting-jobs' => 'کارهای در انتظار',
     'widget-craft-related-name' => 'مرتبط',
+    'widget-craft-related-no-related-entries' => 'هیچ مطلب مرتبطی یافت نشد.',
     'widget-craft-search-edit' => 'ویرایش',
     'widget-craft-search-name' => 'جستجو',
     'widget-craft-search-results-not-found' => 'هیچ نتیجه‌ای برای جستجو یافت نشد.',

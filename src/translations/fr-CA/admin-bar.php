@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'File d’attente d’exécution',
     'widget-craft-queue-waiting-jobs' => 'Tâches en attente',
     'widget-craft-related-name' => 'Associées',
+    'widget-craft-related-no-related-entries' => 'Aucun résultat trouvé.',
     'widget-craft-search-edit' => 'Modifier',
     'widget-craft-search-name' => 'Rechercher',
     'widget-craft-search-results-not-found' => 'Aucun résultat trouvé.',

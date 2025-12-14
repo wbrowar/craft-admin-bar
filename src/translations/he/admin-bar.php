@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'תור הפעלת משימות',
     'widget-craft-queue-waiting-jobs' => 'משימות ממתינות',
     'widget-craft-related-name' => 'קשור',
+    'widget-craft-related-no-related-entries' => 'לא נמצאו ערכים קשורים.',
     'widget-craft-search-edit' => 'עריכה',
     'widget-craft-search-name' => 'חיפוש',
     'widget-craft-search-results-not-found' => 'לא נמצאו תוצאות חיפוש.',

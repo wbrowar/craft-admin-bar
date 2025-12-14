@@ -25,6 +25,6 @@
       </ul>
     </nav>
   {% else %}
-    <admin-bar-text text-content="No related entries found." slot="popover"></admin-bar-text>
+    <admin-bar-text text-content="{{ 'widget-craft-related-no-related-entries'|t('admin-bar', language = userLanguage) }}" slot="popover"></admin-bar-text>
   {% endif %}
 </admin-bar-button>

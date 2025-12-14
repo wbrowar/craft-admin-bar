@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Cola de ejecución',
     'widget-craft-queue-waiting-jobs' => 'Tareas en espera',
     'widget-craft-related-name' => 'Relacionado',
+    'widget-craft-related-no-related-entries' => 'No se encontraron entradas relacionadas.',
     'widget-craft-search-edit' => 'Editar',
     'widget-craft-search-name' => 'Buscar',
     'widget-craft-search-results-not-found' => 'No se encontraron resultados de búsqueda.',

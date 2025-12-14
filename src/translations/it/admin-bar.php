@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Coda di esecuzione',
     'widget-craft-queue-waiting-jobs' => 'Processi in attesa',
     'widget-craft-related-name' => 'Correlati',
+    'widget-craft-related-no-related-entries' => 'Nessuna voce correlata trovata.',
     'widget-craft-search-edit' => 'Modifica',
     'widget-craft-search-name' => 'Cerca',
     'widget-craft-search-results-not-found' => 'Nessun risultato trovato.',

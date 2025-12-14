@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Очередь выполнения',
     'widget-craft-queue-waiting-jobs' => 'Ожидающие задания',
     'widget-craft-related-name' => 'Связанные',
+    'widget-craft-related-no-related-entries' => 'Соответствующие записи не найдены.',
     'widget-craft-search-edit' => 'Редактировать',
     'widget-craft-search-name' => 'Поиск',
     'widget-craft-search-results-not-found' => 'Результаты поиска не найдены.',

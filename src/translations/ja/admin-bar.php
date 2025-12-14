@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => '実行キュー',
     'widget-craft-queue-waiting-jobs' => '待機中のジョブ',
     'widget-craft-related-name' => '関連情報',
+    'widget-craft-related-no-related-entries' => '関連する項目は見つかりませんでした。',
     'widget-craft-search-edit' => '編集',
     'widget-craft-search-name' => '検索',
     'widget-craft-search-results-not-found' => '検索結果が見つかりませんでした。',

@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Antrian berjalan',
     'widget-craft-queue-waiting-jobs' => 'Pekerjaan yang menunggu',
     'widget-craft-related-name' => 'Terkait',
+    'widget-craft-related-no-related-entries' => 'Tidak ditemukan entri terkait.',
     'widget-craft-search-edit' => 'Edit',
     'widget-craft-search-name' => 'Cari',
     'widget-craft-search-results-not-found' => 'Tidak ditemukan hasil pencarian.',

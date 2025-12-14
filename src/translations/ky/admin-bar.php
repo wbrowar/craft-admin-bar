@@ -59,6 +59,7 @@ return [
     'widget-craft-queue-run-queue' => 'Кезекти иштетүү',
     'widget-craft-queue-waiting-jobs' => 'Күтүп жаткан жумуштар',
     'widget-craft-related-name' => 'Окшош',
+    'widget-craft-related-no-related-entries' => 'Эч кандай тиешелүү жазуулар табылган жок.',
     'widget-craft-search-edit' => 'Түзөтүү',
     'widget-craft-search-name' => 'Издөө',
     'widget-craft-search-results-not-found' => 'Издөө натыйжалары табылган жок.',
