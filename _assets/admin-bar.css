@@ -21,19 +21,21 @@ admin-bar {
   }
 }
 .admin-bar-widget {
-  &::part(popover) {
-    & a:not(.admin-bar-button) {
-      text-decoration: underline;
-      color: var(--admin-bar-button-popover-color-text, rgb(255, 255, 255));
-      transition: color var(--admin-bar-transition-duration) ease-out;
-
-      &:hover {
-        color: color-mix(in srgb, currentColor, transparent 30%);
-      }
-    }
-  }
   [slot="popover"] {
     width: stretch;
+
+    & a:not(.admin-bar-button) {
+      overflow-wrap: break-word;
+      text-decoration: underline;
+      font-weight: 500;
+      color: var(--admin-bar-button-color-text, rgb(255, 255, 255));
+      transition: color var(--admin-bar-transition-duration) ease-out, text-decoration-color var(--admin-bar-transition-duration) ease-out;
+
+      &:hover {
+        color: color-mix(in srgb, currentColor, transparent 20%);
+        text-decoration-color: color-mix(in srgb, var(--admin-bar-color-highlight, rgb(255, 255, 255)), transparent 50%);
+      }
+    }
   }
 
   &:is(.admin-bar-widget--blitz, .admin-bar-widget--published) admin-bar-text::part(dl) {
