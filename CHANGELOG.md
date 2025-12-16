@@ -9,29 +9,29 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - There is a setting that allows Admin Bar to automatically embed itself at the top of front-end pages.
   - NOTE: This is set to `false` by default, but will be enabled by default in the next major version.
-- There is now a mobile mode that displays Admin Bar as a vertical menu on smaller screens.
+- There is now a mobile mode setting that displays Admin Bar as a vertical menu on smaller screens.
 - A new setting allows you to toggle Admin Bar to get it out of the way of the content on the page.
 - A new setting lets you drag the toggle button when Admin Bar is toggled down to the collapsed size.
-- Added a new widget, called `Related`, that shows related entries for the current entry.
+- Admin Bar is now translated on the front-end and shows the language based on the logged in user’s language preference.
+  - Admin Bar will automatically switch to RTL in RTL languages.
+- Added a new widget, called `Queue`, that displays the current status of queued background jobs and will automatically run the job queue on page load.
+  - It uses the same controller used in the Craft CMS CP, so it will check your settings to see if the queue should automatically run.
+- Added a new widget, called `Related`, that shows entries related to the current page entry.
   - Only entry types that the current user has permission to view will be shown.
   - If the user has the abilty to edit the entry, an edit button will be shown.
-- Added a new widget, called `Queue`, that displays the current status of queued background jobs and will automatically run the job queue on page load.
-  - It uses the same controller used in the CP, so it will check your settings to see if the queue should automatically run.
 - Added a new theme, called `Frosted`.
-- Added a new theme, called `Stacked`, that wraps Admin Bar elements instead of using a hortizaon scroll.
-- Admin Bar now supports keyboard navigation top open popovers.
+- Added a new theme, called `Stacked`, that wraps Admin Bar elements instead of using a hortizaon scrollbar.
+- Admin Bar now supports keyboard navigation to open popovers and tab through buttons.
 - ARIA labels and descriptions have been added for better screen reader support.
-- Added a checkbox to toggle the Craft CMS dev toolbar on the front-end.
+- Added a checkbox to toggle the Craft CMS Debug Toolbar on the front end.
   - This is available only to users with admin access.
 - Added entry statuses to search results in the Craft Search widget.
 
 
 ### Changed
-- Admin Bar is now translated on the front-end and shows the language based on the logged in user’s language preference.
-  - Admin Bar will automatically switch to RTL in RTL languages.
-- Widget labels are now hidden using CSS so they are still accessible to screen readers.
+- Widget labels are now hidden using CSS so they are still accessible to screen readers and in mobile mode.
 - Updated the design of some widgets.
-- The Search widget will now use fuzzy search by default.
+- The Search widget will now use fuzzy search by default, when only alphanumeric characters are entered.
 - Redesigned the Admin Bar Settings page:
   - Available widgets are now listed in a grid.
   - The default CSS section now shows the CSS used by the selected theme—making it easier to override theme styles.
@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Fixed
 - Fixed the navigation setting link color for the Navigation widget.
+- Fixed a Twig rendering error on the settings page when using Postgres.
 
 
 

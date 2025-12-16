@@ -185,6 +185,7 @@ class AdminBar extends Plugin
         return Craft::$app->getView()->renderTemplate(
             'admin-bar/_settings',
             [
+                'orderBy' => Craft::$app->getDb()->driverName == 'pgsql' ? 'RANDOM()' : 'RAND()',
                 'proEdition' => self::$pro,
                 'settings' => self::$settings,
                 'widgetPlugins' => AdminBarWidget::getAdminBarWidgets() ?? [],

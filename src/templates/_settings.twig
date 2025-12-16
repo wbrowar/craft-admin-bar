@@ -1,7 +1,7 @@
 {% import "_includes/forms" as forms %}
 {% import "codeeditor/codeEditor" as codeEditor %}
 
-{% set previewEntry = craft.entries.orderBy('RAND()').section('*').uri(':notempty:').one() %}
+{% set previewEntry = craft.entries.orderBy(orderBy).section('*').uri(':notempty:').one() %}
 
 <div class="admin-bar-settings-2-column">
     <h2>{{ 'Preview'|t('admin-bar') }}</h2>
