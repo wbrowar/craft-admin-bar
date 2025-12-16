@@ -182,7 +182,7 @@
         button-href="{{ cpUrl('utilities') }}"
         label-text="{{ 'label-utilities'|t('admin-bar', language = userLanguage) }}"
         {% if utilitiesNotificationCount > 0 %}badge-content="{{ utilitiesNotificationCount }}"{% endif %}
-    ></admin-bar-button>
+    >{% if not utilitiesNotificationCount %}<span slot="before-label">{{ self.iconUtilities }}</span>{% endif %}</admin-bar-button>
   {% endif %}
 
   {% if currentUser and currentUser.admin and displaySettingsLink ?? true %}
@@ -287,6 +287,11 @@
 {# guide #}
 {% macro iconGuide() %}{% apply spaceless %}
   {{ svg('@wbrowar/guide/assetbundles/static/icon-mask.svg')|attr({ class: 'icon' }) }}
+{% endapply %}{% endmacro %}
+
+{# utilities #}
+{% macro iconUtilities() %}{% apply spaceless %}
+  {{ svg('@appicons/wrench.svg')|attr({ class: 'icon' }) }}
 {% endapply %}{% endmacro %}
 
 {# settings #}
