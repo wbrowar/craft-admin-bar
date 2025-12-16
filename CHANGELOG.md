@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
   - Available widgets are now listed in a grid.
   - The default CSS section now shows the CSS used by the selected theme—making it easier to override theme styles.
   - The default CSS section is now hidden in a `<details>` element.
+  - Clicking on a plugin name in the "More Admin Bar Widgets" list now takes you to the page in the plugin store, in your site’s CP.
 - Admin Bar is no longer nested inside of a `<craft-admin-bar>` element.
     - This should make for easier placement on the page through custom CSS.
 - Updated Admin Bar Component to version `2.0.0`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)

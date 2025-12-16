@@ -722,8 +722,7 @@ var $t=e=>{throw TypeError(e)},_t=(e,t,o)=>t.has(e)||$t("Cannot "+o),dt=(e,t,o)=
       @container style(--admin-bar-vertical: true) {
         & {
           display: grid;
-          align-items: start;
-          overflow-x: unset;
+          grid-auto-rows: max-content;
           overflow: auto;
         }
       }

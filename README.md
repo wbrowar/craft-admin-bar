@@ -46,7 +46,10 @@ To add Admin Bar to your website add the `{{ adminBar() }}` function within your
 You may pass in an array of arguments to make some changes on how Admin Bar looks and functions. In this example, you may pass in the entry that you'd like to edit when someone clicks the "Edit" link.
 
 ```twig
-{{ adminBar({ entry: entry }) }}
+{{ adminBar({
+  entry: entry,
+  editLinkLabel: entry ?? false ? entry.section.name : null,
+}) }}
 ```
 
 Admin Bar Widgets will also use this entry value to change their content and functionality.

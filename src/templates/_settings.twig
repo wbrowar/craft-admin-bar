@@ -201,7 +201,7 @@
             <h3>{{ 'More Admin Bar Widgets:'|t('admin-bar') }}</h3>
             <ul>
                 {% for plugin in notInstalledPlugins %}
-                    <li><a href="https://plugins.craftcms.com/{{ plugin }}">{{ widgetPlugins[plugin].name }}</a>: {{ widgetPlugins[plugin].widgetDescription }}</li>
+                    <li><a href="{{ cpUrl('plugin-store/' ~ plugin) }}">{{ widgetPlugins[plugin].name }}</a>: {{ widgetPlugins[plugin].widgetDescription }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
