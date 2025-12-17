@@ -5,7 +5,7 @@
 
     &::part(avatar) {
       border-radius: 5px;
-      width: 43px;
+      width: 34px;
     }
     &::part(buttons) {
       @container not style(--admin-bar-vertical: true) {
