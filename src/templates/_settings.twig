@@ -1,7 +1,7 @@
 {% import "_includes/forms" as forms %}
 {% import "codeeditor/codeEditor" as codeEditor %}
 
-{% set previewEntry = craft.entries.orderBy('RAND()').section('*').uri(':notempty:').one() %}
+{% set previewEntry = craft.entries.orderBy(orderBy).section('*').uri(':notempty:').one() %}
 
 <div class="admin-bar-settings-2-column">
     <h2>{{ 'Preview'|t('admin-bar') }}</h2>
@@ -16,6 +16,40 @@
 </div>
 
 <hr>
+
+<div class="admin-bar-settings-grid">
+  {{ forms.lightswitchField({
+    label: 'Auto Render'|t('guide'),
+    instructions: 'Displays Admin Bar on all front-end pages. If set to `false`, Admin Bar can be renderd using the `adminBar()` Twig method.'|t('admin-bar'),
+    id: 'autoRender',
+    name: 'autoRender',
+    on: settings.autoRender,
+  }) }}
+
+  {{ forms.lightswitchField({
+    label: 'Mobile Mode'|t('guide'),
+    instructions: 'Switch to vertical mode on thinner screens (currently available in [these supported browsers](https://caniuse.com/css-container-queries-style)).'|t('admin-bar'),
+    id: 'mobileMode',
+    name: 'mobileMode',
+    on: settings.mobileMode,
+  }) }}
+
+  {{ forms.lightswitchField({
+    label: 'Toggle Button'|t('guide'),
+    instructions: 'Adds a button to Admin Bar that lets you collapse the toolbar down to a single button.'|t('admin-bar'),
+    id: 'toolbarToggle',
+    name: 'toolbarToggle',
+    on: settings.toolbarToggle,
+  }) }}
+
+  {{ forms.lightswitchField({
+    label: 'Toggle Button Draggable'|t('guide'),
+    instructions: 'When collapsed, adds a drag handle to let you move the toggle button out of the way of page content.'|t('admin-bar'),
+    id: 'toolbarToggleDraggable',
+    name: 'toolbarToggleDraggable',
+    on: settings.toolbarToggleDraggable,
+  }) }}
+</div>
 
 {{ forms.editableTableField({
     label: 'Additional Links'|t('admin-bar'),
@@ -64,9 +98,9 @@
     <p>{{ 'Admin Bar Widgets display links, statuses, and page-specific information based on some of the Craft CMS features you are using and the plugins that you currently have installed.'|t('admin-bar') }} {% if not proEdition %}<a class="go" href="{{ cpUrl('plugin-store/admin-bar') }}">{{ 'Get Admin Bar PRO to enable Admin Bar Widgets.'|t('admin-bar') }}</a>{% endif %}</p>
 </div>
 
-<div class="admin-bar-settings-2-column {{ proEdition ? 'admin-bar-pro' : '' }}" style="margin-block-start: calc(2 * var(--l));">
+<div class="{{ proEdition ? 'admin-bar-pro' : '' }}" style="margin-block-start: calc(2 * var(--l));">
     {% if availableAdminBarWidgets|length %}
-        <div>
+        <div class="admin-bar-settings-grid">
             {% set widgetFields = [
                 {
                     handle: 'craft-new-entry',
@@ -89,12 +123,16 @@
                     setting: 'widgetEnabledNavigation',
                 },
                 {
-                    handle: 'craft-sites',
-                    setting: 'widgetEnabledCraftSites',
+                  handle: 'craft-related',
+                  setting: 'widgetEnabledCraftRelated',
                 },
                 {
                     handle: 'craft-authors',
                     setting: 'widgetEnabledCraftAuthors',
+                },
+                {
+                  handle: 'craft-sites',
+                  setting: 'widgetEnabledCraftSites',
                 },
                 {
                     handle: 'craft-published',
@@ -103,6 +141,10 @@
                 {
                     handle: 'blitz',
                     setting: 'widgetEnabledBlitz',
+                },
+                {
+                  handle: 'craft-queue',
+                  setting: 'widgetEnabledCraftQueue',
                 },
                 {
                     handle: 'craft-search',
@@ -118,21 +160,24 @@
                 {% if widgetField.handle in availableAdminBarWidgets %}
                     <div class="admin-bar-settings-plugin-setting requires-admin-bar-pro">
                         {{ svg(widgetPlugins[widgetField.handle].icon) }}
-                        {{ forms.lightswitchField({
-                            disabled: not proEdition,
-                            id: widgetField.setting,
-                            instructions: widgetPlugins[widgetField.handle].widgetDescription ~ ' ' ~ widgetPlugins[widgetField.handle].widgetSettingsWarning ?? '',
-                            label: widgetPlugins[widgetField.handle].name,
-                            name: widgetField.setting,
-                            on: settings[widgetField.setting],
-                        }) }}
+                        <div>
+                          {{ forms.lightswitchField({
+                              disabled: not proEdition,
+                              id: widgetField.setting,
+                              label: widgetPlugins[widgetField.handle].name,
+                              name: widgetField.setting,
+                              on: settings[widgetField.setting],
+                          }) }}
+
+                          <p>{{ (widgetPlugins[widgetField.handle].widgetDescription ~ ' ' ~ widgetPlugins[widgetField.handle].widgetSettingsWarning ?? '')|md(inlineOnly=true) }}</p>
+                        </div>
                     </div>
                 {% endif %}
             {% endfor %}
         </div>
     {% endif %}
 
-    <div>
+    <div style="margin-block-start: var(--xl);">
         <div class="requires-admin-bar-pro">
             {{ forms.lightswitchField({
                 disabled: not proEdition,
@@ -156,7 +201,7 @@
             <h3>{{ 'More Admin Bar Widgets:'|t('admin-bar') }}</h3>
             <ul>
                 {% for plugin in notInstalledPlugins %}
-                    <li><a href="https://plugins.craftcms.com/{{ plugin }}">{{ widgetPlugins[plugin].name }}</a>: {{ widgetPlugins[plugin].widgetDescription }}</li>
+                    <li><a href="{{ cpUrl('plugin-store/' ~ plugin) }}">{{ widgetPlugins[plugin].name }}</a>: {{ widgetPlugins[plugin].widgetDescription }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
@@ -193,9 +238,11 @@
   { label: 'Craft Control Panel', value: 'craft-cp' },
   { label: 'Debug', value: 'debug' },
   { label: 'EV', value: 'ev' },
+  { label: 'Frosted', value: 'frosted' },
   { label: 'Glass', value: 'glass' },
   { label: 'Lemon & Tonic', value: 'lemon-and-tonic' },
   { label: 'Sakura', value: 'sakura' },
+  { label: 'Stacked', value: 'stacked' },
   { label: 'Stark', value: 'stark' },
   { label: 'Whale', value: 'whale' },
   { label: 'Whiskey', value: 'whiskey' },
@@ -235,24 +282,37 @@ admin-bar {
 
 {% set cssDefaults = include('admin-bar/_admin-bar-component-css.css') ~ "\n" ~ adminBarOnPageCss() %}
 
-{{ codeEditor.textareaField({
+<details>
+  <summary>{{ 'See all of the CSS defaults that can be overwritten using the Custom CSS field, above.'|t('admin-bar') }}</summary>
+  {{ codeEditor.textareaField({
     label: 'CSS Defaults'|t('admin-bar'),
     instructions: 'Below is all of the CSS loaded for Admin Bar by default. You can override any of these CSS variables in your front-end stylesheet, or in the Custom CSS field above.'|t('admin-bar'),
     value: cssDefaults|raw,
-}, "Code Editor", {
+  }, "Code Editor", {
     language: "css",
     readOnly: true,
-}, {
+  }, {
     maxEditorRows: 0,
     wrapperClass: 'content-pane',
-}) }}
+  }) }}
+</details>
 
 {% css %}
     @layer admin-bar {
         .admin-bar-settings-preview {
             top: calc(var(--header-height) + 6px);
             position: sticky;
-            z-index: 1;
+            z-index: 999;
+        }
+    }
+    .admin-bar-settings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(30ch, 1fr));
+        gap: var(--xl) calc(var(--xl) * 2);
+        margin-block-end: calc(var(--xl) * 2);
+
+        .field {
+            margin-block: 0;
         }
     }
     .admin-bar-settings-2-column {
@@ -271,10 +331,6 @@ admin-bar {
         display: grid;
         grid-template-columns: 45px 1fr;
         gap: var(--m);
-
-        &:not(:first-child) {
-            margin-block-start: var(--xl);
-        }
 
         & svg {
             display: block;

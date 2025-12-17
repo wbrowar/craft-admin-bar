@@ -1,0 +1,18 @@
+@layer admin-bar {
+  admin-bar.admin-bar {
+    --admin-bar-bg-color: oklch(0.094 0.012 19.465 / 0.2);
+    /*--admin-bar-bg-filter: blur(13px) brightness(0.65) saturate(2.5);*/
+    --admin-bar-bg-filter: blur(24px) brightness(0.65) contrast(.6) saturate(5);
+    --admin-bar-button-color-text: var(--admin-bar-color-text);
+    --admin-bar-button-color-bg-hover: oklch(0.923 0.039 250.656 / 0.7);
+    --admin-bar-color-highlight: oklch(0.371 0.087 249.84);
+    --admin-bar-color-highlight-logout: oklch(54.42% .188 40.74);
+    --admin-bar-color-text: oklch(1 0 89.876);
+    --admin-bar-color-text-logout: oklch(91.58% 0 0);
+    --admin-bar-progress-height: 100%;
+
+    admin-bar-button:hover::part(badge) {
+      color: oklch(0.923 0.039 250.656 / 0.8);
+    }
+  }
+}

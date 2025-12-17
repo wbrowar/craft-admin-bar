@@ -1,42 +1,11 @@
-/**
- * @license
- * Copyright 2019 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */const j=globalThis,J=j.ShadowRoot&&(j.ShadyCSS===void 0||j.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,K=Symbol(),et=new WeakMap;let ct=class{constructor(e,t,r){if(this._$cssResult$=!0,r!==K)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=e,this.t=t}get styleSheet(){let e=this.o;const t=this.t;if(J&&e===void 0){const r=t!==void 0&&t.length===1;r&&(e=et.get(t)),e===void 0&&((this.o=e=new CSSStyleSheet).replaceSync(this.cssText),r&&et.set(t,e))}return e}toString(){return this.cssText}};const _t=e=>new ct(typeof e=="string"?e:e+"",void 0,K),H=(e,...t)=>{const r=e.length===1?e[0]:t.reduce(((o,s,a)=>o+(i=>{if(i._$cssResult$===!0)return i.cssText;if(typeof i=="number")return i;throw Error("Value passed to 'css' function must be a 'css' function result: "+i+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+e[a+1]),e[0]);return new ct(r,e,K)},yt=(e,t)=>{if(J)e.adoptedStyleSheets=t.map((r=>r instanceof CSSStyleSheet?r:r.styleSheet));else for(const r of t){const o=document.createElement("style"),s=j.litNonce;s!==void 0&&o.setAttribute("nonce",s),o.textContent=r.cssText,e.appendChild(o)}},rt=J?e=>e:e=>e instanceof CSSStyleSheet?(t=>{let r="";for(const o of t.cssRules)r+=o.cssText;return _t(r)})(e):e;/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */const{is:xt,defineProperty:wt,getOwnPropertyDescriptor:At,getOwnPropertyNames:St,getOwnPropertySymbols:Et,getPrototypeOf:kt}=Object,V=globalThis,ot=V.trustedTypes,Ct=ot?ot.emptyScript:"",Pt=V.reactiveElementPolyfillSupport,T=(e,t)=>e,D={toAttribute(e,t){switch(t){case Boolean:e=e?Ct:null;break;case Object:case Array:e=e==null?e:JSON.stringify(e)}return e},fromAttribute(e,t){let r=e;switch(t){case Boolean:r=e!==null;break;case Number:r=e===null?null:Number(e);break;case Object:case Array:try{r=JSON.parse(e)}catch{r=null}}return r}},X=(e,t)=>!xt(e,t),st={attribute:!0,type:String,converter:D,reflect:!1,useDefault:!1,hasChanged:X};Symbol.metadata??=Symbol("metadata"),V.litPropertyMetadata??=new WeakMap;let E=class extends HTMLElement{static addInitializer(e){this._$Ei(),(this.l??=[]).push(e)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(e,t=st){if(t.state&&(t.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(e)&&((t=Object.create(t)).wrapped=!0),this.elementProperties.set(e,t),!t.noAccessor){const r=Symbol(),o=this.getPropertyDescriptor(e,r,t);o!==void 0&&wt(this.prototype,e,o)}}static getPropertyDescriptor(e,t,r){const{get:o,set:s}=At(this.prototype,e)??{get(){return this[t]},set(a){this[t]=a}};return{get:o,set(a){const i=o?.call(this);s?.call(this,a),this.requestUpdate(e,i,r)},configurable:!0,enumerable:!0}}static getPropertyOptions(e){return this.elementProperties.get(e)??st}static _$Ei(){if(this.hasOwnProperty(T("elementProperties")))return;const e=kt(this);e.finalize(),e.l!==void 0&&(this.l=[...e.l]),this.elementProperties=new Map(e.elementProperties)}static finalize(){if(this.hasOwnProperty(T("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(T("properties"))){const t=this.properties,r=[...St(t),...Et(t)];for(const o of r)this.createProperty(o,t[o])}const e=this[Symbol.metadata];if(e!==null){const t=litPropertyMetadata.get(e);if(t!==void 0)for(const[r,o]of t)this.elementProperties.set(r,o)}this._$Eh=new Map;for(const[t,r]of this.elementProperties){const o=this._$Eu(t,r);o!==void 0&&this._$Eh.set(o,t)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(e){const t=[];if(Array.isArray(e)){const r=new Set(e.flat(1/0).reverse());for(const o of r)t.unshift(rt(o))}else e!==void 0&&t.push(rt(e));return t}static _$Eu(e,t){const r=t.attribute;return r===!1?void 0:typeof r=="string"?r:typeof e=="string"?e.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise((e=>this.enableUpdating=e)),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach((e=>e(this)))}addController(e){(this._$EO??=new Set).add(e),this.renderRoot!==void 0&&this.isConnected&&e.hostConnected?.()}removeController(e){this._$EO?.delete(e)}_$E_(){const e=new Map,t=this.constructor.elementProperties;for(const r of t.keys())this.hasOwnProperty(r)&&(e.set(r,this[r]),delete this[r]);e.size>0&&(this._$Ep=e)}createRenderRoot(){const e=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return yt(e,this.constructor.elementStyles),e}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach((e=>e.hostConnected?.()))}enableUpdating(e){}disconnectedCallback(){this._$EO?.forEach((e=>e.hostDisconnected?.()))}attributeChangedCallback(e,t,r){this._$AK(e,r)}_$ET(e,t){const r=this.constructor.elementProperties.get(e),o=this.constructor._$Eu(e,r);if(o!==void 0&&r.reflect===!0){const s=(r.converter?.toAttribute!==void 0?r.converter:D).toAttribute(t,r.type);this._$Em=e,s==null?this.removeAttribute(o):this.setAttribute(o,s),this._$Em=null}}_$AK(e,t){const r=this.constructor,o=r._$Eh.get(e);if(o!==void 0&&this._$Em!==o){const s=r.getPropertyOptions(o),a=typeof s.converter=="function"?{fromAttribute:s.converter}:s.converter?.fromAttribute!==void 0?s.converter:D;this._$Em=o;const i=a.fromAttribute(t,s.type);this[o]=i??this._$Ej?.get(o)??i,this._$Em=null}}requestUpdate(e,t,r){if(e!==void 0){const o=this.constructor,s=this[e];if(r??=o.getPropertyOptions(e),!((r.hasChanged??X)(s,t)||r.useDefault&&r.reflect&&s===this._$Ej?.get(e)&&!this.hasAttribute(o._$Eu(e,r))))return;this.C(e,t,r)}this.isUpdatePending===!1&&(this._$ES=this._$EP())}C(e,t,{useDefault:r,reflect:o,wrapped:s},a){r&&!(this._$Ej??=new Map).has(e)&&(this._$Ej.set(e,a??t??this[e]),s!==!0||a!==void 0)||(this._$AL.has(e)||(this.hasUpdated||r||(t=void 0),this._$AL.set(e,t)),o===!0&&this._$Em!==e&&(this._$Eq??=new Set).add(e))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(t){Promise.reject(t)}const e=this.scheduleUpdate();return e!=null&&await e,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[o,s]of this._$Ep)this[o]=s;this._$Ep=void 0}const r=this.constructor.elementProperties;if(r.size>0)for(const[o,s]of r){const{wrapped:a}=s,i=this[o];a!==!0||this._$AL.has(o)||i===void 0||this.C(o,void 0,s,i)}}let e=!1;const t=this._$AL;try{e=this.shouldUpdate(t),e?(this.willUpdate(t),this._$EO?.forEach((r=>r.hostUpdate?.())),this.update(t)):this._$EM()}catch(r){throw e=!1,this._$EM(),r}e&&this._$AE(t)}willUpdate(e){}_$AE(e){this._$EO?.forEach((t=>t.hostUpdated?.())),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(e)),this.updated(e)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(e){return!0}update(e){this._$Eq&&=this._$Eq.forEach((t=>this._$ET(t,this[t]))),this._$EM()}updated(e){}firstUpdated(e){}};E.elementStyles=[],E.shadowRootOptions={mode:"open"},E[T("elementProperties")]=new Map,E[T("finalized")]=new Map,Pt?.({ReactiveElement:E}),(V.reactiveElementVersions??=[]).push("2.1.1");/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */const Z=globalThis,I=Z.trustedTypes,at=I?I.createPolicy("lit-html",{createHTML:e=>e}):void 0,pt="$lit$",$=`lit$${Math.random().toFixed(9).slice(2)}$`,ut="?"+$,Ut=`<${ut}>`,w=document,O=()=>w.createComment(""),R=e=>e===null||typeof e!="object"&&typeof e!="function",Q=Array.isArray,Tt=e=>Q(e)||typeof e?.[Symbol.iterator]=="function",F=`[ 	
-\f\r]`,U=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,it=/-->/g,nt=/>/g,y=RegExp(`>|${F}(?:([^\\s"'>=/]+)(${F}*=${F}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`,"g"),lt=/'/g,dt=/"/g,bt=/^(?:script|style|textarea|title)$/i,Ot=e=>(t,...r)=>({_$litType$:e,strings:t,values:r}),h=Ot(1),A=Symbol.for("lit-noChange"),p=Symbol.for("lit-nothing"),ht=new WeakMap,x=w.createTreeWalker(w,129);function mt(e,t){if(!Q(e)||!e.hasOwnProperty("raw"))throw Error("invalid template strings array");return at!==void 0?at.createHTML(t):t}const Rt=(e,t)=>{const r=e.length-1,o=[];let s,a=t===2?"<svg>":t===3?"<math>":"",i=U;for(let d=0;d<r;d++){const n=e[d];let c,b,l=-1,m=0;for(;m<n.length&&(i.lastIndex=m,b=i.exec(n),b!==null);)m=i.lastIndex,i===U?b[1]==="!--"?i=it:b[1]!==void 0?i=nt:b[2]!==void 0?(bt.test(b[2])&&(s=RegExp("</"+b[2],"g")),i=y):b[3]!==void 0&&(i=y):i===y?b[0]===">"?(i=s??U,l=-1):b[1]===void 0?l=-2:(l=i.lastIndex-b[2].length,c=b[1],i=b[3]===void 0?y:b[3]==='"'?dt:lt):i===dt||i===lt?i=y:i===it||i===nt?i=U:(i=y,s=void 0);const f=i===y&&e[d+1].startsWith("/>")?" ":"";a+=i===U?n+Ut:l>=0?(o.push(c),n.slice(0,l)+pt+n.slice(l)+$+f):n+$+(l===-2?d:f)}return[mt(e,a+(e[r]||"<?>")+(t===2?"</svg>":t===3?"</math>":"")),o]};class M{constructor({strings:t,_$litType$:r},o){let s;this.parts=[];let a=0,i=0;const d=t.length-1,n=this.parts,[c,b]=Rt(t,r);if(this.el=M.createElement(c,o),x.currentNode=this.el.content,r===2||r===3){const l=this.el.content.firstChild;l.replaceWith(...l.childNodes)}for(;(s=x.nextNode())!==null&&n.length<d;){if(s.nodeType===1){if(s.hasAttributes())for(const l of s.getAttributeNames())if(l.endsWith(pt)){const m=b[i++],f=s.getAttribute(l).split($),z=/([.?@])?(.*)/.exec(m);n.push({type:1,index:a,name:z[2],strings:f,ctor:z[1]==="."?Ht:z[1]==="?"?Bt:z[1]==="@"?Nt:G}),s.removeAttribute(l)}else l.startsWith($)&&(n.push({type:6,index:a}),s.removeAttribute(l));if(bt.test(s.tagName)){const l=s.textContent.split($),m=l.length-1;if(m>0){s.textContent=I?I.emptyScript:"";for(let f=0;f<m;f++)s.append(l[f],O()),x.nextNode(),n.push({type:2,index:++a});s.append(l[m],O())}}}else if(s.nodeType===8)if(s.data===ut)n.push({type:2,index:a});else{let l=-1;for(;(l=s.data.indexOf($,l+1))!==-1;)n.push({type:7,index:a}),l+=$.length-1}a++}}static createElement(t,r){const o=w.createElement("template");return o.innerHTML=t,o}}function k(e,t,r=e,o){if(t===A)return t;let s=o!==void 0?r._$Co?.[o]:r._$Cl;const a=R(t)?void 0:t._$litDirective$;return s?.constructor!==a&&(s?._$AO?.(!1),a===void 0?s=void 0:(s=new a(e),s._$AT(e,r,o)),o!==void 0?(r._$Co??=[])[o]=s:r._$Cl=s),s!==void 0&&(t=k(e,s._$AS(e,t.values),s,o)),t}class Mt{constructor(t,r){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=r}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:r},parts:o}=this._$AD,s=(t?.creationScope??w).importNode(r,!0);x.currentNode=s;let a=x.nextNode(),i=0,d=0,n=o[0];for(;n!==void 0;){if(i===n.index){let c;n.type===2?c=new B(a,a.nextSibling,this,t):n.type===1?c=new n.ctor(a,n.name,n.strings,this,t):n.type===6&&(c=new Lt(a,this,t)),this._$AV.push(c),n=o[++d]}i!==n?.index&&(a=x.nextNode(),i++)}return x.currentNode=w,s}p(t){let r=0;for(const o of this._$AV)o!==void 0&&(o.strings!==void 0?(o._$AI(t,o,r),r+=o.strings.length-2):o._$AI(t[r])),r++}}class B{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,r,o,s){this.type=2,this._$AH=p,this._$AN=void 0,this._$AA=t,this._$AB=r,this._$AM=o,this.options=s,this._$Cv=s?.isConnected??!0}get parentNode(){let t=this._$AA.parentNode;const r=this._$AM;return r!==void 0&&t?.nodeType===11&&(t=r.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,r=this){t=k(this,t,r),R(t)?t===p||t==null||t===""?(this._$AH!==p&&this._$AR(),this._$AH=p):t!==this._$AH&&t!==A&&this._(t):t._$litType$!==void 0?this.$(t):t.nodeType!==void 0?this.T(t):Tt(t)?this.k(t):this._(t)}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t))}_(t){this._$AH!==p&&R(this._$AH)?this._$AA.nextSibling.data=t:this.T(w.createTextNode(t)),this._$AH=t}$(t){const{values:r,_$litType$:o}=t,s=typeof o=="number"?this._$AC(t):(o.el===void 0&&(o.el=M.createElement(mt(o.h,o.h[0]),this.options)),o);if(this._$AH?._$AD===s)this._$AH.p(r);else{const a=new Mt(s,this),i=a.u(this.options);a.p(r),this.T(i),this._$AH=a}}_$AC(t){let r=ht.get(t.strings);return r===void 0&&ht.set(t.strings,r=new M(t)),r}k(t){Q(this._$AH)||(this._$AH=[],this._$AR());const r=this._$AH;let o,s=0;for(const a of t)s===r.length?r.push(o=new B(this.O(O()),this.O(O()),this,this.options)):o=r[s],o._$AI(a),s++;s<r.length&&(this._$AR(o&&o._$AB.nextSibling,s),r.length=s)}_$AR(t=this._$AA.nextSibling,r){for(this._$AP?.(!1,!0,r);t!==this._$AB;){const o=t.nextSibling;t.remove(),t=o}}setConnected(t){this._$AM===void 0&&(this._$Cv=t,this._$AP?.(t))}}class G{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,r,o,s,a){this.type=1,this._$AH=p,this._$AN=void 0,this.element=t,this.name=r,this._$AM=s,this.options=a,o.length>2||o[0]!==""||o[1]!==""?(this._$AH=Array(o.length-1).fill(new String),this.strings=o):this._$AH=p}_$AI(t,r=this,o,s){const a=this.strings;let i=!1;if(a===void 0)t=k(this,t,r,0),i=!R(t)||t!==this._$AH&&t!==A,i&&(this._$AH=t);else{const d=t;let n,c;for(t=a[0],n=0;n<a.length-1;n++)c=k(this,d[o+n],r,n),c===A&&(c=this._$AH[n]),i||=!R(c)||c!==this._$AH[n],c===p?t=p:t!==p&&(t+=(c??"")+a[n+1]),this._$AH[n]=c}i&&!s&&this.j(t)}j(t){t===p?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"")}}class Ht extends G{constructor(){super(...arguments),this.type=3}j(t){this.element[this.name]=t===p?void 0:t}}class Bt extends G{constructor(){super(...arguments),this.type=4}j(t){this.element.toggleAttribute(this.name,!!t&&t!==p)}}class Nt extends G{constructor(t,r,o,s,a){super(t,r,o,s,a),this.type=5}_$AI(t,r=this){if((t=k(this,t,r,0)??p)===A)return;const o=this._$AH,s=t===p&&o!==p||t.capture!==o.capture||t.once!==o.once||t.passive!==o.passive,a=t!==p&&(o===p||s);s&&this.element.removeEventListener(this.name,this,o),a&&this.element.addEventListener(this.name,this,t),this._$AH=t}handleEvent(t){typeof this._$AH=="function"?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t)}}class Lt{constructor(t,r,o){this.element=t,this.type=6,this._$AN=void 0,this._$AM=r,this.options=o}get _$AU(){return this._$AM._$AU}_$AI(t){k(this,t)}}const zt=Z.litHtmlPolyfillSupport;zt?.(M,B),(Z.litHtmlVersions??=[]).push("3.3.1");const jt=(e,t,r)=>{const o=r?.renderBefore??t;let s=o._$litPart$;if(s===void 0){const a=r?.renderBefore??null;o._$litPart$=s=new B(t.insertBefore(O(),a),a,void 0,r??{})}return s._$AI(e),s};/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */const Y=globalThis;let _=class extends E{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){const e=super.createRenderRoot();return this.renderOptions.renderBefore??=e.firstChild,e}update(e){const t=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(e),this._$Do=jt(t,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return A}};_._$litElement$=!0,_.finalized=!0,Y.litElementHydrateSupport?.({LitElement:_});const qt=Y.litElementPolyfillSupport;qt?.({LitElement:_});(Y.litElementVersions??=[]).push("4.2.1");/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */const Dt={ATTRIBUTE:1},It=e=>(...t)=>({_$litDirective$:e,values:t});class Vt{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,r,o){this._$Ct=t,this._$AM=r,this._$Ci=o}_$AS(t,r){return this.update(t,r)}update(t,r){return this.render(...r)}}/**
- * @license
- * Copyright 2018 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */const q=It(class extends Vt{constructor(e){if(super(e),e.type!==Dt.ATTRIBUTE||e.name!=="class"||e.strings?.length>2)throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.")}render(e){return" "+Object.keys(e).filter((t=>e[t])).join(" ")+" "}update(e,[t]){if(this.st===void 0){this.st=new Set,e.strings!==void 0&&(this.nt=new Set(e.strings.join(" ").split(/\s/).filter((o=>o!==""))));for(const o in t)t[o]&&!this.nt?.has(o)&&this.st.add(o);return this.render(t)}const r=e.element.classList;for(const o of this.st)o in t||(r.remove(o),this.st.delete(o));for(const o in t){const s=!!t[o];s===this.st.has(o)||this.nt?.has(o)||(s?(r.add(o),this.st.add(o)):(r.remove(o),this.st.delete(o)))}return A}});/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */const Gt={attribute:!0,type:String,converter:D,reflect:!1,hasChanged:X},Wt=(e=Gt,t,r)=>{const{kind:o,metadata:s}=r;let a=globalThis.litPropertyMetadata.get(s);if(a===void 0&&globalThis.litPropertyMetadata.set(s,a=new Map),o==="setter"&&((e=Object.create(e)).wrapped=!0),a.set(r.name,e),o==="accessor"){const{name:i}=r;return{set(d){const n=t.get.call(this);t.set.call(this,d),this.requestUpdate(i,n,e)},init(d){return d!==void 0&&this.C(i,void 0,e,d),d}}}if(o==="setter"){const{name:i}=r;return function(d){const n=this[i];t.call(this,d),this.requestUpdate(i,n,e)}}throw Error("Unsupported decorator location: "+o)};function u(e){return(t,r)=>typeof r=="object"?Wt(e,t,r):((o,s,a)=>{const i=s.hasOwnProperty(a);return s.constructor.createProperty(a,o),i?Object.getOwnPropertyDescriptor(s,a):void 0})(e,t,r)}/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */function W(e){return u({...e,state:!0,attribute:!1})}var Ft=Object.defineProperty,tt=(e,t,r,o)=>{for(var s=void 0,a=e.length-1,i;a>=0;a--)(i=e[a])&&(s=i(t,r,s)||s);return s&&Ft(t,r,s),s};const gt=class extends _{constructor(){super(...arguments),this.progressValue=0,this._progressState="reset",this._progressWidth=0}_onProgressAnimationEnd(){["error","success"].includes(this._progressState)&&(this._progressState="reset")}render(){return h` <div class="wrapper">
+var $t=e=>{throw TypeError(e)},_t=(e,t,o)=>t.has(e)||$t("Cannot "+o),dt=(e,t,o)=>(_t(e,t,"read from private field"),o?o.call(e):t.get(e)),Ft=(e,t,o)=>t.has(e)?$t("Cannot add the same private member more than once"):t instanceof WeakSet?t.add(e):t.set(e,o),Gt=(e,t,o,r)=>(_t(e,t,"write to private field"),t.set(e,o),o);const G=globalThis,et=G.ShadowRoot&&(G.ShadyCSS===void 0||G.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,ot=Symbol(),ct=new WeakMap;let wt=class{constructor(e,t,o){if(this._$cssResult$=!0,o!==ot)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=e,this.t=t}get styleSheet(){let e=this.o;const t=this.t;if(et&&e===void 0){const o=t!==void 0&&t.length===1;o&&(e=ct.get(t)),e===void 0&&((this.o=e=new CSSStyleSheet).replaceSync(this.cssText),o&&ct.set(t,e))}return e}toString(){return this.cssText}};const Jt=e=>new wt(typeof e=="string"?e:e+"",void 0,ot),k=(e,...t)=>{const o=e.length===1?e[0]:t.reduce(((r,a,s)=>r+(i=>{if(i._$cssResult$===!0)return i.cssText;if(typeof i=="number")return i;throw Error("Value passed to 'css' function must be a 'css' function result: "+i+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(a)+e[s+1]),e[0]);return new wt(o,e,ot)},Xt=(e,t)=>{if(et)e.adoptedStyleSheets=t.map((o=>o instanceof CSSStyleSheet?o:o.styleSheet));else for(const o of t){const r=document.createElement("style"),a=G.litNonce;a!==void 0&&r.setAttribute("nonce",a),r.textContent=o.cssText,e.appendChild(r)}},ht=et?e=>e:e=>e instanceof CSSStyleSheet?(t=>{let o="";for(const r of t.cssRules)o+=r.cssText;return Jt(o)})(e):e,{is:Qt,defineProperty:Kt,getOwnPropertyDescriptor:Zt,getOwnPropertyNames:Yt,getOwnPropertySymbols:te,getPrototypeOf:ee}=Object,Q=globalThis,ut=Q.trustedTypes,oe=ut?ut.emptyScript:"",re=Q.reactiveElementPolyfillSupport,q=(e,t)=>e,J={toAttribute(e,t){switch(t){case Boolean:e=e?oe:null;break;case Object:case Array:e=e==null?e:JSON.stringify(e)}return e},fromAttribute(e,t){let o=e;switch(t){case Boolean:o=e!==null;break;case Number:o=e===null?null:Number(e);break;case Object:case Array:try{o=JSON.parse(e)}catch{o=null}}return o}},rt=(e,t)=>!Qt(e,t),pt={attribute:!0,type:String,converter:J,reflect:!1,useDefault:!1,hasChanged:rt};Symbol.metadata??=Symbol("metadata"),Q.litPropertyMetadata??=new WeakMap;let R=class extends HTMLElement{static addInitializer(e){this._$Ei(),(this.l??=[]).push(e)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(e,t=pt){if(t.state&&(t.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(e)&&((t=Object.create(t)).wrapped=!0),this.elementProperties.set(e,t),!t.noAccessor){const o=Symbol(),r=this.getPropertyDescriptor(e,o,t);r!==void 0&&Kt(this.prototype,e,r)}}static getPropertyDescriptor(e,t,o){const{get:r,set:a}=Zt(this.prototype,e)??{get(){return this[t]},set(s){this[t]=s}};return{get:r,set(s){const i=r?.call(this);a?.call(this,s),this.requestUpdate(e,i,o)},configurable:!0,enumerable:!0}}static getPropertyOptions(e){return this.elementProperties.get(e)??pt}static _$Ei(){if(this.hasOwnProperty(q("elementProperties")))return;const e=ee(this);e.finalize(),e.l!==void 0&&(this.l=[...e.l]),this.elementProperties=new Map(e.elementProperties)}static finalize(){if(this.hasOwnProperty(q("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(q("properties"))){const t=this.properties,o=[...Yt(t),...te(t)];for(const r of o)this.createProperty(r,t[r])}const e=this[Symbol.metadata];if(e!==null){const t=litPropertyMetadata.get(e);if(t!==void 0)for(const[o,r]of t)this.elementProperties.set(o,r)}this._$Eh=new Map;for(const[t,o]of this.elementProperties){const r=this._$Eu(t,o);r!==void 0&&this._$Eh.set(r,t)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(e){const t=[];if(Array.isArray(e)){const o=new Set(e.flat(1/0).reverse());for(const r of o)t.unshift(ht(r))}else e!==void 0&&t.push(ht(e));return t}static _$Eu(e,t){const o=t.attribute;return o===!1?void 0:typeof o=="string"?o:typeof e=="string"?e.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise((e=>this.enableUpdating=e)),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach((e=>e(this)))}addController(e){(this._$EO??=new Set).add(e),this.renderRoot!==void 0&&this.isConnected&&e.hostConnected?.()}removeController(e){this._$EO?.delete(e)}_$E_(){const e=new Map,t=this.constructor.elementProperties;for(const o of t.keys())this.hasOwnProperty(o)&&(e.set(o,this[o]),delete this[o]);e.size>0&&(this._$Ep=e)}createRenderRoot(){const e=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return Xt(e,this.constructor.elementStyles),e}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach((e=>e.hostConnected?.()))}enableUpdating(e){}disconnectedCallback(){this._$EO?.forEach((e=>e.hostDisconnected?.()))}attributeChangedCallback(e,t,o){this._$AK(e,o)}_$ET(e,t){const o=this.constructor.elementProperties.get(e),r=this.constructor._$Eu(e,o);if(r!==void 0&&o.reflect===!0){const a=(o.converter?.toAttribute!==void 0?o.converter:J).toAttribute(t,o.type);this._$Em=e,a==null?this.removeAttribute(r):this.setAttribute(r,a),this._$Em=null}}_$AK(e,t){const o=this.constructor,r=o._$Eh.get(e);if(r!==void 0&&this._$Em!==r){const a=o.getPropertyOptions(r),s=typeof a.converter=="function"?{fromAttribute:a.converter}:a.converter?.fromAttribute!==void 0?a.converter:J;this._$Em=r;const i=s.fromAttribute(t,a.type);this[r]=i??this._$Ej?.get(r)??i,this._$Em=null}}requestUpdate(e,t,o){if(e!==void 0){const r=this.constructor,a=this[e];if(o??=r.getPropertyOptions(e),!((o.hasChanged??rt)(a,t)||o.useDefault&&o.reflect&&a===this._$Ej?.get(e)&&!this.hasAttribute(r._$Eu(e,o))))return;this.C(e,t,o)}this.isUpdatePending===!1&&(this._$ES=this._$EP())}C(e,t,{useDefault:o,reflect:r,wrapped:a},s){o&&!(this._$Ej??=new Map).has(e)&&(this._$Ej.set(e,s??t??this[e]),a!==!0||s!==void 0)||(this._$AL.has(e)||(this.hasUpdated||o||(t=void 0),this._$AL.set(e,t)),r===!0&&this._$Em!==e&&(this._$Eq??=new Set).add(e))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(t){Promise.reject(t)}const e=this.scheduleUpdate();return e!=null&&await e,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[r,a]of this._$Ep)this[r]=a;this._$Ep=void 0}const o=this.constructor.elementProperties;if(o.size>0)for(const[r,a]of o){const{wrapped:s}=a,i=this[r];s!==!0||this._$AL.has(r)||i===void 0||this.C(r,void 0,a,i)}}let e=!1;const t=this._$AL;try{e=this.shouldUpdate(t),e?(this.willUpdate(t),this._$EO?.forEach((o=>o.hostUpdate?.())),this.update(t)):this._$EM()}catch(o){throw e=!1,this._$EM(),o}e&&this._$AE(t)}willUpdate(e){}_$AE(e){this._$EO?.forEach((t=>t.hostUpdated?.())),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(e)),this.updated(e)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(e){return!0}update(e){this._$Eq&&=this._$Eq.forEach((t=>this._$ET(t,this[t]))),this._$EM()}updated(e){}firstUpdated(e){}};R.elementStyles=[],R.shadowRootOptions={mode:"open"},R[q("elementProperties")]=new Map,R[q("finalized")]=new Map,re?.({ReactiveElement:R}),(Q.reactiveElementVersions??=[]).push("2.1.1");const at=globalThis,X=at.trustedTypes,bt=X?X.createPolicy("lit-html",{createHTML:e=>e}):void 0,xt="$lit$",S=`lit$${Math.random().toFixed(9).slice(2)}$`,kt="?"+S,ae=`<${kt}>`,T=document,H=()=>T.createComment(""),I=e=>e===null||typeof e!="object"&&typeof e!="function",st=Array.isArray,se=e=>st(e)||typeof e?.[Symbol.iterator]=="function",Z=`[ 	
+\f\r]`,N=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,gt=/-->/g,mt=/>/g,C=RegExp(`>|${Z}(?:([^\\s"'>=/]+)(${Z}*=${Z}*(?:[^ 	
+\f\r"'\`<>=]|("|')|))|$)`,"g"),vt=/'/g,ft=/"/g,At=/^(?:script|style|textarea|title)$/i,ie=e=>(t,...o)=>({_$litType$:e,strings:t,values:o}),d=ie(1),P=Symbol.for("lit-noChange"),c=Symbol.for("lit-nothing"),yt=new WeakMap,E=T.createTreeWalker(T,129);function St(e,t){if(!st(e)||!e.hasOwnProperty("raw"))throw Error("invalid template strings array");return bt!==void 0?bt.createHTML(t):t}const ne=(e,t)=>{const o=e.length-1,r=[];let a,s=t===2?"<svg>":t===3?"<math>":"",i=N;for(let h=0;h<o;h++){const n=e[h];let p,m,u=-1,$=0;for(;$<n.length&&(i.lastIndex=$,m=i.exec(n),m!==null);)$=i.lastIndex,i===N?m[1]==="!--"?i=gt:m[1]!==void 0?i=mt:m[2]!==void 0?(At.test(m[2])&&(a=RegExp("</"+m[2],"g")),i=C):m[3]!==void 0&&(i=C):i===C?m[0]===">"?(i=a??N,u=-1):m[1]===void 0?u=-2:(u=i.lastIndex-m[2].length,p=m[1],i=m[3]===void 0?C:m[3]==='"'?ft:vt):i===ft||i===vt?i=C:i===gt||i===mt?i=N:(i=C,a=void 0);const _=i===C&&e[h+1].startsWith("/>")?" ":"";s+=i===N?n+ae:u>=0?(r.push(p),n.slice(0,u)+xt+n.slice(u)+S+_):n+S+(u===-2?h:_)}return[St(e,s+(e[o]||"<?>")+(t===2?"</svg>":t===3?"</math>":"")),r]};class V{constructor({strings:t,_$litType$:o},r){let a;this.parts=[];let s=0,i=0;const h=t.length-1,n=this.parts,[p,m]=ne(t,o);if(this.el=V.createElement(p,r),E.currentNode=this.el.content,o===2||o===3){const u=this.el.content.firstChild;u.replaceWith(...u.childNodes)}for(;(a=E.nextNode())!==null&&n.length<h;){if(a.nodeType===1){if(a.hasAttributes())for(const u of a.getAttributeNames())if(u.endsWith(xt)){const $=m[i++],_=a.getAttribute(u).split(S),F=/([.?@])?(.*)/.exec($);n.push({type:1,index:s,name:F[2],strings:_,ctor:F[1]==="."?de:F[1]==="?"?ce:F[1]==="@"?he:K}),a.removeAttribute(u)}else u.startsWith(S)&&(n.push({type:6,index:s}),a.removeAttribute(u));if(At.test(a.tagName)){const u=a.textContent.split(S),$=u.length-1;if($>0){a.textContent=X?X.emptyScript:"";for(let _=0;_<$;_++)a.append(u[_],H()),E.nextNode(),n.push({type:2,index:++s});a.append(u[$],H())}}}else if(a.nodeType===8)if(a.data===kt)n.push({type:2,index:s});else{let u=-1;for(;(u=a.data.indexOf(S,u+1))!==-1;)n.push({type:7,index:s}),u+=S.length-1}s++}}static createElement(t,o){const r=T.createElement("template");return r.innerHTML=t,r}}function O(e,t,o=e,r){if(t===P)return t;let a=r!==void 0?o._$Co?.[r]:o._$Cl;const s=I(t)?void 0:t._$litDirective$;return a?.constructor!==s&&(a?._$AO?.(!1),s===void 0?a=void 0:(a=new s(e),a._$AT(e,o,r)),r!==void 0?(o._$Co??=[])[r]=a:o._$Cl=a),a!==void 0&&(t=O(e,a._$AS(e,t.values),a,r)),t}class le{constructor(t,o){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=o}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:o},parts:r}=this._$AD,a=(t?.creationScope??T).importNode(o,!0);E.currentNode=a;let s=E.nextNode(),i=0,h=0,n=r[0];for(;n!==void 0;){if(i===n.index){let p;n.type===2?p=new z(s,s.nextSibling,this,t):n.type===1?p=new n.ctor(s,n.name,n.strings,this,t):n.type===6&&(p=new ue(s,this,t)),this._$AV.push(p),n=r[++h]}i!==n?.index&&(s=E.nextNode(),i++)}return E.currentNode=T,a}p(t){let o=0;for(const r of this._$AV)r!==void 0&&(r.strings!==void 0?(r._$AI(t,r,o),o+=r.strings.length-2):r._$AI(t[o])),o++}}class z{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,o,r,a){this.type=2,this._$AH=c,this._$AN=void 0,this._$AA=t,this._$AB=o,this._$AM=r,this.options=a,this._$Cv=a?.isConnected??!0}get parentNode(){let t=this._$AA.parentNode;const o=this._$AM;return o!==void 0&&t?.nodeType===11&&(t=o.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,o=this){t=O(this,t,o),I(t)?t===c||t==null||t===""?(this._$AH!==c&&this._$AR(),this._$AH=c):t!==this._$AH&&t!==P&&this._(t):t._$litType$!==void 0?this.$(t):t.nodeType!==void 0?this.T(t):se(t)?this.k(t):this._(t)}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t))}_(t){this._$AH!==c&&I(this._$AH)?this._$AA.nextSibling.data=t:this.T(T.createTextNode(t)),this._$AH=t}$(t){const{values:o,_$litType$:r}=t,a=typeof r=="number"?this._$AC(t):(r.el===void 0&&(r.el=V.createElement(St(r.h,r.h[0]),this.options)),r);if(this._$AH?._$AD===a)this._$AH.p(o);else{const s=new le(a,this),i=s.u(this.options);s.p(o),this.T(i),this._$AH=s}}_$AC(t){let o=yt.get(t.strings);return o===void 0&&yt.set(t.strings,o=new V(t)),o}k(t){st(this._$AH)||(this._$AH=[],this._$AR());const o=this._$AH;let r,a=0;for(const s of t)a===o.length?o.push(r=new z(this.O(H()),this.O(H()),this,this.options)):r=o[a],r._$AI(s),a++;a<o.length&&(this._$AR(r&&r._$AB.nextSibling,a),o.length=a)}_$AR(t=this._$AA.nextSibling,o){for(this._$AP?.(!1,!0,o);t!==this._$AB;){const r=t.nextSibling;t.remove(),t=r}}setConnected(t){this._$AM===void 0&&(this._$Cv=t,this._$AP?.(t))}}class K{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,o,r,a,s){this.type=1,this._$AH=c,this._$AN=void 0,this.element=t,this.name=o,this._$AM=a,this.options=s,r.length>2||r[0]!==""||r[1]!==""?(this._$AH=Array(r.length-1).fill(new String),this.strings=r):this._$AH=c}_$AI(t,o=this,r,a){const s=this.strings;let i=!1;if(s===void 0)t=O(this,t,o,0),i=!I(t)||t!==this._$AH&&t!==P,i&&(this._$AH=t);else{const h=t;let n,p;for(t=s[0],n=0;n<s.length-1;n++)p=O(this,h[r+n],o,n),p===P&&(p=this._$AH[n]),i||=!I(p)||p!==this._$AH[n],p===c?t=c:t!==c&&(t+=(p??"")+s[n+1]),this._$AH[n]=p}i&&!a&&this.j(t)}j(t){t===c?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"")}}class de extends K{constructor(){super(...arguments),this.type=3}j(t){this.element[this.name]=t===c?void 0:t}}class ce extends K{constructor(){super(...arguments),this.type=4}j(t){this.element.toggleAttribute(this.name,!!t&&t!==c)}}class he extends K{constructor(t,o,r,a,s){super(t,o,r,a,s),this.type=5}_$AI(t,o=this){if((t=O(this,t,o,0)??c)===P)return;const r=this._$AH,a=t===c&&r!==c||t.capture!==r.capture||t.once!==r.once||t.passive!==r.passive,s=t!==c&&(r===c||a);a&&this.element.removeEventListener(this.name,this,r),s&&this.element.addEventListener(this.name,this,t),this._$AH=t}handleEvent(t){typeof this._$AH=="function"?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t)}}class ue{constructor(t,o,r){this.element=t,this.type=6,this._$AN=void 0,this._$AM=o,this.options=r}get _$AU(){return this._$AM._$AU}_$AI(t){O(this,t)}}const pe=at.litHtmlPolyfillSupport;pe?.(V,z),(at.litHtmlVersions??=[]).push("3.3.1");const be=(e,t,o)=>{const r=o?.renderBefore??t;let a=r._$litPart$;if(a===void 0){const s=o?.renderBefore??null;r._$litPart$=a=new z(t.insertBefore(H(),s),s,void 0,o??{})}return a._$AI(e),a},it=globalThis;let f=class extends R{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){const e=super.createRenderRoot();return this.renderOptions.renderBefore??=e.firstChild,e}update(e){const t=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(e),this._$Do=be(t,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return P}};f._$litElement$=!0,f.finalized=!0,it.litElementHydrateSupport?.({LitElement:f});const ge=it.litElementPolyfillSupport;ge?.({LitElement:f});(it.litElementVersions??=[]).push("4.2.1");const me={ATTRIBUTE:1},ve=e=>(...t)=>({_$litDirective$:e,values:t});class fe{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,o,r){this._$Ct=t,this._$AM=o,this._$Ci=r}_$AS(t,o){return this.update(t,o)}update(t,o){return this.render(...o)}}const M=ve(class extends fe{constructor(e){if(super(e),e.type!==me.ATTRIBUTE||e.name!=="class"||e.strings?.length>2)throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.")}render(e){return" "+Object.keys(e).filter((t=>e[t])).join(" ")+" "}update(e,[t]){if(this.st===void 0){this.st=new Set,e.strings!==void 0&&(this.nt=new Set(e.strings.join(" ").split(/\s/).filter((r=>r!==""))));for(const r in t)t[r]&&!this.nt?.has(r)&&this.st.add(r);return this.render(t)}const o=e.element.classList;for(const r of this.st)r in t||(o.remove(r),this.st.delete(r));for(const r in t){const a=!!t[r];a===this.st.has(r)||this.nt?.has(r)||(a?(o.add(r),this.st.add(r)):(o.remove(r),this.st.delete(r)))}return P}}),ye={attribute:!0,type:String,converter:J,reflect:!1,hasChanged:rt},$e=(e=ye,t,o)=>{const{kind:r,metadata:a}=o;let s=globalThis.litPropertyMetadata.get(a);if(s===void 0&&globalThis.litPropertyMetadata.set(a,s=new Map),r==="setter"&&((e=Object.create(e)).wrapped=!0),s.set(o.name,e),r==="accessor"){const{name:i}=o;return{set(h){const n=t.get.call(this);t.set.call(this,h),this.requestUpdate(i,n,e)},init(h){return h!==void 0&&this.C(i,void 0,e,h),h}}}if(r==="setter"){const{name:i}=o;return function(h){const n=this[i];t.call(this,h),this.requestUpdate(i,n,e)}}throw Error("Unsupported decorator location: "+r)};function l(e){return(t,o)=>typeof o=="object"?$e(e,t,o):((r,a,s)=>{const i=a.hasOwnProperty(s);return a.constructor.createProperty(s,r),i?Object.getOwnPropertyDescriptor(a,s):void 0})(e,t,o)}function w(e){return l({...e,state:!0,attribute:!1})}const _e=(e,t,o)=>(o.configurable=!0,o.enumerable=!0,Reflect.decorate&&typeof t!="object"&&Object.defineProperty(e,t,o),o);function Ct(e){return(t,o)=>{const{slot:r,selector:a}=e??{},s="slot"+(r?`[name=${r}]`:":not([name])");return _e(t,o,{get(){const i=this.renderRoot?.querySelector(s),h=i?.assignedElements(e)??[];return a===void 0?h:h.filter((n=>n.matches(a)))}})}}var we=Object.defineProperty,nt=(e,t,o,r)=>{for(var a=void 0,s=e.length-1,i;s>=0;s--)(i=e[s])&&(a=i(t,o,a)||a);return a&&we(t,o,a),a};const Et=class extends f{constructor(){super(...arguments),this.progressValue=0,this._progressState="reset",this._progressWidth=0}_onProgressAnimationEnd(){["error","success"].includes(this._progressState)&&(this._progressState="reset")}render(){return d` <div class="wrapper">
       <div class="effect"></div>
       <div class="tint"></div>
       <div class="shine"></div>
       <div
+        data-testid="surface-progress"
         class="progress ${this._progressState}"
         @animationend="${this._onProgressAnimationEnd}"
         style="--_progress-width: ${this._progressWidth}%;"
@@ -81,7 +50,7 @@
           </filter>
         </defs>
       </svg>
-    </div>`}willUpdate(t){t.has("progressValue")&&(this._progressWidth=0,this.progressValue<0?(this._progressState="error",this._progressWidth=100):this.progressValue>=100?(this._progressState="success",this._progressWidth=100):this.progressValue>=0&&this.progressValue<100&&(this._progressState="progress",this._progressWidth=this.progressValue))}};gt.styles=H`
+    </div>`}willUpdate(t){t.has("progressValue")&&(this._progressWidth=0,this.progressValue<0?(this._progressState="error",this._progressWidth=100):this.progressValue>=100?(this._progressState="success",this._progressWidth=100):this.progressValue>=0&&this.progressValue<100&&(this._progressState="display",this._progressWidth=this.progressValue))}};Et.styles=k`
     @keyframes fadeOut {
       0% {
         opacity: 1;
@@ -92,6 +61,8 @@
     }
     .wrapper {
       display: grid;
+      position: relative;
+      height: 100%;
       border-radius: var(--admin-bar-border-radius);
       box-shadow:
         0 6px 6px rgba(0, 0, 0, 0.2),
@@ -99,7 +70,7 @@
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
       overflow: hidden;
 
-      & > div {
+      & > div:not(.progress) {
         border-radius: var(--admin-bar-border-radius);
       }
 
@@ -204,7 +175,13 @@
     .content {
       z-index: 4;
     }
-  `;let N=gt;tt([u({attribute:"progress-value",type:Number})],N.prototype,"progressValue");tt([W()],N.prototype,"_progressState");tt([W()],N.prototype,"_progressWidth");function Jt(){return H`
+  `;let W=Et;nt([l({attribute:"progress-value",type:Number})],W.prototype,"progressValue");nt([w()],W.prototype,"_progressState");nt([w()],W.prototype,"_progressWidth");function B(){return k`1px solid color-mix(in oklch, var(--admin-bar-color-text), transparent 90%)`}function Tt(){return k`
+    & {
+      background-color: color-mix(in srgb, var(--admin-bar-button-color-text, white), transparent 90%);
+      outline: 3px solid color-mix(in srgb, var(--admin-bar-color-highlight), transparent 10%);
+      outline-offset: -3px;
+    }
+  `}function Pt(){return k`
     & {
       background-color: var(--admin-bar-button-color-bg, transparent);
       color: var(--admin-bar-button-color-text, white);
@@ -218,21 +195,64 @@
       }
     }
 
-    &:not(.admin-bar-button--logout):hover {
+    &:hover {
       --admin-bar-button-color-bg: var(--admin-bar-button-color-bg-hover, var(--admin-bar-button-color-text, white));
       --admin-bar-text-label-color-bg: var(--admin-bar-color-highlight);
       --admin-bar-text-label-color-text: var(--admin-bar-button-color-bg-hover);
       color: var(--admin-bar-color-highlight, oklch(0.6 0.4 83));
     }
-  `}var Kt=Object.defineProperty,L=(e,t,r,o)=>{for(var s=void 0,a=e.length-1,i;a>=0;a--)(i=e[a])&&(s=i(t,r,s)||s);return s&&Kt(t,r,s),s};const vt=class extends _{constructor(){super(),this.label="",this.isGreetingButton=!1,this.isLogoutButton=!1,this._hasPopoverSlot=!1,customElements.get("admin-bar-surface")||customElements.define("admin-bar-surface",N)}handlePopoverSlotchange(t){const r=t.target.assignedNodes({flatten:!0});this._hasPopoverSlot=r.length>0}render(){const t={"admin-bar-button":!0,"admin-bar-button--el-a":!1,"admin-bar-button--el-button":!1,"admin-bar-button--el-select":!1,"admin-bar-button--greeting":this.isGreetingButton,"admin-bar-button--logout":this.isLogoutButton},r=h`<slot name="before-label"></slot><slot name="label-before"></slot
-      ><slot>${this.label??!1?h`<span>${this.label}</span>`:p}</slot><slot name="label-after"></slot
-      ><slot name="after-label"></slot>`;return this.href?(t["admin-bar-button--el-a"]=!0,h`<a class="${q(t)}" href="${this.href}">${r}</a>`):(t["admin-bar-button--el-button"]=!0,this._hasPopoverSlot?h`<button class="${q(t)}" popovertarget="admin-bar-button-popover">
-          ${r}
-        </button>
-        <admin-bar-surface popover id="admin-bar-button-popover" part="popover">
-          <slot name="popover" @slotchange="${this.handlePopoverSlotchange}"></slot>
-        </admin-bar-surface>`:h`<button class="${q(t)}">${r}</button
-      ><slot name="popover" @slotchange="${this.handlePopoverSlotchange}"></slot>`)}};vt.styles=H`
+  `}function L(){return k`
+    & {
+      clip: rect(0 0 0 0);
+      clip-path: inset(100%);
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  `}var xe=Object.defineProperty,ke=(e,t,o,r)=>{for(var a=void 0,s=e.length-1,i;s>=0;s--)(i=e[s])&&(a=i(t,o,a)||a);return a&&xe(t,o,a),a};const Ut=class extends f{constructor(){super(...arguments),this.textContent=""}render(){return d`<span class="admin-bar-badge"><slot>${this.textContent}</slot></span>`}};Ut.styles=k`
+    :host {
+      padding: 0.4em;
+      background-color: var(--admin-bar-badge-color-bg, rgb(255 255 255 / 0.9));
+      border-radius: 4px;
+      text-box: trim-both cap alphabetic;
+      font-size: 0.8em;
+      color: var(--admin-bar-badge-color-text, black);
+      transition:
+        background var(--admin-bar-transition-duration, 0.3s) ease-out,
+        color var(--admin-bar-transition-duration, 0.3s) ease-out;
+    }
+  `;let lt=Ut;ke([l({attribute:"text-content"})],lt.prototype,"textContent");var Ae=Object.defineProperty,y=(e,t,o,r)=>{for(var a=void 0,s=e.length-1,i;s>=0;s--)(i=e[s])&&(a=i(t,o,a)||a);return a&&Ae(t,o,a),a};const Y=class extends f{constructor(){super(),this.badgeContent="",this.badgePosition="before",this.buttonDisabled=!1,this.label="",this.isGreetingButton=!1,this.isLogoutButton=!1,this._hasPopoverSlot=!1,this._inVertical=!1,this._popoverOpen=!1,customElements.get("admin-bar-badge")||customElements.define("admin-bar-badge",lt),customElements.get("admin-bar-surface")||customElements.define("admin-bar-surface",W)}_onVerticalPopoverButtonClick(){this._inVertical&&(this._popoverOpen=!this._popoverOpen)}_onPopoverButtonKeyDown(t){if(["ArrowUp","ArrowDown"].includes(t.key)){if(t.preventDefault(),!this._popoverOpen){const o=this.shadowRoot?.querySelector("[popovertarget]")??null;o&&o.click()}if(this._popoverFocusableChildren.length){const o='admin-bar-button, admin-bar-checkbox, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';let r=this._popoverFocusableChildren.filter(a=>a.matches(o));if(!r.length){r=[];const a=this.isGreetingButton?this._popoverFocusableChildren[0].querySelector("slot")?.assignedNodes({flatten:!0}):this._popoverFocusableChildren;a&&a.forEach(s=>{const i=s.querySelectorAll(o);for(const h of i)r.push(h)})}if(r.length){let a=null;const s=r.findIndex(i=>i===document.activeElement);t.key==="ArrowUp"?s<=0?a=r[r.length-1]:a=r[s-1]:t.key==="ArrowDown"&&(s>=r.length-1?a=r[0]:a=r[s+1]),a&&(a.tagName==="ADMIN-BAR-BUTTON"?a=a.shadowRoot?.querySelector("a, button")??null:a.tagName==="ADMIN-BAR-CHECKBOX"&&(a=a.shadowRoot?.querySelector("input")??null),a&&a.focus())}}}}updateInVertical(){this._popoverOpen=!1,this._inVertical=window.getComputedStyle(this).getPropertyValue("--admin-bar-vertical")==="true"}_onPopoverToggle(t){this._popoverOpen=t.newState==="open",this.dispatchEvent(new Se(t.oldState,t.newState)),this._popoverOpen?this.dispatchEvent(new Ce):this.dispatchEvent(new Ee)}_handlePopoverSlotchange(t){const o=t.target.assignedNodes({flatten:!0});this._hasPopoverSlot=o.length>0}connectedCallback(){super.connectedCallback(),this.addEventListener("keydown",this._onPopoverButtonKeyDown),this.updateInVertical()}render(){const t={"admin-bar-button":!0,"admin-bar-button--disabled":this.buttonDisabled},o=this.badgeContent?d`<admin-bar-badge class="badge" text-content="${this.badgeContent}" part="badge"></admin-bar-badge>`:null,r=d`<slot name="before-label"></slot>${this.badgeContent&&this.badgePosition==="before"?o:c}<slot>${this.label??!1?d`<span>${this.label}</span>`:c}</slot>${this.badgeContent&&this.badgePosition==="after"?o:c}<slot name="after-label"></slot>`;if(this.href)return d`<a
+        class="${M(t)}"
+        aria-label="${this.buttonAriaLabel??c}"
+        href="${this.buttonDisabled?c:this.href}"
+        ?disabled="${this.buttonDisabled?"disabled":c}"
+        >${r}</a
+      >`;if(this._hasPopoverSlot){const a=d`<button
+        class="${M(t)}"
+        aria-label="${this.buttonAriaLabel??c}"
+        ?disabled="${this.buttonDisabled?"disabled":c}"
+        popovertarget="${this._inVertical?c:"admin-bar-button-popover"}"
+        @click="${this._onVerticalPopoverButtonClick}"
+      >
+        ${r}
+      </button>`;return this._inVertical?d`${a}
+          <div class="vertical-popover" ?data-open="${this._popoverOpen}">
+            <slot name="popover" @slotchange="${this._handlePopoverSlotchange}"></slot>
+          </div>`:d`${a}<admin-bar-surface
+          popover
+          id="admin-bar-button-popover"
+          part="popover"
+          @toggle="${this._onPopoverToggle}"
+          ><slot name="popover" @slotchange="${this._handlePopoverSlotchange}"></slot
+        ></admin-bar-surface>`}return d`<button
+        class="${M(t)}"
+        aria-label="${this.buttonAriaLabel??c}"
+        ?disabled="${this.buttonDisabled?"disabled":c}"
+      >
+        ${r}</button
+      ><slot name="popover" @slotchange="${this._handlePopoverSlotchange}"></slot>`}};Y.shadowRootOptions={...f.shadowRootOptions,delegatesFocus:!0},Y.styles=k`
     @position-try --popover-above {
       inset: auto;
       bottom: anchor(top);
@@ -242,12 +262,13 @@
       top: anchor(bottom);
     }
     :host {
+      --popover-name: --popover-anchor;
       display: block;
       text-box: trim-both cap alphabetic;
     }
+
     .admin-bar-button {
-      ${Jt()}
-      --popover-name: --popover-anchor;
+      ${Pt()}
       anchor-name: var(--popover-name);
       appearance: none;
       box-sizing: border-box;
@@ -257,39 +278,36 @@
       align-items: center;
       padding: var(--admin-bar-block-padding) var(--admin-bar-inline-padding);
       min-width: 100%;
-      height: var(--admin-bar-height, 43px);
+      min-height: var(--admin-bar-height, 43px);
+      height: 100%;
       border: none;
-      outline-color: var(--admin-bar-color-highlight);
       font-family: var(--admin-bar-font-stack);
       font-size: var(--font-size);
       text-decoration: none;
+      outline: none;
       white-space: nowrap;
 
-      &.admin-bar-button--greeting {
-        border-start-start-radius: var(--admin-bar-border-radius);
-        border-end-start-radius: var(--admin-bar-border-radius);
+      &:focus-visible {
+        ${Tt()}
+      }
+      :host([disabled]) & {
+        cursor: not-allowed;
+      }
 
-        @container style(--admin-bar-show-environment) {
-          & {
-            border-start-start-radius: 0;
-          }
+      :host([logout-button]) &:hover {
+        background-color: var(--admin-bar-color-highlight-logout, var(--admin-bar-color-highlight));
+        color: var(--admin-bar-color-text-logout);
+      }
+      &:hover {
+        .badge {
+          background-color: var(--admin-bar-color-highlight);
+          color: var(--admin-bar-color-text);
         }
       }
 
-      &.admin-bar-button--logout {
-        padding: var(--admin-bar-block-padding) clamp(10px, 3vw, 20px);
-        border-end-end-radius: var(--admin-bar-border-radius);
-        border-start-end-radius: var(--admin-bar-border-radius);
-
-        &:hover {
-          --admin-bar-button-color-bg: var(--admin-bar-color-highlight-logout, var(--admin-bar-color-highlight));
-          --admin-bar-button-color-text: var(--admin-bar-color-text-logout);
-        }
-
-        @container style(--admin-bar-show-environment) {
-          & {
-            border-start-end-radius: 0;
-          }
+      @container style(--admin-bar-vertical: true) {
+        & {
+          height: auto;
         }
       }
     }
@@ -299,6 +317,11 @@
       &:hover {
         --admin-bar-button-color-bg: var(--admin-bar-button-color-bg-hover, var(--admin-bar-button-color-text, white));
         color: var(--admin-bar-color-highlight, oklch(0.6 0.4 83));
+
+        .badge {
+          background-color: var(--admin-bar-color-highlight);
+          color: var(--admin-bar-color-text);
+        }
       }
     }
 
@@ -322,13 +345,14 @@
           position-try-fallbacks: --popover-above;
           justify-self: anchor-center;
           inset: auto;
-          top: anchor(bottom);
-          margin: 4px;
+          inset-block-start: calc(anchor(end) + 4px);
+          margin: 0 4px;
+          height: auto;
 
           @container style(--admin-bar-class-bottom: true) {
             position-try-fallbacks: --popover-below;
             inset: auto;
-            bottom: anchor(top);
+            inset-block-end: anchor(start);
           }
         }
       }
@@ -339,45 +363,136 @@
         }
       }
     }
-  `;let C=vt;L([u({attribute:"button-href"})],C.prototype,"href");L([u({attribute:"label-text"})],C.prototype,"label");L([u({attribute:"greeting-button",type:Boolean})],C.prototype,"isGreetingButton");L([u({attribute:"logout-button",type:Boolean})],C.prototype,"isLogoutButton");L([W()],C.prototype,"_hasPopoverSlot");customElements.get("admin-bar-button")||customElements.define("admin-bar-button",C);var Xt=Object.defineProperty,v=(e,t,r,o)=>{for(var s=void 0,a=e.length-1,i;a>=0;a--)(i=e[a])&&(s=i(t,r,s)||s);return s&&Xt(t,r,s),s};const ft=class extends _{constructor(){super(),this.avatarAlt="Avatar of logged in user.",this.greetingText="Hello",this.logoutHref="#",this.logoutLabel="Sign out",this.progressValue=0,this.showEnvironment=!1,this.showGreeting=!1,this.showLogout=!1,this._hasGreetingPopoverSlot=!1,customElements.get("admin-bar-surface")||customElements.define("admin-bar-surface",N)}handleGreetingPopoverSlotchange(t){const r=t.target.assignedNodes({flatten:!0});this._hasGreetingPopoverSlot=r.length>0}render(){const t={"admin-bar":!0,"admin-bar--environment":this.showEnvironment,"admin-bar--greeting":this.showGreeting,"admin-bar--logout":this.showLogout,"glass-surface":!0},r=this.showGreeting?h`<div class="greeting">
-          ${this.avatarSrc?h`<img alt="${this.avatarAlt}" src="${this.avatarSrc}" width="25px" height="25px" part="avatar" />`:p}
-          <span><slot name="greeting">${this.greetingText}</slot></span>
-        </div>`:p,o=this._hasGreetingPopoverSlot?h`
-          <admin-bar-button greeting-button>
+
+    .vertical-popover {
+      display: none;
+      box-sizing: border-box;
+      position: relative;
+      margin: 5px;
+      height: auto;
+      background-color: var(--admin-bar-button-popover-bg, var(--admin-bar-bg-color));
+      border-radius: var(--admin-bar-button-popover-border-radius, var(--admin-bar-border-radius));
+
+      &[data-open] {
+        display: flex;
+      }
+    }
+  `;let v=Y;y([l({attribute:"badge-content"})],v.prototype,"badgeContent");y([l({attribute:"badge-position"})],v.prototype,"badgePosition");y([l({attribute:"button-aria-label"})],v.prototype,"buttonAriaLabel");y([l({attribute:"button-href"})],v.prototype,"href");y([l({attribute:"disabled",type:Boolean})],v.prototype,"buttonDisabled");y([l({attribute:"label-text"})],v.prototype,"label");y([l({attribute:"greeting-button",type:Boolean})],v.prototype,"isGreetingButton");y([l({attribute:"logout-button",type:Boolean})],v.prototype,"isLogoutButton");y([w()],v.prototype,"_hasPopoverSlot");y([w()],v.prototype,"_inVertical");y([w()],v.prototype,"_popoverOpen");y([Ct({flatten:!0,slot:"popover"})],v.prototype,"_popoverFocusableChildren");const Bt=class Rt extends Event{constructor(t,o){super(Rt.eventName,{bubbles:!0,composed:!0}),this.newState="closed",this.oldState="closed",this.open=!1,this.newState=o,this.oldState=t,this.open=o==="open"}};Bt.eventName="toggle";let Se=Bt;const Ot=class Dt extends Event{constructor(){super(Dt.eventName,{bubbles:!0,composed:!0})}};Ot.eventName="opened";let Ce=Ot;const Nt=class Lt extends Event{constructor(){super(Lt.eventName,{bubbles:!0,composed:!0})}};Nt.eventName="closed";let Ee=Nt;function Te(e,t){function o(s){if(s.button!==0)return;let{x:i,y:h}=e.eventToCoordinates(s);e.dragging={dx:e.pos.x-i,dy:e.pos.y-h},t.classList.add("dragging"),t.setPointerCapture(s.pointerId),t.style.userSelect="none",t.style.webkitUserSelect="none"}function r(){e.dragging=null,t.classList.remove("dragging"),t.style.userSelect="",t.style.webkitUserSelect=""}function a(s){if(!e.dragging)return;let{x:i,y:h}=e.eventToCoordinates(s);e.pos={x:i+e.dragging.dx,y:h+e.dragging.dy}}t.addEventListener("pointerdown",o),t.addEventListener("pointerup",r),t.addEventListener("pointercancel",r),t.addEventListener("pointermove",a),t.addEventListener("touchstart",s=>s.preventDefault()),t.addEventListener("dragstart",s=>s.preventDefault())}d`<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="20px"
+  height="20px"
+  fill="currentColor"
+  viewBox="0 -960 960 960"
+>
+  <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224z" />
+</svg>`;const Pe=d`<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  fill="currentColor"
+  viewBox="0 -960 960 960"
+>
+  <path d="M440-440v240h-80v-160H200v-80zm160-320v160h160v80H520v-240z" />
+</svg>`,Ue=d`<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="20px"
+  height="20px"
+  fill="currentColor"
+  viewBox="0 0 228.93 228.72"
+>
+  <path
+    d="M227.35,48.35a14.64,14.64,0,0,0-2.79-17L197.84,4.58a15.47,15.47,0,0,0-17.42-3.17l-5.95,4.74L14.29,166.33,0,228.72l62.39-14.29L222.57,54.26ZM32.59,210.92a30,30,0,0,0-14.84-14.58l5.53-24.15,14.14,6.91,13.06,13.06,6.86,13,0,0Z"
+  />
+</svg>`,Be=d`<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="20px"
+  height="20px"
+  fill="currentColor"
+  viewBox="0 0 16 16"
+>
+  <path
+    fill-rule="evenodd"
+    d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10M.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8"
+  />
+</svg>`;var Re=Object.defineProperty,g=(e,t,o,r)=>{for(var a=void 0,s=e.length-1,i;s>=0;s--)(i=e[s])&&(a=i(t,o,a)||a);return a&&Re(t,o,a),a},j;const jt=class extends f{constructor(){super(),Ft(this,j),this.avatarAlt="Avatar of logged in user.",this.logoutHref="#",this.logoutLabel="Sign out",this.progressValue=0,this.showEnvironment=!1,this.showGreeting=!1,this.showLogout=!1,this.toolbarToggle=void 0,this.toolbarToggleDrag=void 0,this.toolbarToggleDragHandleDescription="Click to drag the toggle button to another position on the page.",this.toolbarToggleInnerDescription="Click to collapse toolbar.",this.toolbarToggleOuterDescription="Click to expand toolbar.",this.toolbarVertical=!1,this._outerToggleDraggableState=void 0,this._hasGreetingPopoverSlot=!1,this._hostWidth=0,customElements.get("admin-bar-button")||customElements.define("admin-bar-button",v),customElements.get("admin-bar-surface")||customElements.define("admin-bar-surface",W)}_toggleVerticalAdminBar(t){this.toolbarToggle=t}_handleGreetingPopoverSlotchange(t){const o=t.target.assignedNodes({flatten:!0});this._hasGreetingPopoverSlot=o.length>0}connectedCallback(){super.connectedCallback(),this.parentElement&&(Gt(this,j,new ResizeObserver(t=>{for(const o of t){const r=Math.round(o.contentRect.width);if(r!==this._hostWidth&&this.autoToggleVertical){const a=r<this.autoToggleVertical;this.toolbarVertical!==a&&(a?this.toolbarVertical=!0:this.toolbarVertical=!1)}this._hostWidth=r}})),dt(this,j).observe(this))}disconnectedCallback(){super.disconnectedCallback(),dt(this,j)?.disconnect()}firstUpdated(){if(this.toolbarToggle===""&&(this.toolbarToggle=this.toolbarVertical?"button":"toolbar"),this.toolbarToggleDrag===""&&(this.toolbarToggleDrag="reset"),this.toolbarToggleDrag){const t=this.shadowRoot?.querySelector(".outer-toggle")??null,o=t?.querySelector(".drag-handle")??null;t&&o&&(this._outerToggleDraggableState={eventToCoordinates(r){return{x:r.clientX,y:r.clientY}},dragging:null,_pos:{x:0,y:0},get pos(){return this._pos},set pos(r){this._pos=r,t.style.transform=`translate(${this._pos.x}px,${this._pos.y}px)`}},Te(this._outerToggleDraggableState,o))}}render(){const t={"admin-bar":!0,"glass-surface":!0},o=this.environmentDescription?d`<p>${this.environmentDescription}</p>`:c,r=d`<div data-testid="greeting-content" class="greeting-content">
+      ${this.avatarSrc?d`<img alt="${this.avatarAlt}" src="${this.avatarSrc}" width="25px" height="25px" part="avatar" />`:c}
+      <span><slot name="greeting">${this.greetingText??Ue}</slot></span>
+    </div>`,a=this._hasGreetingPopoverSlot?d`
+          <admin-bar-button
+            class="greeting"
+            button-aria-label="${this.greetingButtonAriaLabel??c}"
+            greeting-button
+          >
             ${r}
             <div slot="popover">
-              <slot name="greeting-popover" @slotchange="${this.handleGreetingPopoverSlotchange}"></slot>
+              <slot
+                data-testid="greeting-popover--slotted"
+                name="greeting-popover"
+                @slotchange="${this._handleGreetingPopoverSlotchange}"
+              ></slot>
             </div>
           </admin-bar-button>
-        `:h`${r}<slot
+        `:d`<div class="greeting">
+          ${r}<slot
+            data-testid="greeting-popover--empty"
             name="greeting-popover"
-            @slotchange="${this.handleGreetingPopoverSlotchange}"
-          ></slot>`,s=this.showLogout?h`<slot name="logout"
-          ><admin-bar-button
-            logout-button
-            button-href="${this.logoutHref}"
-            label-text="${this.logoutLabel}"
-          ></admin-bar-button
-        ></slot>`:p;return h`
-      <admin-bar-surface progress-value="${this.progressValue}">
-        <nav class="${q(t)}">
-          <div class="environment"></div>
-          ${o}
-          <div class="buttons" part="buttons"><slot></slot></div>
-          <div class="logout">${s}</div>
-        </nav>
+            @slotchange="${this._handleGreetingPopoverSlotchange}"
+          ></slot>
+        </div>`,s=this.showLogout?d`<slot name="logout"
+          ><admin-bar-button logout-button button-href="${this.logoutHref}">${this.logoutLabel}</admin-bar-button></slot
+        >`:c;return d`
+      <admin-bar-surface class="outer-toggle" data-testid="outer-toggle">
+        <div>
+          <admin-bar-button @click="${()=>this._toggleVerticalAdminBar("toolbar")}"
+            ><p>${this.toolbarToggleOuterDescription}</p>
+            <slot name="outer-toggle">${r}</slot></admin-bar-button
+          >
+          <div class="drag-handle" data-testid="drag-handle">
+            ${Be}
+            <p>${this.toolbarToggleDragHandleDescription}</p>
+          </div>
+        </div>
       </admin-bar-surface>
-    `}};ft.styles=H`
+
+      <admin-bar-surface
+        class="${M(t)}"
+        progress-value="${this.progressValue}"
+        part="toolbar"
+        data-testid="toolbar"
+      >
+        <div>
+          <div data-testid="environment" class="environment">${o}</div>
+          ${this.showGreeting?a:d`<div class="greeting"></div>`}
+          <div class="buttons">
+            <nav class="buttons-content" part="buttons"><slot></slot></nav>
+          </div>
+          <div class="logout">${s}</div>
+          <admin-bar-button
+            class="inner-toggle"
+            data-testid="inner-toggle"
+            @click="${()=>this._toggleVerticalAdminBar("button")}"
+            ><p>${this.toolbarToggleInnerDescription}</p>
+            <slot name="inner-toggle">${Pe}</slot></admin-bar-button
+          >
+        </div>
+      </admin-bar-surface>
+    `}updated(t){if(t.has("toolbarVertical")&&(this.autoToggleVertical&&(this.toolbarVertical?this.toolbarToggle="button":this.toolbarToggle="toolbar"),this._adminBarButtonChildren.length))for(const o of this._adminBarButtonChildren)o?.updateInVertical()}};j=new WeakMap,jt.styles=k`
+    :host {
+      container-name: admin-bar;
+      container-type: inline-size;
+      display: block;
+    }
     :host(.fixed) {
       --admin-bar-class-fixed: true;
     }
-
     :host(.sticky) {
       --admin-bar-class-sticky: true;
     }
-
     :host(.bottom) {
       --admin-bar-class-bottom: true;
+    }
+    :host([vertical]) {
+      --admin-bar-vertical: true;
     }
 
     * {
@@ -387,48 +502,103 @@
       box-sizing: border-box;
     }
 
-    admin-bar-surface {
-      display: block;
+    .outer-toggle {
+      display: inline-block;
+
+      & > div {
+        display: grid;
+        grid-template-columns: max-content max-content;
+      }
+      p {
+        ${L()}
+      }
+      .drag-handle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 100%;
+        border-inline-start: ${B()};
+        color: var(--admin-bar-color-text);
+        cursor: grab;
+
+        &.dragging {
+          cursor: grabbing;
+        }
+        & > p {
+          ${L()}
+        }
+
+        :host(:not([toolbar-toggle-drag])) & {
+          display: none;
+        }
+      }
+
+      :host([toolbar-toggle='toolbar']) &,
+      :host(:not([toolbar-toggle])) & {
+        display: none;
+      }
     }
 
     .admin-bar {
-      --border-color: color-mix(in oklch, var(--admin-bar-color-text), transparent 90%);
-      display: grid;
-      grid-template-areas:
-        'environment environment environment'
-        'greeting buttons logout';
-      grid-template-columns: max-content 1fr max-content;
-      grid-template-rows: 0 var(--admin-bar-height, 43px);
-      align-items: center;
-      background: var(--admin-bar-bg);
-      border-radius: var(--admin-bar-border-radius);
-      font-family: var(--admin-bar-font-stack);
-      font-size: var(--admin-bar-font-size, 0.9rem);
-      color: var(--admin-bar-color-text, oklch(1 0 89.876 / 0.8));
-      scrollbar-color: color-mix(in oklch, var(--admin-bar-color-text), transparent 20%) var(--admin-bar-bg-color);
-      scrollbar-width: thin;
+      display: block;
+      box-sizing: border-box;
+      height: 100%;
+      height: stretch;
 
-      &.admin-bar--environment {
-        --admin-bar-show-environment: true;
-        grid-template-rows: var(--environment-height) var(--admin-bar-height, 43px);
+      & > div {
+        display: grid;
+        grid-template-areas:
+          'environment environment environment environment'
+          'greeting buttons logout toggle';
+        grid-template-columns: max-content 1fr max-content max-content;
+        grid-template-rows: auto var(--admin-bar-height, 43px);
+        align-items: center;
+        background: var(--admin-bar-bg);
+        border-radius: var(--admin-bar-border-radius);
+        font-family: var(--admin-bar-font-stack);
+        font-size: var(--admin-bar-font-size, 0.9rem);
+        color: var(--admin-bar-color-text, oklch(1 0 89.876 / 0.8));
+
+        :host([show-environment]) & {
+          --admin-bar-show-environment: true;
+        }
+        :host([show-greeting]) & {
+          --admin-bar-show-greeting: true;
+        }
+        :host([show-logout]) & {
+          --admin-bar-show-logout: true;
+        }
+
+        :host([vertical]) & {
+          grid-template-areas:
+            'environment environment'
+            'greeting toggle'
+            'buttons buttons'
+            'logout logout';
+          grid-template-columns: 1fr max-content;
+          grid-template-rows: auto var(--admin-bar-height, 43px) 1fr var(--admin-bar-height, 43px);
+          align-items: stretch;
+          height: 100%;
+        }
       }
 
-      &.admin-bar--greeting {
-        --admin-bar-show-greeting: true;
+      :host(.vertical-fullscreen) & {
+        height: auto;
       }
 
-      &.admin-bar--logout {
-        --admin-bar-show-logout: true;
+      :host([toolbar-toggle='button']) & {
+        display: none;
       }
     }
 
     .environment {
       grid-area: environment;
+      height: 0;
       border-radius: var(--admin-bar-border-radius) var(--admin-bar-border-radius) 0 0;
 
-      .admin-bar--environment & {
-        height: var(--environment-height);
-        background-color: red;
+      :host([show-environment]) & {
+        height: var(--admin-bar-environment-height, 4px);
         background: var(
           --admin-bar-environment-bg,
           repeating-linear-gradient(
@@ -440,34 +610,47 @@
           )
         );
       }
+
+      p {
+        ${L()}
+      }
     }
 
-    .admin-bar--greeting .greeting {
+    admin-bar-button:is([greeting-button], [logout-button]),
+    .logout,
+    .inner-toggle {
+      display: block;
+      height: 100%;
+    }
+    .greeting {
+      --admin-bar-vertical: false;
       grid-area: greeting;
-      display: none;
-      grid-template-columns: var(--grid-template-columns, 1fr);
+      display: grid;
+
+      &:not(admin-bar-button):not(:empty) {
+        padding-inline: var(--admin-bar-inline-padding);
+      }
+      &::part(popover) {
+        max-height: calc(100dvh - calc(var(--admin-bar-height, 43px) * 2));
+      }
+    }
+    .greeting-content {
+      --grid-template-columns: max-content;
+      display: grid;
+      grid-template-columns: var(--grid-template-columns);
       gap: 7px;
       align-items: center;
       margin-block-start: var(--margin-block-start, 0.5rem);
       margin-block-end: var(--margin-block-end, 0.5rem);
-      padding: 0 clamp(6px, 2vw, 15px);
       border-end-start-radius: var(--admin-bar-border-radius);
       border-end-end-radius: var(--admin-bar-border-radius);
       white-space: nowrap;
 
-      &:has(+ [slot='popover']) {
-        padding: 0;
-      }
-
       &:has(img) {
-        display: grid;
-
-        & *:not(img) {
-          display: none;
-        }
+        --grid-template-columns: max-content max-content;
       }
 
-      & img {
+      img {
         display: block;
         aspect-ratio: 1 / 1;
         width: var(--admin-bar-avatar-size, 25px);
@@ -476,89 +659,170 @@
         border-radius: 50%;
         box-shadow: var(--admin-bar-shadow-elements);
       }
-    }
 
-    @media (min-width: 700px) {
-      .admin-bar--greeting .greeting {
-        --grid-template-columns: 1fr;
-        display: grid;
-
-        @supports not selector(:has(*)) {
-          display: flex;
-        }
-
+      @container (width < 700px) and (not style(--admin-bar-vertical: true)) {
         &:has(img) {
-          --grid-template-columns: var(--admin-bar-avatar-size, 25px) 1fr;
+          --grid-template-columns: max-content;
+          display: grid;
 
-          & *:not(img) {
-            display: initial;
+          span {
+            display: none;
           }
         }
       }
     }
 
-    .buttons {
-      grid-area: buttons;
-      display: flex;
-      min-width: 1px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+    .inner-toggle {
+      grid-area: toggle;
+      display: none;
+      border-inline-start: ${B()};
 
-      .admin-bar--greeting & {
-        border-left: 1px solid var(--border-color);
+      :host([toolbar-toggle]) & {
+        display: var(--admin-bar-toolbar-toggle-display, inline-flex);
       }
 
-      .admin-bar--logout & {
-        border-right: 1px solid var(--border-color);
+      p {
+        ${L()}
+      }
+    }
+
+    .buttons {
+      grid-area: buttons;
+      position: relative;
+      width: 100%;
+      height: 100%;
+
+      :host([show-greeting]) & {
+        border-inline-start: ${B()};
+
+        @container style(--admin-bar-vertical: true) {
+          & {
+            border-block-start: ${B()};
+            border-inline-start: none;
+          }
+        }
+      }
+
+      :host([show-logout]) & {
+        border-inline-end: ${B()};
+
+        @container style(--admin-bar-vertical: true) {
+          & {
+            border-block-end: ${B()};
+            border-inline-end: none;
+          }
+        }
+      }
+    }
+    .buttons-content {
+      display: flex;
+      flex-flow: row nowrap;
+      position: absolute;
+      inset: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-color: color-mix(in oklch, var(--admin-bar-color-text), transparent 20%)
+        color-mix(in oklch, var(--admin-bar-bg-color), transparent 20%);
+      scrollbar-width: thin;
+
+      @container style(--admin-bar-vertical: true) {
+        & {
+          display: grid;
+          grid-auto-rows: max-content;
+          overflow: auto;
+        }
       }
     }
 
     .logout {
       grid-area: logout;
     }
-  `;let g=ft;v([u({attribute:"avatar-alt"})],g.prototype,"avatarAlt");v([u({attribute:"avatar-src"})],g.prototype,"avatarSrc");v([u({attribute:"greeting-text"})],g.prototype,"greetingText");v([u({attribute:"logout-href"})],g.prototype,"logoutHref");v([u({attribute:"logout-label"})],g.prototype,"logoutLabel");v([u({attribute:"progress",type:Number})],g.prototype,"progressValue");v([u({attribute:"show-environment",type:Boolean})],g.prototype,"showEnvironment");v([u({attribute:"show-greeting",type:Boolean})],g.prototype,"showGreeting");v([u({attribute:"show-logout",type:Boolean})],g.prototype,"showLogout");v([W()],g.prototype,"_hasGreetingPopoverSlot");customElements.get("admin-bar")||customElements.define("admin-bar",g);var Zt=Object.defineProperty,P=(e,t,r,o)=>{for(var s=void 0,a=e.length-1,i;a>=0;a--)(i=e[a])&&(s=i(t,r,s)||s);return s&&Zt(t,r,s),s};const $t=class extends _{constructor(){super(...arguments),this.dlContent=[],this.labelContent="",this.labelPosition="after",this.multiLine=!1,this.tableContent={rows:[]},this.textContent=""}render(){const t=[];this.textContent??!1?t.push(h`<span class="text">${this.textContent}</span>`):this.dlContent.length?t.push(h`<dl part="dl">
-          ${this.dlContent.map(o=>h`<dt>${o[0]??""}</dt>
-                <dd>${o[1]??""}</dd>`)}
-        </dl>`):this.tableContent?.rows?.length&&t.push(h`<table part="table">
-          ${this.tableContent?.headers?.length?h`<thead>
-                <tr>
-                  ${this.tableContent.headers.map(o=>h`<th>${o??""}</th>`)}
-                </tr>
-              </thead>`:p}
-          ${h`<tbody>
-            ${this.tableContent.rows.map(o=>h`<tr>
-                  ${o.map(s=>h`<td>${s}</td>`)}
-                </tr>`)}
-          </tbody>`}
-          ${this.tableContent?.footers?.length?h`<tfoot>
-                <tr>
-                  ${this.tableContent.footers.map(o=>h`<td>${o??""}</td>`)}
-                </tr>
-              </tfoot>`:p}
-        </table>`);let r=h`<slot>${t}</slot>`;return(this.labelContent??!1)&&(r=this.labelPosition==="before"?h`<span class="label">${this.labelContent}</span>${r}`:h`${r}<span class="label">${this.labelContent}</span>`),h`<span class="admin-bar-text${this.multiLine?" multi-line":""}">${r}</span>`}};$t.styles=H`
+  `;let b=jt;g([l({attribute:"auto-toggle-vertical",type:Number})],b.prototype,"autoToggleVertical");g([l({attribute:"avatar-alt"})],b.prototype,"avatarAlt");g([l({attribute:"avatar-src"})],b.prototype,"avatarSrc");g([l({attribute:"environment-description"})],b.prototype,"environmentDescription");g([l({attribute:"greeting-button-aria-label"})],b.prototype,"greetingButtonAriaLabel");g([l({attribute:"greeting-text"})],b.prototype,"greetingText");g([l({attribute:"logout-href"})],b.prototype,"logoutHref");g([l({attribute:"logout-label"})],b.prototype,"logoutLabel");g([l({attribute:"progress",type:Number})],b.prototype,"progressValue");g([l({attribute:"show-environment",type:Boolean})],b.prototype,"showEnvironment");g([l({attribute:"show-greeting",type:Boolean})],b.prototype,"showGreeting");g([l({attribute:"show-logout",type:Boolean})],b.prototype,"showLogout");g([l({attribute:"toolbar-toggle",reflect:!0})],b.prototype,"toolbarToggle");g([l({attribute:"toolbar-toggle-drag",reflect:!0})],b.prototype,"toolbarToggleDrag");g([l({attribute:"toolbar-toggle-drag-handle-description"})],b.prototype,"toolbarToggleDragHandleDescription");g([l({attribute:"toolbar-toggle-inner-description"})],b.prototype,"toolbarToggleInnerDescription");g([l({attribute:"toolbar-toggle-outer-description"})],b.prototype,"toolbarToggleOuterDescription");g([l({attribute:"vertical",reflect:!0,type:Boolean})],b.prototype,"toolbarVertical");g([w()],b.prototype,"_outerToggleDraggableState");g([w()],b.prototype,"_hasGreetingPopoverSlot");g([w()],b.prototype,"_hostWidth");g([Ct({flatten:!0,selector:"admin-bar-button"})],b.prototype,"_adminBarButtonChildren");var Oe=Object.defineProperty,A=(e,t,o,r)=>{for(var a=void 0,s=e.length-1,i;s>=0;s--)(i=e[s])&&(a=i(t,o,a)||a);return a&&Oe(t,o,a),a};const tt=class extends f{constructor(){super(...arguments),this.inputChecked=!1,this.inputDisabled=!1,this.inputLabel="",this.inputName="checkbox",this.inputSwitch=!1,this.labelPosition="after",this._hasCheckedIconSlot=!1,this._hasUncheckedIconSlot=!1,this._readyForUpdates=!1}handleCheckedIconSlotchange(t){const o=t.target.assignedNodes({flatten:!0});this._hasCheckedIconSlot=o.length>0}handleUncheckedIconSlotchange(t){const o=t.target.assignedNodes({flatten:!0});this._hasUncheckedIconSlot=o.length>0}_toggleChecked(){this.inputChecked=!this.inputChecked}firstUpdated(t){this._readyForUpdates=!0}render(){const t=d`<slot>${this.inputLabel}</slot>`,o=this.inputChecked?d`<slot name="checked-icon" @slotchange="${this.handleCheckedIconSlotchange}"></slot>`:d`<slot name="unchecked-icon" @slotchange="${this.handleUncheckedIconSlotchange}"></slot>`,r={"admin-bar-checkbox":!0,"admin-bar-checkbox--disabled":this.inputDisabled,"admin-bar-checkbox--has-icon":this.inputChecked?this._hasCheckedIconSlot:this._hasUncheckedIconSlot};return d`<label class="${M(r)}"
+      >${this.labelPosition==="before"?t:c}${o}<input
+        id="${this.inputName}"
+        name="${this.inputName}"
+        ?switch="${this.inputSwitch}"
+        ?checked="${this.inputChecked?"checked":c}"
+        ?disabled="${this.inputDisabled?"disabled":c}"
+        aria-label="${this.inputAriaLabel??c}"
+        type="checkbox"
+        @click="${this._toggleChecked}"
+      />${this.labelPosition==="after"?t:c}</label
+    >`}willUpdate(t){this._readyForUpdates&&t.has("inputChecked")&&(this.dispatchEvent(new De(this.inputChecked)),this.inputChecked?this.dispatchEvent(new Ne):this.dispatchEvent(new Le))}};tt.shadowRootOptions={...f.shadowRootOptions,delegatesFocus:!0},tt.styles=k`
     :host {
-      display: inline-block;
-      text-box: trim-both cap alphabetic;
+      display: block;
+      height: var(--admin-bar-height, 43px);
     }
-    .admin-bar-text {
+    .admin-bar-checkbox {
+      ${Pt()}
       display: flex;
       flex-wrap: nowrap;
       gap: 5px;
       align-items: center;
       padding: var(--admin-bar-text-padding, var(--admin-bar-block-padding) var(--admin-bar-inline-padding));
-      height: var(--admin-bar-height, 43px);
+      height: 100%;
+      accent-color: var(--admin-bar-color-highlight);
+      white-space: nowrap;
+
+      &:has(:focus-visible) {
+        ${Tt()}
+      }
+
+      input {
+        outline: none;
+      }
+      :host([disabled]) & {
+        cursor: not-allowed;
+      }
+      &.admin-bar-checkbox--has-icon input[type='checkbox'] {
+        ${L()}
+      }
+    }
+  `;let x=tt;A([l({attribute:"input-aria-label"})],x.prototype,"inputAriaLabel");A([l({attribute:"checked",reflect:!0,type:Boolean,useDefault:!0})],x.prototype,"inputChecked");A([l({attribute:"disabled",type:Boolean})],x.prototype,"inputDisabled");A([l({attribute:"label-text"})],x.prototype,"inputLabel");A([l({attribute:"input-name"})],x.prototype,"inputName");A([l({attribute:"input-switch",type:Boolean})],x.prototype,"inputSwitch");A([l({attribute:"label-position"})],x.prototype,"labelPosition");A([w()],x.prototype,"_hasCheckedIconSlot");A([w()],x.prototype,"_hasUncheckedIconSlot");A([w()],x.prototype,"_readyForUpdates");const qt=class Mt extends Event{constructor(t){super(Mt.eventName,{bubbles:!0,composed:!0}),this.checked=!1,this.checked=t}};qt.eventName="change";let De=qt;const Ht=class It extends Event{constructor(){super(It.eventName,{bubbles:!0,composed:!0})}};Ht.eventName="checked";let Ne=Ht;const Vt=class zt extends Event{constructor(){super(zt.eventName,{bubbles:!0,composed:!0})}};Vt.eventName="unchecked";let Le=Vt;var je=Object.defineProperty,D=(e,t,o,r)=>{for(var a=void 0,s=e.length-1,i;s>=0;s--)(i=e[s])&&(a=i(t,o,a)||a);return a&&je(t,o,a),a};const Wt=class extends f{constructor(){super(),this.dlContent=[],this.badgeContent="",this.badgePosition="before",this.multiLine=!1,this.tableContent={rows:[]},this.textContent="",customElements.get("admin-bar-badge")||customElements.define("admin-bar-badge",lt)}render(){const t=[];this.textContent??!1?t.push(d`<span class="text">${this.textContent}</span>`):this.dlContent.length?t.push(d`<dl part="dl">
+          ${this.dlContent.map(r=>d`<dt>${r[0]??""}</dt>
+                <dd>${r[1]??""}</dd>`)}
+        </dl>`):this.tableContent?.rows?.length&&t.push(d`<table part="table">
+          ${this.tableContent?.headers?.length?d`<thead>
+                <tr>
+                  ${this.tableContent.headers.map(r=>d`<th>${r??""}</th>`)}
+                </tr>
+              </thead>`:c}
+          ${d`<tbody>
+            ${this.tableContent.rows.map(r=>d`<tr>
+                  ${r.map(a=>d`<td>${a}</td>`)}
+                </tr>`)}
+          </tbody>`}
+          ${this.tableContent?.footers?.length?d`<tfoot>
+                <tr>
+                  ${this.tableContent.footers.map(r=>d`<td>${r??""}</td>`)}
+                </tr>
+              </tfoot>`:c}
+        </table>`);let o=d`<slot>${t}</slot>`;return(this.badgeContent??!1)&&(o=this.badgePosition==="before"?d`<admin-bar-badge part="badge">${this.badgeContent}</admin-bar-badge>${o}`:d`${o}<admin-bar-badge part="badge">${this.badgeContent}</admin-bar-badge>`),d`<span class="admin-bar-text${this.multiLine?" multi-line":""}">${o}</span>`}};Wt.styles=k`
+    :host {
+      display: flex;
+      align-items: center;
+      min-height: var(--admin-bar-height, 43px);
+      text-box: trim-both cap alphabetic;
+    }
+    .admin-bar-text {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 5px;
+      padding: var(--admin-bar-text-padding, var(--admin-bar-block-padding) var(--admin-bar-inline-padding));
+      height: 100%;
       background-color: var(--admin-bar-text-color-bg, transparent);
       font-size: var(--font-size);
       color: var(--admin-bar-color-text, rgb(255 255 255 / 0.8));
       white-space: nowrap;
       transition:
-        background var(--admin-bar-transition-duration, 0.4s) ease-out,
-        color var(--admin-bar-transition-duration, 0.4s) ease-out;
+        background var(--admin-bar-transition-duration, 0.3s) ease-out,
+        color var(--admin-bar-transition-duration, 0.3s) ease-out;
 
       &:is(.multi-line, :has(dl, table)) {
         padding: var(--admin-bar-text-padding, var(--admin-bar-inline-padding));
         height: unset;
-        white-space: unset;
+        white-space: normal;
 
         &:has(table) {
           padding: 0;
@@ -590,8 +854,8 @@
         --table-border-radius: calc(var(--admin-bar-border-radius) * 0.6);
 
         & thead {
-          background-color: var(--admin-bar-text-label-color-bg);
-          color: var(--admin-bar-text-label-color-text);
+          background-color: var(--admin-bar-badge-color-bg);
+          color: var(--admin-bar-badge-color-text);
 
           & th:first-child {
             border-start-start-radius: var(--table-border-radius);
@@ -601,7 +865,7 @@
           }
         }
         & tfoot {
-          background-color: color-mix(in srgb, var(--admin-bar-text-label-color-bg), transparent 80%);
+          background-color: color-mix(in srgb, var(--admin-bar-badge-color-bg), transparent 80%);
 
           & td:first-child {
             border-end-start-radius: var(--table-border-radius);
@@ -618,13 +882,4 @@
         }
       }
     }
-    .label {
-      padding: 0.4em;
-      background-color: var(--admin-bar-text-label-color-bg, rgb(255 255 255 / 0.9));
-      border-radius: 4px;
-      line-height: 1;
-      text-box: trim-both cap alphabetic;
-      font-size: 0.8em;
-      color: var(--admin-bar-text-label-color-text, black);
-    }
-  `;let S=$t;P([u({attribute:"dl-content",type:Array})],S.prototype,"dlContent");P([u({attribute:"label-content"})],S.prototype,"labelContent");P([u({attribute:"label-position"})],S.prototype,"labelPosition");P([u({attribute:"multi-line",type:Boolean})],S.prototype,"multiLine");P([u({attribute:"table-content",type:Object})],S.prototype,"tableContent");P([u({attribute:"text-content"})],S.prototype,"textContent");customElements.get("admin-bar-text")||customElements.define("admin-bar-text",S);class Qt extends HTMLElement{static observedAttributes=["data-api-status"];_actionUrl=void 0;_csrfToken=void 0;_requestStatus;_sessionActionUrl=void 0;attributeChangedCallback(t,r,o){t==="data-api-status"&&["errored","loading","ready","resolved"].includes(o)&&(o==="errored"&&(this._csrfToken=void 0),this._requestStatus=o)}connectedCallback(){this._actionUrl=this.dataset.actionUrl,this._sessionActionUrl=this.dataset.sessionActionUrl,this.setApiStatus("ready")}async actionRequest(t,r=""){if(this._requestStatus!=="loading"){if(this._actionUrl===void 0)return{message:"action-url-invalid",status:"error"};if(this._csrfToken===void 0){const o=await this.getSessionInfo();if(o.csrfTokenValue)this._csrfToken=o.csrfTokenValue;else return{message:"csrf-token-invalid",status:"error"}}try{this.setApiStatus("loading");const o=new FormData;o.append("requestHandle",t),r&&o.append("params",r);const s=await fetch(this._actionUrl,{body:o,headers:{Accept:"application/json","X-CSRF-Token":this._csrfToken??"","X-Requested-With":"XMLHttpRequest"},method:"POST"});if(!s.ok)throw this.setApiStatus("errored"),new Error(`Response status: ${s.status}`);const a=await s.json();if(a.status!=="success")throw a.message;return this.setApiStatus("resolved"),a}catch(o){return this.setApiStatus("errored"),{message:o,status:"error"}}}}async getSessionInfo(){if(this._sessionActionUrl)return fetch(this._sessionActionUrl,{headers:{Accept:"application/json"}}).then(t=>t.json())}setApiStatus(t){const r=this.querySelector("admin-bar");if(r)switch(t){case"errored":r.setAttribute("progress","-1");break;case"loading":r.setAttribute("progress","50");break;case"resolved":r.setAttribute("progress","100");break}this.dataset.apiStatus=t}}customElements.define("craft-admin-bar",Qt);class Yt extends HTMLElement{_searchForm=null;_resultsElement=null;_onSearchFormSubmit=async t=>{t.preventDefault();const r=this.shadowRoot?.querySelector('input[type="search"]')??null;if(r){const o=await window.adminBarPostRequest(this,"craft-search-search",JSON.stringify({query:r.value}));if(this._resultsElement){let s,a;if(o.searchResultsStatus==="OK"){s=document.getElementById("admin-bar-search-results-template"),a=s.content;const i=document.createElement("ul");o.searchResults.forEach(d=>{const c=a.cloneNode(!0).querySelector("li"),b=c.querySelector("admin-bar-button.edit");d.cpEditUrl?(b.setAttribute("button-href",d.cpEditUrl),b.setAttribute("label-text",d.title)):c.removeChild(b);const l=c.querySelector("admin-bar-button.view"),m=c.querySelector("admin-bar-text.view");d.url??!1?(l.setAttribute("button-href",d.url),l.setAttribute("label-text",d.title),m.remove()):(m.setAttribute("text-content",d.title),l.remove()),i.append(c)}),this._resultsElement.replaceChildren(i)}else s=document.getElementById("admin-bar-search-no-results-template"),a=s.content,this._resultsElement.replaceChildren(a.cloneNode(!0))}}};constructor(){super();const r=document.getElementById("admin-bar-search-template").content;this.attachShadow({mode:"open"}).appendChild(r.cloneNode(!0)),this._searchForm=this.shadowRoot?.querySelector("form")??null,this._resultsElement=this.shadowRoot?.querySelector("form + div")??null}connectedCallback(){this._searchForm?.addEventListener("submit",this._onSearchFormSubmit)}disconnectedCallback(){this._searchForm?.removeEventListener("submit",this._onSearchFormSubmit)}}customElements.define("craft-admin-bar-search",Yt);window.adminBarPostRequest=async(e,t,r="")=>{try{const o=e.closest("craft-admin-bar"),s=await o?.actionRequest(t,r);if(s?.status==="success"){if(s.refreshPage)location.reload();else if(setTimeout(()=>{o&&(o.dataset.apiStatus="ready")},3e3),s.data)return s.data}else throw s?.message}catch(o){console.error(`Admin Bar: ${o}`)}};
+  `;let U=Wt;D([l({attribute:"dl-content",type:Array})],U.prototype,"dlContent");D([l({attribute:"badge-content"})],U.prototype,"badgeContent");D([l({attribute:"badge-position"})],U.prototype,"badgePosition");D([l({attribute:"multi-line",type:Boolean})],U.prototype,"multiLine");D([l({attribute:"table-content",type:Object})],U.prototype,"tableContent");D([l({attribute:"text-content"})],U.prototype,"textContent");function qe(e=[]){e.forEach(t=>{const o=`admin-bar-${t}`;if(!customElements.get(o))switch(t){case"button":customElements.define(o,v);break;case"checkbox":customElements.define(o,x);break;case"text":customElements.define(o,U);break}}),customElements.get("admin-bar")||customElements.define("admin-bar",b)}class Me extends HTMLElement{static observedAttributes=["data-api-status"];#t=null;_actionUrl=void 0;_csrfToken=void 0;_requestStatus;_sessionActionUrl=void 0;attributeChangedCallback(t,o,r){t==="data-api-status"&&["errored","loading","ready","resolved"].includes(r)&&(r==="errored"&&(this._csrfToken=void 0),this._requestStatus=r)}connectedCallback(){this.#t=document.getElementById(this.dataset.adminBar??"")??null,this._actionUrl=this.dataset.actionUrl,this._sessionActionUrl=this.dataset.sessionActionUrl,this.setApiStatus("ready",!0),this.setUpDebugToolbarCheckbox()}async actionRequest(t,o="",r=!0){if(!(r&&this._requestStatus==="loading")){if(this._actionUrl===void 0)return{message:"action-url-invalid",status:"error"};if(this._csrfToken===void 0){const a=await this.getSessionInfo();if(a.csrfTokenValue)this._csrfToken=a.csrfTokenValue;else return{message:"csrf-token-invalid",status:"error"}}try{this.setApiStatus("loading",r);const a=new FormData;a.append("requestHandle",t),o&&a.append("params",o);const s=await fetch(this._actionUrl,{body:a,headers:{Accept:"application/json","X-CSRF-Token":this._csrfToken??"","X-Requested-With":"XMLHttpRequest"},method:"POST"});if(!s.ok)throw new Error(`Response status: ${s.status}`);const i=await s.json();if(i.status!=="success")throw i.message;if(i.followupAction){const h=this._actionUrl.replace("admin-bar/admin-bar",i.followupAction),n=await fetch(h,{headers:{Accept:"application/json","X-CSRF-Token":this._csrfToken??"","X-Requested-With":"XMLHttpRequest"},method:"POST"});if(!n.ok)throw new Error(`Response status: ${n.status}`)}return this.setApiStatus("resolved",r),i}catch(a){return this.setApiStatus("errored",!0),{message:a,status:"error"}}}}async getSessionInfo(){if(this._sessionActionUrl)return fetch(this._sessionActionUrl,{headers:{Accept:"application/json"}}).then(t=>t.json())}setApiStatus(t,o){if(this.#t&&o)switch(t){case"errored":this.#t.setAttribute("progress","-1");break;case"loading":this.#t.setAttribute("progress","50");break;case"resolved":this.#t.setAttribute("progress","100");break}this.dataset.apiStatus=t}setUpDebugToolbarCheckbox(){const t=this.#t?.querySelector("#admin-bar-checkbox-debug-toolbar");t&&t.addEventListener("change",async o=>{t.setAttribute("disabled",!0),await window.adminBarPostRequest(document.getElementById(this.dataset.adminBar??""),"admin-bar-debug-toolbar-toggle",JSON.stringify({query:o.checked})),t.removeAttribute("disabled")})}}customElements.define("craft-admin-bar",Me);class He extends HTMLElement{static observedAttributes=["data-queue-total"];#t=null;#e=[];#a=0;#s=0;#o=null;#r={};#i=null;_checkQueue=async()=>{const t=await window.adminBarPostRequest(this.closest("admin-bar"),"craft-queue-check","{}",!0);t&&(this._setJobTotals({jobsWaiting:t.jobsWaiting,jobsDelayed:t.jobsDelayed,jobsReserved:t.jobsReserved,jobsFailed:t.jobsFailed}),this.setAttribute("data-queue-total",t.totalJobs.toString()))};_setJobTotals({jobsWaiting:t,jobsDelayed:o,jobsReserved:r,jobsFailed:a}){this.#e=[],t>0&&this.#e.push([t,this.#r.jobStatusWaiting]),o>0&&this.#e.push([o,this.#r.jobStatusDelayed]),r>0&&this.#e.push([r,this.#r.jobStatusReserved]),a>0&&this.#e.push([a,this.#r.jobStatusFailed])}_onRunButtonClick=()=>{this._runQueue()};_runQueue=async()=>{await window.adminBarPostRequest(this.closest("admin-bar"),"craft-queue-run","{}"),this._checkQueue()};_updateJobStatus=async t=>{const s=document.getElementById("admin-bar-queue-job-status-template").content.cloneNode(!0).querySelector(`.${t}`);this.#t&&(this.#t.replaceChildren(s),t==="has-jobs"?(this.#t.querySelector(".has-jobs")?.setAttribute("dl-content",JSON.stringify(this.#e)),this.#a===0&&(this.#a=setInterval(this._checkQueue,1e4))):(clearInterval(this.#a),this.#a=0))};constructor(){super();const o=document.getElementById("admin-bar-queue-template").content;this.attachShadow({mode:"open"}).appendChild(o.cloneNode(!0)),this.#r=JSON.parse(this.getAttribute("data-t-messages")??"{}")??{},this.#o=this.shadowRoot?.querySelector(".run-jobs")??null,this.#t=this.shadowRoot?.querySelector(".job-status")??null,this.#i=this.closest("admin-bar-button")??null}attributeChangedCallback(t,o,r){t==="data-queue-total"&&this.#o&&(this.#s=parseInt(r),this.#s>0?(this.#i.setAttribute("badge-content",r),this.#o.style.display="block",this._updateJobStatus("has-jobs")):(this.#i.removeAttribute("badge-content"),this.#o.style.display="none",this._updateJobStatus("no-jobs")))}async connectedCallback(){const t=JSON.parse(this.getAttribute("data-job-totals")??"{}");this._setJobTotals({jobsWaiting:t.jobsWaiting??0,jobsDelayed:t.jobsDelayed??0,jobsReserved:t.jobsReserved??0,jobsFailed:t.jobsFailed??0}),this._updateJobStatus(this.#s?"has-jobs":"no-jobs"),this.#o?.addEventListener("click",this._onRunButtonClick),this.#s>0&&await window.adminBarPostRequest(this.closest("admin-bar"),"craft-queue-run","{}",!0)}disconnectedCallback(){this.#o?.removeEventListener("click",this._onRunButtonClick)}}customElements.define("craft-admin-bar-queue",He);class Ie extends HTMLElement{#t=null;#e=null;_onSearchFormSubmit=async t=>{t.preventDefault();const o=this.#t?.querySelector('input[type="search"]')??null;if(o){const r=await window.adminBarPostRequest(this.closest("admin-bar"),"craft-search-search",JSON.stringify({query:o.value}));if(this.#e){let a,s;if(r.searchResultsStatus==="OK"){a=document.getElementById("admin-bar-search-results-template"),s=a.content;const i=document.createElement("ul");r.searchResults.forEach(h=>{const p=s.cloneNode(!0).querySelector("li"),m=p.querySelector("admin-bar-button.edit");h.cpEditUrl?(m.setAttribute("button-href",h.cpEditUrl),m.setAttribute("label-text",h.title)):p.removeChild(m);const u=p.querySelector("admin-bar-button.view"),$=u.querySelector("admin-bar-text"),_=p.querySelector("admin-bar-text.view");h.url??!1?(u.setAttribute("button-href",h.url),u.setAttribute("badge-content",h.status),$.setAttribute("text-content",h.title),_.remove()):(_.setAttribute("text-content",h.title),u.remove()),i.append(p)}),this.#e.replaceChildren(i)}else a=document.getElementById("admin-bar-search-no-results-template"),s=a.content,this.#e.replaceChildren(s.cloneNode(!0))}}};constructor(){super();const o=document.getElementById("admin-bar-search-template").content;this.attachShadow({mode:"open"}).appendChild(o.cloneNode(!0)),this.#t=this.shadowRoot?.querySelector("form")??null,this.#e=this.shadowRoot?.querySelector("form + div")??null}connectedCallback(){this.#t?.addEventListener("submit",this._onSearchFormSubmit)}disconnectedCallback(){this.#t?.removeEventListener("submit",this._onSearchFormSubmit)}}customElements.define("craft-admin-bar-search",Ie);qe(["button","checkbox","text"]);window.adminBarPostRequest=async(e,t,o="",r=!1)=>{try{const a=document.querySelector(`[data-admin-bar="${e?.id}"]`),s=await a?.actionRequest(t,o,!r);if(s?.status==="success"){if(s.refreshPage)location.reload();else if(setTimeout(()=>{a&&(a.dataset.apiStatus="ready")},3e3),s.data)return s.data}else throw s?.message}catch(a){console.error(`Admin Bar: ${a}`)}};

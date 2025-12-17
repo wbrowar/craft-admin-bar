@@ -23,7 +23,7 @@
 
   {% set mainEntity = metaJsonLdContainer.mainEntityOfPage['@type'] ?? null %}
   {% if mainEntity ?? false %}
-    {% set extrasList = extrasList|merge([['Main Entity'|t('admin-bar'), mainEntity]]) %}
+    {% set extrasList = extrasList|merge([['widget-seomatic-main-entity'|t('admin-bar', language = userLanguage), mainEntity]]) %}
   {% endif %}
 
   {% set meta = {
@@ -37,8 +37,8 @@
   } %}
 
   <admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.5rem">
-    {{ svg('@nystudio107/seomatic/icon-mask.svg')|attr({ class: 'icon' }) }}
-    {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
+    {{ svg('@nystudio107/seomatic/icon-mask.svg')|attr({ class: 'icon', slot: 'before-label' }) }}
+    {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
     <div slot="popover">
       {{ pluginWidgets.seoMeta(meta) }}
     </div>

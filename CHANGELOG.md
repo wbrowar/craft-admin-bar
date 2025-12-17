@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.8.0 - 2025-12-17
+### Added
+- There is a setting that allows Admin Bar to automatically embed itself at the top of front-end pages.
+  - NOTE: This is set to `false` by default, but will be enabled by default in the next major version.
+- There is now a mobile mode setting that displays Admin Bar as a vertical menu on smaller screens.
+- A new setting allows you to toggle Admin Bar to get it out of the way of the content on the page.
+- A new setting lets you drag the toggle button when Admin Bar is toggled down to the collapsed size.
+- Admin Bar is now translated on the front-end and shows the language based on the logged in user’s language preference.
+  - Admin Bar will automatically switch to RTL in RTL languages.
+- Added a new widget, called `Queue`, that displays the current status of queued background jobs and will automatically run the job queue on page load.
+  - It uses the same controller used in the Craft CMS CP, so it will check your settings to see if the queue should automatically run.
+- Added a new widget, called `Related`, that shows entries related to the current page entry.
+  - Only entry types that the current user has permission to view will be shown.
+  - If the user has the abilty to edit the entry, an edit button will be shown.
+- Added a new theme, called `Frosted`.
+- Added a new theme, called `Stacked`, that wraps Admin Bar elements instead of using a hortizaon scrollbar.
+- Admin Bar now supports keyboard navigation to open popovers and tab through buttons.
+- ARIA labels and descriptions have been added for better screen reader support.
+- Added a checkbox to toggle the Craft CMS Debug Toolbar on the front end.
+  - This is available only to users with admin access.
+- Added entry statuses to search results in the Craft Search widget.
+
+
+### Changed
+- Widget labels are now hidden using CSS so they are still accessible to screen readers and in mobile mode.
+- Updated the design of some widgets.
+- The Search widget will now use fuzzy search by default, when only alphanumeric characters are entered.
+- Redesigned the Admin Bar Settings page:
+  - Available widgets are now listed in a grid.
+  - The default CSS section now shows the CSS used by the selected theme—making it easier to override theme styles.
+  - The default CSS section is now hidden in a `<details>` element.
+  - Clicking on a plugin name in the "More Admin Bar Widgets" list now takes you to the page in the plugin store, in your site’s CP.
+- Admin Bar is no longer nested inside of a `<craft-admin-bar>` element.
+    - This should make for easier placement on the page through custom CSS.
+- Updated Admin Bar Component to version `2.0.0`. To see what’s new see the [Admin Bar Component Changelog on GitHub](https://github.com/wbrowar/admin-bar-component/blob/main/CHANGELOG.md)
+  - NOTE: Admin Bar Component `2.x` introduces breaking changes to some style variables. All of the built-in themes have been updated, but you may need to review CSS overrides in Admin Bar settings.
+
+### Fixed
+- Fixed the navigation setting link color for the Navigation widget.
+- Fixed a Twig rendering error on the settings page when using Postgres.
+
+
+
 ## 5.7.1 - 2025-10-09
 ### Changed
 - Changed the progress bar to the `progress` attribute built into Admin Bar Component

@@ -13,10 +13,12 @@ namespace wbrowar\adminbar;
 use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
+use craft\web\View;
 use wbrowar\adminbar\helpers\AdminBarWidget;
 use wbrowar\adminbar\models\Settings;
 use wbrowar\adminbar\services\Bar;
 use wbrowar\adminbar\twigextensions\AdminBarTwigExtension;
+use yii\base\Event;
 
 /**
  * Craft plugins are very much like little applications in and of themselves. We’ve made
@@ -90,7 +92,32 @@ class AdminBar extends Plugin
         ]);
 
         // Add in our Twig extensions
-        Craft::$app->view->registerTwigExtension(new AdminBarTwigExtension());
+        Craft::$app->getView()->registerTwigExtension(new AdminBarTwigExtension());
+
+        // Auto embed Admin Bar if it can be rendered
+        Event::on(View::class, View::EVENT_BEGIN_BODY, function(Event $event) {
+            if ($this::$settings->autoRender && $event->sender->getTemplateMode() === View::TEMPLATE_MODE_SITE && $this->bar->canRender()) {
+                $config = [
+                    'sticky' => true,
+                ];
+
+                $entry = Craft::$app->getUrlManager()->getMatchedElement();
+
+                if ($entry) {
+                    $config['entry'] = $entry;
+
+                    if ($entry->sectionId) {
+                        $section = Craft::$app->getEntries()->getSectionById($entry->sectionId);
+
+                        if ($section) {
+                            $config['editLinkLabel'] = $section->name;
+                        }
+                    }
+                }
+
+                Craft::$app->getView()->registerHtml($this->bar->render($config), Craft::$app->getView()::POS_BEGIN);
+            }
+        });
 
         /**
          * Logging in Craft involves using one of the following methods:
@@ -155,9 +182,10 @@ class AdminBar extends Plugin
      */
     protected function settingsHtml(): ?string
     {
-        return Craft::$app->view->renderTemplate(
+        return Craft::$app->getView()->renderTemplate(
             'admin-bar/_settings',
             [
+                'orderBy' => Craft::$app->getDb()->driverName == 'pgsql' ? 'RANDOM()' : 'RAND()',
                 'proEdition' => self::$pro,
                 'settings' => self::$settings,
                 'widgetPlugins' => AdminBarWidget::getAdminBarWidgets() ?? [],

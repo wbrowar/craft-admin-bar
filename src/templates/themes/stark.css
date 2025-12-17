@@ -1,17 +1,22 @@
 @layer admin-bar {
-  admin-bar {
+  admin-bar.admin-bar {
     --admin-bar-bg: linear-gradient(to bottom, oklch(1 0 89.876), oklch(1 0 89.876 / 0.9), oklch(1 0 89.876 / 0.2));
     --admin-bar-bg-color: oklch(1 0 89.876);
     --admin-bar-button-color-bg-hover: hsl(0, 0%, 93%);
     --admin-bar-button-color-text: oklch(0.569 0 89.876);
     --admin-bar-color-highlight: oklch(0.348 0 89.876);
     --admin-bar-color-text: oklch(0.371 0 89.876 / 0.9);
-    --admin-bar-text-label-color-bg: oklch(0.569 0 89.876);
-    --admin-bar-text-label-color-text: oklch(0.91 0.02 251.72);
+    --admin-bar-badge-color-bg: oklch(0.569 0 89.876);
+    --admin-bar-badge-color-text: oklch(0.91 0.02 251.72);
     --admin-bar-color-highlight-logout: oklch(0.632 0.253 28.718);
     --admin-bar-color-text-logout: oklch(1 0 89.876);
     --admin-bar-button-popover-bg: linear-gradient(to bottom, oklch(1 0 89.876) 75%, oklch(0.946 0 89.876));
     --admin-bar-progress-color: oklch(0.632 0.253 28.718);
     --admin-bar-progress-height: 3px;
+    --widget-search-results-badge-color-text: oklch(1 0 89.876);
+
+    admin-bar-button:hover::part(badge) {
+      color: oklch(1 0 89.876);
+    }
   }
 }

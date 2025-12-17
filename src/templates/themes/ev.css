@@ -1,24 +1,29 @@
 @layer admin-bar {
-  admin-bar {
+  admin-bar.admin-bar {
     --admin-bar-bg-color: oklch(0.55 0.25 27.92 / 0.85);
     --admin-bar-border-radius: 10px;
     --admin-bar-button-color-bg-hover: oklch(0.164 0 89.876 / 0.9);
     --admin-bar-button-color-text: oklch(0.98 0.01 226.44);
     --admin-bar-color-highlight: oklch(1 0 89.876);
     --admin-bar-color-text: oklch(0.98 0.01 226.44 / 0.9);
-    --admin-bar-text-label-color-bg: oklch(0 0 0 / 0.9);
-    --admin-bar-text-label-color-text: oklch(0.98 0.01 226.44);
+    --admin-bar-badge-color-bg: oklch(0 0 0 / 0.9);
+    --admin-bar-badge-color-text: oklch(0.98 0.01 226.44);
     --admin-bar-color-highlight-logout: oklch(0.88 0.21 93.32);
     --admin-bar-color-text-logout: oklch(0 0 0 / 0.9);
     --admin-bar-bg-filter: blur(2px) brightness(0.4) saturate(0.3);
     --admin-bar-progress-color: oklch(0.88 0.21 93.32 / 0.8);
     --admin-bar-progress-height: 4px;
+    --widget-search-results-badge-color-text: oklch(0.164 0 89.876 / 0.9);
 
     @supports (not (font: -apple-system-body)) and (not (-moz-appearance: none)) {
       & {
         --admin-bar-enable-glass: true;
         --admin-bar-bg-filter: blur(2px) brightness(1.5) saturate(0.3);
       }
+    }
+
+    admin-bar-button:hover::part(badge) {
+      color: oklch(0.164 0 89.876 / 0.9);
     }
   }
 }

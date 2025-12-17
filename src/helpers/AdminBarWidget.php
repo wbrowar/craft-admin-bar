@@ -22,6 +22,7 @@ use putyourlightson\blitz\records\CacheRecord;
 use wbrowar\adminbar\AdminBar;
 use wbrowar\adminbar\models\Settings;
 use wbrowar\guide\Guide;
+use yii\helpers\StringHelper;
 
 /**
  * AdminBar Settings Model
@@ -43,6 +44,8 @@ class AdminBarWidget
     private const WIDGET_CRAFT_AUTHORS = 'craft-authors';
     private const WIDGET_CRAFT_NEW_ENTRY = 'craft-new-entry';
     private const WIDGET_CRAFT_PUBLISHED = 'craft-published';
+    private const WIDGET_CRAFT_QUEUE = 'craft-queue';
+    private const WIDGET_CRAFT_RELATED = 'craft-related';
     private const WIDGET_CRAFT_SEARCH = 'craft-search';
     private const WIDGET_CRAFT_SITES = 'craft-sites';
     private const WIDGET_GUIDE = 'guide';
@@ -64,6 +67,8 @@ class AdminBarWidget
             (self::WIDGET_CRAFT_AUTHORS) => AdminBar::$pro ? $settings->widgetEnabledCraftAuthors : false,
             (self::WIDGET_CRAFT_NEW_ENTRY) => AdminBar::$pro ? $settings->widgetEnabledCraftNewEntry : false,
             (self::WIDGET_CRAFT_PUBLISHED) => AdminBar::$pro ? $settings->widgetEnabledCraftPublished : false,
+            (self::WIDGET_CRAFT_QUEUE) => AdminBar::$pro ? $settings->widgetEnabledCraftQueue : false,
+            (self::WIDGET_CRAFT_RELATED) => AdminBar::$pro ? $settings->widgetEnabledCraftRelated : false,
             (self::WIDGET_CRAFT_SEARCH) => AdminBar::$pro ? $settings->widgetEnabledCraftSearch : false,
             (self::WIDGET_CRAFT_SITES) => AdminBar::$pro ? $settings->widgetEnabledCraftSites : false,
             (self::WIDGET_GUIDE) => AdminBar::$pro ? $settings->widgetEnabledGuide : false,
@@ -85,6 +90,8 @@ class AdminBarWidget
      */
     public static function getAdminBarWidgets(bool $onlyEnabled = false): array
     {
+        $userLanguage = Craft::$app->getUser()->getIdentity()->getPreferredLanguage();
+
         $widgets = [
             (self::WIDGET_BLITZ) => [
                 'name' => 'Blitz',
@@ -92,27 +99,37 @@ class AdminBarWidget
                 'version' => null
             ],
             (self::WIDGET_CRAFT_AUTHORS) => [
-                'name' => 'Authors',
+                'name' => Craft::t('admin-bar', 'widget-craft-authors-name', [], $userLanguage),
                 'widgetDescription' => Craft::t('admin-bar', 'The authors for the current entry.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_NEW_ENTRY) => [
-                'name' => 'New Entry',
+                'name' => Craft::t('admin-bar', 'widget-craft-new-entry-name', [], $userLanguage),
                 'widgetDescription' => Craft::t('admin-bar', 'Links to create a new entry from sections that the author has permission to create.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_PUBLISHED) => [
-                'name' => 'Published',
+                'name' => Craft::t('admin-bar', 'widget-craft-published-name', [], $userLanguage),
                 'widgetDescription' => Craft::t('admin-bar', 'The Post Date for when the current page entry was published, along with other publishing information.'),
                 'version' => null
             ],
+            (self::WIDGET_CRAFT_QUEUE) => [
+                'name' => Craft::t('admin-bar', 'widget-craft-queue-name', [], $userLanguage),
+                'widgetDescription' => Craft::t('admin-bar', 'Displays the status of jobs in the Craft queue and automatically runs them on page load.'),
+                'version' => null
+            ],
+            (self::WIDGET_CRAFT_RELATED) => [
+                'name' => Craft::t('admin-bar', 'widget-craft-related-name', [], $userLanguage),
+                'widgetDescription' => Craft::t('admin-bar', 'A list of entries related to the current page entry.'),
+                'version' => null
+            ],
             (self::WIDGET_CRAFT_SEARCH) => [
-                'name' => 'Search',
+                'name' => Craft::t('admin-bar', 'widget-craft-search-name', [], $userLanguage),
                 'widgetDescription' => Craft::t('admin-bar', 'Use Craft CMS’s search to find, edit, and jump to other pages in your site.'),
                 'version' => null
             ],
             (self::WIDGET_CRAFT_SITES) => [
-                'name' => 'Sites',
+                'name' => Craft::t('admin-bar', 'widget-craft-sites-name', [], $userLanguage),
                 'widgetDescription' => Craft::t('admin-bar', 'The name of the site for the current page and links to the same page on all propagated sites.'),
                 'version' => null
             ],
@@ -173,6 +190,18 @@ class AdminBarWidget
         if (in_array($widgetHandle, $enabledWidgets)) {
             $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
             $widgets[$widgetHandle]['version'] = '5.5.0';
+        }
+
+        $widgetHandle = self::WIDGET_CRAFT_QUEUE;
+        if (in_array($widgetHandle, $enabledWidgets)) {
+            $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
+            $widgets[$widgetHandle]['version'] = '5.8.0';
+        }
+
+        $widgetHandle = self::WIDGET_CRAFT_RELATED;
+        if (in_array($widgetHandle, $enabledWidgets)) {
+            $widgets[$widgetHandle]['icon'] = Craft::getAlias('@appicons/craft-cms.svg');
+            $widgets[$widgetHandle]['version'] = '5.8.0';
         }
 
         $widgetHandle = self::WIDGET_CRAFT_SEARCH;
@@ -258,8 +287,9 @@ class AdminBarWidget
     {
         $config = [];
 
-        $onSettingsPreivew = implode('/', Craft::$app->getRequest()->getSegments()) == 'settings/plugins/admin-bar';
+        $onSettingsPreview = implode('/', Craft::$app->getRequest()->getSegments()) == 'settings/plugins/admin-bar';
 
+        $editableSections = Craft::$app->getEntries()->getEditableSections();
         $entrySection = !empty($entry) ? Craft::$app->getEntries()->getSectionById($entry['sectionId']) : null;
 
         // Blitz Widget
@@ -320,7 +350,6 @@ class AdminBarWidget
         $config[self::WIDGET_CRAFT_NEW_ENTRY] = ['sections' => []];
         if ($settings->widgetEnabledCraftNewEntry) {
             $sections = [];
-            $editableSections = Craft::$app->getEntries()->getEditableSections();
 
             foreach ($editableSections as $editableSection) {
                 if ($editableSection->type !== 'single') {
@@ -345,9 +374,38 @@ class AdminBarWidget
             $config[self::WIDGET_CRAFT_PUBLISHED]['timeFormat'] = $userWidgetsConfig[self::WIDGET_CRAFT_PUBLISHED]['timeFormat'] ?? $config[self::WIDGET_CRAFT_PUBLISHED]['timeFormat'];
         }
 
+        // Craft Queue
+        $config[self::WIDGET_CRAFT_QUEUE] = [
+            'onSettingsPreview' => $onSettingsPreview,
+            'jobsWaiting' => 0,
+            'jobsDelayed' => 0,
+            'jobsReserved' => 0,
+            'jobsFailed' => 0,
+            'totalJobs' => 0,
+        ];
+        if ($settings->widgetEnabledCraftQueue) {
+            $config[self::WIDGET_CRAFT_QUEUE]['jobsWaiting'] = Craft::$app->queue->getTotalWaiting();
+            $config[self::WIDGET_CRAFT_QUEUE]['jobsDelayed'] = Craft::$app->queue->getTotalDelayed();
+            $config[self::WIDGET_CRAFT_QUEUE]['jobsReserved'] = Craft::$app->queue->getTotalReserved();
+            $config[self::WIDGET_CRAFT_QUEUE]['jobsFailed'] = Craft::$app->queue->getTotalFailed();
+            $config[self::WIDGET_CRAFT_QUEUE]['totalJobs'] = Craft::$app->queue->getTotalJobs();
+        }
+
+        // Craft Search
+        $config[self::WIDGET_CRAFT_RELATED] = [
+            'editableSectionHandles' => [],
+        ];
+        if ($settings->widgetEnabledCraftRelated) {
+            $sectionHandles = [];
+            foreach ($editableSections as $editableSection) {
+                $sectionHandles[] = $editableSection->handle;
+            }
+            $config[self::WIDGET_CRAFT_RELATED]['editableSectionHandles'] = $sectionHandles;
+        }
+
         // Craft Search
         $config[self::WIDGET_CRAFT_SEARCH] = [
-            'onSettingsPreivew' => $onSettingsPreivew,
+            'onSettingsPreview' => $onSettingsPreview,
         ];
 
         // Craft Sites
@@ -418,13 +476,19 @@ class AdminBarWidget
         // SEO
         $config[self::WIDGET_SEO] = [
             'handle' => 'seo',
-            'onSettingsPreivew' => $onSettingsPreivew,
         ];
         if (
             !empty($entry)
             && $settings->widgetEnabledSeo
             && ($widgetPlugins[self::WIDGET_SEO]['version'] ?? false)
         ) {
+            $seoFieldHandle = null;
+            $fields = $entry->getFieldLayout()->getCustomFields();
+            foreach ($fields as $field) {
+                if (get_class($field) == 'ether\seo\fields\SeoField') {
+                    $config[self::WIDGET_SEO]['handle'] = $field->handle;
+                }
+            }
             $config[self::WIDGET_SEO]['handle'] = $userWidgetsConfig[self::WIDGET_SEO]['handle'] ?? $config[self::WIDGET_SEO]['handle'];
         }
 
@@ -462,6 +526,26 @@ class AdminBarWidget
                         'status' => 'success',
                     ];
                 }
+            } elseif ($handle == self::WIDGET_CRAFT_QUEUE) {
+                if ($action === 'check') {
+                    $data['jobsWaiting'] = Craft::$app->queue->getTotalWaiting();
+                    $data['jobsDelayed'] = Craft::$app->queue->getTotalDelayed();
+                    $data['jobsReserved'] = Craft::$app->queue->getTotalReserved();
+                    $data['jobsFailed'] = Craft::$app->queue->getTotalFailed();
+                    $data['totalJobs'] = Craft::$app->queue->getTotalJobs();
+
+                    $results = [
+                        'data' => $data,
+                        'message' => Craft::t('admin-bar', 'Job queue checked.'),
+                        'status' => 'success',
+                    ];
+                } elseif ($action === 'run') {
+                    $results = [
+                        'followupAction' => 'queue/run',
+                        'message' => Craft::t('admin-bar', 'Job queue ran.'),
+                        'status' => 'success',
+                    ];
+                }
             } elseif ($handle == self::WIDGET_CRAFT_SEARCH) {
                 if ($action === 'search') {
                     $data = [
@@ -470,9 +554,11 @@ class AdminBarWidget
                     ];
                     
                     if ($params['query'] ?? false) {
+                        $formattedQuery = ctype_alpha($params['query']) ? '*' . $params['query'] . '*' : $params['query'];
+
                         $searchResponse = Entry::find()
                             ->section('*')
-                            ->search($params['query'])
+                            ->search($formattedQuery)
                             ->orderBy('score')
                             ->limit(25)
                             ->all();
@@ -481,14 +567,13 @@ class AdminBarWidget
                             $resultsFormatted = [];
                             $editableSectionIds = Craft::$app->getEntries()->getEditableSectionIds();
 
-//                            (entry.section.id in craft.app.entries.editableSectionIds)
-
                             foreach ($searchResponse as $entry) {
                                 $addEditUrl = in_array($entry->section->id, $editableSectionIds);
 
                                 $resultsFormatted[] = [
                                     'cpEditUrl' => $addEditUrl ? $entry->getCpEditUrl() : '',
-                                    'title' => $entry->title,
+                                    'status' => strtoupper($entry->getStatus()),
+                                    'title' => StringHelper::truncate($entry->title, 80),
                                     'url' => $entry->url ?? '',
                                 ];
                             }
@@ -500,7 +585,7 @@ class AdminBarWidget
                     
                     $results = [
                         'data' => $data,
-                        'message' => Craft::t('admin-bar', 'Blitz cache refreshed.'),
+                        'message' => Craft::t('admin-bar', 'Search was successful.'),
                         'status' => 'success',
                     ];
                 }

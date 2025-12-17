@@ -39,6 +39,14 @@ class Settings extends Model
     public array $additionalLinks = [];
 
     /**
+     * Automatically renders Admin Bar at the top of the page and makes it sticky.
+     * If the page is an entry, an edit link will be added to the Admin Bar.
+     *
+     * @var boolean
+     */
+    public bool $autoRender = false;
+
+    /**
      * Some field model attribute
      *
      * @var string Custom CSS used to style Guide components.
@@ -118,11 +126,32 @@ class Settings extends Model
     public bool $displayWidgetLabels = false;
 
     /**
+     * Switch to vertical mode on thinner screens (currently available in [these supported browsers](https://caniuse.com/css-container-queries-style)).
+     *
+     * @var bool
+     */
+    public bool $mobileMode = false;
+
+    /**
      * Sets CSS variables based on a set of predefined themes.
      *
      * @var string
      */
     public string $theme = 'default';
+
+    /**
+     * Adds a button to Admin Bar that lets you collapse the toolbar down to a single button.
+     *
+     * @var bool
+     */
+    public bool $toolbarToggle = false;
+
+    /**
+     * When collapsed, adds a drag handle to let you move the toggle button out of the way of page content.
+     *
+     * @var bool
+     */
+    public bool $toolbarToggleDraggable = false;
 
     /**
      * Enables the Admin Bar Widget: Blitz
@@ -151,6 +180,20 @@ class Settings extends Model
      * @var bool
      */
     public bool $widgetEnabledCraftPublished = false;
+
+    /**
+     * Enables the Admin Bar Widget: Queue
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledCraftQueue = false;
+
+    /**
+     * Enables the Admin Bar Widget: Related
+     *
+     * @var bool
+     */
+    public bool $widgetEnabledCraftRelated = false;
 
     /**
      * Enables the Admin Bar Widget: Search

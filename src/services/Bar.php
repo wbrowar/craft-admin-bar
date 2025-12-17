@@ -102,6 +102,12 @@ class Bar extends Component
             $config['useCss'] = key_exists('useCss', $config) ? $config['useCss'] : true;
             $config['useJs'] = key_exists('useJs', $config) ? $config['useJs'] : true;
 
+            // User language preferences
+            $userLanguage = Craft::$app->getUser()->getIdentity()->getPreferredLanguage() ?? Craft::$app->language;
+            $userLocale = Craft::$app->getI18n()->getLocaleById($userLanguage);
+            $config['userLanguageRtl'] = $userLocale->getOrientation() == 'rtl';
+            $config['userLanguage'] = $userLanguage;
+
             // Get utilities notification count
             $config['utilitiesNotificationCount'] = 0;
             $userUtilities = Craft::$app->getUtilities()->getAuthorizedUtilityTypes();
@@ -120,7 +126,10 @@ class Bar extends Component
             $config['displayGuideLink'] = $settings->displayGuideLink;
             $config['displayUtilitiesLink'] = $settings->displayUtilitiesLink && !empty($userUtilities);
             $config['displaySettingsLink'] = $settings->displaySettingsLink && Craft::$app->getConfig()->getGeneral()->allowAdminChanges;
+            $config['mobileMode'] = $settings->mobileMode;
             $config['theme'] = $settings->theme;
+            $config['toolbarToggle'] = $settings->toolbarToggle;
+            $config['toolbarToggleDraggable'] = $settings->toolbarToggleDraggable;
 
             // Pro features
             $config['proEdition'] = AdminBar::$pro;

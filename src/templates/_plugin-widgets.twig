@@ -3,6 +3,7 @@
 {% if 'craft-new-entry' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_craft-new-entry' with {
     pluginHandle: 'craft-new-entry',
+    userLanguage,
     widgetConfig: widgetsConfig['craft-new-entry'],
   } %}
 {% endif %}
@@ -10,6 +11,7 @@
 {% if 'guide' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_guide' with {
     pluginHandle: 'guide',
+    userLanguage,
     widgetConfig: widgetsConfig['guide'],
   } %}
 {% endif %}
@@ -17,6 +19,7 @@
 {% if 'seo' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_seo' with {
     pluginHandle: 'seo',
+    userLanguage,
     widgetConfig: widgetsConfig['seo'],
   } %}
 {% endif %}
@@ -24,32 +27,45 @@
 {% if 'seomatic' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_seomatic' with {
     pluginHandle: 'seomatic',
+    userLanguage,
   } %}
 {% endif %}
 
 {% if 'navigation' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_navigation' with {
     pluginHandle: 'navigation',
+    userLanguage,
   } %}
 {% endif %}
 
-{% if 'craft-sites' in enabledWidgets %}
-  {% include 'admin-bar/admin-bar-widgets/_craft-sites' with {
-    pluginHandle: 'craft-sites',
-    widgetConfig: widgetsConfig['craft-sites'],
+{% if 'craft-related' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-related' with {
+    pluginHandle: 'craft-related',
+    userLanguage,
+    widgetConfig: widgetsConfig['craft-related'],
   } %}
 {% endif %}
 
 {% if 'craft-authors' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_craft-authors' with {
     pluginHandle: 'craft-authors',
+    userLanguage,
     widgetConfig: widgetsConfig['craft-authors'],
+  } %}
+{% endif %}
+
+{% if 'craft-sites' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-sites' with {
+    pluginHandle: 'craft-sites',
+    userLanguage,
+    widgetConfig: widgetsConfig['craft-sites'],
   } %}
 {% endif %}
 
 {% if 'craft-published' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_craft-published' with {
     pluginHandle: 'craft-published',
+    userLanguage,
     widgetConfig: widgetsConfig['craft-published'],
   } %}
 {% endif %}
@@ -57,13 +73,23 @@
 {% if 'blitz' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_blitz' with {
     pluginHandle: 'blitz',
+    userLanguage,
     widgetConfig: widgetsConfig['blitz'],
+  } %}
+{% endif %}
+
+{% if 'craft-queue' in enabledWidgets %}
+  {% include 'admin-bar/admin-bar-widgets/_craft-queue' with {
+    pluginHandle: 'craft-queue',
+    userLanguage,
+    widgetConfig: widgetsConfig['craft-queue'],
   } %}
 {% endif %}
 
 {% if 'craft-search' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_craft-search' with {
     pluginHandle: 'craft-search',
+    userLanguage,
     widgetConfig: widgetsConfig['craft-search'],
   } %}
 {% endif %}
@@ -71,5 +97,6 @@
 {% if 'view-count' in enabledWidgets %}
   {% include 'admin-bar/admin-bar-widgets/_view-count' with {
     pluginHandle: 'view-count',
+    userLanguage,
   } %}
 {% endif %}

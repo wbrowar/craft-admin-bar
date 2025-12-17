@@ -1,7 +1,9 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
 {% if widgetConfig['sections']|length %}
   <admin-bar-button class="admin-bar-widget" style="--admin-bar-icon-width: 1.1rem">
-    {{ iconSvg('plus')|attr({ class: 'icon' }) }}
-    {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
+    {{ iconSvg('plus')|attr({ class: 'icon', slot: 'before-label' }) }}
+    {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
     <div slot="popover">
       {% for section in widgetConfig['sections'] %}
         <admin-bar-button button-href="{{ cpUrl('entries/' ~ section.handle ~ '/new') }}">

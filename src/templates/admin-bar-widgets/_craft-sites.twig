@@ -1,9 +1,11 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
 {% set widgetElement = widgetConfig['entrySiteLinks']|length ? 'admin-bar-button' : 'admin-bar-text' %}
 
 {% if widgetConfig['currentSite'] %}
   {% set widgetContent %}
-    {{ svg('@appicons/' ~ widgetConfig['earthIcon'] ~ '.svg')|attr({ class: 'icon' }) }}
-    {{ widgetConfig['currentSite'].name }}
+    {{ svg('@appicons/' ~ widgetConfig['earthIcon'] ~ '.svg')|attr({ class: 'icon', slot: "before-label" }) }}
+    {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
 
     {% if widgetConfig['entrySiteLinks']|length %}
       <div slot="popover">
@@ -16,8 +18,10 @@
       </div>
     {% endif %}
   {% endset %}
-  <{{ widgetElement }}
-      class="admin-bar-widget"
-      style="--admin-bar-icon-width: 1.5rem"
-  >{{ widgetContent }}</{{ widgetElement }}>
+  {{ tag(widgetElement, {
+    class: 'admin-bar-widget',
+    'badge-content': widgetConfig['currentSite'].name,
+    html: widgetContent,
+    style: { '--admin-bar-icon-width': '1.5rem' }
+  }) }}
 {% endif %}

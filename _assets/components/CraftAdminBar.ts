@@ -1,4 +1,5 @@
 import { CraftAdminBarResponse } from '../admin-bar.ts'
+import { AdminBar, AdminBarCheckbox, AdminBarCheckboxChangeEvent } from 'admin-bar-component'
 
 enum ApiStatus {
   Errored = 'errored',
@@ -15,6 +16,8 @@ enum ErrorCode {
 
 export default class CraftAdminBar extends HTMLElement {
   static observedAttributes = ['data-api-status']
+
+  #adminBar: AdminBar | null = null
 
   /**
    * The url to the `admin-bar/admin-bar` controller action.
@@ -57,18 +60,26 @@ export default class CraftAdminBar extends HTMLElement {
   }
 
   connectedCallback(): void {
+    this.#adminBar = document.getElementById(this.dataset.adminBar ?? '') ?? null
+
     this._actionUrl = this.dataset.actionUrl
     this._sessionActionUrl = this.dataset.sessionActionUrl
 
-    this.setApiStatus(ApiStatus.Ready)
+    this.setApiStatus(ApiStatus.Ready, true)
+
+    this.setUpDebugToolbarCheckbox()
   }
 
   /**
    * Performs a request to the AdminBarController default action.
    */
-  async actionRequest(request: string, actionParams: string = ''): Promise<CraftAdminBarResponse | undefined> {
+  async actionRequest(
+    request: string,
+    actionParams: string = '',
+    updateProgressBar = true
+  ): Promise<CraftAdminBarResponse | undefined> {
     // If a request is currently in progress, bail
-    if (this._requestStatus === ApiStatus.Loading) {
+    if (updateProgressBar && this._requestStatus === ApiStatus.Loading) {
       return
     }
 
@@ -97,7 +108,7 @@ export default class CraftAdminBar extends HTMLElement {
     }
 
     try {
-      this.setApiStatus(ApiStatus.Loading)
+      this.setApiStatus(ApiStatus.Loading, updateProgressBar)
 
       // Create new form data and populate it to pass into the controller action.
       const params = new FormData()
@@ -119,7 +130,6 @@ export default class CraftAdminBar extends HTMLElement {
 
       // If request is not complete, throw error.
       if (!response.ok) {
-        this.setApiStatus(ApiStatus.Errored)
         throw new Error(`Response status: ${response.status}`)
       }
 
@@ -129,10 +139,26 @@ export default class CraftAdminBar extends HTMLElement {
         throw json.message
       }
 
-      this.setApiStatus(ApiStatus.Resolved)
+      if (json.followupAction) {
+        const followupActionUrl = this._actionUrl.replace('admin-bar/admin-bar', json.followupAction)
+        const followupResponse = await fetch(followupActionUrl, {
+          headers: {
+            Accept: 'application/json',
+            'X-CSRF-Token': this._csrfToken ?? '',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          method: 'POST',
+        })
+
+        if (!followupResponse.ok) {
+          throw new Error(`Response status: ${followupResponse.status}`)
+        }
+      }
+
+      this.setApiStatus(ApiStatus.Resolved, updateProgressBar)
       return json
     } catch (error) {
-      this.setApiStatus(ApiStatus.Errored)
+      this.setApiStatus(ApiStatus.Errored, true)
       return {
         message: error as string,
         status: 'error',
@@ -155,25 +181,42 @@ export default class CraftAdminBar extends HTMLElement {
    * @param apiStatus A value from the `ApiStatus` enum.
    * @private
    */
-  private setApiStatus(apiStatus: ApiStatus) {
+  private setApiStatus(apiStatus: ApiStatus, updateProgressBar: boolean) {
     // Visually show the progress of the request.
-    const adminBarElement = this.querySelector('admin-bar')
-    if (adminBarElement) {
+    if (this.#adminBar && updateProgressBar) {
       switch (apiStatus) {
         case ApiStatus.Errored:
-          adminBarElement.setAttribute('progress', '-1')
+          this.#adminBar.setAttribute('progress', '-1')
           break
         case ApiStatus.Loading:
-          adminBarElement.setAttribute('progress', '50')
+          this.#adminBar.setAttribute('progress', '50')
           break
         case ApiStatus.Resolved:
-          adminBarElement.setAttribute('progress', '100')
+          this.#adminBar.setAttribute('progress', '100')
           break
       }
     }
 
     // Change the status attribute on the `<craft-admin-bar>` element.
     this.dataset.apiStatus = apiStatus
+  }
+
+  private setUpDebugToolbarCheckbox() {
+    const checkboxElement: AdminBarCheckbox = this.#adminBar?.querySelector('#admin-bar-checkbox-debug-toolbar')
+
+    if (checkboxElement) {
+      // Add event listener to toggle debug toolbar
+      checkboxElement.addEventListener('change', async (e: AdminBarCheckboxChangeEvent) => {
+        checkboxElement.setAttribute('disabled', true)
+
+        await window.adminBarPostRequest(
+          document.getElementById(this.dataset.adminBar ?? ''),
+          'admin-bar-debug-toolbar-toggle',
+          JSON.stringify({ query: e.checked })
+        )
+        checkboxElement.removeAttribute('disabled')
+      })
+    }
   }
 }
 

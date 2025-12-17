@@ -1,24 +1,24 @@
 {% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
 
 <admin-bar-button class="admin-bar-widget admin-bar-widget--craft-search" style="--admin-bar-icon-width: 1.3rem">
-  {{ iconSvg('magnifying-glass')|attr({ class: 'icon' }) }}
-  {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
+  {{ iconSvg('magnifying-glass')|attr({ class: 'icon', slot: 'before-label' }) }}
+  {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
 
   <div slot="popover">
-    {% if widgetConfig.onSettingsPreivew %}
-      {{ pluginWidgets.onSettingsPreivew(widgets[pluginHandle].name) }}
+    {% if widgetConfig.onSettingsPreview %}
+      {{ pluginWidgets.onSettingsPreview(widgets[pluginHandle].name) }}
     {% else %}
       <craft-admin-bar-search>
         <template id="admin-bar-search-template">
           <style>
             form {
               display: grid;
-              grid-template-columns: auto max-content;
+              grid-template-columns: 1fr max-content;
               align-items: center;
+              width: 100%;
             }
             input {
               padding-inline: var(--admin-bar-inline-padding);
-              min-width: 300px;
               height: 44px;
               background: var(--craft-admin-bar-color-input-bg, rgb(255 255 255 / .9));
               border: none;
@@ -44,7 +44,7 @@
           </style>
 
           <form>
-            <input type="search" name="admin-bar-widget-craft-search-input" placeholder="{{ 'Search entries'|t('admin-bar') }}">
+            <input type="search" name="admin-bar-widget-craft-search-input" placeholder="{{ 'widget-craft-search-search-placeholder'|t('admin-bar', language = userLanguage) }}">
             <button type="submit">{{ iconSvg('magnifying-glass') }}</button>
           </form>
           <div></div>
@@ -52,16 +52,15 @@
 
         <template id="admin-bar-search-results-template">
           <li>
-            <admin-bar-text class="view"></admin-bar-text>
-            <admin-bar-button class="view"></admin-bar-button>
-            <admin-bar-button class="edit">{{ iconSvg('pencil') }} {{ 'Edit'|t('admin-bar') }}</admin-bar-button>
+            <admin-bar-text class="view" multi-line></admin-bar-text>
+            <admin-bar-button class="view"><admin-bar-text multi-line></admin-bar-text></admin-bar-button>
+            <admin-bar-button class="edit">{{ iconSvg('pencil') }} {{ 'widget-craft-search-edit'|t('admin-bar', language = userLanguage) }}</admin-bar-button>
             <style>
               li {
                 list-style: none;
 
                 &:hover {
                   --edit-opacity: 1;
-                  background-color: color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 95%);
                 }
                 &:has(:nth-child(2)) {
                   display: grid;
@@ -74,11 +73,27 @@
                 fill: currentColor;
               }
               .edit {
-                opacity: var(--edit-opacity, 0);
+                border-radius: 6px;
+                opacity: var(--edit-opacity, .2);
                 transition: opacity var(--admin-bar-transition-duration, 0) ease-out;
 
                 &:focus {
                   --edit-opacity: 1;
+                }
+              }
+              admin-bar-button.view {
+                &:hover {
+                  &::part(badge) {
+                    background-color: var(--widget-search-results-badge-color-bg, var(--admin-bar-color-highlight));
+                    color: var(--widget-search-results-badge-color-text, var(--admin-bar-button-color-text, white));
+                  }
+
+                  admin-bar-text {
+                    --admin-bar-color-text: var(--widget-search-results-color-text, var(--admin-bar-color-highlight));
+                  }
+                }
+                admin-bar-text {
+                  --admin-bar-inline-padding: 0;
                 }
               }
               admin-bar-text.view {
@@ -89,7 +104,7 @@
         </template>
 
         <template id="admin-bar-search-no-results-template">
-          <admin-bar-text>{{ 'No search results found.'|t('admin-bar') }}</admin-bar-text>
+          <admin-bar-text>{{ 'widget-craft-search-results-not-found'|t('admin-bar', language = userLanguage) }}</admin-bar-text>
         </template>
       </craft-admin-bar-search>
     {% endif %}

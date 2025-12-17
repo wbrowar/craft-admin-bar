@@ -1,10 +1,12 @@
+{% import 'admin-bar/_plugin-widgets-macros' as pluginWidgets %}
+
 {% if entry ?? false %}
   <admin-bar-text
       class="admin-bar-widget"
-      label-content="{{ craft.viewCount.total(entry.id) }} {{ displayWidgetLabels ? '' : 'Views'|t('admin-bar') }}"
-      label-position="before"
+      badge-content="{{ craft.viewCount.total(entry.id) }} {{ displayWidgetLabels ? '' : 'widget-view-count-views'|t('admin-bar', language = userLanguage) }}"
+      badge-position="before"
   >
-    {{ displayWidgetLabels ? widgets[pluginHandle].name : '' }}
+    {{ pluginWidgets.widgetBadgeAndLabel(null, widgets[pluginHandle].name, displayWidgetLabels) }}
   </admin-bar-text>
 {% endif %}
 

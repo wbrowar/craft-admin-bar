@@ -1,7 +1,8 @@
-import 'admin-bar-component'
+import { AdminBar, defineAdminBarElements } from 'admin-bar-component'
 import './admin-bar.css'
 import './components/CraftAdminBar.ts'
 import type CraftAdminBar from './components/CraftAdminBar.ts'
+import './components/CraftAdminBarQueue.ts'
 import './components/CraftAdminBarSearch.ts'
 
 enum ApiStatus {
@@ -17,16 +18,28 @@ export interface CraftAdminBarResponse {
   status: 'success' | 'error'
 }
 
-window.adminBarPostRequest = async (target: HTMLElement, request: string, body: string = '') => {
+/**
+ * Define `<admin-bar>` and subcomponents as custom elements.
+ */
+defineAdminBarElements(['button', 'checkbox', 'text'])
+
+/**
+ * Fires a POST request to the Craft Admin Bar Controller action.
+ *
+ * @param target
+ * @param request
+ * @param body
+ */
+window.adminBarPostRequest = async (target: AdminBar | null, request: string, body: string = '', silent = false) => {
   try {
     if (import.meta.env.DEV) {
-      console.log('Firing adminBarPostRequest with params', target, request, body)
+      console.log('Firing adminBarPostRequest with params', target, request, body, silent)
     }
 
     // Find the `<craft-admin-bar>` ancestor element.
-    const craftAdminBar: CraftAdminBar | null = target.closest('craft-admin-bar')
+    const craftAdminBar: CraftAdminBar | null = document.querySelector(`[data-admin-bar="${target?.id}"]`)
 
-    const response = await craftAdminBar?.actionRequest(request, body)
+    const response = await craftAdminBar?.actionRequest(request, body, !silent)
 
     if (import.meta.env.DEV) {
       console.log('adminBarPostRequest response', craftAdminBar, response)

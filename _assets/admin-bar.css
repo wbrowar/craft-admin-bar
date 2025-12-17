@@ -1,6 +1,9 @@
-@import url(admin-bar-component/dist/admin-bar.css);
+@import url(admin-bar-component/admin-bar.css);
 
 admin-bar {
+  container-name: admin-bar;
+  container-type: inline-size;
+
   & svg.icon {
     display: block;
     width: var(--admin-bar-icon-width, 1rem);
@@ -10,18 +13,27 @@ admin-bar {
       fill: currentColor !important;
     }
   }
+
+  [slot="greeting-popover"] {
+    position: relative;
+    max-height: calc(80dvh - var(--admin-bar-height) - clamp(4px, 1vw, 13px));
+    overflow: auto;
+  }
 }
 .admin-bar-widget {
-  &::part(popover) {
-    max-height: calc(90dvh - var(--admin-bar-height) - clamp(4px, 1vw, 13px));
+  [slot="popover"] {
+    width: stretch;
 
     & a:not(.admin-bar-button) {
+      overflow-wrap: break-word;
       text-decoration: underline;
-      color: var(--admin-bar-button-popover-color-text, rgb(255, 255, 255));
-      transition: color var(--admin-bar-transition-duration) ease-out;
+      font-weight: 500;
+      color: var(--admin-bar-button-color-text, rgb(255, 255, 255));
+      transition: color var(--admin-bar-transition-duration) ease-out, text-decoration-color var(--admin-bar-transition-duration) ease-out;
 
       &:hover {
-        color: color-mix(in srgb, currentColor, transparent 30%);
+        color: color-mix(in srgb, currentColor, transparent 20%);
+        text-decoration-color: color-mix(in srgb, var(--admin-bar-color-highlight, rgb(255, 255, 255)), transparent 50%);
       }
     }
   }
@@ -30,8 +42,13 @@ admin-bar {
     grid-template-columns: max-content max-content;
   }
   &.admin-bar-widget--navigation {
+    &::part(popover) {
+      max-width: 500px;
+    }
+
     span:has(a svg) {
       & a {
+        color: currentColor;
         transition: color var(--admin-bar-transition-duration) ease-out, opacity calc(var(--admin-bar-transition-duration) * .5) ease-out !important;
         opacity: 0;
       }
@@ -40,6 +57,21 @@ admin-bar {
           opacity: 1;
         }
       }
+    }
+  }
+}
+.admin-bar-widget-label {
+  --admin-bar-text-padding: 0;
+
+  @container not style(--admin-bar-vertical: true) {
+    &.admin-bar-widget-label-hidden {
+      clip: rect(0 0 0 0);
+      clip-path: inset(100%);
+      position: fixed;
+      width: 1px;
+      height: 1px;
+      white-space: nowrap;
+      overflow: hidden;
     }
   }
 }
