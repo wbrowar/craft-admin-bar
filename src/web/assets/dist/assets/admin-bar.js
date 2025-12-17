@@ -304,6 +304,12 @@ var $t=e=>{throw TypeError(e)},_t=(e,t,o)=>t.has(e)||$t("Cannot "+o),dt=(e,t,o)=
           color: var(--admin-bar-color-text);
         }
       }
+
+      @container style(--admin-bar-vertical: true) {
+        & {
+          height: auto;
+        }
+      }
     }
     [popovertarget]:has(+ [popover]:popover-open) {
       --admin-bar-button-color-bg: color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 85%);
