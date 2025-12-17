@@ -3,7 +3,7 @@
 {% endmacro %}
 
 {% macro seoMeta(meta) %}
-  <div style="--admin-bar-text-padding: 0; display: flex; flex-flow: row wrap; gap: 14px; width: min(400px, 90vw); padding: clamp(4px, 1vw, 13px); {% if meta.extrasList|length %}border-block-end: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);{% endif %}">
+  <div style="--admin-bar-text-padding: 0; width: min(400px, 90vw); padding: clamp(4px, 1vw, 13px); {% if meta.extrasList|length %}border-block-end: 1px solid color-mix(in srgb, var(--admin-bar-button-color-bg-hover), transparent 80%);{% endif %}">
     {% if meta.imageUrl ?? false %}
       <img
           src="{{ meta.imageUrl }}"
