@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.8.1 - 2025-12-22
+### Fixed
+- Fixed an issue where Admin Bar would incorrectly display at full height on Safari. [#50](https://github.com/wbrowar/craft-admin-bar/issues/50)
+
+
 ## 5.8.0 - 2025-12-17
 ### Added
 - There is a setting that allows Admin Bar to automatically embed itself at the top of front-end pages.
