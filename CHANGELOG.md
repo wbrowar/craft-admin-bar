@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## Unreleased
+### Fixed
+- Fixed an issue where the Edit button’s default `returnUrl` used the `{url}` placeholder, which Craft 5.10.2+ rejects with an `Invalid returnUrl param` error when opening an asset or entry picker on the edit page. The default is now the entry’s front-end URL. [#53](https://github.com/wbrowar/craft-admin-bar/issues/53)
+
 ## 5.8.1 - 2026-01-30
 ### Fixed
 - Fixed an issue where Admin Bar would incorrectly display at full height on Safari. [#50](https://github.com/wbrowar/craft-admin-bar/issues/50)
