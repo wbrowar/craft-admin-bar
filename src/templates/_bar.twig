@@ -144,9 +144,6 @@
       {% set entryEditUrl = entry.cpEditUrl %}
 
       {% if (returnUrl is defined and returnUrl != null) or returnUrl is not defined %}
-        {# Use a real URL here. Craft 5.10.2+ rejects any unhashed `returnUrl` containing `{`, and the CP's element
-           index JS re-sends the edit page URL (including this hashed value) as `returnUrl`, so a `{url}` placeholder
-           breaks asset/entry pickers on the edit page. See https://github.com/wbrowar/craft-admin-bar/issues/53 #}
         {% set entryEditUrlFormatted = cpUrl(entryEditUrl, { returnUrl: (returnUrl ?? entry.url ?? craft.app.request.absoluteUrl)|hash }) %}
       {% else %}
         {% set entryEditUrlFormatted = cpUrl(entryEditUrl) %}
