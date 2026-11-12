@@ -106,7 +106,7 @@ class AdminBar extends Plugin
                 if ($entry) {
                     $config['entry'] = $entry;
 
-                    if ($entry->sectionId) {
+                    if ($entry instanceof \craft\elements\Entry && $entry->sectionId) {
                         $section = Craft::$app->getEntries()->getSectionById($entry->sectionId);
 
                         if ($section) {

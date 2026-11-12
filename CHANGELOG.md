@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.8.3 - 2026-11-12
+### Fix
+- Fixed an error thrown on Category pages. (thanks to @darylknight) [#55](https://github.com/wbrowar/craft-guide/issues/55)
+
+
 ## 5.8.2 - 2026-09-08
 ### Fixed
 - Fixed an issue where the Edit button’s default `returnUrl` used the `{url}` placeholder, which Craft 5.10.2+ rejects with an `Invalid returnUrl param` error when opening an asset or entry picker on the edit page. The default is now the entry’s front-end URL. Thanks, Alex Aguilar! [#53](https://github.com/wbrowar/craft-admin-bar/issues/53)
